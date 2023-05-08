@@ -1,0 +1,67 @@
+[gd_scene load_steps=2 format=3 uid="uid://x5a4ej5ednxk"]
+
+[ext_resource type="Script" path="res://ui/settings_container.gd" id="1_dhtu8"]
+
+[node name="SettingsContainer" type="MarginContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -139.5
+offset_top = -95.5
+offset_right = 139.5
+offset_bottom = 95.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dhtu8")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 2
+color = Color(0.141176, 0.141176, 0.141176, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="TooltipsCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Tooltips"
+
+[node name="SkipScreensCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Skip Start/End Screens (debug)"
+
+[node name="SkipSoulSummaryCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Skip Soul Summary"
+
+[node name="SkipWaitForPlayersCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Skip 'Wait for Players' Screens"
+
+[node name="SkipPhaseReminderCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Skip 'Wait for Players' Screens"
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="toggled" from="MarginContainer/VBoxContainer/TooltipsCheckBox" to="." method="_on_tooltips_check_box_toggled"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/SkipScreensCheckBox" to="." method="_on_skip_screens_check_box_toggled"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/SkipSoulSummaryCheckBox" to="." method="_on_skip_soul_summary_check_box_toggled"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/SkipWaitForPlayersCheckBox" to="." method="_on_skip_wait_for_players_check_box_toggled"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/SkipPhaseReminderCheckBox" to="." method="_on_skip_phase_reminder_check_box_toggled"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]

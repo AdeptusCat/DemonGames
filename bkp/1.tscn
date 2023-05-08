@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cn4vlmqow36ct"]
+
+[ext_resource type="Script" path="res://arcana.gd" id="1_nnflc"]
+
+[node name="arcana_card" type="Node"]
+script = ExtResource("1_nnflc")

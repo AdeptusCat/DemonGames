@@ -1,0 +1,62 @@
+[gd_resource type="ShaderMaterial" load_steps=12 format=3 uid="uid://huchw08y81pd"]
+
+[ext_resource type="Shader" path="res://materials_shaders/polygon_shader_test.gdshader" id="1_crse7"]
+
+[sub_resource type="Gradient" id="Gradient_074wi"]
+resource_local_to_scene = true
+offsets = PackedFloat32Array(0, 0.194093, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.57727, 0, 0.169556, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_pbqug"]
+gradient = SubResource("Gradient_074wi")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6mwyu"]
+noise_type = 3
+fractal_type = 3
+fractal_octaves = 1
+fractal_ping_pong_strength = 9.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3qncb"]
+seamless = true
+noise = SubResource("FastNoiseLite_6mwyu")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_5iimo"]
+noise_type = 2
+fractal_type = 3
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_am2i0"]
+seamless = true
+noise = SubResource("FastNoiseLite_5iimo")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3lu0a"]
+noise_type = 2
+seed = 1
+fractal_type = 3
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_d631x"]
+seamless = true
+noise = SubResource("FastNoiseLite_3lu0a")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_f07dv"]
+noise_type = 2
+seed = 2
+fractal_type = 3
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vycxw"]
+seamless = true
+noise = SubResource("FastNoiseLite_f07dv")
+
+[resource]
+shader = ExtResource("1_crse7")
+shader_parameter/speed = 0.01
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 0.62
+shader_parameter/noise1 = SubResource("NoiseTexture2D_am2i0")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_d631x")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_vycxw")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_pbqug")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_3qncb")

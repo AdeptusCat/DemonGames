@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cdnjh4ot7q4gt"]
+
+[ext_resource type="Texture2D" uid="uid://btrmf0kw01ekj" path="res://demon_assets/ereshkigal/01802-2005639271-a painting of a female murderer in a pile of rotten flesh.png" id="1_8hgoq"]
+[ext_resource type="Script" path="res://demon_resource.gd" id="1_xcmll"]
+
+[resource]
+script = ExtResource("1_xcmll")
+name = "Ereshkigal"
+rank = 41
+skulls = 2
+stars = 4
+hearts = 1
+sex = 1
+player = 0
+incapacitated = false
+onEarth = false
+image = ExtResource("1_8hgoq")
+description = "Goddess of the Netherworld. Insatiable Mistress of Decaying Flesh."

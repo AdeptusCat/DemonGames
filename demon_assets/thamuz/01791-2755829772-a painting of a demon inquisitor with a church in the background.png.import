@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://bvu2tlddensr8"
+path="res://.godot/imported/01791-2755829772-a painting of a demon inquisitor with a church in the background.png-13bce8d343120f066eef110b2032017f.ctex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://demon_assets/thamuz/01791-2755829772-a painting of a demon inquisitor with a church in the background.png"
+dest_files=["res://.godot/imported/01791-2755829772-a painting of a demon inquisitor with a church in the background.png-13bce8d343120f066eef110b2032017f.ctex"]
+
+[params]
+
+compress/mode=0
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=false
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=1

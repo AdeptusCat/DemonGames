@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://jach5rvr6mb6"]
+
+[ext_resource type="Script" path="res://lieutenant_resource.gd" id="1_62fl5"]
+[ext_resource type="Texture2D" uid="uid://dciq712xq406s" path="res://assets/lieutenants/00661-455833780-painting of a dark eldar as in warhammer 40k.png" id="1_kakte"]
+
+[resource]
+script = ExtResource("1_62fl5")
+capacitiy = 1
+combatBonus = 1
+image = ExtResource("1_kakte")

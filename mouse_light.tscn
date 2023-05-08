@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqdoyij1sehhj"]
+
+[ext_resource type="Texture2D" uid="uid://b4awi58rg5qaf" path="res://assets/light/radial.png" id="1_r4nxu"]
+
+[node name="PointLight2D" type="PointLight2D"]
+position = Vector2(-723, 782)
+scale = Vector2(5, 5)
+color = Color(0.670588, 0, 0.701961, 1)
+range_item_cull_mask = 6
+texture = ExtResource("1_r4nxu")
+height = 200.0

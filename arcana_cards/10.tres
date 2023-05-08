@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dsus37sbx4c6o"]
+
+[ext_resource type="Script" path="res://arcana_resource.gd" id="1_vk7x7"]
+
+[resource]
+script = ExtResource("1_vk7x7")
+name = "Sacred Music10"
+minorSpell = 1
+cost = 1
+player = 1

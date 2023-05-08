@@ -1,0 +1,288 @@
+[gd_scene load_steps=60 format=3 uid="uid://bp85e0ki1akfx"]
+
+[ext_resource type="Shader" path="res://materials_shaders/shader_test.gdshader" id="1_eeboi"]
+[ext_resource type="Material" uid="uid://by51hh6f2rra2" path="res://materials_shaders/sectio_border_material.tres" id="2_ksdcr"]
+[ext_resource type="Texture2D" uid="uid://ccofwp3squfvf" path="res://assets/pixel.png" id="3_3p5x0"]
+[ext_resource type="Texture2D" uid="uid://qr14kucrashs" path="res://icon.svg" id="4_4uka3"]
+[ext_resource type="Shader" path="res://materials_shaders/shader_test2.gdshader" id="4_juvjj"]
+[ext_resource type="Shader" path="res://materials_shaders/map_sectios_test.gdshader" id="6_i1sqt"]
+[ext_resource type="Texture2D" uid="uid://bgijk4prumaxr" path="res://assets/circle.png" id="7_t5iwl"]
+[ext_resource type="Shader" path="res://materials_shaders/map_sectios_test2.gdshader" id="8_2yex2"]
+[ext_resource type="Shader" path="res://materials_shaders/polygon_shader_test.gdshader" id="9_5u4al"]
+[ext_resource type="Texture2D" uid="uid://bjcit3s2j3j18" path="res://assets/sectio_background.png" id="10_1dha2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2vas8"]
+shader = ExtResource("1_eeboi")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_llw3u"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wq2fc"]
+noise = SubResource("FastNoiseLite_llw3u")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0onq7"]
+shader = ExtResource("4_juvjj")
+shader_parameter/lod = 2.426
+
+[sub_resource type="Gradient" id="Gradient_4c4nb"]
+offsets = PackedFloat32Array(0, 0.526502, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.634544, 0.325388, 0.0789081, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qeb2m"]
+gradient = SubResource("Gradient_4c4nb")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_06byu"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_16c33"]
+seamless = true
+noise = SubResource("FastNoiseLite_06byu")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_gh5tw"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_yioep"]
+seamless = true
+noise = SubResource("FastNoiseLite_gh5tw")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_eenjn"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_x00kn"]
+seamless = true
+noise = SubResource("FastNoiseLite_eenjn")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_erwir"]
+shader = ExtResource("6_i1sqt")
+shader_parameter/speed = 0.1
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/noise1 = SubResource("NoiseTexture2D_16c33")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_yioep")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_x00kn")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_qeb2m")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bvm1n"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_vggxo"]
+load_path = "res://.godot/imported/circle.png-6efbe600b7e2418cd5091089237d13c1.ctex"
+
+[sub_resource type="Gradient" id="Gradient_eoig4"]
+offsets = PackedFloat32Array(0.0388693, 0.272085, 0.632509)
+colors = PackedColorArray(0.252218, 8.79108e-05, 0.280643, 1, 0.733333, 0.105882, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0i8t8"]
+gradient = SubResource("Gradient_eoig4")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0exhh"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_108gd"]
+seamless = true
+noise = SubResource("FastNoiseLite_0exhh")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_krpv4"]
+fractal_octaves = 4
+fractal_lacunarity = 3.0
+fractal_gain = 0.2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4vdit"]
+seamless = true
+noise = SubResource("FastNoiseLite_krpv4")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1oonx"]
+seed = -1
+fractal_gain = 0.2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pk22q"]
+seamless = true
+noise = SubResource("FastNoiseLite_1oonx")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_gnohc"]
+fractal_gain = 0.2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_q2s5k"]
+seamless = true
+noise = SubResource("FastNoiseLite_gnohc")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sb0s8"]
+shader = ExtResource("8_2yex2")
+shader_parameter/speed = 0.01
+shader_parameter/scroll1 = Vector2(1.1, 1.1)
+shader_parameter/scroll2 = Vector2(0.1, 0.1)
+shader_parameter/distortion_strength = 0.931
+shader_parameter/noise1 = SubResource("NoiseTexture2D_4vdit")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_pk22q")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_q2s5k")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_0i8t8")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_108gd")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2dnu7"]
+load_path = "res://.godot/imported/background.png-1fdba8b6a966ce2c2ffc607f7c096e95.ctex"
+
+[sub_resource type="Gradient" id="Gradient_5dfte"]
+resource_local_to_scene = true
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.194093, 0.434599, 0.649789)
+colors = PackedColorArray(0, 0, 0, 1, 0.600443, 0.440831, 0, 1, 0.205768, 0.0739971, 0.0246722, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5kdk6"]
+resource_local_to_scene = true
+gradient = SubResource("Gradient_5dfte")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_la16w"]
+seed = 4
+fractal_type = 3
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gun2l"]
+seamless = true
+noise = SubResource("FastNoiseLite_la16w")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_d7mcb"]
+fractal_type = 3
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rnvkm"]
+seamless = true
+noise = SubResource("FastNoiseLite_d7mcb")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_sux7b"]
+seed = 1
+fractal_type = 3
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_la007"]
+seamless = true
+noise = SubResource("FastNoiseLite_sux7b")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_5v0uy"]
+seed = 2
+fractal_type = 3
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ld5sw"]
+seamless = true
+noise = SubResource("FastNoiseLite_5v0uy")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jae8w"]
+resource_local_to_scene = true
+shader = ExtResource("9_5u4al")
+shader_parameter/speed = 0.1
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 0.05
+shader_parameter/noise1 = SubResource("NoiseTexture2D_rnvkm")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_la007")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_ld5sw")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_5kdk6")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_gun2l")
+
+[sub_resource type="Gradient" id="Gradient_kdkyt"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kqtq2"]
+gradient = SubResource("Gradient_kdkyt")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_md3lr"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n5odo"]
+seamless = true
+noise = SubResource("FastNoiseLite_md3lr")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_xa70a"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6cnrc"]
+seamless = true
+noise = SubResource("FastNoiseLite_xa70a")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_w7ugk"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5ndr2"]
+seamless = true
+noise = SubResource("FastNoiseLite_w7ugk")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qhskd"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_hvjd3"]
+seamless = true
+noise = SubResource("FastNoiseLite_qhskd")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t2k4p"]
+shader = ExtResource("9_5u4al")
+shader_parameter/speed = 0.1
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 0.1
+shader_parameter/noise1 = SubResource("NoiseTexture2D_6cnrc")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_5ndr2")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_hvjd3")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_kqtq2")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_n5odo")
+
+[node name="ShaderTest" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_2vas8")
+position = Vector2(296, 293)
+texture = SubResource("NoiseTexture2D_wq2fc")
+
+[node name="Line2D" type="Line2D" parent="."]
+material = ExtResource("2_ksdcr")
+position = Vector2(930, 238)
+points = PackedVector2Array(0, 0, 100, 100, 200, 100, 389, -46)
+width = 50.0
+default_color = Color(1, 1, 1, 0)
+texture = ExtResource("3_3p5x0")
+texture_mode = 2
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture_filter = 4
+material = SubResource("ShaderMaterial_0onq7")
+position = Vector2(577.5, 528.5)
+scale = Vector2(7.82031, 4.80469)
+texture = ExtResource("4_4uka3")
+
+[node name="Sprite2D4" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_erwir")
+position = Vector2(-3, -13)
+texture = ExtResource("7_t5iwl")
+
+[node name="Sprite2D5" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_bvm1n")
+position = Vector2(-3, -13)
+texture = SubResource("CompressedTexture2D_vggxo")
+
+[node name="Sprite2D8" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_sb0s8")
+position = Vector2(-3, -13)
+texture = SubResource("CompressedTexture2D_2dnu7")
+
+[node name="Polygon2D2" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_jae8w")
+position = Vector2(-23, 166)
+texture = ExtResource("10_1dha2")
+texture_offset = Vector2(-23, 166)
+polygon = PackedVector2Array(-679.769, -138.751, -604.256, -88.3269, -525.021, -43.98, -442.552, -5.98328, -357.357, 25.4293, -269.962, 50.0642, -180.904, 67.7698, -90.7312, 78.437, 0, 82, 90.7312, 78.437, 180.904, 67.7698, 269.962, 50.0642, 357.357, 25.4293, 442.552, -5.98328, 525.021, -43.98, 604.256, -88.3269, 679.769, -138.751, 583.415, -271.46, 518.605, -228.184, 450.601, -190.123, 379.822, -157.512, 306.703, -130.552, 231.696, -109.409, 155.261, -94.2131, 77.8705, -85.058, 0, -82, -77.8705, -85.058, -155.261, -94.2131, -231.696, -109.409, -306.703, -130.552, -379.822, -157.512, -450.601, -190.123, -518.605, -228.184, -583.415, -271.46)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_jae8w")
+texture = ExtResource("10_1dha2")
+polygon = PackedVector2Array(-679.769, -138.751, -604.256, -88.3269, -525.021, -43.98, -442.552, -5.98328, -357.357, 25.4293, -269.962, 50.0642, -180.904, 67.7698, -90.7312, 78.437, 0, 82, 90.7312, 78.437, 180.904, 67.7698, 269.962, 50.0642, 357.357, 25.4293, 442.552, -5.98328, 525.021, -43.98, 604.256, -88.3269, 679.769, -138.751, 583.415, -271.46, 518.605, -228.184, 450.601, -190.123, 379.822, -157.512, 306.703, -130.552, 231.696, -109.409, 155.261, -94.2131, 77.8705, -85.058, 0, -82, -77.8705, -85.058, -155.261, -94.2131, -231.696, -109.409, -306.703, -130.552, -379.822, -157.512, -450.601, -190.123, -518.605, -228.184, -583.415, -271.46)
+
+[node name="Polygon2D2" type="Polygon2D" parent="Polygon2D"]
+material = SubResource("ShaderMaterial_jae8w")
+position = Vector2(-63, 536)
+texture = ExtResource("10_1dha2")
+polygon = PackedVector2Array(-679.769, -138.751, -604.256, -88.3269, -525.021, -43.98, -442.552, -5.98328, -357.357, 25.4293, -269.962, 50.0642, -180.904, 67.7698, -90.7312, 78.437, 0, 82, 90.7312, 78.437, 180.904, 67.7698, 269.962, 50.0642, 357.357, 25.4293, 442.552, -5.98328, 525.021, -43.98, 604.256, -88.3269, 679.769, -138.751, 583.415, -271.46, 518.605, -228.184, 450.601, -190.123, 379.822, -157.512, 306.703, -130.552, 231.696, -109.409, 155.261, -94.2131, 77.8705, -85.058, 0, -82, -77.8705, -85.058, -155.261, -94.2131, -231.696, -109.409, -306.703, -130.552, -379.822, -157.512, -450.601, -190.123, -518.605, -228.184, -583.415, -271.46)
+
+[node name="Polygon2D3" type="Polygon2D" parent="Polygon2D"]
+use_parent_material = true
+position = Vector2(24, -171)
+color = Color(1, 1, 1, 0)
+texture = ExtResource("10_1dha2")
+texture_offset = Vector2(24, -171)
+polygon = PackedVector2Array(-679.769, -138.751, -604.256, -88.3269, -525.021, -43.98, -442.552, -5.98328, -357.357, 25.4293, -269.962, 50.0642, -180.904, 67.7698, -90.7312, 78.437, 0, 82, 90.7312, 78.437, 180.904, 67.7698, 269.962, 50.0642, 357.357, 25.4293, 442.552, -5.98328, 525.021, -43.98, 604.256, -88.3269, 679.769, -138.751, 583.415, -271.46, 518.605, -228.184, 450.601, -190.123, 379.822, -157.512, 306.703, -130.552, 231.696, -109.409, 155.261, -94.2131, 77.8705, -85.058, 0, -82, -77.8705, -85.058, -155.261, -94.2131, -231.696, -109.409, -306.703, -130.552, -379.822, -157.512, -450.601, -190.123, -518.605, -228.184, -583.415, -271.46)
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_t2k4p")
+position = Vector2(3240, 1784)
+texture = ExtResource("4_4uka3")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(2986, 1533)
+texture = ExtResource("4_4uka3")

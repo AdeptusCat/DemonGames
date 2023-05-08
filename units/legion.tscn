@@ -1,0 +1,140 @@
+[gd_scene load_steps=19 format=3 uid="uid://dj6htpcjrkre8"]
+
+[ext_resource type="Script" path="res://units/legion.gd" id="1_h3d5h"]
+[ext_resource type="Texture2D" uid="uid://cbmert5pfgg4n" path="res://assets/bar.png" id="2_7xjy2"]
+[ext_resource type="Texture2D" uid="uid://d206wyqx847u4" path="res://assets/bar1.png" id="3_1243l"]
+[ext_resource type="Script" path="res://legion_margin_container.gd" id="4_ka76n"]
+[ext_resource type="Shader" path="res://materials_shaders/unit_background.gdshader" id="5_b5ydx"]
+[ext_resource type="Shader" path="res://materials_shaders/legion.gdshader" id="6_40t4t"]
+[ext_resource type="Texture2D" uid="uid://cpat55k5ohgcw" path="res://noise/desolve_noise.tres" id="7_4dpsb"]
+[ext_resource type="Texture2D" uid="uid://ckkqcsdpp6e56" path="res://assets/triumphirates/00839-2766685014-symbol of an tribal rune with red background.png" id="7_l5w2j"]
+[ext_resource type="Texture2D" uid="uid://dtsscr8bliiv0" path="res://assets/triumphirates/00892-3176970373-symbol of an tribal rune with green background.png" id="8_haw1a"]
+[ext_resource type="Texture2D" uid="uid://bwr56spe72ugb" path="res://assets/triumphirates/00892-3176970373-symbol of an tribal rune with green background_n.png" id="9_ic0n7"]
+
+[sub_resource type="Gradient" id="Gradient_jsfci"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nd576"]
+gradient = SubResource("Gradient_jsfci")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6xjaq"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_uxg1v"]
+noise = SubResource("FastNoiseLite_6xjaq")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ifw8g"]
+resource_local_to_scene = true
+shader = ExtResource("5_b5ydx")
+shader_parameter/dissolveState = 0.0
+shader_parameter/dissolveNoise = SubResource("NoiseTexture2D_uxg1v")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1oc8h"]
+resource_local_to_scene = true
+shader = ExtResource("6_40t4t")
+shader_parameter/dissolveState = 0.0
+shader_parameter/flashState = 1.0
+shader_parameter/dissolveNoise = ExtResource("7_4dpsb")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xkc75"]
+resource_local_to_scene = true
+shader = ExtResource("6_40t4t")
+shader_parameter/dissolveState = 0.0
+shader_parameter/flashState = 1.0
+shader_parameter/dissolveNoise = ExtResource("7_4dpsb")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_t3iin"]
+diffuse_texture = ExtResource("8_haw1a")
+normal_texture = ExtResource("9_ic0n7")
+texture_filter = 4
+
+[node name="Legion" type="Node2D" groups=["Persist"]]
+light_mask = 4
+z_index = 1
+script = ExtResource("1_h3d5h")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
+position = Vector2(-2, -7)
+scale = Vector2(4.39844, 4.44531)
+range_item_cull_mask = 2
+texture = SubResource("GradientTexture2D_nd576")
+height = 20.0
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+visible = false
+polygon = PackedVector2Array(-61.4397, -57.6001, -61.4397, 57.5999, 66.5598, 64, 61.4399, -64)
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+visible = false
+offset_right = 512.0
+offset_bottom = 512.0
+value = 50.0
+texture_under = ExtResource("2_7xjy2")
+texture_over = ExtResource("3_1243l")
+
+[node name="LegionMarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = -63.0
+offset_right = 55.0
+offset_bottom = 63.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("4_ka76n")
+
+[node name="ColorRect" type="ColorRect" parent="LegionMarginContainer"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_ifw8g")
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LegionMarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="LegionMarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+
+[node name="TextureRect_old" type="TextureRect" parent="LegionMarginContainer/VBoxContainer/MarginContainer"]
+visible = false
+texture_filter = 4
+material = SubResource("ShaderMaterial_1oc8h")
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("7_l5w2j")
+expand_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="LegionMarginContainer/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+light_mask = 2
+texture_filter = 3
+material = SubResource("ShaderMaterial_xkc75")
+custom_minimum_size = Vector2(90, 90)
+layout_mode = 2
+texture = SubResource("CanvasTexture_t3iin")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="LegionMarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Legion
+"
+horizontal_alignment = 1
+
+[connection signal="path_changed" from="NavigationAgent2D" to="." method="_on_navigation_agend_2d_path_changed"]
+[connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agend_2d_target_reached"]
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agend_2d_velocity_computed"]
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

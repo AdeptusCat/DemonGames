@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="DemonResource" load_steps=3 format=3 uid="uid://da0xvmva0nvwx"]
+
+[ext_resource type="Texture2D" uid="uid://bdvqxvqmrlkfj" path="res://demon_assets/pruflas/01765-2332866494-a painting a king of babylon.png" id="1_3gqen"]
+[ext_resource type="Script" path="res://demon_resource.gd" id="1_xcmll"]
+
+[resource]
+script = ExtResource("1_xcmll")
+name = "Pruflas"
+rank = 53
+skulls = 3
+stars = 1
+hearts = 1
+sex = 0
+player = 0
+incapacitated = false
+onEarth = false
+image = ExtResource("1_3gqen")
+description = "Grand Prince and Grand Duke. Former Ruler of Babylon. Commander of Twenty-Two Legions."

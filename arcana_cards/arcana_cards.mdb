@@ -1,0 +1,378 @@
+{
+	"sheets": [
+		{
+			"name": "ArcanaCards",
+			"columns": [
+				{
+					"typeStr": "1",
+					"name": "Name"
+				},
+				{
+					"typeStr": "5:Walk The Earth,Recruit Lieutenant,Nonary Pass,Pass,Double Pass,Triple Pass,Quadruple Pass,Quinary Pass,Senary Pass,Septenary Pass,Play Right Away,Walk The Earth Safely",
+					"name": "Minor Spell"
+				},
+				{
+					"typeStr": "3",
+					"name": "Cost",
+					"display": null
+				}
+			],
+			"lines": [
+				{
+					"Name": "Try Again",
+					"Minor Spell": 4,
+					"Cost": 2
+				},
+				{
+					"Name": "Sisyphus' Rock",
+					"Minor Spell": 0,
+					"Cost": 6
+				},
+				{
+					"Name": "Git 'Em",
+					"Minor Spell": 5,
+					"Cost": 3
+				},
+				{
+					"Name": "The Iago Syndrome",
+					"Minor Spell": 0,
+					"Cost": 4
+				},
+				{
+					"Name": "The Order of the Silver Dawn",
+					"Minor Spell": 6,
+					"Cost": 4
+				},
+				{
+					"Name": "Salome's Oil",
+					"Minor Spell": 0,
+					"Cost": 2
+				},
+				{
+					"Name": "The Sword of the Guardian",
+					"Minor Spell": 0,
+					"Cost": 1
+				},
+				{
+					"Name": "Vom Kriege",
+					"Minor Spell": 0,
+					"Cost": 6
+				},
+				{
+					"Name": "Wand of Ibb",
+					"Minor Spell": 0,
+					"Cost": 0
+				},
+				{
+					"Name": "Salome's Oil",
+					"Minor Spell": 0,
+					"Cost": 2
+				},
+				{
+					"Name": "Foci",
+					"Minor Spell": 1,
+					"Cost": 8
+				},
+				{
+					"Name": "Call for Lilith",
+					"Minor Spell": 5,
+					"Cost": 3
+				},
+				{
+					"Name": "So, sue me...",
+					"Minor Spell": 4,
+					"Cost": 2
+				},
+				{
+					"Name": "Wicked Pope",
+					"Minor Spell": 6,
+					"Cost": 4
+				},
+				{
+					"Name": "Watch Out!!!",
+					"Minor Spell": 8,
+					"Cost": 2
+				},
+				{
+					"Name": "Spiky Virgin",
+					"Minor Spell": 0,
+					"Cost": 4
+				},
+				{
+					"Name": "Look Into the Future",
+					"Minor Spell": 0,
+					"Cost": 3
+				},
+				{
+					"Name": "Hit the soft spots",
+					"Minor Spell": 1,
+					"Cost": 2
+				},
+				{
+					"Name": "Getaway",
+					"Minor Spell": 5,
+					"Cost": 0
+				},
+				{
+					"Name": "Puppets",
+					"Minor Spell": 0,
+					"Cost": 6
+				},
+				{
+					"Name": "Uriel Must Obey",
+					"Minor Spell": 0,
+					"Cost": 4
+				},
+				{
+					"Name": "Secret Tunnel",
+					"Minor Spell": 5,
+					"Cost": 3
+				},
+				{
+					"Name": "Love for Lilith",
+					"Minor Spell": 1,
+					"Cost": 4
+				},
+				{
+					"Name": "A very old friend",
+					"Minor Spell": 0,
+					"Cost": 0
+				},
+				{
+					"Name": "Don't eat that!",
+					"Minor Spell": 3,
+					"Cost": 1
+				},
+				{
+					"Name": "Riot",
+					"Minor Spell": 5,
+					"Cost": 2
+				},
+				{
+					"Name": "Come on Join us",
+					"Minor Spell": 4,
+					"Cost": 3
+				},
+				{
+					"Name": "We Are The Dead",
+					"Minor Spell": 0,
+					"Cost": 5
+				},
+				{
+					"Name": "Weredogs",
+					"Minor Spell": 6,
+					"Cost": 1
+				},
+				{
+					"Name": "Secret Tunnel",
+					"Minor Spell": 5,
+					"Cost": 3
+				},
+				{
+					"Name": "He can't be All Good",
+					"Minor Spell": 0,
+					"Cost": 2
+				},
+				{
+					"Name": "Is it supposed to sound like that?",
+					"Minor Spell": 10,
+					"Cost": 0
+				},
+				{
+					"Name": "Let's settle this...",
+					"Minor Spell": 6,
+					"Cost": 3
+				},
+				{
+					"Name": "Recruit",
+					"Minor Spell": 4,
+					"Cost": 2
+				},
+				{
+					"Name": "Jones' Device",
+					"Minor Spell": 1,
+					"Cost": 0
+				},
+				{
+					"Name": "Sleep Late",
+					"Minor Spell": 6,
+					"Cost": 2
+				},
+				{
+					"Name": "A Deliberate Mistake",
+					"Minor Spell": 1,
+					"Cost": 2
+				},
+				{
+					"Name": "Zealots",
+					"Minor Spell": 0,
+					"Cost": 2
+				},
+				{
+					"Name": "Love for Uriel",
+					"Minor Spell": 0,
+					"Cost": 5
+				},
+				{
+					"Name": "Rage",
+					"Minor Spell": 0,
+					"Cost": 2
+				},
+				{
+					"Name": "Lost Lore",
+					"Minor Spell": 10,
+					"Cost": 0
+				},
+				{
+					"Name": "Hellhounds!!!",
+					"Minor Spell": 0,
+					"Cost": 0
+				},
+				{
+					"Name": "Cthonians",
+					"Minor Spell": 4,
+					"Cost": 3
+				},
+				{
+					"Name": "Carnossa",
+					"Minor Spell": 0,
+					"Cost": 4
+				},
+				{
+					"Name": "Luddites",
+					"Minor Spell": 0,
+					"Cost": 3
+				},
+				{
+					"Name": "Cute Old Lady",
+					"Minor Spell": 11,
+					"Cost": 0
+				},
+				{
+					"Name": "Hickochs's Mechanical Sleeve",
+					"Minor Spell": 1,
+					"Cost": 5
+				},
+				{
+					"Name": "Meltdown",
+					"Minor Spell": 0,
+					"Cost": 2
+				},
+				{
+					"Name": "Fast Cash",
+					"Minor Spell": 6,
+					"Cost": 2
+				},
+				{
+					"Name": "Uriel Must Obey",
+					"Minor Spell": 0,
+					"Cost": 4
+				},
+				{
+					"Name": "Crystal Ball",
+					"Minor Spell": 8,
+					"Cost": 6
+				},
+				{
+					"Name": "Madwoman",
+					"Minor Spell": 9,
+					"Cost": 3
+				},
+				{
+					"Name": "Flagellation",
+					"Minor Spell": 7,
+					"Cost": 3
+				},
+				{
+					"Name": "The Toad Trick",
+					"Minor Spell": 2,
+					"Cost": 4
+				},
+				{
+					"Name": "The Sodomess",
+					"Minor Spell": 9,
+					"Cost": 7
+				},
+				{
+					"Name": "Stop Time",
+					"Minor Spell": 0,
+					"Cost": 0
+				},
+				{
+					"Name": "'My Sweet",
+					"Minor Spell": 9,
+					"Cost": 2
+				},
+				{
+					"Name": "The Gomorran",
+					"Minor Spell": 0,
+					"Cost": 1
+				},
+				{
+					"Name": "Mother Dog",
+					"Minor Spell": 0,
+					"Cost": 0
+				},
+				{
+					"Name": "Doppelgänger",
+					"Minor Spell": 6,
+					"Cost": 2
+				},
+				{
+					"Name": "Wine of Drunkenness",
+					"Minor Spell": 0,
+					"Cost": 3
+				},
+				{
+					"Name": "Into the Void",
+					"Minor Spell": 5,
+					"Cost": 0
+				},
+				{
+					"Name": "Hunk",
+					"Minor Spell": 0,
+					"Cost": 4
+				},
+				{
+					"Name": "Big Bomb",
+					"Minor Spell": 0,
+					"Cost": 2
+				},
+				{
+					"Name": "Court Duty",
+					"Minor Spell": 10,
+					"Cost": 0
+				},
+				{
+					"Name": "A Fit of Goodness",
+					"Minor Spell": 10,
+					"Cost": 0
+				},
+				{
+					"Name": "If this gets out...",
+					"Minor Spell": 10,
+					"Cost": 0
+				},
+				{
+					"Name": "Kiss Me!",
+					"Minor Spell": 10,
+					"Cost": 0
+				},
+				{
+					"Name": "Exile",
+					"Minor Spell": 10,
+					"Cost": 0
+				},
+				{
+					"Name": "Prove to me that you are real...",
+					"Minor Spell": 10,
+					"Cost": 0
+				}
+			],
+			"separators": [],
+			"props": {}
+		}
+	],
+	"customTypes": [],
+	"compress": false
+}

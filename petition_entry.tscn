@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8hn7e2w8pyg"]
+
+[ext_resource type="Script" path="res://petition_entry.gd" id="1_i13tp"]
+
+[node name="PetitionEntry" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+script = ExtResource("1_i13tp")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "SectioName"
+horizontal_alignment = 1
+
+[node name="SoulsLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+text = "1"
+
+[node name="ApprovetButton" type="Button" parent="."]
+layout_mode = 2
+mouse_filter = 1
+text = "Occupy Sectio"
+
+[node name="DenyButton" type="Button" parent="."]
+layout_mode = 2
+mouse_filter = 1
+text = "Deny Occupation"
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="ApprovetButton" to="." method="_on_approvet_button_pressed"]
+[connection signal="pressed" from="DenyButton" to="." method="_on_deny_button_pressed"]

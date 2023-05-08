@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://clftx75iegews"]
+
+[ext_resource type="Texture2D" uid="uid://dsknegcl6nfcj" path="res://demon_assets/ashtaroth/01751-620828207-a painting of a beatiful female dark eldar counting money.png" id="1_3j7wt"]
+[ext_resource type="Script" path="res://demon_resource.gd" id="1_xcmll"]
+
+[resource]
+script = ExtResource("1_xcmll")
+name = "Ashtaroth"
+rank = 11
+skulls = 2
+stars = 2
+hearts = 6
+sex = 1
+player = 0
+incapacitated = false
+onEarth = false
+image = ExtResource("1_3j7wt")
+description = "Goddess of Lust and Sloth. Princess of Accusers and Inquisitors. Treasurer of Hell. COmmander of Forty Legions. Knight of the Order of the Fly."

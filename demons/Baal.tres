@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cn8h4l07hl0pn"]
+
+[ext_resource type="Texture2D" uid="uid://cicuqct5nvekk" path="res://demon_assets/baal/01788-1752908418-a painting of a demon knight in a thunder storm.png" id="1_tlpix"]
+[ext_resource type="Script" path="res://demon_resource.gd" id="1_xcmll"]
+
+[resource]
+script = ExtResource("1_xcmll")
+name = "Baal"
+rank = 14
+skulls = 4
+stars = 2
+hearts = 3
+sex = 0
+player = 0
+incapacitated = false
+onEarth = false
+image = ExtResource("1_tlpix")
+description = "Grand Duke of Hell. Daemon of Thunderstorm. High General of the INfernal Armies. Supreme Dominator. Commander of Sixty-Six Legions. Knight of the ORder of the Fly."

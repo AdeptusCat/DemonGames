@@ -1,0 +1,315 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://demon.gd" id="1_kdcug"]
+[ext_resource type="Texture2D" uid="uid://borcal1a6lxbs" path="res://assets/frame1.png" id="2_swp8t"]
+[ext_resource type="Texture2D" uid="uid://25er4ht16vnw" path="res://assets/00698-3170758600-drawing of a skull, digital art, game asset.png" id="3_0m7h4"]
+[ext_resource type="Texture2D" uid="uid://cgkg76vn5cx1s" path="res://assets/00710-4029699230-drawing of a pentagram, digital art, game asset.png" id="4_8bmdq"]
+[ext_resource type="Texture2D" uid="uid://br3bhpalcxcw5" path="res://assets/00690-2262657839-drawing of a heart, digital art, game asset.png" id="5_2tppv"]
+[ext_resource type="Texture2D" uid="uid://dfgdkoorijh8" path="res://assets/demon.png" id="6_tnnto"]
+
+[node name="Demon" type="MarginContainer"]
+offset_right = 864.0
+offset_bottom = 956.0
+script = ExtResource("1_kdcug")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 2
+offset_right = 864.0
+offset_bottom = 956.0
+texture = ExtResource("2_swp8t")
+patch_margin_left = 256
+patch_margin_top = 256
+patch_margin_right = 256
+patch_margin_bottom = 256
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 2
+offset_right = 864.0
+offset_bottom = 956.0
+theme_override_constants/margin_left = 150
+theme_override_constants/margin_top = 110
+theme_override_constants/margin_right = 150
+theme_override_constants/margin_bottom = 150
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2"]
+layout_mode = 2
+offset_left = 150.0
+offset_top = 110.0
+offset_right = 714.0
+offset_bottom = 806.0
+theme_override_constants/separation = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/HBoxContainer"]
+layout_mode = 2
+offset_right = 32.0
+offset_bottom = 696.0
+theme_override_constants/separation = 20
+
+[node name="SexTextureRect" type="TextureRect" parent="MarginContainer2/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+offset_right = 32.0
+
+[node name="SkullsVBoxContainer" type="VBoxContainer" parent="MarginContainer2/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+offset_top = 20.0
+offset_right = 32.0
+offset_bottom = 232.0
+alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer2/HBoxContainer/VBoxContainer/SkullsVBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_right = 32.0
+offset_bottom = 32.0
+texture = ExtResource("3_0m7h4")
+ignore_texture_size = true
+
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer2/HBoxContainer/VBoxContainer/SkullsVBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_top = 36.0
+offset_right = 32.0
+offset_bottom = 68.0
+texture = ExtResource("3_0m7h4")
+ignore_texture_size = true
+
+[node name="TextureRect3" type="TextureRect" parent="MarginContainer2/HBoxContainer/VBoxContainer/SkullsVBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_top = 72.0
+offset_right = 32.0
+offset_bottom = 104.0
+texture = ExtResource("3_0m7h4")
+ignore_texture_size = true
+
+[node name="TextureRect4" type="TextureRect" parent="MarginContainer2/HBoxContainer/VBoxContainer/SkullsVBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_top = 108.0
+offset_right = 32.0
+offset_bottom = 140.0
+texture = ExtResource("3_0m7h4")
+ignore_texture_size = true
+
+[node name="TextureRect5" type="TextureRect" parent="MarginContainer2/HBoxContainer/VBoxContainer/SkullsVBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_top = 144.0
+offset_right = 32.0
+offset_bottom = 176.0
+texture = ExtResource("3_0m7h4")
+ignore_texture_size = true
+
+[node name="TextureRect6" type="TextureRect" parent="MarginContainer2/HBoxContainer/VBoxContainer/SkullsVBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_top = 180.0
+offset_right = 32.0
+offset_bottom = 212.0
+texture = ExtResource("3_0m7h4")
+ignore_texture_size = true
+
+[node name="StarsVBoxContainer" type="VBoxContainer" parent="MarginContainer2/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+offset_top = 252.0
+offset_right = 32.0
+offset_bottom = 464.0
+alignment = 2
+
+[node name="TextureRect7" type="TextureRect" parent="MarginContainer2/HBoxContainer/VBoxContainer/StarsVBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_right = 32.0
+offset_bottom = 32.0
+texture = ExtResource("4_8bmdq")
+ignore_texture_size = true
+
+[node name="TextureRect8" type="TextureRect" parent="MarginContainer2/HBoxContainer/VBoxContainer/StarsVBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_top = 36.0
+offset_right = 32.0
+offset_bottom = 68.0
+texture = ExtResource("4_8bmdq")
+ignore_texture_size = true
+
+[node name="TextureRect9" type="TextureRect" parent="MarginContainer2/HBoxContainer/VBoxContainer/StarsVBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_top = 72.0
+offset_right = 32.0
+offset_bottom = 104.0
+texture = ExtResource("4_8bmdq")
+ignore_texture_size = true
+
+[node name="TextureRect10" type="TextureRect" parent="MarginContainer2/HBoxContainer/VBoxContainer/StarsVBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_top = 108.0
+offset_right = 32.0
+offset_bottom = 140.0
+texture = ExtResource("4_8bmdq")
+ignore_texture_size = true
+
+[node name="TextureRect11" type="TextureRect" parent="MarginContainer2/HBoxContainer/VBoxContainer/StarsVBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_top = 144.0
+offset_right = 32.0
+offset_bottom = 176.0
+texture = ExtResource("4_8bmdq")
+ignore_texture_size = true
+
+[node name="TextureRect12" type="TextureRect" parent="MarginContainer2/HBoxContainer/VBoxContainer/StarsVBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_top = 180.0
+offset_right = 32.0
+offset_bottom = 212.0
+texture = ExtResource("4_8bmdq")
+ignore_texture_size = true
+
+[node name="HeartsVBoxContainer" type="VBoxContainer" parent="MarginContainer2/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+offset_top = 484.0
+offset_right = 32.0
+offset_bottom = 696.0
+alignment = 2
+
+[node name="TextureRect13" type="TextureRect" parent="MarginContainer2/HBoxContainer/VBoxContainer/HeartsVBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_right = 32.0
+offset_bottom = 32.0
+texture = ExtResource("5_2tppv")
+ignore_texture_size = true
+
+[node name="TextureRect14" type="TextureRect" parent="MarginContainer2/HBoxContainer/VBoxContainer/HeartsVBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_top = 36.0
+offset_right = 32.0
+offset_bottom = 68.0
+texture = ExtResource("5_2tppv")
+ignore_texture_size = true
+
+[node name="TextureRect15" type="TextureRect" parent="MarginContainer2/HBoxContainer/VBoxContainer/HeartsVBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_top = 72.0
+offset_right = 32.0
+offset_bottom = 104.0
+texture = ExtResource("5_2tppv")
+ignore_texture_size = true
+
+[node name="TextureRect16" type="TextureRect" parent="MarginContainer2/HBoxContainer/VBoxContainer/HeartsVBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_top = 108.0
+offset_right = 32.0
+offset_bottom = 140.0
+texture = ExtResource("5_2tppv")
+ignore_texture_size = true
+
+[node name="TextureRect17" type="TextureRect" parent="MarginContainer2/HBoxContainer/VBoxContainer/HeartsVBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_top = 144.0
+offset_right = 32.0
+offset_bottom = 176.0
+texture = ExtResource("5_2tppv")
+ignore_texture_size = true
+
+[node name="TextureRect18" type="TextureRect" parent="MarginContainer2/HBoxContainer/VBoxContainer/HeartsVBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+offset_top = 180.0
+offset_right = 32.0
+offset_bottom = 212.0
+texture = ExtResource("5_2tppv")
+ignore_texture_size = true
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer2/HBoxContainer"]
+layout_mode = 2
+offset_left = 52.0
+offset_right = 564.0
+offset_bottom = 696.0
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+offset_right = 512.0
+offset_bottom = 75.0
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/HBoxContainer/VBoxContainer2/HBoxContainer"]
+layout_mode = 2
+offset_right = 489.0
+offset_bottom = 75.0
+size_flags_horizontal = 3
+
+[node name="DemonNameLabel" type="Label" parent="MarginContainer2/HBoxContainer/VBoxContainer2/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_right = 489.0
+offset_bottom = 45.0
+theme_override_font_sizes/font_size = 30
+text = "Demon Name"
+horizontal_alignment = 1
+
+[node name="DemonDescriptionLabel" type="Label" parent="MarginContainer2/HBoxContainer/VBoxContainer2/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_top = 49.0
+offset_right = 489.0
+offset_bottom = 75.0
+text = "Description"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer2/HBoxContainer/VBoxContainer2/HBoxContainer"]
+layout_mode = 2
+offset_left = 493.0
+offset_top = 24.0
+offset_right = 512.0
+offset_bottom = 50.0
+text = "47"
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer2/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+offset_top = 79.0
+offset_right = 512.0
+offset_bottom = 112.0
+size_flags_vertical = 3
+
+[node name="DemonTextureRect" type="TextureRect" parent="MarginContainer2/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_top = 116.0
+offset_right = 512.0
+offset_bottom = 628.0
+texture = ExtResource("6_tnnto")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+offset_top = 632.0
+offset_right = 512.0
+offset_bottom = 666.0
+size_flags_vertical = 3
+
+[node name="Label3" type="Label" parent="MarginContainer2/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+offset_top = 670.0
+offset_right = 512.0
+offset_bottom = 696.0
+text = "Special Rules"
+horizontal_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="MarginContainer2/HBoxContainer/VBoxContainer2"]
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://br1k1lyyg0lp3"]
+
+[ext_resource type="Shader" path="res://cloud_test.gdshader" id="1_ijrnd"]
+[ext_resource type="Texture2D" uid="uid://dciq712xq406s" path="res://assets/demons/00661-455833780-painting of a dark eldar as in warhammer 40k.png" id="2_cvxqp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ue4vh"]
+shader = ExtResource("1_ijrnd")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ue4vh")
+position = Vector2(274.5, 159)
+scale = Vector2(2.07227, 1.62109)
+texture = ExtResource("2_cvxqp")

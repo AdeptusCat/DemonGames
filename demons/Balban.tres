@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cjgmniuum1wmh"]
+
+[ext_resource type="Texture2D" uid="uid://8sr0tjoanjjp" path="res://demon_assets/balban/01851-3877631566-a painting of a female demon riding a demon beast.png" id="1_mkylj"]
+[ext_resource type="Script" path="res://demon_resource.gd" id="1_xcmll"]
+
+[resource]
+script = ExtResource("1_xcmll")
+name = "Balban"
+rank = 35
+skulls = 2
+stars = 4
+hearts = 1
+sex = 1
+player = 0
+incapacitated = false
+onEarth = false
+image = ExtResource("1_mkylj")
+description = "Demon of Delusion. Mistress of the Beast."

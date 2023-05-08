@@ -1,0 +1,9 @@
+[gd_resource type="NoiseTexture2D" load_steps=2 format=3 uid="uid://cpat55k5ohgcw"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_cghkp"]
+
+[resource]
+width = 125
+height = 125
+seamless = true
+noise = SubResource("FastNoiseLite_cghkp")

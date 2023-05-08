@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bkykudb3jeme0"]
+
+[ext_resource type="Texture2D" uid="uid://bvu2tlddensr8" path="res://demon_assets/thamuz/01791-2755829772-a painting of a demon inquisitor with a church in the background.png" id="1_7un74"]
+[ext_resource type="Script" path="res://demon_resource.gd" id="1_xcmll"]
+
+[resource]
+script = ExtResource("1_xcmll")
+name = "Thamuz"
+rank = 26
+skulls = 3
+stars = 1
+hearts = 4
+sex = 0
+player = 0
+incapacitated = false
+onEarth = false
+image = ExtResource("1_7un74")
+description = "Infernal ambassador to Spain. Inventor of artillery and instigator of the Inquisition. Commander of Fifty Legions."

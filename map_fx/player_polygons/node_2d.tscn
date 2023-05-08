@@ -1,0 +1,138 @@
+[gd_scene load_steps=17 format=3 uid="uid://bpfhae42bq35b"]
+
+[ext_resource type="Texture2D" uid="uid://bpnox6mrqiujb" path="res://noise/player_polygon_6/distortion_noise.tres" id="1_qhnxu"]
+[ext_resource type="Texture2D" uid="uid://cqef7s4li1ffv" path="res://noise/player_polygon_6/noise1.tres" id="2_0qhit"]
+[ext_resource type="Texture2D" uid="uid://tiq7aonrmvp8" path="res://noise/player_polygon_6/noise2.tres" id="3_dfwn6"]
+[ext_resource type="Texture2D" uid="uid://dwjvhvwwtboxo" path="res://noise/player_polygon_6/noise3.tres" id="4_wnr43"]
+
+[sub_resource type="Shader" id="Shader_ts47n"]
+code = "shader_type canvas_item;
+
+uniform sampler2D noise1 : repeat_enable;
+uniform sampler2D noise2 : repeat_enable;
+uniform sampler2D noise3 : repeat_enable;
+
+uniform sampler2D noiseN1 : repeat_enable;
+uniform sampler2D noiseN2 : repeat_enable;
+uniform sampler2D noiseN3 : repeat_enable;
+
+uniform sampler2D colorTexture;
+
+uniform float speed = 1.0;
+uniform vec2 scroll1 = vec2(0.1, 0.1);
+uniform vec2 scroll2 = vec2(0.2, 0.2);
+const float mid = 0.5;
+
+uniform float distortion_strength : hint_range(0.05, 1.0) = 0.1;
+uniform sampler2D distortion_noise : repeat_enable;
+uniform sampler2D distortion_noiseN : repeat_enable;
+void fragment() {
+//	float pct = 0.0;
+//	pct = distance(UV,vec2(0.5));
+//	float speed = pct;
+	vec2 rotation_cw_uv = vec2(cos(TIME*speed) * (UV.x - mid) + sin(TIME*speed) * (UV.y - mid) + mid, cos(TIME*speed) * (UV.y - mid) - sin(TIME*speed) * (UV.x - mid) + mid);
+	vec2 rotation_ccw_uv = vec2(cos(TIME*speed) * (UV.x - mid) - sin(TIME*speed) * (UV.y - mid) + mid, cos(TIME*speed) * (UV.y - mid) + sin(TIME*speed) * (UV.x - mid) + mid);
+//	float new_color1 = texture(noise1, rotation_cw_uv + scroll1).r;
+//	float new_color2 = texture(noise2, rotation_ccw_uv + scroll2).r;
+
+	
+	
+//	vec3 new_color = vec3(noise_r, noise_g, noise_b);
+	float new_color1 = texture(noise1, UV + scroll1 * speed * TIME).r;
+	float new_color2 = texture(noise2, UV - scroll2 * speed * TIME).r;
+	float new_color3 = texture(noise3, vec2(UV.x + scroll2.x * speed * TIME, UV.y - scroll2.y * speed * TIME)).r;
+	
+	float new_colorN1 = texture(noiseN1, UV + scroll1 * speed * TIME).r;
+	float new_colorN2 = texture(noiseN2, UV - scroll2 * speed * TIME).r;
+	float new_colorN3 = texture(noiseN3, vec2(UV.x + scroll2.x * speed * TIME, UV.y - scroll2.y * speed * TIME)).r;
+	
+	
+	float energy = new_color1 * new_color2 * new_color3;
+	float distortion_noise_value =  texture(distortion_noise, rotation_ccw_uv).r;
+	vec3 color = texture(colorTexture, vec2(energy) - (distortion_strength / 2.0) + vec2(distortion_noise_value) * distortion_strength).rgb;
+	float alpha = texture(colorTexture, vec2(energy) - (distortion_strength / 2.0) + vec2(distortion_noise_value) * distortion_strength).a;
+	
+	float energyN = new_colorN1 * new_colorN2 * new_colorN3;
+	float distortion_noise_valueN =  texture(distortion_noiseN, rotation_ccw_uv).r;
+	vec3 colorN = texture(noiseN1, vec2(energyN) - (distortion_strength / 2.0) + vec2(distortion_noise_valueN) * distortion_strength).rgb;
+	
+	NORMAL_MAP = colorN;
+	COLOR.rgb = color.rgb;
+	COLOR.a = alpha;
+//	COLOR = texture(colorTexture, vec2(new_color1 * new_color2));
+//	COLOR.rgb = texture(TEXTURE, UV).rgb;
+//	COLOR.rgb = new_color1.rgb;
+//	COLOR.a = clamp(new_alpha * 10.0 * texture(TEXTURE, UV).a, 0.0, 1.0);
+}"
+
+[sub_resource type="Gradient" id="Gradient_wma3b"]
+resource_local_to_scene = true
+offsets = PackedFloat32Array(0, 0.194093, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.57727, 0, 0.169556, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_y0foi"]
+gradient = SubResource("Gradient_wma3b")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kla2b"]
+noise_type = 3
+fractal_type = 3
+fractal_octaves = 1
+fractal_ping_pong_strength = 9.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lusr4"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_kla2b")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_xcne2"]
+noise_type = 2
+fractal_type = 3
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_a4ny2"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_xcne2")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ggtul"]
+noise_type = 2
+seed = 1
+fractal_type = 3
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xr2du"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_ggtul")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_5u06a"]
+noise_type = 2
+seed = 2
+fractal_type = 3
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_nu47i"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_5u06a")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2dwt0"]
+resource_local_to_scene = true
+shader = SubResource("Shader_ts47n")
+shader_parameter/speed = 0.01
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 0.62
+shader_parameter/noise1 = ExtResource("2_0qhit")
+shader_parameter/noise2 = ExtResource("3_dfwn6")
+shader_parameter/noise3 = ExtResource("4_wnr43")
+shader_parameter/noiseN1 = SubResource("NoiseTexture2D_a4ny2")
+shader_parameter/noiseN2 = SubResource("NoiseTexture2D_xr2du")
+shader_parameter/noiseN3 = SubResource("NoiseTexture2D_nu47i")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_y0foi")
+shader_parameter/distortion_noise = ExtResource("1_qhnxu")
+shader_parameter/distortion_noiseN = SubResource("NoiseTexture2D_lusr4")
+
+[node name="Node2D" type="Node2D"]
+light_mask = 2
+material = SubResource("ShaderMaterial_2dwt0")

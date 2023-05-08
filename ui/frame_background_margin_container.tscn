@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://dm6xoflw4305t"]
+
+[ext_resource type="Texture2D" uid="uid://cx4qcdfkx2x46" path="res://assets/frames/bg.png" id="1_a31ro"]
+
+[node name="FrameBackgroundMarginContainer" type="MarginContainer"]
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 20
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.2, 0.2, 0.2, 1)
+layout_mode = 2
+texture = ExtResource("1_a31ro")
+expand_mode = 1
+stretch_mode = 1

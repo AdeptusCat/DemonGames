@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://by7j636gysxjc"]
+
+[ext_resource type="Script" path="res://arcana_resource.gd" id="1_r82sv"]
+
+[resource]
+script = ExtResource("1_r82sv")
+cardName = "Git ' Em"
+minorSpell = 4
+cost = 3
+player = 1

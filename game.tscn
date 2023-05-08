@@ -1,0 +1,95 @@
+[gd_scene load_steps=15 format=3 uid="uid://cccosrsc7gc5w"]
+
+[ext_resource type="Script" path="res://game.gd" id="1_e2grr"]
+[ext_resource type="AudioStream" uid="uid://dsjykmjg2eiw6" path="res://assets/audio/pass.wav" id="3_2ki4d"]
+[ext_resource type="PackedScene" uid="uid://bqkxk7t577kq2" path="res://rank_track.tscn" id="4_5g0mk"]
+[ext_resource type="AudioStream" uid="uid://cdlts74gpstjy" path="res://assets/audio/pass_for_good.wav" id="4_70hh2"]
+[ext_resource type="AudioStream" uid="uid://dclx3n1ct4hhg" path="res://assets/audio/cast_arcana_card.wav" id="5_jo5lo"]
+[ext_resource type="AudioStream" uid="uid://dkmmfdxbt40rr" path="res://assets/audio/battle_begin.wav" id="5_msab6"]
+[ext_resource type="PackedScene" uid="uid://b577200ddlglu" path="res://map.tscn" id="6_w5r8f"]
+[ext_resource type="Script" path="res://audio.gd" id="7_370e0"]
+[ext_resource type="AudioStream" uid="uid://b3rldghvrhqln" path="res://assets/audio/walk_the_earth.wav" id="7_jm1ey"]
+[ext_resource type="PackedScene" uid="uid://d00aywoo0y4ld" path="res://ui/ui.tscn" id="10_kjlhk"]
+[ext_resource type="Script" path="res://camera.gd" id="11_oe2ei"]
+[ext_resource type="PackedScene" uid="uid://bs53uu056xcwu" path="res://sequence_of_play.tscn" id="12_hn5jr"]
+
+[sub_resource type="Gradient" id="Gradient_s7p8l"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0057s"]
+gradient = SubResource("Gradient_s7p8l")
+
+[node name="Game" type="Control" groups=["Persist"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_e2grr")
+
+[node name="Players" type="Node" parent="."]
+
+[node name="RankTrack" parent="." instance=ExtResource("4_5g0mk")]
+
+[node name="Map" parent="." instance=ExtResource("6_w5r8f")]
+unique_name_in_owner = true
+position = Vector2(992, 551)
+
+[node name="UI" parent="." instance=ExtResource("10_kjlhk")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(960, 540)
+script = ExtResource("11_oe2ei")
+metadata/_edit_lock_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="Camera2D"]
+visible = false
+position = Vector2(40, 21.0001)
+scale = Vector2(69.5781, 47.75)
+range_item_cull_mask = 2
+texture = SubResource("GradientTexture2D_0057s")
+height = 30.0
+
+[node name="AudioNode2d" type="Node2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.694118, 0.231373, 0.223529, 1)
+
+[node name="Audio" type="Node" parent="."]
+script = ExtResource("7_370e0")
+
+[node name="PassAudio" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("3_2ki4d")
+max_polyphony = 4
+
+[node name="PassForGoodAudio" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("4_70hh2")
+volume_db = 6.0
+max_polyphony = 4
+
+[node name="WalkTheEarthAudio" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("7_jm1ey")
+volume_db = 6.0
+max_polyphony = 4
+
+[node name="BattleStartAudio" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("5_msab6")
+max_polyphony = 4
+
+[node name="CastArcanaAudio" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("5_jo5lo")
+max_polyphony = 4
+
+[node name="SequenceOfPlay" parent="." instance=ExtResource("12_hn5jr")]

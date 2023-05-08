@@ -1,0 +1,153 @@
+[gd_scene load_steps=18 format=3 uid="uid://b27g577ew11xt"]
+
+[ext_resource type="Texture2D" uid="uid://btmy0sr72oyjb" path="res://noise/color_texture.tres" id="1_oy1ix"]
+[ext_resource type="Texture2D" uid="uid://di3k32j5sshc" path="res://noise/distortion_noise.tres" id="2_ekk5k"]
+[ext_resource type="Texture2D" uid="uid://cbgf8v3il72v1" path="res://noise/noise1.tres" id="3_eult5"]
+[ext_resource type="Texture2D" uid="uid://bmvkbslaj4pu8" path="res://noise/noise2.tres" id="4_p7ydp"]
+[ext_resource type="Texture2D" uid="uid://ctblwkubprwg7" path="res://noise/noise3.tres" id="5_5cs8t"]
+
+[sub_resource type="Shader" id="Shader_awhim"]
+code = "shader_type canvas_item;
+
+uniform sampler2D noise1 : repeat_enable;
+uniform sampler2D noise2 : repeat_enable;
+uniform sampler2D noise3 : repeat_enable;
+
+uniform sampler2D noiseN1 : repeat_enable;
+uniform sampler2D noiseN2 : repeat_enable;
+uniform sampler2D noiseN3 : repeat_enable;
+
+uniform sampler2D colorTexture;
+uniform sampler2D colorTextureN;
+
+uniform float speed = 1.0;
+uniform vec2 scroll1 = vec2(0.1, 0.1);
+uniform vec2 scroll2 = vec2(0.2, 0.2);
+const float mid = 0.5;
+
+uniform float distortion_strength : hint_range(0.05, 1.0) = 0.1;
+uniform sampler2D distortion_noise : repeat_enable;
+uniform sampler2D distortion_noiseN : repeat_enable;
+
+void fragment() {
+//	float pct = 0.0;
+//	pct = distance(UV,vec2(0.5));
+//	float speed = pct;
+	vec2 rotation_cw_uv = vec2(cos(TIME*speed) * (UV.x - mid) + sin(TIME*speed) * (UV.y - mid) + mid, cos(TIME*speed) * (UV.y - mid) - sin(TIME*speed) * (UV.x - mid) + mid);
+	vec2 rotation_ccw_uv = vec2(cos(TIME*speed) * (UV.x - mid) - sin(TIME*speed) * (UV.y - mid) + mid, cos(TIME*speed) * (UV.y - mid) + sin(TIME*speed) * (UV.x - mid) + mid);
+//	float new_color1 = texture(noise1, rotation_cw_uv + scroll1).r;
+//	float new_color2 = texture(noise2, rotation_ccw_uv + scroll2).r;
+
+	
+	
+//	vec3 new_color = vec3(noise_r, noise_g, noise_b);
+	float new_color1 = texture(noise1, UV + scroll1 * speed * TIME).r;
+	float new_color2 = texture(noise2, UV - scroll2 * speed * TIME).r;
+	float new_color3 = texture(noise3, vec2(UV.x + scroll2.x * speed * TIME, UV.y - scroll2.y * speed * TIME)).r;
+	
+	float new_colorN1 = texture(noiseN1, UV + scroll1 * speed * TIME).r;
+	float new_colorN2 = texture(noiseN2, UV - scroll2 * speed * TIME).r;
+	float new_colorN3 = texture(noiseN3, vec2(UV.x + scroll2.x * speed * TIME, UV.y - scroll2.y * speed * TIME)).r;
+	
+	float energy = new_color1 * new_color2 * new_color3;
+	float energyN = new_colorN1 * new_colorN2 * new_colorN3;
+	
+	float distortion_noise_value = texture(distortion_noise, rotation_ccw_uv).r;
+	vec3 color = texture(colorTexture, vec2(energy) - (distortion_strength / 2.0) + vec2(distortion_noise_value) * distortion_strength).rgb;
+	float alpha = texture(colorTexture, vec2(energy) - (distortion_strength / 2.0) + vec2(distortion_noise_value) * distortion_strength).a;
+	
+	float distortion_noise_valueN = texture(distortion_noiseN, rotation_ccw_uv).r;
+	vec3 colorN = texture(noiseN1, vec2(energyN) - (distortion_strength / 2.0) + vec2(distortion_noise_valueN) * distortion_strength).rgb;
+
+	NORMAL_MAP = colorN.rgb;
+//	NORMAL_MAP = texture(noiseN2, UV + scroll1 * speed * TIME).rgb;
+//	COLOR.rgb = colorN.rgb;
+	COLOR.rgb = color.rgb;
+	COLOR.a = alpha;
+//	COLOR = texture(colorTexture, vec2(new_color1 * new_color2));
+//	COLOR.rgb = texture(TEXTURE, UV).rgb;
+//	COLOR.rgb = new_color1.rgb;
+//	COLOR.a = clamp(new_alpha * 10.0 * texture(TEXTURE, UV).a, 0.0, 1.0);
+}"
+
+[sub_resource type="Gradient" id="Gradient_j248h"]
+offsets = PackedFloat32Array(0, 0.558304)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_n6xke"]
+gradient = SubResource("Gradient_j248h")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8mtft"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8lxq0"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_8mtft")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_l6wx1"]
+fractal_octaves = 4
+fractal_lacunarity = 3.0
+fractal_gain = 0.2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_m1s5x"]
+width = 250
+height = 250
+invert = true
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_l6wx1")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_p15al"]
+seed = -1
+fractal_gain = 0.2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3tmmt"]
+width = 1000
+height = 750
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_p15al")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_y2a8e"]
+fractal_gain = 0.2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5btvs"]
+width = 250
+height = 125
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_y2a8e")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j4sik"]
+shader = SubResource("Shader_awhim")
+shader_parameter/speed = 0.02
+shader_parameter/scroll1 = Vector2(1.1, 1.1)
+shader_parameter/scroll2 = Vector2(0.1, 0.1)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = ExtResource("3_eult5")
+shader_parameter/noise2 = ExtResource("4_p7ydp")
+shader_parameter/noise3 = ExtResource("5_5cs8t")
+shader_parameter/noiseN1 = SubResource("NoiseTexture2D_m1s5x")
+shader_parameter/noiseN2 = SubResource("NoiseTexture2D_3tmmt")
+shader_parameter/noiseN3 = SubResource("NoiseTexture2D_5btvs")
+shader_parameter/colorTexture = ExtResource("1_oy1ix")
+shader_parameter/colorTextureN = SubResource("GradientTexture1D_n6xke")
+shader_parameter/distortion_noise = ExtResource("2_ekk5k")
+shader_parameter/distortion_noiseN = SubResource("NoiseTexture2D_8lxq0")
+
+[node name="Sprite2D9" type="ColorRect"]
+light_mask = 7
+material = SubResource("ShaderMaterial_j4sik")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -7500.0
+offset_top = -5000.0
+offset_right = -4000.0
+offset_bottom = -2500.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+mouse_filter = 2

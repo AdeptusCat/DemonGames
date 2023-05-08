@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="DemonResource" load_steps=3 format=3 uid="uid://cgq6e3mv7bb6t"]
+
+[ext_resource type="Texture2D" uid="uid://xe4271mgwq0v" path="res://demon_assets/andras/01844-873426350-painting of two arguing humans and a demon standing in the background.png" id="1_mn4sh"]
+[ext_resource type="Script" path="res://demon_resource.gd" id="2_8trid"]
+
+[resource]
+script = ExtResource("2_8trid")
+name = "Andras"
+rank = 56
+skulls = 2
+stars = 1
+hearts = 2
+sex = 0
+player = 0
+incapacitated = false
+onEarth = false
+image = ExtResource("1_mn4sh")
+description = "God of Quarrels. Grand Marquis of Hell. Commander of Thirty Legions."

@@ -1,0 +1,2462 @@
+[gd_scene load_steps=139 format=3 uid="uid://b577200ddlglu"]
+
+[ext_resource type="Script" path="res://map.gd" id="1_do3gg"]
+[ext_resource type="PackedScene" uid="uid://0jxmw3vgonen" path="res://sectio.tscn" id="1_kah8n"]
+[ext_resource type="Shader" path="res://materials_shaders/polygon_shader_test.gdshader" id="8_7v0y2"]
+[ext_resource type="Shader" path="res://materials_shaders/shader_test_line.gdshader" id="9_g81da"]
+[ext_resource type="Texture2D" uid="uid://3f8amfnqj5nu" path="res://sectio_assets/treachery/spies/00015-4233092237-painting of a spy with a demon face.png" id="9_hg4ha"]
+[ext_resource type="Texture2D" uid="uid://qr14kucrashs" path="res://icon.svg" id="9_kkvw8"]
+[ext_resource type="AudioStream" uid="uid://dvmj8xxwyblps" path="res://assets/audio/march.wav" id="10_jljl1"]
+[ext_resource type="AudioStream" uid="uid://cuj4kv531027o" path="res://assets/audio/spawn_legion.wav" id="11_vsbj5"]
+[ext_resource type="Texture2D" uid="uid://rhfhl3dclj88" path="res://sectio_assets/fraud/falsifiers/00025-749429789-a painting of a demonic money printing machine.png" id="12_dnf8b"]
+[ext_resource type="AudioStream" uid="uid://dhc65f5l2f5ne" path="res://assets/audio/spawn_lieutenant.wav" id="12_xb37a"]
+[ext_resource type="Texture2D" uid="uid://dbl8g3stl5fxg" path="res://sectio_assets/heretics/tempe_of_false_preachers/00006-868080740-a painting of a false preacher.png" id="13_7mtbk"]
+[ext_resource type="Shader" path="res://materials_shaders/distortion_screen.gdshader" id="14_f36ku"]
+[ext_resource type="Texture2D" uid="uid://c6objej4nofgs" path="res://sectio_assets/the_wrathful/lower_dungeon_of_the_racially_superior/00001-2265384839-a painting dark dungeon with torturing devices.png" id="14_snmmy"]
+[ext_resource type="Texture2D" uid="uid://b4awi58rg5qaf" path="res://assets/light/radial.png" id="14_tb35d"]
+[ext_resource type="Texture2D" uid="uid://ns4f3o5cnr0h" path="res://sectio_assets/the_greedy/exploiters_of_land_and_sea/00036-3677310343-a painting of thousands of digging people in a gold mine.png" id="15_naoxh"]
+[ext_resource type="Texture2D" uid="uid://mvlpmtpgc1u7" path="res://assets/pentagram.png" id="16_fbvtl"]
+[ext_resource type="Texture2D" uid="uid://c2enqojfoec50" path="res://sectio_assets/the_gluttonous/sea_of_lard/00128-3546313921-painting of fat people wading through yellow mud.png" id="16_v1cs8"]
+[ext_resource type="Shader" path="res://materials_shaders/map_center.gdshader" id="17_2x25j"]
+[ext_resource type="Texture2D" uid="uid://bkijuv8aldudi" path="res://sectio_assets/the_lustful/orgastica/00035-3388440854-a painting of an orgy.png" id="17_q70bu"]
+[ext_resource type="Texture2D" uid="uid://tqbqw1x2gdyx" path="res://sectio_assets/limbo/the_wise_men/00037-4219892559-a painting greek philosophers.png" id="18_yu2ta"]
+[ext_resource type="Texture2D" uid="uid://b3eir7ovfpxdx" path="res://assets/ring.png" id="21_1h4rc"]
+[ext_resource type="Texture2D" uid="uid://pxatxoe7w3s" path="res://assets/ring_small.png" id="27_tb867"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_8c4oe"]
+vertices = PackedVector2Array(3809, -1321, 4071, 2801, -1392, 2731, -1574, -1241)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-1574, -1241, -1392, 2731, 4071, 2801, 3809, -1321)])
+
+[sub_resource type="Gradient" id="Gradient_m4tf3"]
+offsets = PackedFloat32Array(0, 0.508834, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.677461, 0.685904, 0.581043, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_v7sxr"]
+gradient = SubResource("Gradient_m4tf3")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_stltb"]
+fractal_type = 3
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_y5b8n"]
+seamless = true
+noise = SubResource("FastNoiseLite_stltb")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jydbl"]
+fractal_type = 3
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_b8ugh"]
+seamless = true
+noise = SubResource("FastNoiseLite_jydbl")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_s3df7"]
+seed = 1
+fractal_type = 3
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_aiing"]
+seamless = true
+noise = SubResource("FastNoiseLite_s3df7")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_tctc1"]
+seed = 2
+fractal_type = 3
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_eediu"]
+seamless = true
+noise = SubResource("FastNoiseLite_tctc1")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4qlhj"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ucfcw"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lo4de"]
+seamless = true
+noise = SubResource("FastNoiseLite_ucfcw")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hn0pm"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3e8gt"]
+seamless = true
+noise = SubResource("FastNoiseLite_hn0pm")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5cnhm"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lxxjf"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cmecg"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a3gw2"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rwrof"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x0mdx"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7m040"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vyw6o"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w4vuk"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f2dju"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vthu4"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_huxvh"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xmb7d"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r182q"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1nn5h"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jqqom"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_21lrh"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0vy6p"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hcrcy"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i4pxx"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f8mqn"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_50iis"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vi44a"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8swjy"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b37xv"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3llor"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_idgcj"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jkyf4"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gddsl"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6hmvx"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hqu5s"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1o1s7"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gd1uq"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dxate"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t0bdw"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jvnjg"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4wbce"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w2j72"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kfevv"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_to2cb"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tj7m6"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j8v23"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t5qcn"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n31qi"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dx6ys"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1gbad"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xe0id"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p1mx0"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f3hlx"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t4mfy"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dkh68"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0h5ou"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5cd7w"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tl1w8"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_twhga"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ftvkl"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4l7xo"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jw4vc"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_joglk"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3iyxk"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g2oaf"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5klm1"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e4tv3"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_47y6r"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vwk2i"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p4f6o"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hp5j0"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_06prw"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cnbdk"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7xvlr"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lvm7p"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h0k4u"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0xwgu"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rx4m6"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_75gs3"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dnu6i"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_84h2j"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x0fxk"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n0kjy"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r8v6i"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gfrjk"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8l8kc"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gy427"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nferd"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2io3d"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j7qix"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ymxj0"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_einrf"]
+resource_local_to_scene = true
+shader = ExtResource("8_7v0y2")
+shader_parameter/speed = 0.3
+shader_parameter/scroll1 = Vector2(0.1, 0.1)
+shader_parameter/scroll2 = Vector2(0.2, 0.2)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_b8ugh")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_aiing")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_eediu")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_v7sxr")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_y5b8n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2bshf"]
+resource_local_to_scene = true
+shader = ExtResource("9_g81da")
+shader_parameter/scroll1 = Vector2(1, 0.4)
+shader_parameter/scroll2 = Vector2(0.2, 1.4)
+shader_parameter/speed = 0.04
+shader_parameter/xStretch = 1.0
+shader_parameter/yStretch = 0.1
+shader_parameter/laserSize = 0.62
+shader_parameter/wobbliness = 0.221
+shader_parameter/color1 = null
+shader_parameter/color2 = Color(1, 0, 0, 1)
+shader_parameter/colorMixFactor = 1.0
+shader_parameter/glowFactor = 2.5
+shader_parameter/minAlpha = 0.3
+shader_parameter/lod = 0.0
+shader_parameter/blur = 3.0
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_lo4de")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_3e8gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vha3i"]
+shader = ExtResource("14_f36ku")
+shader_parameter/speed = 1.0
+shader_parameter/distortion_strength = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sgioc"]
+shader = ExtResource("14_f36ku")
+shader_parameter/speed = 1.0
+shader_parameter/distortion_strength = 0.1
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2ecgi"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_svm6m"]
+width = 2000
+height = 2000
+seamless = true
+noise = SubResource("FastNoiseLite_2ecgi")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_w1va4"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_b3dg4"]
+seamless = true
+noise = SubResource("FastNoiseLite_w1va4")
+
+[sub_resource type="Gradient" id="Gradient_cp2jt"]
+offsets = PackedFloat32Array(0, 0.0883392, 0.194346, 0.293286, 0.30742, 0.583039)
+colors = PackedColorArray(0.145098, 0, 0.0117647, 0, 0, 0, 0, 1, 0.22688, 0, 0.0170332, 1, 0.718454, 0, 0.0539386, 1, 0.78169, 0.4071, 9.62615e-07, 1, 0.857397, 0.678272, 0.153712, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5dbwc"]
+gradient = SubResource("Gradient_cp2jt")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_f1rv8"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4ui5o"]
+seamless = true
+noise = SubResource("FastNoiseLite_f1rv8")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_37onp"]
+shader = ExtResource("17_2x25j")
+shader_parameter/scroll1 = Vector2(0.1, 0.5)
+shader_parameter/scroll2 = Vector2(-0.1, 0.3)
+shader_parameter/noiseScale1 = Vector2(1, 1)
+shader_parameter/noiseScale2 = Vector2(1, 1)
+shader_parameter/blur = 1.898
+shader_parameter/base_intensity = 0.1
+shader_parameter/intensity_factor = 0.652
+shader_parameter/speed = 0.1
+shader_parameter/distortion_strength = 0.058
+shader_parameter/NOISE_PATTERN1 = SubResource("NoiseTexture2D_svm6m")
+shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_b3dg4")
+shader_parameter/TONE_MAPPING = SubResource("GradientTexture1D_5dbwc")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_4ui5o")
+
+[node name="Map" type="Node2D"]
+script = ExtResource("1_do3gg")
+
+[node name="NavigationNode2D" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(16, 3)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="NavigationNode2D"]
+position = Vector2(-1068, -738)
+navigation_polygon = SubResource("NavigationPolygon_8c4oe")
+
+[node name="MapSprites2" type="Node2D" parent="."]
+
+[node name="Polygons" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Sectios" type="Node2D" parent="."]
+
+[node name="Treachery" type="Node2D" parent="Sectios"]
+
+[node name="Spies" parent="Sectios/Treachery" instance=ExtResource("1_kah8n")]
+sectioTexture = ExtResource("9_hg4ha")
+
+[node name="Area2D" parent="Sectios/Treachery/Spies" index="1"]
+position = Vector2(-1, 0)
+
+[node name="CollisionPolygon2D" parent="Sectios/Treachery/Spies/Area2D" index="0"]
+polygon = PackedVector2Array(31, 10, 4, 14, -20, 7, -38, -8, -27, -22, 4, -11, 20, -14)
+
+[node name="Polygon2D" parent="Sectios/Treachery/Spies" index="3"]
+material = SubResource("ShaderMaterial_4qlhj")
+
+[node name="Line2D" parent="Sectios/Treachery/Spies" index="10"]
+material = SubResource("ShaderMaterial_5cnhm")
+
+[node name="Desecrators Of The Flesh" parent="Sectios/Treachery" instance=ExtResource("1_kah8n")]
+sectioName = "Desecrators Of The Flesh"
+quarter = 1
+
+[node name="CollisionPolygon2D" parent="Sectios/Treachery/Desecrators Of The Flesh/Area2D" index="0"]
+polygon = PackedVector2Array(2, -34, 21, -20, 19, 2, 24, 21, 8, 37, -8, 12, -11, -18)
+
+[node name="Polygon2D" parent="Sectios/Treachery/Desecrators Of The Flesh" index="3"]
+material = SubResource("ShaderMaterial_lxxjf")
+
+[node name="Line2D" parent="Sectios/Treachery/Desecrators Of The Flesh" index="10"]
+material = SubResource("ShaderMaterial_cmecg")
+
+[node name="Adulterers In Heat" parent="Sectios/Treachery" instance=ExtResource("1_kah8n")]
+sectioName = "Adulterers In Heat"
+quarter = 2
+souls = 4
+
+[node name="CollisionPolygon2D" parent="Sectios/Treachery/Adulterers In Heat/Area2D" index="0"]
+polygon = PackedVector2Array(39, 13, 10, 14, -8, 31, -30, 13, -1, -15, 43, -21)
+
+[node name="Polygon2D" parent="Sectios/Treachery/Adulterers In Heat" index="3"]
+material = SubResource("ShaderMaterial_a3gw2")
+
+[node name="Line2D" parent="Sectios/Treachery/Adulterers In Heat" index="10"]
+material = SubResource("ShaderMaterial_rwrof")
+
+[node name="Betrayers of Confidence" parent="Sectios/Treachery" instance=ExtResource("1_kah8n")]
+sectioName = "Betrayers of Confidence"
+quarter = 3
+souls = 4
+
+[node name="CollisionPolygon2D" parent="Sectios/Treachery/Betrayers of Confidence/Area2D" index="0"]
+polygon = PackedVector2Array(-26, 2, -9, 11, 0, 34, 29, 31, 18, -3, 1, -18, -20, -29)
+
+[node name="Polygon2D" parent="Sectios/Treachery/Betrayers of Confidence" index="3"]
+material = SubResource("ShaderMaterial_x0mdx")
+
+[node name="Line2D" parent="Sectios/Treachery/Betrayers of Confidence" index="10"]
+material = SubResource("ShaderMaterial_7m040")
+
+[node name="Traitors" parent="Sectios/Treachery" instance=ExtResource("1_kah8n")]
+sectioName = "Traitors"
+quarter = 4
+souls = 3
+
+[node name="CollisionPolygon2D" parent="Sectios/Treachery/Traitors/Area2D" index="0"]
+polygon = PackedVector2Array(-31, 9, -22, 34, 4, 13, 19, -27, -8, -24, -17, -2)
+
+[node name="Polygon2D" parent="Sectios/Treachery/Traitors" index="3"]
+material = SubResource("ShaderMaterial_vyw6o")
+
+[node name="Line2D" parent="Sectios/Treachery/Traitors" index="10"]
+material = SubResource("ShaderMaterial_w4vuk")
+
+[node name="Fraud" type="Node2D" parent="Sectios"]
+
+[node name="Miracle Workers" parent="Sectios/Fraud" instance=ExtResource("1_kah8n")]
+sectioName = "Miracle Workers"
+circle = 1
+
+[node name="CollisionPolygon2D" parent="Sectios/Fraud/Miracle Workers/Area2D" index="0"]
+polygon = PackedVector2Array(-43, -15, -7, 6, 25, 11, 55, 7, 50, -10, 17, -3, -7, -11, -29, -28)
+
+[node name="Polygon2D" parent="Sectios/Fraud/Miracle Workers" index="3"]
+material = SubResource("ShaderMaterial_f2dju")
+
+[node name="Line2D" parent="Sectios/Fraud/Miracle Workers" index="10"]
+material = SubResource("ShaderMaterial_vthu4")
+
+[node name="Falsifiers" parent="Sectios/Fraud" instance=ExtResource("1_kah8n")]
+sectioName = "Falsifiers"
+circle = 1
+quarter = 1
+souls = 5
+sectioTexture = ExtResource("12_dnf8b")
+
+[node name="CollisionPolygon2D" parent="Sectios/Fraud/Falsifiers/Area2D" index="0"]
+polygon = PackedVector2Array(19, -33, 4, -47, -11, -22, -11, 9, -1, 38, 12, 57, 26, 47, 13, 31, 8, 9, 9, -15)
+
+[node name="Polygon2D" parent="Sectios/Fraud/Falsifiers" index="3"]
+material = SubResource("ShaderMaterial_huxvh")
+
+[node name="Line2D" parent="Sectios/Fraud/Falsifiers" index="10"]
+material = SubResource("ShaderMaterial_xmb7d")
+
+[node name="Liars" parent="Sectios/Fraud" instance=ExtResource("1_kah8n")]
+sectioName = "Liars"
+circle = 1
+quarter = 2
+souls = 4
+
+[node name="CollisionPolygon2D" parent="Sectios/Fraud/Liars/Area2D" index="0"]
+polygon = PackedVector2Array(52, 3, 25, 2, -4, 14, -26, 34, -40, 21, -16, -4, 25, -18, 56, -18)
+
+[node name="Polygon2D" parent="Sectios/Fraud/Liars" index="3"]
+material = SubResource("ShaderMaterial_r182q")
+
+[node name="Line2D" parent="Sectios/Fraud/Liars" index="10"]
+material = SubResource("ShaderMaterial_1nn5h")
+
+[node name="Sowers Of Scandal" parent="Sectios/Fraud" instance=ExtResource("1_kah8n")]
+sectioName = "Sowers Of Scandal"
+circle = 1
+quarter = 3
+souls = 3
+
+[node name="CollisionPolygon2D" parent="Sectios/Fraud/Sowers Of Scandal/Area2D" index="0"]
+polygon = PackedVector2Array(-43, -13, -17, 0, 1, 18, 10, 49, 31, 49, 20, 14, -10, -16, -36, -29)
+
+[node name="Polygon2D" parent="Sectios/Fraud/Sowers Of Scandal" index="3"]
+material = SubResource("ShaderMaterial_jqqom")
+
+[node name="Line2D" parent="Sectios/Fraud/Sowers Of Scandal" index="10"]
+material = SubResource("ShaderMaterial_21lrh")
+
+[node name="Court Of Corruption" parent="Sectios/Fraud" instance=ExtResource("1_kah8n")]
+sectioName = "Court Of Corruption"
+circle = 1
+quarter = 4
+souls = 4
+
+[node name="CollisionPolygon2D" parent="Sectios/Fraud/Court Of Corruption/Area2D" index="0"]
+polygon = PackedVector2Array(-41, 28, -33, 44, 1, 15, 16, -9, 21, -40, 4, -39, -5, -6, -21, 14)
+
+[node name="Polygon2D" parent="Sectios/Fraud/Court Of Corruption" index="3"]
+material = SubResource("ShaderMaterial_0vy6p")
+
+[node name="Line2D" parent="Sectios/Fraud/Court Of Corruption" index="10"]
+material = SubResource("ShaderMaterial_hcrcy")
+
+[node name="The Violent" type="Node2D" parent="Sectios"]
+
+[node name="Farm Of Domestic Violence" parent="Sectios/The Violent" instance=ExtResource("1_kah8n")]
+sectioName = "Farm Of Domestic Violence"
+circle = 2
+souls = 3
+
+[node name="CollisionPolygon2D" parent="Sectios/The Violent/Farm Of Domestic Violence/Area2D" index="0"]
+polygon = PackedVector2Array(-45, -35, -11, -12, 26, -2, 60, -11, 68, 7, 27, 14, -17, 6, -58, -20)
+
+[node name="Polygon2D" parent="Sectios/The Violent/Farm Of Domestic Violence" index="3"]
+material = SubResource("ShaderMaterial_i4pxx")
+
+[node name="Line2D" parent="Sectios/The Violent/Farm Of Domestic Violence" index="10"]
+material = SubResource("ShaderMaterial_f8mqn")
+
+[node name="Tyrants" parent="Sectios/The Violent" instance=ExtResource("1_kah8n")]
+sectioName = "Tyrants"
+circle = 2
+quarter = 1
+souls = 4
+
+[node name="CollisionPolygon2D" parent="Sectios/The Violent/Tyrants/Area2D" index="0"]
+polygon = PackedVector2Array(19, 78, 33, 67, 17, 41, 7, 13, 9, -19, 22, -44, 8, -57, -11, -26, -15, 12, -3, 47)
+
+[node name="Polygon2D" parent="Sectios/The Violent/Tyrants" index="3"]
+material = SubResource("ShaderMaterial_50iis")
+
+[node name="Line2D" parent="Sectios/The Violent/Tyrants" index="10"]
+material = SubResource("ShaderMaterial_vi44a")
+
+[node name="Basement Of Wanton Killers" parent="Sectios/The Violent" instance=ExtResource("1_kah8n")]
+sectioName = "Basement Of Wanton Killers"
+circle = 2
+quarter = 2
+
+[node name="CollisionPolygon2D" parent="Sectios/The Violent/Basement Of Wanton Killers/Area2D" index="0"]
+polygon = PackedVector2Array(67, -15, 64, 3, 33, 4, -10, 15, -38, 41, -50, 28, -21, 0, 26, -16)
+
+[node name="Polygon2D" parent="Sectios/The Violent/Basement Of Wanton Killers" index="3"]
+material = SubResource("ShaderMaterial_8swjy")
+
+[node name="Line2D" parent="Sectios/The Violent/Basement Of Wanton Killers" index="10"]
+material = SubResource("ShaderMaterial_b37xv")
+
+[node name="Bad People" parent="Sectios/The Violent" instance=ExtResource("1_kah8n")]
+sectioName = "Bad People"
+circle = 2
+quarter = 3
+
+[node name="CollisionPolygon2D" parent="Sectios/The Violent/Bad People/Area2D" index="0"]
+polygon = PackedVector2Array(18, 62, 37, 60, 19, 9, -17, -25, -50, -39, -49, -19, -20, -7, 1, 15)
+
+[node name="Polygon2D" parent="Sectios/The Violent/Bad People" index="3"]
+material = SubResource("ShaderMaterial_3llor")
+
+[node name="Line2D" parent="Sectios/The Violent/Bad People" index="10"]
+material = SubResource("ShaderMaterial_idgcj")
+
+[node name="Dogs Of War" parent="Sectios/The Violent" instance=ExtResource("1_kah8n")]
+sectioName = "Dogs Of War"
+circle = 2
+quarter = 4
+souls = 4
+
+[node name="CollisionPolygon2D" parent="Sectios/The Violent/Dogs Of War/Area2D" index="0"]
+polygon = PackedVector2Array(-50, 31, -42, 48, -9, 24, 12, -8, 22, -36, 25, -60, 8, -59, 2, -27, -12, 4, -37, 23)
+
+[node name="Polygon2D" parent="Sectios/The Violent/Dogs Of War" index="3"]
+material = SubResource("ShaderMaterial_jkyf4")
+
+[node name="Line2D" parent="Sectios/The Violent/Dogs Of War" index="10"]
+material = SubResource("ShaderMaterial_gddsl")
+
+[node name="Heretics" type="Node2D" parent="Sectios"]
+
+[node name="Temple Of False Preachers" parent="Sectios/Heretics" instance=ExtResource("1_kah8n")]
+sectioName = "Temple Of False Preachers"
+circle = 3
+souls = 4
+sectioTexture = ExtResource("13_7mtbk")
+
+[node name="CollisionPolygon2D" parent="Sectios/Heretics/Temple Of False Preachers/Area2D" index="0"]
+polygon = PackedVector2Array(-54, -42, -22, -15, 31, -2, 78, -11, 85, 6, 28, 16, -30, 1, -70, -30)
+
+[node name="Polygon2D" parent="Sectios/Heretics/Temple Of False Preachers" index="3"]
+material = SubResource("ShaderMaterial_6hmvx")
+
+[node name="Line2D" parent="Sectios/Heretics/Temple Of False Preachers" index="10"]
+material = SubResource("ShaderMaterial_hqu5s")
+
+[node name="Users Of Foul Language" parent="Sectios/Heretics" instance=ExtResource("1_kah8n")]
+sectioName = "Users Of Foul Language"
+circle = 3
+quarter = 1
+souls = 4
+
+[node name="CollisionPolygon2D" parent="Sectios/Heretics/Users Of Foul Language/Area2D" index="0"]
+polygon = PackedVector2Array(25, 98, 38, 87, 11, 38, 5, -2, 13, -27, 31, -55, 12, -66, -4, -35, -11, 13, 1, 57)
+
+[node name="Polygon2D" parent="Sectios/Heretics/Users Of Foul Language" index="3"]
+material = SubResource("ShaderMaterial_1o1s7")
+
+[node name="Line2D" parent="Sectios/Heretics/Users Of Foul Language" index="10"]
+material = SubResource("ShaderMaterial_gd1uq")
+
+[node name="Idolaters" parent="Sectios/Heretics" instance=ExtResource("1_kah8n")]
+sectioName = "Idolaters"
+circle = 3
+quarter = 2
+souls = 3
+
+[node name="CollisionPolygon2D" parent="Sectios/Heretics/Idolaters/Area2D" index="0"]
+polygon = PackedVector2Array(72, 4, 77, -15, 27, -14, -20, -2, -61, 33, -47, 47, -12, 16, 31, 2)
+
+[node name="Polygon2D" parent="Sectios/Heretics/Idolaters" index="3"]
+material = SubResource("ShaderMaterial_dxate")
+
+[node name="Line2D" parent="Sectios/Heretics/Idolaters" index="10"]
+material = SubResource("ShaderMaterial_t0bdw")
+
+[node name="Megalomaniacs" parent="Sectios/Heretics" instance=ExtResource("1_kah8n")]
+sectioName = "Megalomaniacs"
+circle = 3
+quarter = 3
+souls = 3
+
+[node name="CollisionPolygon2D" parent="Sectios/Heretics/Megalomaniacs/Area2D" index="0"]
+polygon = PackedVector2Array(23, 72, 41, 72, 19, 8, -22, -35, -64, -53, -67, -33, -26, -14, 6, 21)
+
+[node name="Polygon2D" parent="Sectios/Heretics/Megalomaniacs" index="3"]
+material = SubResource("ShaderMaterial_jvnjg")
+
+[node name="Line2D" parent="Sectios/Heretics/Megalomaniacs" index="10"]
+material = SubResource("ShaderMaterial_4wbce")
+
+[node name="Atheists Surprise" parent="Sectios/Heretics" instance=ExtResource("1_kah8n")]
+sectioName = "Atheists Surprise"
+circle = 3
+quarter = 4
+souls = 4
+
+[node name="CollisionPolygon2D" parent="Sectios/Heretics/Atheists Surprise/Area2D" index="0"]
+polygon = PackedVector2Array(-60, 47, -52, 64, -4, 30, 22, -13, 31, -68, 12, -67, 1, -17, -20, 16)
+
+[node name="Polygon2D" parent="Sectios/Heretics/Atheists Surprise" index="3"]
+material = SubResource("ShaderMaterial_w2j72")
+
+[node name="Line2D" parent="Sectios/Heretics/Atheists Surprise" index="10"]
+material = SubResource("ShaderMaterial_kfevv")
+
+[node name="The Wrathful" type="Node2D" parent="Sectios"]
+
+[node name="Lower Dungeon Of The Racially Superior" parent="Sectios/The Wrathful" instance=ExtResource("1_kah8n")]
+sectioName = "Lower Dungeon Of The Racially Superior"
+circle = 4
+souls = 4
+sectioTexture = ExtResource("14_snmmy")
+
+[node name="CollisionPolygon2D" parent="Sectios/The Wrathful/Lower Dungeon Of The Racially Superior/Area2D" index="0"]
+polygon = PackedVector2Array(-80, -52, -40, -23, 17, -5, 76, -14, 84, 2, 15, 13, -50, -5, -95, -38)
+
+[node name="Polygon2D" parent="Sectios/The Wrathful/Lower Dungeon Of The Racially Superior" index="3"]
+material = SubResource("ShaderMaterial_to2cb")
+
+[node name="Line2D" parent="Sectios/The Wrathful/Lower Dungeon Of The Racially Superior" index="10"]
+material = SubResource("ShaderMaterial_tj7m6")
+
+[node name="The Envious" parent="Sectios/The Wrathful" instance=ExtResource("1_kah8n")]
+sectioName = "The Envious"
+circle = 4
+quarter = 1
+souls = 5
+
+[node name="CollisionPolygon2D" parent="Sectios/The Wrathful/The Envious/Area2D" index="0"]
+polygon = PackedVector2Array(27, 95, 41, 84, 10, 22, 7, -20, 12, -51, 28, -85, 18, -93, -1, -50, -9, -11, -3, 35)
+
+[node name="Polygon2D" parent="Sectios/The Wrathful/The Envious" index="3"]
+material = SubResource("ShaderMaterial_j8v23")
+
+[node name="Line2D" parent="Sectios/The Wrathful/The Envious" index="10"]
+material = SubResource("ShaderMaterial_t5qcn")
+
+[node name="Swamp Of Useless Rage" parent="Sectios/The Wrathful" instance=ExtResource("1_kah8n")]
+sectioName = "Swamp Of Useless Rage"
+circle = 4
+quarter = 2
+
+[node name="CollisionPolygon2D" parent="Sectios/The Wrathful/Swamp Of Useless Rage/Area2D" index="0"]
+polygon = PackedVector2Array(83, 4, 88, -15, 29, -16, -20, -6, -75, 45, -60, 54, -16, 16, 33, 3)
+
+[node name="Polygon2D" parent="Sectios/The Wrathful/Swamp Of Useless Rage" index="3"]
+material = SubResource("ShaderMaterial_n31qi")
+
+[node name="Line2D" parent="Sectios/The Wrathful/Swamp Of Useless Rage" index="10"]
+material = SubResource("ShaderMaterial_dx6ys")
+
+[node name="Furnace Of Book Burners" parent="Sectios/The Wrathful" instance=ExtResource("1_kah8n")]
+sectioName = "Furnace Of Book Burners"
+circle = 4
+quarter = 3
+
+[node name="CollisionPolygon2D" parent="Sectios/The Wrathful/Furnace Of Book Burners/Area2D" index="0"]
+polygon = PackedVector2Array(-93, -50, -46, -29, -10, 7, 14, 76, 34, 72, 8, -1, -33, -43, -87, -68)
+
+[node name="Polygon2D" parent="Sectios/The Wrathful/Furnace Of Book Burners" index="3"]
+material = SubResource("ShaderMaterial_1gbad")
+
+[node name="Line2D" parent="Sectios/The Wrathful/Furnace Of Book Burners" index="10"]
+material = SubResource("ShaderMaterial_xe0id")
+
+[node name="Parliament Of Intolerance" parent="Sectios/The Wrathful" instance=ExtResource("1_kah8n")]
+sectioName = "Parliament Of Intolerance"
+circle = 4
+quarter = 4
+souls = 4
+
+[node name="CollisionPolygon2D" parent="Sectios/The Wrathful/Parliament Of Intolerance/Area2D" index="0"]
+polygon = PackedVector2Array(-77, 61, -70, 80, -20, 46, 17, -11, 29, -75, 9, -74, -2, -16, -29, 29)
+
+[node name="Polygon2D" parent="Sectios/The Wrathful/Parliament Of Intolerance" index="3"]
+material = SubResource("ShaderMaterial_p1mx0")
+
+[node name="Line2D" parent="Sectios/The Wrathful/Parliament Of Intolerance" index="10"]
+material = SubResource("ShaderMaterial_f3hlx")
+
+[node name="The Greedy" type="Node2D" parent="Sectios"]
+
+[node name="Bankers & Brokers" parent="Sectios/The Greedy" instance=ExtResource("1_kah8n")]
+sectioName = "Bankers & Brokers"
+circle = 5
+
+[node name="CollisionPolygon2D" parent="Sectios/The Greedy/Bankers & Brokers/Area2D" index="0"]
+polygon = PackedVector2Array(-82, -59, -35, -21, 26, -6, 101, -18, 110, 0, 23, 14, -44, -6, -98, -46)
+
+[node name="Polygon2D" parent="Sectios/The Greedy/Bankers & Brokers" index="3"]
+material = SubResource("ShaderMaterial_t4mfy")
+
+[node name="Line2D" parent="Sectios/The Greedy/Bankers & Brokers" index="10"]
+material = SubResource("ShaderMaterial_dkh68")
+
+[node name="Thieves" parent="Sectios/The Greedy" instance=ExtResource("1_kah8n")]
+sectioName = "Thieves"
+circle = 5
+quarter = 1
+souls = 3
+
+[node name="CollisionPolygon2D" parent="Sectios/The Greedy/Thieves/Area2D" index="0"]
+polygon = PackedVector2Array(32, 119, 43, 108, 18, 58, 11, 9, 19, -38, 34, -80, 20, -84, -5, -30, -11, 19, 3, 73)
+
+[node name="Polygon2D" parent="Sectios/The Greedy/Thieves" index="3"]
+material = SubResource("ShaderMaterial_0h5ou")
+
+[node name="Line2D" parent="Sectios/The Greedy/Thieves" index="10"]
+material = SubResource("ShaderMaterial_5cd7w")
+
+[node name="Exploiters Of Land And Sea" parent="Sectios/The Greedy" instance=ExtResource("1_kah8n")]
+sectioName = "Exploiters Of Land And Sea"
+circle = 5
+quarter = 2
+souls = 3
+sectioTexture = ExtResource("15_naoxh")
+
+[node name="CollisionPolygon2D" parent="Sectios/The Greedy/Exploiters Of Land And Sea/Area2D" index="0"]
+polygon = PackedVector2Array(-80, 61, -67, 66, -28, 27, 4, 10, 50, 2, 95, 4, 98, -13, 46, -15, -1, -11, -35, 8)
+
+[node name="Polygon2D" parent="Sectios/The Greedy/Exploiters Of Land And Sea" index="3"]
+material = SubResource("ShaderMaterial_tl1w8")
+
+[node name="Line2D" parent="Sectios/The Greedy/Exploiters Of Land And Sea" index="10"]
+material = SubResource("ShaderMaterial_twhga")
+
+[node name="Snake Eyes Saloon" parent="Sectios/The Greedy" instance=ExtResource("1_kah8n")]
+sectioName = "Snake Eyes Saloon"
+circle = 5
+quarter = 3
+souls = 5
+
+[node name="CollisionPolygon2D" parent="Sectios/The Greedy/Snake Eyes Saloon/Area2D" index="0"]
+polygon = PackedVector2Array(35, 102, 53, 98, 29, 22, -23, -35, -87, -60, -90, -45, -32, -16, 12, 32)
+
+[node name="Polygon2D" parent="Sectios/The Greedy/Snake Eyes Saloon" index="3"]
+material = SubResource("ShaderMaterial_ftvkl")
+
+[node name="Line2D" parent="Sectios/The Greedy/Snake Eyes Saloon" index="10"]
+material = SubResource("ShaderMaterial_4l7xo")
+
+[node name="Embezzlers Brazier" parent="Sectios/The Greedy" instance=ExtResource("1_kah8n")]
+sectioName = "Embezzlers Brazier"
+circle = 5
+quarter = 4
+souls = 3
+
+[node name="CollisionPolygon2D" parent="Sectios/The Greedy/Embezzlers Brazier/Area2D" index="0"]
+polygon = PackedVector2Array(-82, 62, -73, 79, -3, 26, 30, -41, 38, -102, 20, -100, 9, -45, -23, 16)
+
+[node name="Polygon2D" parent="Sectios/The Greedy/Embezzlers Brazier" index="3"]
+material = SubResource("ShaderMaterial_jw4vc")
+
+[node name="Line2D" parent="Sectios/The Greedy/Embezzlers Brazier" index="10"]
+material = SubResource("ShaderMaterial_joglk")
+
+[node name="The Gluttonous" type="Node2D" parent="Sectios"]
+
+[node name="Tavern Of Endless Revelry" parent="Sectios/The Gluttonous" instance=ExtResource("1_kah8n")]
+sectioName = "Tavern Of Endless Revelry"
+circle = 6
+souls = 4
+
+[node name="CollisionPolygon2D" parent="Sectios/The Gluttonous/Tavern Of Endless Revelry/Area2D" index="0"]
+polygon = PackedVector2Array(-87, -58, -32, -19, 39, 2, 126, -10, 135, 6, 39, 21, -40, -2, -99, -49)
+
+[node name="Polygon2D" parent="Sectios/The Gluttonous/Tavern Of Endless Revelry" index="3"]
+material = SubResource("ShaderMaterial_3iyxk")
+
+[node name="Line2D" parent="Sectios/The Gluttonous/Tavern Of Endless Revelry" index="10"]
+material = SubResource("ShaderMaterial_g2oaf")
+
+[node name="Sugar Hill" parent="Sectios/The Gluttonous" instance=ExtResource("1_kah8n")]
+sectioName = "Sugar Hill"
+circle = 6
+quarter = 1
+souls = 4
+
+[node name="CollisionPolygon2D" parent="Sectios/The Gluttonous/Sugar Hill/Area2D" index="0"]
+polygon = PackedVector2Array(32, 132, 48, 122, 20, 74, 11, 35, 11, -24, 40, -87, 21, -90, -5, -23, -7, 32, 3, 82)
+
+[node name="Polygon2D" parent="Sectios/The Gluttonous/Sugar Hill" index="3"]
+material = SubResource("ShaderMaterial_5klm1")
+
+[node name="Line2D" parent="Sectios/The Gluttonous/Sugar Hill" index="10"]
+material = SubResource("ShaderMaterial_e4tv3")
+
+[node name="Addiction" parent="Sectios/The Gluttonous" instance=ExtResource("1_kah8n")]
+sectioName = "Addiction"
+circle = 6
+quarter = 2
+souls = 4
+
+[node name="CollisionPolygon2D" parent="Sectios/The Gluttonous/Addiction/Area2D" index="0"]
+polygon = PackedVector2Array(95, 9, 96, -13, 33, -13, -12, -3, -55, 23, -105, 78, -83, 88, -40, 37, -3, 14, 42, 4)
+
+[node name="Polygon2D" parent="Sectios/The Gluttonous/Addiction" index="3"]
+material = SubResource("ShaderMaterial_47y6r")
+
+[node name="Line2D" parent="Sectios/The Gluttonous/Addiction" index="10"]
+material = SubResource("ShaderMaterial_vwk2i")
+
+[node name="Sea Of Lard" parent="Sectios/The Gluttonous" instance=ExtResource("1_kah8n")]
+sectioName = "Sea Of Lard"
+circle = 6
+quarter = 3
+souls = 4
+sectioTexture = ExtResource("16_v1cs8")
+
+[node name="CollisionPolygon2D" parent="Sectios/The Gluttonous/Sea Of Lard/Area2D" index="0"]
+polygon = PackedVector2Array(47, 125, 69, 121, 40, 33, -9, -21, -92, -61, -96, -42, -19, -4, 22, 45)
+
+[node name="Polygon2D" parent="Sectios/The Gluttonous/Sea Of Lard" index="3"]
+material = SubResource("ShaderMaterial_p4f6o")
+
+[node name="Line2D" parent="Sectios/The Gluttonous/Sea Of Lard" index="10"]
+material = SubResource("ShaderMaterial_hp5j0")
+
+[node name="The Insatiable" parent="Sectios/The Gluttonous" instance=ExtResource("1_kah8n")]
+sectioName = "The Insatiable"
+circle = 6
+quarter = 4
+souls = 4
+
+[node name="CollisionPolygon2D" parent="Sectios/The Gluttonous/The Insatiable/Area2D" index="0"]
+polygon = PackedVector2Array(-86, 67, -80, 86, -8, 30, 28, -28, 45, -120, 26, -119, 10, -35, -23, 17)
+
+[node name="Polygon2D" parent="Sectios/The Gluttonous/The Insatiable" index="3"]
+material = SubResource("ShaderMaterial_06prw")
+
+[node name="Line2D" parent="Sectios/The Gluttonous/The Insatiable" index="10"]
+material = SubResource("ShaderMaterial_cnbdk")
+
+[node name="The Lustful" type="Node2D" parent="Sectios"]
+
+[node name="The Weak Flesh" parent="Sectios/The Lustful" instance=ExtResource("1_kah8n")]
+sectioName = "The Weak Flesh"
+circle = 7
+
+[node name="CollisionPolygon2D" parent="Sectios/The Lustful/The Weak Flesh/Area2D" index="0"]
+polygon = PackedVector2Array(-103, -69, -53, -28, 0, -5, 65, 5, 138, -16, 145, 5, 66, 23, -6, 14, -70, -16, -117, -55)
+
+[node name="Polygon2D" parent="Sectios/The Lustful/The Weak Flesh" index="3"]
+material = SubResource("ShaderMaterial_7xvlr")
+
+[node name="Line2D" parent="Sectios/The Lustful/The Weak Flesh" index="10"]
+material = SubResource("ShaderMaterial_lvm7p")
+
+[node name="Sadistic Pleasure Pit" parent="Sectios/The Lustful" instance=ExtResource("1_kah8n")]
+sectioName = "Sadistic Pleasure Pit"
+circle = 7
+quarter = 1
+souls = 4
+
+[node name="CollisionPolygon2D" parent="Sectios/The Lustful/Sadistic Pleasure Pit/Area2D" index="0"]
+polygon = PackedVector2Array(41, -114, 26, -123, 2, -55, -2, 8, 18, 84, 46, 125, 61, 116, 39, 79, 15, 9, 19, -45)
+
+[node name="Polygon2D" parent="Sectios/The Lustful/Sadistic Pleasure Pit" index="3"]
+material = SubResource("ShaderMaterial_h0k4u")
+
+[node name="Line2D" parent="Sectios/The Lustful/Sadistic Pleasure Pit" index="10"]
+material = SubResource("ShaderMaterial_0xwgu")
+
+[node name="Molesters Purgatory" parent="Sectios/The Lustful" instance=ExtResource("1_kah8n")]
+sectioName = "Molesters Purgatory"
+circle = 7
+quarter = 2
+souls = 3
+
+[node name="CollisionPolygon2D" parent="Sectios/The Lustful/Molesters Purgatory/Area2D" index="0"]
+polygon = PackedVector2Array(128, 4, 136, -13, 68, -19, 4, -6, -46, 21, -104, 87, -87, 96, -35, 41, 13, 9, 75, -1)
+
+[node name="Polygon2D" parent="Sectios/The Lustful/Molesters Purgatory" index="3"]
+material = SubResource("ShaderMaterial_rx4m6")
+
+[node name="Line2D" parent="Sectios/The Lustful/Molesters Purgatory" index="10"]
+material = SubResource("ShaderMaterial_75gs3")
+
+[node name="Garden Of Unnatural Acts" parent="Sectios/The Lustful" instance=ExtResource("1_kah8n")]
+sectioName = "Garden Of Unnatural Acts"
+circle = 7
+quarter = 3
+souls = 5
+
+[node name="CollisionPolygon2D" parent="Sectios/The Lustful/Garden Of Unnatural Acts/Area2D" index="0"]
+polygon = PackedVector2Array(-119, -58, -51, -27, -6, 11, 29, 63, 46, 125, 64, 125, 47, 52, 8, -2, -45, -45, -118, -75)
+
+[node name="Polygon2D" parent="Sectios/The Lustful/Garden Of Unnatural Acts" index="3"]
+material = SubResource("ShaderMaterial_dnu6i")
+
+[node name="Line2D" parent="Sectios/The Lustful/Garden Of Unnatural Acts" index="10"]
+material = SubResource("ShaderMaterial_84h2j")
+
+[node name="Orgastica" parent="Sectios/The Lustful" instance=ExtResource("1_kah8n")]
+sectioName = "Orgastica"
+circle = 7
+quarter = 4
+souls = 3
+sectioTexture = ExtResource("17_q70bu")
+
+[node name="CollisionPolygon2D" parent="Sectios/The Lustful/Orgastica/Area2D" index="0"]
+polygon = PackedVector2Array(-102, 79, -97, 100, -43, 67, 6, 15, 35, -51, 45, -129, 27, -126, 18, -54, -8, -3, -51, 46)
+
+[node name="Polygon2D" parent="Sectios/The Lustful/Orgastica" index="3"]
+material = SubResource("ShaderMaterial_x0fxk")
+
+[node name="Line2D" parent="Sectios/The Lustful/Orgastica" index="10"]
+material = SubResource("ShaderMaterial_n0kjy")
+
+[node name="Limbo" type="Node2D" parent="Sectios"]
+
+[node name="Playground Of The Idle" parent="Sectios/Limbo" instance=ExtResource("1_kah8n")]
+sectioName = "Playground Of The Idle"
+circle = 8
+
+[node name="CollisionPolygon2D" parent="Sectios/Limbo/Playground Of The Idle/Area2D" index="0"]
+polygon = PackedVector2Array(-128, -79, -76, -38, -13, -10, 57, -1, 139, -19, 145, 0, 59, 20, -18, 12, -90, -20, -140, -69)
+
+[node name="Polygon2D" parent="Sectios/Limbo/Playground Of The Idle" index="3"]
+material = SubResource("ShaderMaterial_r8v6i")
+
+[node name="Line2D" parent="Sectios/Limbo/Playground Of The Idle" index="10"]
+material = SubResource("ShaderMaterial_gfrjk")
+
+[node name="Underachievers" parent="Sectios/Limbo" instance=ExtResource("1_kah8n")]
+sectioName = "Underachievers"
+circle = 8
+quarter = 1
+souls = 3
+
+[node name="CollisionPolygon2D" parent="Sectios/Limbo/Underachievers/Area2D" index="0"]
+polygon = PackedVector2Array(44, -125, 26, -133, -1, -53, -10, 10, 12, 89, 45, 139, 61, 132, 32, 79, 14, 13, 19, -47)
+
+[node name="Polygon2D" parent="Sectios/Limbo/Underachievers" index="3"]
+material = SubResource("ShaderMaterial_8l8kc")
+
+[node name="Line2D" parent="Sectios/Limbo/Underachievers" index="10"]
+material = SubResource("ShaderMaterial_gy427")
+
+[node name="The Forest Of Suicides" parent="Sectios/Limbo" instance=ExtResource("1_kah8n")]
+sectioName = "The Forest Of Suicides"
+circle = 8
+quarter = 2
+souls = 6
+
+[node name="CollisionPolygon2D" parent="Sectios/Limbo/The Forest Of Suicides/Area2D" index="0"]
+polygon = PackedVector2Array(150, 6, 154, -18, 79, -21, 6, -9, -50, 15, -113, 98, -93, 104, -39, 41, 3, 15, 80, -5)
+
+[node name="Polygon2D" parent="Sectios/Limbo/The Forest Of Suicides" index="3"]
+material = SubResource("ShaderMaterial_nferd")
+
+[node name="Line2D" parent="Sectios/Limbo/The Forest Of Suicides" index="10"]
+material = SubResource("ShaderMaterial_2io3d")
+
+[node name="The Wise Men" parent="Sectios/Limbo" instance=ExtResource("1_kah8n")]
+sectioName = "The Wise Men"
+circle = 8
+quarter = 3
+souls = 0
+sectioTexture = ExtResource("18_yu2ta")
+
+[node name="CollisionPolygon2D" parent="Sectios/Limbo/The Wise Men/Area2D" index="0"]
+position = Vector2(-1, 0)
+polygon = PackedVector2Array(47, 137, 65, 138, 53, 68, 22, 12, -42, -46, -129, -85, -134, -63, -52, -30, 2, 23, 32, 73)
+
+[node name="Polygon2D" parent="Sectios/Limbo/The Wise Men" index="3"]
+material = SubResource("ShaderMaterial_j7qix")
+
+[node name="Line2D" parent="Sectios/Limbo/The Wise Men" index="10"]
+material = SubResource("ShaderMaterial_ymxj0")
+
+[node name="A Room Full Of Narcissists" parent="Sectios/Limbo" instance=ExtResource("1_kah8n")]
+sectioName = "A Room Full Of Narcissists"
+circle = 8
+quarter = 4
+
+[node name="CollisionPolygon2D" parent="Sectios/Limbo/A Room Full Of Narcissists/Area2D" index="0"]
+polygon = PackedVector2Array(-116, 87, -56, 53, -10, 0, 19, -65, 31, -145, 49, -148, 40, -62, 11, 12, -44, 68, -108, 106)
+
+[node name="Polygon2D" parent="Sectios/Limbo/A Room Full Of Narcissists" index="3"]
+material = SubResource("ShaderMaterial_einrf")
+
+[node name="Line2D" parent="Sectios/Limbo/A Room Full Of Narcissists" index="10"]
+material = SubResource("ShaderMaterial_2bshf")
+
+[node name="Anthell" type="Node2D" parent="Sectios"]
+
+[node name="EventDialog" type="AcceptDialog" parent="."]
+unique_name_in_owner = true
+position = Vector2i(900, 500)
+
+[node name="Marker2D" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(20.9999, 13.9999)
+rotation = 0.226893
+
+[node name="Marker" type="Sprite2D" parent="Marker2D"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(2, 2, 2, 1)
+position = Vector2(0.224609, 0.974243)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("9_kkvw8")
+
+[node name="MarchAudio" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("10_jljl1")
+max_polyphony = 4
+
+[node name="SpawnLegionAudio" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("11_vsbj5")
+max_polyphony = 4
+
+[node name="SpawnLieutenantAudio" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("12_xb37a")
+max_polyphony = 4
+
+[node name="BorderLinesNode2D" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Distortion" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_vha3i")
+scale = Vector2(7.3, 7.3)
+texture = ExtResource("21_1h4rc")
+
+[node name="Distortion2" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_sgioc")
+scale = Vector2(1.35, 1.35)
+texture = ExtResource("27_tb867")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture_filter = 4
+texture_repeat = 2
+material = SubResource("ShaderMaterial_37onp")
+position = Vector2(-3, -2)
+scale = Vector2(0.55, 0.55)
+texture = ExtResource("16_fbvtl")
+flip_v = true
+
+[node name="Line2D" type="Line2D" parent="."]
+position = Vector2(595, 249)
+
+[node name="Marker2D2" type="Marker2D" parent="."]
+position = Vector2(-1416, 360)
+
+[node name="Marker2D3" type="Marker2D" parent="."]
+position = Vector2(-1284, 500)
+
+[node name="Marker2D4" type="Marker2D" parent="."]
+position = Vector2(-1076, 636)
+
+[node name="Marker2D5" type="Marker2D" parent="."]
+position = Vector2(-872, 794)
+
+[node name="Marker2D6" type="Marker2D" parent="."]
+position = Vector2(-900, 288)
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+energy = 0.5
+range_item_cull_mask = 2
+height = 0.1
+
+[node name="LightningTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="LightningPointLight2D" type="PointLight2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(771, 819)
+scale = Vector2(2, 2)
+color = Color(0.890196, 0.886275, 0.866667, 1)
+range_item_cull_mask = 4
+texture = ExtResource("14_tb35d")
+height = 100.0
+
+[node name="MouseLights" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[connection signal="timeout" from="LightningTimer" to="." method="_on_lightning_timer_timeout"]
+
+[editable path="Sectios/Treachery/Spies"]
+[editable path="Sectios/Treachery/Desecrators Of The Flesh"]
+[editable path="Sectios/Treachery/Adulterers In Heat"]
+[editable path="Sectios/Treachery/Betrayers of Confidence"]
+[editable path="Sectios/Treachery/Traitors"]
+[editable path="Sectios/Fraud/Miracle Workers"]
+[editable path="Sectios/Fraud/Falsifiers"]
+[editable path="Sectios/Fraud/Liars"]
+[editable path="Sectios/Fraud/Sowers Of Scandal"]
+[editable path="Sectios/Fraud/Court Of Corruption"]
+[editable path="Sectios/The Violent/Farm Of Domestic Violence"]
+[editable path="Sectios/The Violent/Tyrants"]
+[editable path="Sectios/The Violent/Basement Of Wanton Killers"]
+[editable path="Sectios/The Violent/Bad People"]
+[editable path="Sectios/The Violent/Dogs Of War"]
+[editable path="Sectios/Heretics/Temple Of False Preachers"]
+[editable path="Sectios/Heretics/Users Of Foul Language"]
+[editable path="Sectios/Heretics/Idolaters"]
+[editable path="Sectios/Heretics/Megalomaniacs"]
+[editable path="Sectios/Heretics/Atheists Surprise"]
+[editable path="Sectios/The Wrathful/Lower Dungeon Of The Racially Superior"]
+[editable path="Sectios/The Wrathful/The Envious"]
+[editable path="Sectios/The Wrathful/Swamp Of Useless Rage"]
+[editable path="Sectios/The Wrathful/Furnace Of Book Burners"]
+[editable path="Sectios/The Wrathful/Parliament Of Intolerance"]
+[editable path="Sectios/The Greedy/Bankers & Brokers"]
+[editable path="Sectios/The Greedy/Thieves"]
+[editable path="Sectios/The Greedy/Exploiters Of Land And Sea"]
+[editable path="Sectios/The Greedy/Snake Eyes Saloon"]
+[editable path="Sectios/The Greedy/Embezzlers Brazier"]
+[editable path="Sectios/The Gluttonous/Tavern Of Endless Revelry"]
+[editable path="Sectios/The Gluttonous/Sugar Hill"]
+[editable path="Sectios/The Gluttonous/Addiction"]
+[editable path="Sectios/The Gluttonous/Sea Of Lard"]
+[editable path="Sectios/The Gluttonous/The Insatiable"]
+[editable path="Sectios/The Lustful/The Weak Flesh"]
+[editable path="Sectios/The Lustful/Sadistic Pleasure Pit"]
+[editable path="Sectios/The Lustful/Molesters Purgatory"]
+[editable path="Sectios/The Lustful/Garden Of Unnatural Acts"]
+[editable path="Sectios/The Lustful/Orgastica"]
+[editable path="Sectios/Limbo/Playground Of The Idle"]
+[editable path="Sectios/Limbo/Underachievers"]
+[editable path="Sectios/Limbo/The Forest Of Suicides"]
+[editable path="Sectios/Limbo/The Wise Men"]
+[editable path="Sectios/Limbo/A Room Full Of Narcissists"]

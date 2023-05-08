@@ -1,0 +1,188 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxpec6q1es30b"]
+
+[ext_resource type="Theme" uid="uid://dw2pduwrnp3pj" path="res://themes/main_menu_theme.tres" id="1_chw6u"]
+[ext_resource type="Script" path="res://ui/main_menu.gd" id="2_8l4ai"]
+[ext_resource type="Texture2D" uid="uid://33vjdhmtldwa" path="res://assets/boot_splash/generals around table 2.png" id="3_kwemu"]
+
+[node name="MainMenuControl" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_chw6u")
+script = ExtResource("2_8l4ai")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+texture = ExtResource("3_kwemu")
+stretch_mode = 3
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -155.5
+offset_top = -173.5
+offset_right = 155.5
+offset_bottom = 173.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 80
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="ConnectToLobbyButton" type="Button" parent="MarginContainer2/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+text = "Connect To Online Lobby"
+
+[node name="ConnectToLocalButton" type="Button" parent="MarginContainer2/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+text = "Connect to Local Lobby
+"
+
+[node name="HostLocalGameButton" type="Button" parent="MarginContainer2/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+text = "Host Local Game"
+
+[node name="TutorialButton" type="Button" parent="MarginContainer2/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Tutorial"
+
+[node name="ProfileButton" type="Button" parent="MarginContainer2/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+text = "Profile
+"
+
+[node name="TutorialMenuButton" type="MenuButton" parent="MarginContainer2/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Tutorial"
+
+[node name="MarginContainer3" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -211.5
+offset_right = 211.5
+offset_bottom = 77.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 100
+
+[node name="Label" type="Label" parent="MarginContainer3"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_font_sizes/font_size = 60
+text = "Demon Games"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer4" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+theme_override_constants/margin_left = 200
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer4"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Label" type="Label" parent="MarginContainer4/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.694118, 0, 0, 1)
+text = "Early Access Version"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="MarginContainer4/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "- Expect Bugs"
+
+[node name="Label2" type="Label" parent="MarginContainer4/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "- There are many Features still in development"
+
+[node name="Label4" type="Label" parent="MarginContainer4/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "- Feedback helps a lot"
+
+[node name="MarginContainer5" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -155.5
+offset_top = -83.0
+offset_right = 155.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 170
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer5"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ItchButton" type="Button" parent="MarginContainer5/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "View Demon Games on Itch.io"
+
+[node name="RedditButton" type="Button" parent="MarginContainer5/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Check out AdeptusCat on Reddit"
+
+[node name="RedditButton2" type="Button" parent="MarginContainer5/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Visit the Community on Discord"
+
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/VBoxContainer/ConnectToLobbyButton" to="." method="_on_connect_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/VBoxContainer/ConnectToLocalButton" to="." method="_on_connect_to_local_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/VBoxContainer/HostLocalGameButton" to="." method="_on_host_game_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/VBoxContainer/TutorialButton" to="." method="_on_tutorial_button_pressed"]
+[connection signal="pressed" from="MarginContainer5/VBoxContainer2/ItchButton" to="." method="_on_itch_button_pressed"]
+[connection signal="pressed" from="MarginContainer5/VBoxContainer2/RedditButton" to="." method="_on_reddit_button_pressed"]
+[connection signal="pressed" from="MarginContainer5/VBoxContainer2/RedditButton2" to="." method="_on_reddit_button_2_pressed"]

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://c6a78efcq8v2w"]
+
+[ext_resource type="Texture2D" uid="uid://dxxxngi30rybe" path="res://demon_assets/naburos/01929-3632630276-painting of a demon guarding the gate of hell.png" id="1_hj1x1"]
+[ext_resource type="Script" path="res://demon_resource.gd" id="2_ktsrf"]
+
+[resource]
+script = ExtResource("2_ktsrf")
+name = "Naburos"
+rank = 62
+skulls = 2
+stars = 1
+hearts = 2
+sex = 0
+player = 0
+incapacitated = false
+onEarth = false
+image = ExtResource("1_hj1x1")
+description = "Marquis of the Empire. Protector of the Gates of Hell. Keeper of Dilmun."

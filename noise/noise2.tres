@@ -1,0 +1,11 @@
+[gd_resource type="NoiseTexture2D" load_steps=2 format=3 uid="uid://bmvkbslaj4pu8"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_p15al"]
+seed = -1
+fractal_gain = 0.2
+
+[resource]
+width = 1000
+height = 750
+seamless = true
+noise = SubResource("FastNoiseLite_p15al")

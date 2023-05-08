@@ -1,0 +1,99 @@
+[gd_scene load_steps=13 format=3 uid="uid://7a7uc3aun4f3"]
+
+[ext_resource type="Texture2D" uid="uid://ckm0kcrcmp05p" path="res://noise/circle/noise1.tres" id="1_wsic1"]
+[ext_resource type="Texture2D" uid="uid://dutrbsu4a4pgh" path="res://noise/circle/noise2.tres" id="2_mcn2c"]
+[ext_resource type="Texture2D" uid="uid://1w1cs7vgjhhq" path="res://noise/circle/noise3.tres" id="3_6j1c8"]
+[ext_resource type="Texture2D" uid="uid://bgijk4prumaxr" path="res://assets/circle.png" id="4_n1rwe"]
+
+[sub_resource type="Shader" id="Shader_btack"]
+code = "shader_type canvas_item;
+
+uniform sampler2D noise1 : repeat_enable;
+uniform sampler2D noise2 : repeat_enable;
+uniform sampler2D noise3 : repeat_enable;
+
+uniform sampler2D noiseN1 : repeat_enable;
+uniform sampler2D noiseN2 : repeat_enable;
+uniform sampler2D noiseN3 : repeat_enable;
+
+uniform vec4 smoke_color : source_color; 
+
+uniform float speed = 1.0;
+const float mid = 0.5;
+
+uniform vec2 scroll = vec2(0.1, 0.1);
+
+void fragment() {
+	
+	vec2 rotation_cw_uv = vec2(cos(TIME*speed) * (UV.x - mid) + sin(TIME*speed) * (UV.y - mid) + mid, cos(TIME*speed) * (UV.y - mid) - sin(TIME*speed) * (UV.x - mid) + mid);
+	vec2 rotation_ccw_uv = vec2(cos(TIME*speed) * (UV.x - mid) - sin(TIME*speed) * (UV.y - mid) + mid, cos(TIME*speed) * (UV.y - mid) + sin(TIME*speed) * (UV.x - mid) + mid);
+	
+	vec2 uv1 = vec2(UV.x + TIME*speed, UV.y);
+	vec2 uv2 = vec2(UV.x - TIME*speed, UV.y);
+	vec2 uv3 = vec2(UV.x, UV.y + TIME*speed);
+	
+	float noise_r = texture(noise1, rotation_ccw_uv + scroll).r;
+	float noise_g = texture(noise2, rotation_cw_uv).g;
+	float noise_b = texture(noise3, rotation_ccw_uv).b;
+	
+	float noiseN_r = texture(noiseN1, rotation_ccw_uv + scroll).r;
+	float noiseN_g = texture(noiseN2, rotation_cw_uv).g;
+	float noiseN_b = texture(noiseN3, rotation_ccw_uv).b;
+	
+	vec3 new_color2 = vec3(noise_r, noise_g, noise_b);
+	vec3 new_color1 = texture(noise1, rotation_ccw_uv).rgb;
+	vec3 new_color = new_color1 * smoke_color.rgb;
+	float new_alpha = noise_r * noise_r * noise_g * noise_g * noise_b * noise_b;
+	
+	vec3 new_colorN2 = vec3(noiseN_r, noiseN_g, noiseN_b);
+	vec3 new_colorN1 = texture(noiseN1, rotation_ccw_uv).rgb;
+	vec3 new_colorN = new_colorN1;
+	
+//	COLOR.rgb = texture(TEXTURE, UV).rgb;
+	NORMAL_MAP = new_colorN.rgb;
+	COLOR.rgb = new_color.rgb;
+//	COLOR.a = clamp(new_alpha * 10.0 * texture(TEXTURE, UV).a, 0.0, 1.0);
+}"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qqv8u"]
+frequency = 0.002
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1cc4v"]
+width = 1024
+height = 1024
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_qqv8u")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_g7ja3"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_286cp"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_g7ja3")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dfoqj"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_p0vtl"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_dfoqj")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v7t7u"]
+shader = SubResource("Shader_btack")
+shader_parameter/smoke_color = Color(0.678431, 0.545098, 0.431373, 1)
+shader_parameter/speed = 0.01
+shader_parameter/scroll = Vector2(0.1, 0.1)
+shader_parameter/noise1 = ExtResource("1_wsic1")
+shader_parameter/noise2 = ExtResource("2_mcn2c")
+shader_parameter/noise3 = ExtResource("3_6j1c8")
+shader_parameter/noiseN1 = SubResource("NoiseTexture2D_1cc4v")
+shader_parameter/noiseN2 = SubResource("NoiseTexture2D_286cp")
+shader_parameter/noiseN3 = SubResource("NoiseTexture2D_p0vtl")
+
+[node name="CircleFog" type="Sprite2D"]
+light_mask = 7
+material = SubResource("ShaderMaterial_v7t7u")
+scale = Vector2(3.63, 3.63)
+texture = ExtResource("4_n1rwe")

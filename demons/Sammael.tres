@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://b5myb5ig028xe"]
+
+[ext_resource type="Texture2D" uid="uid://b37y6ghtydqtm" path="res://demon_assets/sammael/01815-2477834186-painting of a demon prince as the angel of death.png" id="1_hpry3"]
+[ext_resource type="Script" path="res://demon_resource.gd" id="2_brl7i"]
+
+[resource]
+script = ExtResource("2_brl7i")
+name = "Sammael"
+rank = 2
+skulls = 3
+stars = 4
+hearts = 5
+sex = 0
+player = 0
+incapacitated = false
+onEarth = false
+image = ExtResource("1_hpry3")
+description = "Prince of Daemons. Tempter of Eve. Lover of Lilith. Angel of Death."

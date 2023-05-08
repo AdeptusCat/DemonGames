@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://c32yihckyuvok"]
+
+[ext_resource type="Script" path="res://arcana_resource.gd" id="1_fiski"]
+
+[resource]
+script = ExtResource("1_fiski")
+name = "Sacred Music5"
+minorSpell = 3
+player = 1

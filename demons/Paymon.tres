@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cy6vnlqdguv5h"]
+
+[ext_resource type="Texture2D" uid="uid://bgpwvlvj7aube" path="res://demon_assets/paymon/01822-2382655012-painting of a demon performing a ritualin a big hall with candles, warhammer.png" id="1_shewr"]
+[ext_resource type="Script" path="res://demon_resource.gd" id="2_po20f"]
+
+[resource]
+script = ExtResource("2_po20f")
+name = "Paymon"
+rank = 44
+skulls = 1
+stars = 1
+hearts = 4
+sex = 0
+player = 0
+incapacitated = false
+onEarth = false
+image = ExtResource("1_shewr")
+description = "Master of Ceremonies of the Infernal Regions. Knight of the Order of the Fly."

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://db33bnif33te3"]
+
+[ext_resource type="Texture2D" uid="uid://ol55gix2uwso" path="res://demon_assets/asmodeus/01712-2707723855-a painting of a beatufil female dark eldar.png" id="1_e23bc"]
+[ext_resource type="Script" path="res://demon_resource.gd" id="1_xcmll"]
+
+[resource]
+script = ExtResource("1_xcmll")
+name = "Asmodeus"
+rank = 5
+skulls = 3
+stars = 3
+hearts = 5
+sex = 1
+player = 0
+incapacitated = false
+onEarth = false
+image = ExtResource("1_e23bc")
+description = "Goddess of Lust. Sister of Kain. Mistress of Succubi and Incubi. Mistress of Lief. Madam of Hell's Gambling Halls. Inventor of French Fashion. Commander of Seventy-Two Legions."

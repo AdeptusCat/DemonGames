@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://ddwd3y4xo7omf"]
+
+[ext_resource type="Texture2D" uid="uid://v04xyadqwi7h" path="res://demon_assets/moloch/01843-3188024162-painting of a demon bringing the plague in a sea of tears.png" id="1_5o4dh"]
+[ext_resource type="Script" path="res://demon_resource.gd" id="1_xcmll"]
+
+[resource]
+script = ExtResource("1_xcmll")
+name = "Moloch"
+rank = 17
+skulls = 3
+stars = 4
+hearts = 2
+sex = 0
+player = 0
+incapacitated = false
+onEarth = false
+image = ExtResource("1_5o4dh")
+description = "The Bomination of the Ammonites. Daemon of Fire. Devourer of the Canaanite Children. Bringer of Plagues. Lord of the Land of Tears. Devil of Pain and Sadness. Knight of the Order of the Fly."

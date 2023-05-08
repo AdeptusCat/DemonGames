@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqkxk7t577kq2"]
+
+[ext_resource type="Script" path="res://rank_track.gd" id="1_7nmup"]
+
+[node name="RankTrack" type="Node"]
+script = ExtResource("1_7nmup")
