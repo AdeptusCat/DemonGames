@@ -73,6 +73,11 @@ func _ready():
 
 func _on_tutorial(topic, text : String):
 	match topic:
+		Tutorial.Topic.PlayersTree:
+			var pos : Transform2D = %PlayersTree.get_global_transform_with_canvas()
+			%PlayersTree.top_level = true
+			%PlayersTree.global_position = pos.origin
+		
 		Tutorial.Topic.NextDemon:
 			var pos : Transform2D = %NextDemonContainer.get_global_transform_with_canvas()
 			%NextDemonContainer.top_level = true
@@ -170,6 +175,11 @@ func _on_tutorialRead():
 	%PlayersTree.z_index = 0
 	%BuyArcanaCardButton.disabled = false
 	%EndPhaseButton.disabled = false
+	
+	if %PlayersTree.top_level:
+		%PlayersTree.top_level = false
+		%PlayersTree.visible = false
+		%PlayersTree.visible = true
 	
 	if %RecruitLegionsButton.top_level:
 		%RecruitLegionsButton.top_level = false

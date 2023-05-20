@@ -56,8 +56,13 @@ func combatOver():
 
 
 @rpc ("any_peer", "call_local")
+func resetCamera():
+	Signals.resetCamera.emit()
+
+
+@rpc ("any_peer", "call_local")
 func moveCamera(_position : Vector2):
-	Signals.moveCamera.emit((_position))
+	Signals.moveCamera.emit(_position)
 
 
 @rpc ("any_peer", "call_local")
@@ -257,7 +262,9 @@ func sendSoulSummary(soulSummary : Dictionary):
 	Signals.resetCamera.emit()
 	print("w1 ",Connection.host)
 	doneGatheringSouls.rpc_id(Connection.host)
-	
+
+
+
 
 
 @rpc ("any_peer", "call_local")

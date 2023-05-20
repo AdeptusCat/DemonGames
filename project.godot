@@ -35,6 +35,7 @@ Astar="*res://astar/astar.gd"
 Ai="*res://ai/ai.gd"
 RpcCalls="*res://rpc_calls.gd"
 Tutorial="*res://autoloads/tutorial.gd"
+Sectios="*res://autoloads/sectios.gd"
 
 [display]
 

@@ -60,6 +60,3 @@ func _on_reddit_button_2_pressed():
 	OS.shell_open("https://discord.gg/AXhbqHNjhm")
 
 
-func _on_tutorial_button_pressed():
-	Tutorial.tutorial = true
-	_on_host_game_button_pressed()

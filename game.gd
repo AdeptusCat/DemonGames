@@ -890,6 +890,78 @@ func sequenceOfPlay(phase : int = 0):
 				await get_tree().create_timer(0.5).timeout
 			else:
 				spawnDebugTroops1(playerId)
+	
+	if Tutorial.tutorial and Tutorial.chapter == Tutorial.Chapter.Introduction:
+		Signals.tutorial.emit(Tutorial.Topic.Introduction, 
+			"Demon Games is a game of power-struggle and intrigue among the Demons 
+			of Hell. The players each assume the role of a group of Demons thirsty for 
+			power and influence and the winner is the first player to claim control of one 
+			of Hell's Circles.")
+		await Signals.tutorialRead
+		
+		Signals.tutorial.emit(Tutorial.Topic.Introduction, 
+			"The map shows Hell and its vicinity. \n
+			Hell itself is divided in nine concentric Circles and is surrounded by the AnteHell. \n
+			Each Circle is named after the predominant kind of sinners it cares for and is in
+			turn divided into five Sectio, each named after the special kind of sinners the
+			Sectio contains.")
+		await Signals.tutorialRead
+		
+		var sectio : Sectio = Decks.sectioNodes["Megalomaniacs"]
+		for peer in Connection.peers:
+			RpcCalls.occupySectio.rpc_id(peer, Data.id, sectio.sectioName)
+		
+		for peer in Connection.peers:
+			RpcCalls.moveCamera.rpc_id(peer, sectio.global_position)
+		await Signals.doneMoving
+		
+		Signals.tutorial.emit(Tutorial.Topic.Introduction, 
+			"Sectio are the sections into which each of Hell’s Circles are divided, and
+			since control of these in turn leads to control of Hell’s Circles, \nthey are the
+			battleground upon which the struggle for control of Hell is waged. \nEach
+			Sectio has the follow ing information printed in it")
+		await Signals.tutorialRead
+		
+		Signals.tutorial.emit(Tutorial.Topic.Introduction, 
+			"The number in the circle indicates the amount of souls that the Sectio produces each Soul Phase. \n
+			The color of the Sectio shows the owner.")
+		await Signals.tutorialRead
+		
+		for peer in Connection.peers:
+			RpcCalls.moveCamera.rpc_id(peer, Vector2(-1500,-1500))
+		await Signals.doneMoving
+		
+		Signals.tutorial.emit(Tutorial.Topic.Introduction, 
+			"AnteHell (“Ante” as in “before”) is the name of the wastelands surrounding
+			Hell. \nLost Souls, odd incorporeal beings and a few stray Daemons populate
+			it. \nOne of the few reasons to visit AnteHell is that you can find and tame the
+			fearsome Hellhounds there.")
+		await Signals.tutorialRead
+		
+		for peer in Connection.peers:
+			RpcCalls.resetCamera.rpc_id(peer)
+		await Signals.doneMoving
+		
+		Signals.tutorial.emit(Tutorial.Topic.Introduction, 
+			"The five-pointed star, the Pentagram, in the centre of Hell marks the location
+			of the Infernal Court. It may not be entered.")
+		await Signals.tutorialRead
+		
+		Signals.tutorial.emit(Tutorial.Topic.PlayersTree, 
+			"On the left you can observe your and other players stats. \n
+			Next to the name of the players are the amount of Souls the player has. \n
+			Souls are the 'currency' of the game and are used to pay for raising Legions, empowering magic and so on. \n
+			The Income of souls per turn depend on Demons on Earth, occupied Sectios and the upkeep you have to pay for your Units. \n
+			Players receive Favors/Disfavors when they do things that are regarded by Lucifer as particularly good/amusing or bad/tasteless.")
+		await Signals.tutorialRead
+		
+		await get_tree().create_timer(0.1).timeout
+		Signals.returnToMainMenu.emit()
+		await Signals.tutorialRead
+		
+		
+		
+		
 	await get_tree().create_timer(0.1).timeout
 	for peer in Connection.peers:
 		RpcCalls.updatePhaseLabel.rpc_id(peer, phase, Data.phases.keys()[phase])
@@ -1985,12 +2057,10 @@ func _on_recruit_legions():
 	Data.changeState(Data.States.RECRUITING)
 	
 	if Data.player.sectiosWithoutEnemiesLeft.size() > 0:
-		for sectioName in Data.player.sectiosWithoutEnemiesLeft:
-			Decks.sectioNodes[sectioName].changeClickable(true)
+		Sectios.sectiosClickable(true, Data.player.sectiosWithoutEnemiesLeft)
 	else:
 		Data.player.sectiosWithoutEnemiesLeft = Data.player.sectiosWithoutEnemies.duplicate()
-		for sectioName in Data.player.sectiosWithoutEnemiesLeft:
-			Decks.sectioNodes[sectioName].changeClickable(true)
+		Sectios.sectiosClickable(true, Data.player.sectiosWithoutEnemiesLeft)
 	
 	while true:
 		var sectio = await Signals.sectioClicked
@@ -2003,17 +2073,14 @@ func _on_recruit_legions():
 			if not Data.player.hasEnoughSouls(3):
 				break
 			
-			if Data.player.sectiosWithoutEnemiesLeft.size() > 1:
-				Data.player.sectiosWithoutEnemiesLeft.erase(sectio.sectioName)
-				Decks.sectioNodes[sectio.sectioName].changeClickable(false)
-			else:
-				Data.player.sectiosWithoutEnemiesLeft = Data.player.sectiosWithoutEnemies.duplicate()
-				for sectioName in Data.player.sectiosWithoutEnemiesLeft:
-					Decks.sectioNodes[sectioName].changeClickable(true)
+			Sectios.sectiosLeftClickable(Data.player.sectiosWithoutEnemiesLeft, sectio.sectioName)
 			Signals.tutorialRead.emit()
 	
 	Data.changeState(Data.States.IDLE)
 	Signals.recruitingDone.emit()
+
+
+
 
 
 func _on_recruit_lieutenant():
@@ -2021,26 +2088,17 @@ func _on_recruit_lieutenant():
 	Signals.toggleEndPhaseButton.emit(false)
 	Signals.toggleBuyArcanaCardButtonEnabled.emit(false)
 	
-	for sectio in Data.player.sectiosWithoutEnemies:
-		if not Decks.sectioNodes[sectio].clickable:
-			Decks.sectioNodes[sectio].changeClickable(true)
+	Sectios.sectiosClickable(true, Data.player.sectiosWithoutEnemies)
 	
 	var sectio = await Signals.sectioClicked
 	
 	map.placeUnit(sectio, Data.id, Data.UnitType.Lieutenant)
 	
-	if not Data.player.hasEnoughSouls(3):
-		for sectioName in Data.player.sectiosWithoutEnemies:
-			Decks.sectioNodes[sectioName].changeClickable(false)
+	if Data.player.hasEnoughSouls(3):
+		Sectios.remainingSectiosClickable(Data.player.sectiosWithoutEnemies.duplicate())
 	else:
-		var sectiosNotAvailable = Data.player.sectiosWithoutEnemies.duplicate()
-		for sectioName in Data.player.sectiosWithoutEnemiesLeft:
-			sectiosNotAvailable.erase(sectioName)
-		for sectioName in Data.player.sectiosWithoutEnemiesLeft:
-			Decks.sectioNodes[sectioName].changeClickable(true)
-		for sectioName in sectiosNotAvailable:
-			Decks.sectioNodes[sectioName].changeClickable(false)
-			
+		Sectios.sectiosClickable(false, Data.player.sectiosWithoutEnemies)
+	
 	Signals.recruitingDone.emit()
 	
 	if Tutorial.tutorial:

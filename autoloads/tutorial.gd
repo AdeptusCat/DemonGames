@@ -1,18 +1,20 @@
 extends Node
 
-enum Chapter {Introduction, Soul, Summoning, Actions, Combat}
+enum Chapter {Introduction, Soul, Summoning, Actions, Combat, Petitions}
 var chapterNames : Dictionary = {
 	Chapter.Introduction : "Introduction",
 	Chapter.Soul : "Collecting Souls",
 	Chapter.Summoning : "Summoning Units",
 	Chapter.Actions : "Demon Actions",
 	Chapter.Combat : "Combat and Petitions",
+	Chapter.Petitions : "Petition for Sectios"
 }
 var chapter : Chapter
 var tutorial : bool = false
 var currentTopic : Topic = Topic.Phase
 
 enum Topic {
+	Introduction, PlayersTree,
 	Phase, 
 	Soul,
 	NextDemon,

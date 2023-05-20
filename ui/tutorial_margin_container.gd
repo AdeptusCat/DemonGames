@@ -12,6 +12,8 @@ func _on_tutorial(topic, text : String):
 #	else:
 #		position = pos
 	match topic:
+		Tutorial.Topic.Introduction:
+			%ColorRect.hide()
 		
 		Tutorial.Topic.Soul:
 			%ColorRect.hide()
