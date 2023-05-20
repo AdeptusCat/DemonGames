@@ -196,3 +196,4 @@ func getRandomCard(deckName : String):
 			return demonCards.pop_back()
 		"lieutenant" :
 			return lieutenants.pop_back()
+

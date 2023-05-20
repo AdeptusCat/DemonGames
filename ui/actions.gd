@@ -39,6 +39,8 @@ func _ready():
 	Signals.skullUsed.connect(skullUsed)
 	Signals.cancelMarch.connect(_on_cancelMarch)
 	Signals.doEvilDeedsResult.connect(_on_doEvilDeedsResult)
+	Signals.actionThroughArcana.connect(_on_actionThroughArcana)
+	
 
 
 func _on_cancelMarch():
@@ -226,11 +228,23 @@ func _on_pass_button_pressed():
 			arcanaCard.highlight()
 	Signals.tutorialRead.emit()
 
+
 func _on_pass_for_good_button_pressed():
 	for peer in Connection.peers:
 		RpcCalls.demonAction.rpc_id(peer, currentDemon, "Pass For Good")
 	Signals.demonDone.emit(0)
 	AudioSignals.passForGood.emit()
+
+
+func _on_actionThroughArcana(minorSpell : Decks.MinorSpell):
+	var MinorSpell = Decks.MinorSpell
+	match minorSpell:
+		MinorSpell.Pass:
+			passTurns(1)
+		MinorSpell.WalkTheEarth:
+			walkTheEarth()
+		MinorSpell.WalkTheEarthSafely:
+			walkTheEarth()
 
 
 func passTurns(turnsPassed):

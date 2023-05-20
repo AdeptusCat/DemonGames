@@ -26,6 +26,7 @@ var tw2
 
 func _ready():
 	%MinorSpellButton.pivot_offset = %MinorSpellButton.size / 2
+	Signals.arcanaClicked.connect(_on_arcanaClicked)
 
 
 @rpc("any_peer", "call_local")
@@ -76,9 +77,33 @@ func disable():
 #		tween1.play()
 
 
-
-func _process(delta):
-	pass
+func _on_arcanaClicked(arcanaCard : ArcanaCard, mode):
+	if mode == "discard":
+		if Tutorial.tutorial:
+			if arcanaCard.minorSpell == Decks.MinorSpell.RecruitLieutenants:
+				return
+			else:
+				Signals.tutorialRead.emit()
+		var player : Player = Data.players[arcanaCard.player]
+#		player.arcanaCards.erase(arcanaCard.cardName)
+		for peer in Connection.peers:
+			RpcCalls.discardArcanaCard.rpc_id(peer, arcanaCard.cardName, arcanaCard.player)
+		arcanaCard.queue_free()
+		if player.arcanaCards.size() > 5:
+			player.discardModeArcanaCard()
+		else:
+			for card in player.arcanaCards:
+				Data.arcanaCardNodes[card].mode = ""
+			RpcCalls.checkEndPhaseCondition()
+	elif mode == "pick":
+		if Tutorial.tutorial:
+			if arcanaCard.minorSpell == Decks.MinorSpell.RecruitLieutenants:
+				Signals.tutorialRead.emit()
+			else:
+				return
+		for peer in Connection.peers:
+			RpcCalls.addArcanaCard.rpc_id(peer, Data.id, arcanaCard.cardName)
+		Signals.hidePickArcanaCardContainer.emit(arcanaCard.cardName)
 
 
 func loadStats(_cardName):

@@ -19,8 +19,6 @@ signal unitFinishedFleeing
 var fleeRequestId
 #var sectioAttackedFrom
 
-var lieutenantNameToSpawn : String = ""
-
 var tw1
 
 var map_fx_path : String = "res://map_fx/map_fx.tscn"
@@ -996,12 +994,11 @@ func _on_unitClicked(legion):
 
 
 func _on_spawnUnit(sectioName : String, playerId : int, unitType : Data.UnitType, unitName : String = ""):
-	lieutenantNameToSpawn = unitName
 	var sectio : Sectio = Decks.sectioNodes[sectioName]
-	placeUnit(sectio, playerId, unitType)
+	placeUnit(sectio, playerId, unitType, unitName)
 
 
-func placeUnit(sectio, playerId : int = Data.id, unitType : Data.UnitType = Data.UnitType.Legion):
+func placeUnit(sectio, playerId : int = Data.id, unitType : Data.UnitType = Data.UnitType.Legion, lieutenantNameToSpawn : String = ""):
 	var player = Data.players[playerId]
 	if unitType == Data.UnitType.Lieutenant:
 		if Decks.availableLieutenants.size() > 0:
@@ -1018,8 +1015,9 @@ func placeUnit(sectio, playerId : int = Data.id, unitType : Data.UnitType = Data
 						continue
 					spawnUnit.rpc_id(peer, sectio.sectioName, nr, playerId, Data.UnitType.Lieutenant, lieutenantNameToSpawn)
 					updateTroopInSectio.rpc_id(peer, sectio.sectioName, sectio.troops)
-				
-			Signals.recruitedLieutenant.emit()
+			
+			Data.players[Data.id].canAffordRecruitLieutenants()
+			RpcCalls.recruitedLieutenant.rpc_id(Connection.host)
 	
 	if unitType == Data.UnitType.Legion:
 		var nr = randi()

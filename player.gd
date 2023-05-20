@@ -101,6 +101,47 @@ func addSectio(sectio):
 		sectios.append(str(sectio))
 
 
+
+func changeIncome():
+	var income : int = 0
+	var enemyInSectio : bool = false
+	var demonsOnEarth : int = 0
+	var demonHearts : int = 0
+	for demonRank in demons:
+		demonRank = demonRank as int
+		var demon : Demon = Data.demons[demonRank]
+		if not demon.incapacitated:
+			if demon.onEarth:
+				demonsOnEarth += 1
+				demonHearts += demon.hearts
+	
+	for sectioName in sectios:
+		for unitName in Decks.sectioNodes[sectioName].troops:
+			if not Data.troops[unitName].triumphirate == playerId:
+				enemyInSectio = true
+				break
+		if not enemyInSectio:
+			var sectio = Decks.sectioNodes[sectioName]
+			var isIsolated = sectio.isolated()
+			var soulsGathered = sectio.souls
+			# check for hellhounds in sectio as well!! hellhounds  hellhounds  hellhounds  hellhounds  hellhounds  hellhounds 
+			if isIsolated:
+				soulsGathered -= 2
+			soulsGathered = clamp(soulsGathered, 0, 100)
+			income += soulsGathered
+
+	for unitName in troops:
+		var unit = Data.troops[unitName]
+		if not unit.unitType == Data.UnitType.Hellhound:
+			income -= 1
+	
+	income += demonHearts
+	var incomeString = str(income + demonsOnEarth)
+	if demonsOnEarth > 0:
+		incomeString += " - " + str(demonsOnEarth * 6 + income)
+	Signals.changeIncome.emit(playerId, incomeString)
+
+
 func canAffordRecruitLieutenants(cardNameToIgnore = ""):
 	var arcanaCardsNames = arcanaCards
 	for cardName in arcanaCardsNames:

@@ -19,6 +19,8 @@ signal startGame
 signal connected
 
 # UI
+signal showChosenLieutenantFromAvailableLieutenantsBox(lieutenantName : String)
+
 signal showStartScreen
 signal showArcanaCardsContainer
 signal showRankTrackMarginContainer
@@ -108,6 +110,7 @@ signal stopFollowingUnit(unit)
 
 # Game
 signal updateTurnTrack(turn : int)
+signal actionThroughArcana(action : String)
 signal action(demonRank : int, action : String)
 signal resetGame
 signal addPlayer(scene : Player)

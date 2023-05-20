@@ -8,6 +8,20 @@ func _ready():
 	Signals.changeDisfavors.connect(_on_changeDisfavors)
 
 
+func canAffordRecruitLieutenants(playerNr, cardNameToIgnore = ""):
+	var player = Data.players[playerNr]
+	var arcanaCardsNames = player.arcanaCards
+	for cardName in arcanaCardsNames:
+		if is_instance_valid(Data.arcanaCardNodes[cardName]):
+			if not cardName == cardNameToIgnore:
+				var arcanaCard = Data.arcanaCardNodes[cardName]
+				arcanaCard.disable()
+				if not player.hasEnoughSouls(arcanaCard.cost):
+					continue
+				var MinorSpell = Decks.MinorSpell
+				if arcanaCard.minorSpell == MinorSpell.RecruitLieutenants and Data.player.arcanaCards.size() <= 5:
+					arcanaCard.highlight()
+
 
 func _on_changeSouls(playerId : int, value : int):
 	print("change soulssss")

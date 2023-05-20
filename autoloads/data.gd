@@ -6,7 +6,7 @@ var players : Dictionary = {}
 var demons : Dictionary = {}
 var arcanaCards : Dictionary = {}
 var arcanaCardNodes : Dictionary = {}
-var currentDemon = null
+var currentDemon : Demon = null
 var id : int = 0
 var player : Player
 var troops : Dictionary = {}

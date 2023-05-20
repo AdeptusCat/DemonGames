@@ -55,6 +55,7 @@ func _ready():
 	Signals.showArcanaCardsContainer.connect(_on_showArcanaCardsContainer)
 	Signals.showRankTrackMarginContainer.connect(_on_showRankTrackMarginContainer)
 	Signals.showPlayerStatusMarginContainer.connect(_on_showPlayerStatusMarginContainer)
+	Signals.showChosenLieutenantFromAvailableLieutenantsBox.connect(showChosenLieutenantFromAvailableLieutenantsBox)
 
 	Signals.updateTurnTrack.connect(_on_updateTurnTrack)
 	
