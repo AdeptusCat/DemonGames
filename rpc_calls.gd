@@ -220,8 +220,9 @@ func sendSoulSummary(soulSummary : Dictionary):
 		var rank = soulSummary[Data.id]["earth"][demonName]["rank"]
 		var demon : Demon = Data.demons[rank]
 		
-		Signals.tutorial.emit(Tutorial.Topic.Soul, "'" + demon.demonName + "' is one of your Demons on Earth and gathers Souls and a Favor each Turn. \nThe amount of Souls gathered depends on the amount of Hearts of the Demon.")
-		await Signals.tutorialRead
+		if Tutorial.tutorial:
+			Signals.tutorial.emit(Tutorial.Topic.Soul, "'" + demon.demonName + "' is one of your Demons on Earth and gathers Souls and a Favor each Turn. \nThe amount of Souls gathered depends on the amount of Hearts of the Demon.")
+			await Signals.tutorialRead
 		
 		demon.showSoulsGathered(souls, favors)
 		await Signals.animationDone
@@ -234,15 +235,16 @@ func sendSoulSummary(soulSummary : Dictionary):
 		Signals.moveCamera.emit(sectio.global_position)
 		await Signals.doneMoving
 		
-		match sectioNr:
-			0: 
-				Signals.tutorial.emit(Tutorial.Topic.Soul, "'" + sectioName + "' is one of your Sectios and generates three Souls each Soul Phase.")
-			1:
-				Signals.tutorial.emit(Tutorial.Topic.Soul, "In '" + sectioName + "' is an enemy Unit inside, so it generates no Souls until there is no enemy Unit present.")
-			2:
-				Signals.tutorial.emit(Tutorial.Topic.Soul, "'" + sectioName + "' has no friendly Sectio adjacent. So it generates two Souls less, until it is connected with another friendly Sectio.")
-		sectioNr += 1
-		await Signals.tutorialRead
+		if Tutorial.tutorial:
+			match sectioNr:
+				0: 
+					Signals.tutorial.emit(Tutorial.Topic.Soul, "'" + sectioName + "' is one of your Sectios and generates three Souls each Soul Phase.")
+				1:
+					Signals.tutorial.emit(Tutorial.Topic.Soul, "In '" + sectioName + "' is an enemy Unit inside, so it generates no Souls until there is no enemy Unit present.")
+				2:
+					Signals.tutorial.emit(Tutorial.Topic.Soul, "'" + sectioName + "' has no friendly Sectio adjacent. So it generates two Souls less, until it is connected with another friendly Sectio.")
+			sectioNr += 1
+			await Signals.tutorialRead
 		
 		sectio.showSoulsGathered(souls)
 		await Signals.animationDone
@@ -253,8 +255,9 @@ func sendSoulSummary(soulSummary : Dictionary):
 		Signals.moveCamera.emit(unit.global_position)
 		await Signals.doneMoving
 		
-		Signals.tutorial.emit(Tutorial.Topic.Soul, "Every Unit you own costs you one Soul per Turn.")
-		await Signals.tutorialRead
+		if Tutorial.tutorial:
+			Signals.tutorial.emit(Tutorial.Topic.Soul, "Every Unit you own costs you one Soul per Turn.")
+			await Signals.tutorialRead
 		
 		unit.showSoulsPaid(souls)
 		await Signals.animationDone
