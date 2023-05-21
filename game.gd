@@ -63,7 +63,7 @@ func _ready():
 #	skipPetitions = true
 #	skipEnd = true
 
-	skipUnitPlacing = true
+#	skipUnitPlacing = true
 #	debugTroops = true
 #
 #	Settings.tooltips = false
@@ -727,11 +727,12 @@ func sequenceOfPlay(phase : int = 0):
 				for peer in Connection.peers:
 					RpcCalls.occupySectio.rpc_id(peer, winner, sequence.combatWinner[winner])
 			
-			Signals.tutorial.emit(Tutorial.Topic.Combat, "Notice, the winner of the Battle will occupy the Sectio for free.")
-			await Signals.tutorialRead
-			
-			Signals.tutorial.emit(Tutorial.Topic.Combat, "Now use the menu to the left to pick the Sectio you want to capture.")
-			await Signals.tutorialRead
+			if Tutorial.tutorial:
+				Signals.tutorial.emit(Tutorial.Topic.Combat, "Notice, the winner of the Battle will occupy the Sectio for free.")
+				await Signals.tutorialRead
+				
+				Signals.tutorial.emit(Tutorial.Topic.Combat, "Now use the menu to the left to pick the Sectio you want to capture.")
+				await Signals.tutorialRead
 			
 			for triumphirate in petitionSectiosByTriumphirate:
 				print("wait ",triumphirate, petitionSectiosByTriumphirate[triumphirate])

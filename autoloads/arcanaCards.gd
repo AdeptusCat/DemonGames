@@ -3,6 +3,7 @@ extends Node
 
 func _ready():
 	Signals.minorSpell.connect(_on_MinorSpell)
+	Signals.arcanaClicked.connect(_on_arcanaClicked)
 
 
 func _on_MinorSpell(arcanaCard : ArcanaCard):
@@ -66,3 +67,33 @@ func _on_MinorSpell(arcanaCard : ArcanaCard):
 	for peer in Connection.peers:
 		RpcCalls.discardArcanaCard.rpc_id(peer, arcanaCard.cardName, Data.id)
 	AudioSignals.castArcana.emit()
+
+
+func _on_arcanaClicked(arcanaCard : ArcanaCard, mode):
+	print(mode, "lul")
+	if mode == "discard":
+		if Tutorial.tutorial:
+			if arcanaCard.minorSpell == Decks.MinorSpell.RecruitLieutenants:
+				return
+			else:
+				Signals.tutorialRead.emit()
+		var player : Player = Data.players[arcanaCard.player]
+#		player.arcanaCards.erase(arcanaCard.cardName)
+		for peer in Connection.peers:
+			RpcCalls.discardArcanaCard.rpc_id(peer, arcanaCard.cardName, arcanaCard.player)
+		arcanaCard.queue_free()
+		if player.arcanaCards.size() > 5:
+			player.discardModeArcanaCard()
+		else:
+			for card in player.arcanaCards:
+				Data.arcanaCardNodes[card].mode = ""
+			RpcCalls.checkEndPhaseCondition()
+	elif mode == "pick":
+		if Tutorial.tutorial:
+			if arcanaCard.minorSpell == Decks.MinorSpell.RecruitLieutenants:
+				Signals.tutorialRead.emit()
+			else:
+				return
+		for peer in Connection.peers:
+			RpcCalls.addArcanaCard.rpc_id(peer, Data.id, arcanaCard.cardName)
+		Signals.hidePickArcanaCardContainer.emit(arcanaCard.cardName)

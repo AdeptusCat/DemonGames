@@ -935,18 +935,20 @@ func combat(map):
 				RpcCalls.pickDemonForCombat.rpc_id(triumphirate)
 				print("pick demon ", Data.players[triumphirate].playerName)
 				
-				Signals.tutorial.emit(Tutorial.Topic.Combat, "Demons can help your Units in Combat. Depending on the amount on Skull they have, the survivability of Units increases. \nA Demon can only fight once per Combat Phase. \nYou can also choose to not use a Demon in Combat. \nDemons on Earth cannot fight in Hell.")
+				if Tutorial.tutorial:
+					Signals.tutorial.emit(Tutorial.Topic.Combat, "Demons can help your Units in Combat. Depending on the amount on Skull they have, the survivability of Units increases. \nA Demon can only fight once per Combat Phase. \nYou can also choose to not use a Demon in Combat. \nDemons on Earth cannot fight in Hell.")
 				
 				var demonName = await Signals.pickedDemonInGame
 				print("player ", Data.players[triumphirate].playerName, " chose demon ", demonName)
 				if not demonName == 0:
 					demonDict[triumphirate] = demonName
 		
-		Signals.tutorial.emit(Tutorial.Topic.Combat, "Lieutenants help your Legions to hit enemy Units. \nThe number with the '+' sign on the left shows the combat bonus. \nThe number on the right shows the number of Legions the Lieutenant can support.")
-		await Signals.tutorialRead
-		
-		Signals.tutorial.emit(Tutorial.Topic.Combat, "You can at anytime decide to flee from Combat, but if you do, it counts as a win for the enemy and will occupy the Sectio for free.")
-		await Signals.tutorialRead
+		if Tutorial.tutorial:
+			Signals.tutorial.emit(Tutorial.Topic.Combat, "Lieutenants help your Legions to hit enemy Units. \nThe number with the '+' sign on the left shows the combat bonus. \nThe number on the right shows the number of Legions the Lieutenant can support.")
+			await Signals.tutorialRead
+			
+			Signals.tutorial.emit(Tutorial.Topic.Combat, "You can at anytime decide to flee from Combat, but if you do, it counts as a win for the enemy and will occupy the Sectio for free.")
+			await Signals.tutorialRead
 		
 		var fleeingFromCombat = false
 		var noMoreEnemies = false
