@@ -92,4 +92,5 @@ func _on_noDemonClicked():
 	%DemonHeaderLabel.text = buttonTextNormal
 	expand = false
 	button.queue_free()
-	Signals.noDemonPicked.emit()
+	Data.pickDemon = false
+	RpcCalls.pickedDemonForCombat.rpc_id(Connection.host, 0)

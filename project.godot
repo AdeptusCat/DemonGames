@@ -36,6 +36,8 @@ Ai="*res://ai/ai.gd"
 RpcCalls="*res://rpc_calls.gd"
 Tutorial="*res://autoloads/tutorial.gd"
 Sectios="*res://autoloads/sectios.gd"
+Demons="*res://autoloads/demons.gd"
+Units="*res://autoloads/units.gd"
 
 [display]
 

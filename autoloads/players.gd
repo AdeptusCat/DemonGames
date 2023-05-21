@@ -6,6 +6,25 @@ func _ready():
 	Signals.changeIncome.connect(_on_changeIncome)
 	Signals.changeFavors.connect(_on_changeFavors)
 	Signals.changeDisfavors.connect(_on_changeDisfavors)
+	Signals.incomeChanged.connect(_on_incomeChanged)
+	Signals.buyArcanaCard.connect(_on_buyArcanaCard)
+
+
+func _on_buyArcanaCard():
+	Data.player.checkPlayerSummoningCapabilities(5)
+#	if Data.player.hasEnoughSouls(10):
+#		%BuyArcanaCardMarginContainer.show()
+#	else:
+#		%BuyArcanaCardMarginContainer.hide()
+	if Data.player.hasEnoughSouls(5):
+		var souls = Data.players[Data.id].souls - 5
+		Signals.changeSouls.emit(Data.id, souls)
+		RpcCalls.requestArcanaCardsToPick.rpc_id(Connection.host)
+
+
+func _on_incomeChanged(playerId : int):
+	var player = Data.players[playerId]
+	player.changeIncome()
 
 
 func canAffordRecruitLieutenants(playerNr, cardNameToIgnore = ""):

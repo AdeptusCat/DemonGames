@@ -61,6 +61,8 @@ func _ready():
 	
 	Signals.tutorial.connect(_on_tutorial)
 	Signals.tutorialRead.connect(_on_tutorialRead)
+	
+	Signals.removeLieutenantFromAvailableLieutenantsBox.connect(_on_removeLieutenantFromAvailableLieutenantsBox)
 #	%WaitForPlayerControl.modulate.a = 1.0
 #	%WaitForPlayerControl.show()
 ##			await get_tree().create_timer(10.0).timeout
@@ -70,6 +72,11 @@ func _ready():
 #	tw1.set_ease(Tween.EASE_IN)
 #	tw1.tween_property(%WaitForPlayerControl, "modulate", Color(1,1,1,0), 2.0)#.set_delay(0.5)
 #	tw1.tween_callback(turn)
+
+
+func _on_removeLieutenantFromAvailableLieutenantsBox(lieutenantName : String):
+	Decks.availableLieutenants.erase(lieutenantName)
+	removeLieutenantFromAvailableLieutenantsBox(lieutenantName)
 
 
 func _on_tutorial(topic, text : String):

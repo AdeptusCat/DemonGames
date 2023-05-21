@@ -55,6 +55,25 @@ func StartServer():
 				network.peer_connected.connect(func(id): peer_connected(id))
 				network.peer_disconnected.connect(func(id): peer_disconnected(id))
 				serverActive = true
+				
+#				print(_on_incomeChanged.get_method())
+#				sendFunction(rpcFunction)
+#				sendFunction(rpcFunction.bind("testString"))
+
+
+func sendFunction(f : Callable):
+	print(f)
+	print(f.get_method())
+	var args : Array = f.get_bound_arguments()
+	print(f.get_method())
+	f = Callable(f.get_object(), str(f.get_method()))
+	print(f)
+	f.rpc(args[0])
+
+
+@rpc("any_peer", "call_local")
+func rpcFunction(str : String = ""):
+	print(str)
 
 
 func peer_connected(player_id):

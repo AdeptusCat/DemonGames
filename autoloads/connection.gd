@@ -31,6 +31,11 @@ func _ready():
 	Signals.returnToMainMenu.connect(_on_returnToMainMenu)
 
 
+func sendToPeers(function : Callable):
+	for peer in Connection.peers:
+		function.rpc_id(peer)
+
+
 func _on_returnToMainMenu():
 	network.close()
 

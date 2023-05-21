@@ -6,6 +6,7 @@ extends Control
 @onready var actionsNode = $UI/Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions
 @onready var map =$Map
 @onready var sequence : SequenceOfPlay = $SequenceOfPlay
+@onready var debug = $Debug
 
 var turn : int = 1
 
@@ -36,25 +37,15 @@ func _ready():
 	randomize()
 #	loadSaveGame = true
 	Signals.proceed.connect(_on_proceed)
-	Signals.tamingHellhound.connect(_on_taming_hellhound)
-	Signals.petitionApproved.connect(_on_petition_approved)
-	Signals.petitionsDone.connect(_on_peititonsDone)
-	Signals.noDemonPicked.connect(_on_no_demon_picked)
-	Signals.demonStatusChange.connect(_on_demon_status_change)
-	Signals.removeLieutenantFromAvailableLieutenantsBox.connect(_on_removeLieutenantFromAvailableLieutenantsBox)
-	Signals.pickedDemon.connect(_on_picked_demon)
-	Signals.recruitLieutenant.connect(_on_recruit_lieutenant)
-	Signals.recruitLegions.connect(_on_recruit_legions)
+	
 	Signals.host.connect(_on_host)
 	Signals.join.connect(_on_join)
 	Signals.start.connect(_on_start)
+	Signals.allPlayersReady.connect(_on_allPlayersReady)
+	
 	Signals.phaseDone.connect(_on_phase_done)
 	Signals.demonDoneWithPhase.connect(_on_demon_done_with_phase)
-	Signals.buyArcanaCard.connect(_on_buyArcanaCard)
-	Signals.allPlayersReady.connect(_on_allPlayersReady)
-	Signals.recruitingDone.connect(_on_recruitingDone)
-	Signals.recruiting.connect(_on_recruiting)
-	Signals.incomeChanged.connect(_on_incomeChanged)
+	
 	Signals.returnToMainMenu.connect(_on_returnToMainMenu)
 	Signals.returnToLobby.connect(_on_returnToLobby)
 	Signals.addPlayer.connect(_on_addPlayer)
@@ -140,142 +131,6 @@ func loadGame(savegame : Dictionary):
 			var newAiId : int = Connection.oldNewIdDict[int(oldAiId)]
 			for stateName in savegame.worldStates[oldAiId]:
 				Ai.worldStates[newAiId].set_state(stateName, savegame.worldStates[oldAiId][stateName])
-
-# bugs
-# fleeing from combat cancels the next combat? happened once
-
-
-func debugSectios():
-	return
-	for peer in Connection.peers:
-#		occupySectio.rpc_id(peer, Ai.playerIds[0], "The Wise Men")
-		RpcCalls.occupySectio.rpc_id(peer, Data.id, "The Wise Men")
-	#	occupySectio.rpc_id(peer, 1, "Thieves")
-	#	occupySectio.rpc_id(peer, 1, "The Envious")
-	#	occupySectio.rpc_id(peer, 1, "Sugar Hill")
-
-	#	occupySectio.rpc_id(peer, 1, "Sugar Hill")
-	#	occupySectio.rpc_id(peer, 1, "Addiction")
-	#	occupySectio.rpc_id(peer, 1, "Sea Of Lard")
-	#	occupySectio.rpc_id(peer, 1, "The Insatiable")
-	#	occupySectio.rpc_id(peer, 1, "Tavern Of Endless Revelry")
-
-
-
-@rpc("any_peer", "call_local")
-func spawnDebugTroops1(ai : int = 0):
-	var sectio
-	if Connection.dedicatedServer:
-		return
-	if not ai == 0:
-		sectio = Decks.sectioNodes["Megalomaniacs"]
-		sectio = Decks.sectioNodes["Bad People"]
-		map.placeUnit(sectio, ai, Data.UnitType.Legion)
-		map.placeUnit(sectio, ai, Data.UnitType.Legion)
-		map.placeUnit(sectio, ai, Data.UnitType.Legion)
-		map.placeUnit(sectio, ai, Data.UnitType.Legion)
-		map.placeUnit(sectio, ai, Data.UnitType.Legion)
-		return
-#	return
-#	if Data.id == 1:
-	if Data.player.playerName == "Player 1":
-		sectio = Decks.sectioNodes["Bad People"]
-		map.placeUnit(sectio, Data.id, Data.UnitType.Lieutenant, "Shalmaneser")
-		map.placeUnit(sectio, Data.id, Data.UnitType.Legion)
-#		map.placeUnit(sectio, Data.id, Data.UnitType.Legion)
-#		map.placeUnit(sectio, Data.id, Data.UnitType.Legion)
-#		map.placeUnit(sectio, Data.id, Data.UnitType.Legion)
-		
-		
-#		await get_tree().create_timer(1.0).timeout
-#		map.recruitLieutenant = true
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map.recruitLieutenant = true
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map.recruitLieutenant = true
-#		map._on_sectioClicked(Decks.sectioNodes["Basement Of Wanton Killers"])
-#		map._on_sectioClicked(Decks.sectioNodes["Basement Of Wanton Killers"])
-#		map._on_sectioClicked(Decks.sectioNodes["Basement Of Wanton Killers"])
-#		map._on_sectioClicked(Decks.sectioNodes["Sowers Of Scandal"])
-#		map._on_sectioClicked(Decks.sectioNodes["Dogs Of War"])
-#		map._on_sectioClicked(Decks.sectioNodes["Megalomaniacs"])
-#		map._on_sectioClicked(Decks.sectioNodes["Spies"])
-	
-	else:
-		sectio = Decks.sectioNodes["Megalomaniacs"]
-		sectio = Decks.sectioNodes["Bad People"]
-		map.placeUnit(sectio, Data.UnitType.Legion)
-		map.placeUnit(sectio, Data.UnitType.Legion)
-		map.placeUnit(sectio, Data.UnitType.Legion)
-		map.placeUnit(sectio, Data.UnitType.Legion)
-		map.placeUnit(sectio, Data.UnitType.Legion)
-		
-#
-#		sectio = Decks.sectioNodes["Basement Of Wanton Killers"]
-#		map.placeUnit(sectio, Data.UnitType.Legion)
-#		sectio = Decks.sectioNodes["Dogs Of War"]
-#		map.placeUnit(sectio, Data.UnitType.Legion)
-#		sectio = Decks.sectioNodes["Sowers Of Scandal"]
-#		map.placeUnit(sectio, Data.UnitType.Legion)
-		
-#		sectio = Decks.sectioNodes["Bad People"]
-#		map.placeUnit(sectio, Data.UnitType.Lieutenant)
-#		map.placeUnit(sectio, Data.UnitType.Legion)
-#		map.placeUnit(sectio, Data.UnitType.Legion)
-#		map.placeUnit(sectio, Data.UnitType.Legion)
-#		map.placeUnit(sectio, Data.UnitType.Legion)
-#		map.recruitLieutenant = true
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map.recruitLieutenant = true
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map.recruitLieutenant = true
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map.recruitLieutenant = true
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map.recruitLieutenant = true
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map.recruitLieutenant = true
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map.recruitLieutenant = true
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map._on_sectioClicked(Decks.sectioNodes["Basement Of Wanton Killers"])
-#		map._on_sectioClicked(Decks.sectioNodes["Basement Of Wanton Killers"])
-#		map._on_sectioClicked(Decks.sectioNodes["Basement Of Wanton Killers"])
-		
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#
-#		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#
-		map._on_sectioClicked(Decks.sectioNodes["Liars"])
-#		map._on_sectioClicked(Decks.sectioNodes["Spies"])
-#		map._on_sectioClicked(Decks.sectioNodes["Traitors"])
-	return
-	map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#	map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#	map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#	map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-#	map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-	map.recruitLieutenant = true
-	map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-	map.recruitLieutenant = true
-	map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-	map.recruitLieutenant = true
-	map._on_sectioClicked(Decks.sectioNodes["Bad People"])
-	map.recruitLieutenant = true
-	map._on_sectioClicked(Decks.sectioNodes["Bad People"])
 
 
 func setupSaveGame(_playerIds : Array, _aiPlayersIds : Array):
@@ -521,7 +376,7 @@ func setup(_playerIds : Array, _aiPlayersIds : Array):
 #
 
 		#debug
-		debugSectios()
+		debug.debugSectios()
 
 		
 		var assignedCircles = []
@@ -618,20 +473,14 @@ func setup(_playerIds : Array, _aiPlayersIds : Array):
 	sequenceOfPlay(phase)
 
 
-
-func _on_incomeChanged(playerId : int):
-	var player = Data.players[playerId]
-	player.changeIncome()
-
-
 func sequenceOfPlay(phase : int = 0):
 	if debugTroops:
 		for playerId in Data.players.keys():
 			if Connection.peers.has(playerId):
-				spawnDebugTroops1.rpc_id(playerId)
+				debug.spawnDebugTroops1.rpc_id(playerId)
 				await get_tree().create_timer(0.5).timeout
 			else:
-				spawnDebugTroops1(playerId)
+				debug.spawnDebugTroops1(playerId)
 	
 	if Tutorial.tutorial and Tutorial.chapter == Tutorial.Chapter.Introduction:
 		Signals.tutorial.emit(Tutorial.Topic.Introduction, 
@@ -963,8 +812,6 @@ func sequenceOfPlay(phase : int = 0):
 		Save.saveGame()
 
 
-
-
 func _on_map_unit_placing_done():
 #	pass # Replace with function body.
 	print("done")
@@ -1032,128 +879,6 @@ func _on_start():
 	Server.request_start_game.rpc_id(1, Data.id)
 
 
-func _on_recruiting():
-	Signals.toggleRecruitLegionsButtonEnabled.emit(false)
-
-
-func _on_recruitingDone():
-	Signals.toggleEndPhaseButton.emit(true)
-	for sectioName in Data.player.sectiosWithoutEnemies:
-		Decks.sectioNodes[sectioName].changeClickable(false)
-	Data.player.checkPlayerSummoningCapabilities(0)
-
-
-func _on_recruit_legions():
-	Signals.recruiting.emit()
-	Data.changeState(Data.States.RECRUITING)
-	
-	Sectios.sectiosWithoutEnemiesClickable()
-	
-	while true:
-		var sectio = await Signals.sectioClicked
-		if sectio == null:
-			break
-		if Data.player.hasEnoughSouls(3):
-			map.placeUnit(sectio, Data.id, Data.UnitType.Legion)
-			var souls = Data.players[sectio.player].souls - 3
-			Signals.changeSouls.emit(sectio.player, souls)
-			if not Data.player.hasEnoughSouls(3):
-				break
-			
-			Sectios.sectiosLeftClickable(sectio.sectioName)
-			Signals.tutorialRead.emit()
-	
-	Data.changeState(Data.States.IDLE)
-	Signals.recruitingDone.emit()
-
-
-func _on_recruit_lieutenant(lieutenantName : String):
-	Signals.recruiting.emit()
-	Signals.toggleEndPhaseButton.emit(false)
-	Signals.toggleBuyArcanaCardButtonEnabled.emit(false)
-	
-	Sectios.sectiosClickable(Data.player.sectiosWithoutEnemies)
-	
-	var sectio = await Signals.sectioClicked
-	
-	map.placeUnit(sectio, Data.id, Data.UnitType.Lieutenant, lieutenantName)
-	
-	if Data.player.hasEnoughSouls(3):
-		Sectios.remainingSectiosClickable(Data.player.sectiosWithoutEnemies.duplicate())
-	else:
-		Sectios.sectiosUnclickable(Data.player.sectiosWithoutEnemies)
-	
-	Signals.recruitingDone.emit()
-	
-	if Tutorial.tutorial:
-		Signals.tutorialRead.emit()
-
-func _on_picked_demon(demonRank : int):
-	RpcCalls.pickedDemonForCombat.rpc_id(Connection.host, demonRank)
-
-
-# not used
-#func _on_pick_combat_hit_control_legions_hit(unitNames):
-#	pickedHitsForCombat.rpc_id(Connection.host, unitNames)
-
-
-
-
-
-func _on_buyArcanaCard():
-	Data.player.checkPlayerSummoningCapabilities(5)
-#	if Data.player.hasEnoughSouls(10):
-#		%BuyArcanaCardMarginContainer.show()
-#	else:
-#		%BuyArcanaCardMarginContainer.hide()
-	if Data.player.hasEnoughSouls(5):
-		var souls = Data.players[Data.id].souls - 5
-		Signals.changeSouls.emit(Data.id, souls)
-		RpcCalls.requestArcanaCardsToPick.rpc_id(Connection.host)
-
-
-func _on_removeLieutenantFromAvailableLieutenantsBox(lieutenantName : String):
-	Decks.availableLieutenants.erase(lieutenantName)
-	ui.removeLieutenantFromAvailableLieutenantsBox(lieutenantName)
-	
-
-
-func _on_demon_status_change(demonRank, status):
-	for peer in Connection.peers:
-		RpcCalls.demonStatusChange.rpc_id(peer, demonRank, status)
-	Signals.incomeChanged.emit(Data.id)
-
-
-func _on_no_demon_picked():
-	Data.pickDemon = false
-	RpcCalls.pickedDemonForCombat.rpc_id(Connection.host, 0)
-
-
-func _on_petition_approved(sectioName):
-#	confirmPetition.rpc_id(Connection.host, true)
-	var favors = Data.player.favors - 1
-	Signals.changeFavors.emit(Data.id, favors)
-	for peer in Connection.peers:
-		RpcCalls.occupySectio.rpc_id(peer, Data.id, sectioName)
-
-
-func _on_peititonsDone():
-	RpcCalls.petitionsDone.rpc_id(Connection.host)
-
-
-func _on_map_pick_unit(sectio):
-	ui.pickUnitToMove(sectio)
-
-
-func _on_taming_hellhound():
-	var result = Dice.roll(1)
-	if result[0] <= 4:
-		pass
-	elif result[0] == 5:
-		pass
-	elif result[0] == 6:
-		pass
-#		map.removeUnit.rpc_id(peer, unitName)
 
 
 func _on_proceed():
