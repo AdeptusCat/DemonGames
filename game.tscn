@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cccosrsc7gc5w"]
+[gd_scene load_steps=23 format=3 uid="uid://cccosrsc7gc5w"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_e2grr"]
 [ext_resource type="AudioStream" uid="uid://dsjykmjg2eiw6" path="res://assets/audio/pass.wav" id="3_2ki4d"]
@@ -13,6 +13,13 @@
 [ext_resource type="Script" path="res://camera.gd" id="11_oe2ei"]
 [ext_resource type="PackedScene" uid="uid://bs53uu056xcwu" path="res://sequence_of_play.tscn" id="12_hn5jr"]
 [ext_resource type="Script" path="res://debug.gd" id="13_0j48s"]
+[ext_resource type="Script" path="res://phases/hell.gd" id="14_qsi5j"]
+[ext_resource type="Script" path="res://phases/soul.gd" id="15_hlf63"]
+[ext_resource type="Script" path="res://phases/summoning.gd" id="16_nqqpm"]
+[ext_resource type="Script" path="res://phases/action.gd" id="17_w1lge"]
+[ext_resource type="Script" path="res://phases/combat.gd" id="18_j7r7q"]
+[ext_resource type="Script" path="res://phases/petition.gd" id="19_gjj7y"]
+[ext_resource type="Script" path="res://phases/end.gd" id="20_orwt7"]
 
 [sub_resource type="Gradient" id="Gradient_s7p8l"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
@@ -97,3 +104,24 @@ max_polyphony = 4
 
 [node name="Debug" type="Node" parent="."]
 script = ExtResource("13_0j48s")
+
+[node name="Hell" type="Node" parent="."]
+script = ExtResource("14_qsi5j")
+
+[node name="Soul" type="Node" parent="."]
+script = ExtResource("15_hlf63")
+
+[node name="Summoning" type="Node" parent="."]
+script = ExtResource("16_nqqpm")
+
+[node name="Action" type="Node" parent="."]
+script = ExtResource("17_w1lge")
+
+[node name="Combat" type="Node" parent="."]
+script = ExtResource("18_j7r7q")
+
+[node name="Petition" type="Node" parent="."]
+script = ExtResource("19_gjj7y")
+
+[node name="End" type="Node" parent="."]
+script = ExtResource("20_orwt7")
