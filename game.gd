@@ -80,13 +80,7 @@ func _ready():
 
 
 func _on_allPlayersReady():
-	for peer in Connection.peers:
-		for _peer in Connection.peers:
-			map.addSpawner.rpc_id(_peer, peer)
-	if Save.savegame.size() > 0:
-		setupSaveGame(Connection.peers, Connection.aiPlayersId)
-	else:
-		setup(Connection.peers, Connection.aiPlayersId)
+	setup(Connection.peers, Connection.aiPlayersId)
 
 
 func saveGame():
@@ -135,76 +129,64 @@ func setup(_playerIds : Array, _aiPlayersIds : Array):
 	
 	playerIds = setupAiPlayer(playerIds, _aiPlayersIds)
 	
-	addAiSpawner()
-	
-	setupColors(playerIds)
+	addSpawner(playerIds)
 	
 	setupMouseLights()
 	
-	fillAvailableLieutenantsBox()
+	if Save.savegame.size() == 0:
+		setupColors(playerIds)
+		setupSouls()
+		setupFavors()
+	else:
+		setupColorsFromSavegame(playerIds)
+		setupSoulsFromSavegame()
+		setupFavorsFromSavegame()
 	
-	setupSouls()
-	setupFavors()
 	
 	if not Tutorial.tutorial:
-		setupDemons()
-		confirmStartDemon()
+		if Save.savegame.size() == 0:
+			setupDemons()
+			confirmStartDemon()
 		
-		#debug
-		debug.debugSectios()
-		
-		setupSectios()
-		
-		setupStartLegions()
+			#debug
+			debug.debugSectios()
+			
+			setupSectios()
+			
+			fillAvailableLieutenantsBox()
+			
+			setupStartLegions()
+			
+			for peer in Connection.peers:
+				RpcCalls.updateRankTrack.rpc_id(peer, rankTrackNode.rankTrack)
+			
+			var phase : int = 0
+			if Tutorial.tutorial:
+				phase = setupPhaseforTutorial()
+			
+			sequenceOfPlay(phase)
+		else:
+			setupDemonsFromSavegame()
 	
-	for peer in Connection.peers:
-		RpcCalls.updateRankTrack.rpc_id(peer, rankTrackNode.rankTrack)
-	
-	var phase : int = 0
-	if Tutorial.tutorial:
-		phase = setupPhaseforTutorial()
-	
-	sequenceOfPlay(phase)
-
-
-func setupSaveGame(_playerIds : Array, _aiPlayersIds : Array):
-	var playerIds : Array = _playerIds.duplicate()
-	Signals.phaseReminder.emit("Start Phase")
-	
-	playerIds = setupAiPlayer(playerIds, _aiPlayersIds)
-	
-	addAiSpawner()
-	
-	var playerNameIdDict = {}
-	
-	setupColorsFromSavegame(playerIds, playerNameIdDict)
-	
-	setupMouseLights()
-	
-	setupSoulsFromSavegame()
-	setupFavorsFromSavegame()
-	
-	setupDemonsFromSavegame()
-	
-	setupSectiosFromSavegame()
-	
-	setupLegionsFromSavegame()
-	setupLieutenantsFromSavegame()
-	fillAvailableLieutenantsBox()
-	
-	setupArcanaCardsFromSavegame()
-
-	for peer in Connection.peers:
-		RpcCalls.toogleWaitForPlayer.rpc_id(peer, 66, true)
-	if not Settings.skipScreens:
-		for peer in Connection.peers:
-			await Signals.proceedSignal
-	for peer in Connection.peers:
-		RpcCalls.toogleWaitForPlayer.rpc_id(peer, 66, false)
-	
-	if Save.savegame.game:
-		loadGame(Save.savegame.game)
-	sequenceOfPlay(Data.phase)
+			setupSectiosFromSavegame()
+			
+			setupLegionsFromSavegame()
+			setupLieutenantsFromSavegame()
+			fillAvailableLieutenantsBox()
+			
+			setupArcanaCardsFromSavegame()
+			
+			for peer in Connection.peers:
+				RpcCalls.toogleWaitForPlayer.rpc_id(peer, 66, true)
+			if not Settings.skipScreens:
+				for peer in Connection.peers:
+					await Signals.proceedSignal
+			for peer in Connection.peers:
+				RpcCalls.toogleWaitForPlayer.rpc_id(peer, 66, false)
+			
+			if Save.savegame.game:
+				loadGame(Save.savegame.game)
+			sequenceOfPlay(Data.phase)
 
 
 func setupAiPlayer(playerIds : Array, aiPlayersIds : Array) -> Array:
@@ -215,13 +197,13 @@ func setupAiPlayer(playerIds : Array, aiPlayersIds : Array) -> Array:
 	return playerIds
 
 
-func addAiSpawner() -> void:
-	for id in Ai.playerIds:
+func addSpawner(playerIds : Array) -> void:
+	for id in playerIds:
 		for peer in Connection.peers:
 			map.addSpawner.rpc_id(peer, id)
 
 
-func setupColorsFromSavegame(playerIds : Array, playerNameIdDict : Dictionary) -> Dictionary:
+func setupColorsFromSavegame(playerIds : Array) -> void:
 	var colorNamesLeft = Data.colorsNames.duplicate()
 	colorNamesLeft.remove_at(0) # remove "Random" color
 	colorNamesLeft.shuffle()
@@ -236,8 +218,6 @@ func setupColorsFromSavegame(playerIds : Array, playerNameIdDict : Dictionary) -
 		# json keys are always strings
 		Connection.oldNewIdDict[loadedId] = id
 		Save.savegame.players[id] = Save.savegame.players[str(loadedId)]
-		playerNameIdDict[newName] = id
-		playerNameIdDict[loadedName] = id
 		
 		for peer in Connection.peers:
 			RpcCalls.addPlayer.rpc_id(peer, id)
@@ -251,7 +231,6 @@ func setupColorsFromSavegame(playerIds : Array, playerNameIdDict : Dictionary) -
 		for peer in Connection.peers:
 			RpcCalls.changeColor.rpc_id(peer, id, colorName)
 			RpcCalls.changePlayerName.rpc_id(peer, id, Connection.playerIdNamesDict[id])
-	return playerNameIdDict
 
 
 func setupColors(playerIds : Array) -> void:
