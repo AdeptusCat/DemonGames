@@ -13,11 +13,8 @@ var turn : int = 1
 var playerCount = 1
 var rankTrack
 
-
-
 signal pickedHits(unitNames)
 signal test
-
 
 var skipHell = false
 var skipSouls = false
@@ -30,7 +27,6 @@ var skipUnitPlacing = false
 var debugTroops = false
 
 var loadSaveGame = false
-
 
 
 func _ready():
@@ -133,42 +129,99 @@ func loadGame(savegame : Dictionary):
 				Ai.worldStates[newAiId].set_state(stateName, savegame.worldStates[oldAiId][stateName])
 
 
+func setup(_playerIds : Array, _aiPlayersIds : Array):
+	var playerIds : Array = _playerIds.duplicate()
+	Signals.phaseReminder.emit("Start Phase")
+	
+	playerIds = setupAiPlayer(playerIds, _aiPlayersIds)
+	
+	addAiSpawner()
+	
+	setupColors(playerIds)
+	
+	setupMouseLights()
+	
+	fillAvailableLieutenantsBox()
+	
+	setupSouls()
+	setupFavors()
+	
+	if not Tutorial.tutorial:
+		setupDemons()
+		confirmStartDemon()
+		
+		#debug
+		debug.debugSectios()
+		
+		setupSectios()
+		
+		setupStartLegions()
+	
+	for peer in Connection.peers:
+		RpcCalls.updateRankTrack.rpc_id(peer, rankTrackNode.rankTrack)
+	
+	var phase : int = 0
+	if Tutorial.tutorial:
+		phase = setupPhaseforTutorial()
+	
+	sequenceOfPlay(phase)
+
+
 func setupSaveGame(_playerIds : Array, _aiPlayersIds : Array):
 	var playerIds : Array = _playerIds.duplicate()
 	Signals.phaseReminder.emit("Start Phase")
 	
-	for aiPlayerId in _aiPlayersIds:
-		Ai.playerIds.append(aiPlayerId)
-		Ai.addWorldState(aiPlayerId)
-#		var aiId = Ai.addAiPlayer()
-		playerIds.append(aiPlayerId)
-		print("setup player ", aiPlayerId, playerIds)
+	playerIds = setupAiPlayer(playerIds, _aiPlayersIds)
 	
-	for id in Ai.playerIds:
-		for _peer in Connection.peers:
-			map.addSpawner.rpc_id(_peer, id)
+	addAiSpawner()
 	
 	var playerNameIdDict = {}
-#	for playerId in playerIds:
-#		print("start phase ",Connection.playerIdNamesDict)
-#		var newName = Connection.playerIdInfoDict[playerId]["playerName"]
-#		var loadedName = Connection.playerIdInfoDict[playerId]["loadedPlayerName"]
-#		var loadedId = Connection.playerIdInfoDict[playerId]["loadedPlayerId"]
-#		Save.savegame.players[newName] = Save.savegame.players[loadedName]
-#		print(newName, " ", loadedName, " ", Save.savegame.players)
-#		for peer in Connection.peers:
-#			addPlayer.rpc_id(peer, playerId, Save.savegame.players[newName])
-#			changeColor.rpc_id(peer, playerId, Save.savegame.players[loadedName].colorName)
-#			changePlayerName.rpc_id(peer, playerId, newName)
-#		playerNameIdDict[newName] = playerId
-#		playerNameIdDict[loadedName] = playerId
-#		Save.savegame.players[playerId] = Save.savegame.players[loadedName]
 	
+	setupColorsFromSavegame(playerIds, playerNameIdDict)
 	
+	setupMouseLights()
 	
-		
-#	var playerCount = 1
+	setupSoulsFromSavegame()
+	setupFavorsFromSavegame()
 	
+	setupDemonsFromSavegame()
+	
+	setupSectiosFromSavegame()
+	
+	setupLegionsFromSavegame()
+	setupLieutenantsFromSavegame()
+	fillAvailableLieutenantsBox()
+	
+	setupArcanaCardsFromSavegame()
+
+	for peer in Connection.peers:
+		RpcCalls.toogleWaitForPlayer.rpc_id(peer, 66, true)
+	if not Settings.skipScreens:
+		for peer in Connection.peers:
+			await Signals.proceedSignal
+	for peer in Connection.peers:
+		RpcCalls.toogleWaitForPlayer.rpc_id(peer, 66, false)
+	
+	if Save.savegame.game:
+		loadGame(Save.savegame.game)
+	sequenceOfPlay(Data.phase)
+
+
+func setupAiPlayer(playerIds : Array, aiPlayersIds : Array) -> Array:
+	for aiPlayerId in aiPlayersIds:
+		Ai.playerIds.append(aiPlayerId)
+		Ai.addWorldState(aiPlayerId)
+		playerIds.append(aiPlayerId)
+	return playerIds
+
+
+func addAiSpawner() -> void:
+	for id in Ai.playerIds:
+		for peer in Connection.peers:
+			map.addSpawner.rpc_id(peer, id)
+
+
+func setupColorsFromSavegame(playerIds : Array, playerNameIdDict : Dictionary) -> Dictionary:
 	var colorNamesLeft = Data.colorsNames.duplicate()
 	colorNamesLeft.remove_at(0) # remove "Random" color
 	colorNamesLeft.shuffle()
@@ -198,18 +251,74 @@ func setupSaveGame(_playerIds : Array, _aiPlayersIds : Array):
 		for peer in Connection.peers:
 			RpcCalls.changeColor.rpc_id(peer, id, colorName)
 			RpcCalls.changePlayerName.rpc_id(peer, id, Connection.playerIdNamesDict[id])
-	
+	return playerNameIdDict
+
+
+func setupColors(playerIds : Array) -> void:
+	var colorNamesLeft = Data.colorsNames.duplicate()
+	colorNamesLeft.remove_at(0) # remove "Random" color
+	colorNamesLeft.shuffle()
+	for colorName in Connection.playerIdColorDict.values():
+		if colorNamesLeft.has(colorName):
+			colorNamesLeft.erase(colorName)
+	for id in playerIds:
+		for peer in Connection.peers:
+			RpcCalls.addPlayer.rpc_id(peer, id)
+		var colorName : String = Connection.playerIdColorDict[id]
+		if colorName == Data.colorsNames[0]:
+			colorName = colorNamesLeft.pop_back()
+		for peer in Connection.peers:
+			RpcCalls.changeColor.rpc_id(peer, id, colorName)
+			RpcCalls.changePlayerName.rpc_id(peer, id, Connection.playerIdNamesDict[id])
+
+
+func setupMouseLights():
 	for peer in Connection.peers:
 		RpcCalls.initMouseLights.rpc_id(peer)
 	
+	
+func fillAvailableLieutenantsBox():
+	for i in range(3):
+		var lieutenantName : String = Decks.getRandomCard("lieutenant")
+		for peer in Connection.peers:
+			RpcCalls.fillAvailableLieutenantsBox.rpc_id(peer, lieutenantName)
+
+func setupSoulsFromSavegame():
 	for playerId in Data.players:
 		var player = Data.players[playerId]
-#		# 4 legions and souls/favors
-		print("setup load")
 		Signals.changeSouls.emit(playerId, Save.savegame.players[playerId].souls)
+
+
+func setupSouls():
+	for playerId in Data.players:
+		var player = Data.players[playerId]
+		var souls = player.souls + 10
+		Signals.changeSouls.emit(playerId, souls)
+
+
+func setupFavorsFromSavegame():
+	for playerId in Data.players:
+		var player = Data.players[playerId]
 		Signals.changeFavors.emit(playerId, Save.savegame.players[playerId].favors)
 		Signals.changeDisfavors.emit(playerId, Save.savegame.players[playerId].disfavors)
-	
+
+
+func setupFavors():
+	for playerId in Data.players:
+		var player = Data.players[playerId]
+		var favors = player.favors + 1
+		Signals.changeFavors.emit(playerId, favors)
+
+
+func setupDemons():
+	for playerId in Data.players:
+		for i in range(3):
+			var nr : String = Decks.getRandomCard("demon")
+			for peer in Connection.peers:
+				RpcCalls.addDemon.rpc_id(peer, playerId, nr)
+
+
+func setupDemonsFromSavegame():
 	for playerId in Data.players:
 		# 5 demons
 		for demonName in Save.savegame.players[playerId].demons:
@@ -218,12 +327,122 @@ func setupSaveGame(_playerIds : Array, _aiPlayersIds : Array):
 			if demonName is String:
 				for peer in Connection.peers:
 					RpcCalls.addDemon.rpc_id(peer, playerId, demonName + ".tres", Save.savegame.demons[demonName])
-	
+
+
+func confirmStartDemon():
+	for peer in Connection.peers:
+		RpcCalls.toogleWaitForPlayer.rpc_id(peer, 0, true)
+	if not Settings.skipScreens:
+		for peer in Connection.peers:
+			ui.confirmStartDemon.rpc_id(peer)
+		for peer in Connection.peers:
+			await Signals.proceedSignal
+	for peer in Connection.peers:
+		RpcCalls.toogleWaitForPlayer.rpc_id(peer, 0, false)
+
+
+func setupSectios():
+	var assignedCircles = []
+	var assignedQuarters = []
+	for playerId in Data.players:
+		var quarters = [0, 1, 2, 3, 4]
+		quarters.shuffle()
+		var playersAssignedCircles = []
+		var circles = []
+		for nr in range(9):
+			circles.append(nr)
+		for quarterNr in range(4):
+			var quarter = quarters.pop_back()
+			var circle = randi_range(0, 8)
+			while true:
+				var free = true
+				for index in assignedCircles.size():
+					var assignedCircle = assignedCircles[index]
+					var assignedQuarter = assignedQuarters[index]
+					if assignedCircle == circle and assignedQuarter == quarter:
+						free = false
+				if playersAssignedCircles.has(circle):
+					free = false
+				if free:
+					break
+				else:
+					circle = randi_range(0, 8)
+			playersAssignedCircles.append(circle)
+			assignedQuarters.append(quarter)
+			assignedCircles.append(circle)
+			var sectio : Sectio = Decks.sectios[circle][quarter]
+			for peer in Connection.peers:
+				RpcCalls.occupySectio.rpc_id(peer, playerId, sectio.sectioName)
+
+
+func setupSectiosFromSavegame():
 	for playerId in Data.players:
 		for sectioName in Save.savegame.players[playerId].sectios:
 			for peer in Connection.peers:
 				RpcCalls.occupySectio.rpc_id(peer, playerId, sectioName)
-	
+
+
+func setupArcanaCardsFromSavegame():
+	for playerId in Data.players:
+#		# 9 arcana cards
+		for cardName in Save.savegame.players[playerId].arcanaCards:
+			# remove card from deck
+			Decks.getSpecificCard("arcana", cardName)
+			for peer in Connection.peers:
+				RpcCalls.addArcanaCard.rpc_id(peer, playerId, cardName)
+	for peer in Connection.peers:
+		RpcCalls.showArcanaCardsContainer.rpc_id(peer)
+		RpcCalls.showStartScreen.rpc_id(peer)
+
+
+
+func setupStartLegions():
+	if not skipUnitPlacing:
+		var playerIds : Array = Connection.peers.duplicate()
+		playerIds.append_array(Ai.playerIds.duplicate())
+		playerIds.shuffle()
+		for playerId in playerIds:
+			if playerId > 0:
+				playerPlaceStartLegion(playerId)
+			else:
+				aiPlaceStartLegion(playerId)
+
+
+func aiPlaceStartLegion(id : int) -> void:
+	var bestSectio : Sectio = Ai.getBestStartSectio(id)
+	map.placeUnit(bestSectio, id, Data.UnitType.Legion)
+
+
+func playerPlaceStartLegion(playerId : int) -> void:
+	map.placeFirstLegion.rpc_id(playerId)
+	for peer in Connection.peers:
+		RpcCalls.toogleWaitForPlayer.rpc_id(peer, playerId, true)
+	for peer in Connection.peers:
+		ui.updateRankTrackCurrentPlayer.rpc_id(peer, playerId)
+	await map.unitPlacingDone
+	for peer in Connection.peers:
+		RpcCalls.toogleWaitForPlayer.rpc_id(peer, playerId, false)
+
+
+func setupPhaseforTutorial() -> int:
+	var phase : int = 0
+	match Tutorial.chapter:
+		Tutorial.Chapter.Introduction:
+			phase = 0
+		Tutorial.Chapter.Soul:
+			phase = 1
+		Tutorial.Chapter.Summoning:
+			phase = 2
+		Tutorial.Chapter.Actions:
+			phase = 3
+		Tutorial.Chapter.Combat:
+			phase = 4
+		Tutorial.Chapter.Petitions:
+			phase = 5
+	return phase
+
+
+func setupLegionsFromSavegame():
 	for legion in Save.savegame.legions.values():
 #		loadUnit.rpc_id(playerNameIdDict[legion.playerName], legion.occupiedSectio)
 		var sectio = Decks.sectioNodes[legion.occupiedSectio]
@@ -240,7 +459,9 @@ func setupSaveGame(_playerIds : Array, _aiPlayersIds : Array):
 				print("spawning unit for ", playerId, " sending to ",peer)
 				map.spawnUnit.rpc_id(peer, sectio.sectioName, legion.unitNr, playerId, Data.UnitType.Legion)
 				map.updateTroopInSectio.rpc_id(peer, sectio.sectioName, sectio.troops)
-	
+
+
+func setupLieutenantsFromSavegame():
 	for lieutenant in Save.savegame.lieutenants.values():
 		# doesnt need to return the name, for its already known
 		# but it needs to be removed from the deck
@@ -260,217 +481,6 @@ func setupSaveGame(_playerIds : Array, _aiPlayersIds : Array):
 					continue
 				map.spawnUnit.rpc_id(peer, lieutenant.occupiedSectio, lieutenant.unitNr, playerId, Data.UnitType.Lieutenant, lieutenant.unitName)
 				map.updateTroopInSectio.rpc_id(peer, sectio.sectioName, sectio.troops)
-		# old
-#		for peer in Connection.peers:
-#			map.spawnLieutenant.rpc_id(peer, lieutenant.occupiedSectio, lieutenant.unitNr, lieutenant.unitName, playerNameIdDict[lieutenant.playerName])
-	
-	# fill Lieutenants Box after spawning the players Lieutenants
-	for i in range(3):
-		var lieutenantName = Decks.getRandomCard("lieutenant")
-		# might be null if there are no Lieutenants left
-		if lieutenantName:
-			for peer in Connection.peers:
-				RpcCalls.fillAvailableLieutenantsBox.rpc_id(peer, lieutenantName)
-		
-	for playerId in Data.players:
-#		# 9 arcana cards
-		for cardName in Save.savegame.players[playerId].arcanaCards:
-			# remove card from deck
-			Decks.getSpecificCard("arcana", cardName)
-			for peer in Connection.peers:
-				RpcCalls.addArcanaCard.rpc_id(peer, playerId, cardName)
-	for peer in Connection.peers:
-		RpcCalls.showArcanaCardsContainer.rpc_id(peer, )
-		RpcCalls.showStartScreen.rpc_id(peer, )
-
-	for peer in Connection.peers:
-		RpcCalls.toogleWaitForPlayer.rpc_id(peer, 66, true)
-	if not Settings.skipScreens:
-		for peer in Connection.peers:
-			await Signals.proceedSignal
-	for peer in Connection.peers:
-		RpcCalls.toogleWaitForPlayer.rpc_id(peer, 66, false)
-	
-	if Save.savegame.game:
-		loadGame(Save.savegame.game)
-	sequenceOfPlay(Data.phase)
-
-
-func setup(_playerIds : Array, _aiPlayersIds : Array):
-	var playerIds : Array = _playerIds.duplicate()
-	Signals.phaseReminder.emit("Start Phase")
-	
-	for aiPlayerId in _aiPlayersIds:
-		Ai.playerIds.append(aiPlayerId)
-		Ai.addWorldState(aiPlayerId)
-#		var aiId = Ai.addAiPlayer()
-		playerIds.append(aiPlayerId)
-		print("setup player ", aiPlayerId, playerIds)
-	
-	for id in Ai.playerIds:
-		for _peer in Connection.peers:
-			map.addSpawner.rpc_id(_peer, id)
-	
-#	var playerCount = 1
-	var colorNamesLeft = Data.colorsNames.duplicate()
-	colorNamesLeft.remove_at(0) # remove "Random" color
-	colorNamesLeft.shuffle()
-	for colorName in Connection.playerIdColorDict.values():
-		if colorNamesLeft.has(colorName):
-			colorNamesLeft.erase(colorName)
-	for id in playerIds:
-		for peer in Connection.peers:
-			RpcCalls.addPlayer.rpc_id(peer, id)
-		var colorName : String = Connection.playerIdColorDict[id]
-#		if Connection.playerIdColorDict.has(id):
-#			colorName = Connection.playerIdColorDict[id]
-#		else:
-#			colorName = colorNamesLeft.pop_back()
-		if colorName == Data.colorsNames[0]:
-			colorName = colorNamesLeft.pop_back()
-		for peer in Connection.peers:
-			RpcCalls.changeColor.rpc_id(peer, id, colorName)
-			RpcCalls.changePlayerName.rpc_id(peer, id, Connection.playerIdNamesDict[id])
-	
-	for peer in Connection.peers:
-		RpcCalls.initMouseLights.rpc_id(peer)
-	
-	for i in range(3):
-		var lieutenantName : String = Decks.getRandomCard("lieutenant")
-		for peer in Connection.peers:
-			RpcCalls.fillAvailableLieutenantsBox.rpc_id(peer, lieutenantName)
-	
-	for playerId in Data.players:
-		var player = Data.players[playerId]
-#		# 4 legions and souls/favors		
-#		player.souls = player.souls + 10add
-#		player.favors = player.favors + 1
-		print("setup ", playerId, " ", player.souls)
-		var souls = player.souls + 10
-		var favors = player.favors + 1
-		Signals.changeSouls.emit(playerId, souls)
-		Signals.changeFavors.emit(playerId, favors)
-	
-	if not Tutorial.tutorial:
-		for playerId in Data.players:
-			# 5 demonsactionPhase(
-			for i in range(3):
-				var nr : String = Decks.getRandomCard("demon")
-				print("demon ",nr)
-				
-				for peer in Connection.peers:
-					RpcCalls.addDemon.rpc_id(peer, playerId, nr)
-	
-	
-		for peer in Connection.peers:
-			RpcCalls.toogleWaitForPlayer.rpc_id(peer, 0, true)
-		if not Settings.skipScreens:
-			for peer in Connection.peers:
-				ui.confirmStartDemon.rpc_id(peer)
-			for peer in Connection.peers:
-				print("waiting for peer")
-				await Signals.proceedSignal
-		for peer in Connection.peers:
-			RpcCalls.toogleWaitForPlayer.rpc_id(peer, 0, false)
-	#		# 6 arrange the Rank Track
-#
-
-		#debug
-		debug.debugSectios()
-
-		
-		var assignedCircles = []
-		var assignedQuarters = []
-		for playerId in Data.players:
-	#		# 7 sectios
-	#		for i in range(4):
-	#			var sectio = Decks.getRandomCard("sectio")
-	#			occupySectio.rpc_id(peer, playerId, sectio)
-			
-			var quarters = [0, 1, 2, 3, 4]
-			quarters.shuffle()
-			var playersAssignedCircles = []
-			var circles = []
-			for nr in range(9):
-				circles.append(nr)
-			for quarterNr in range(4):
-				var quarter = quarters.pop_back()
-				var circle = randi_range(0, 8)
-				while true:
-					var free = true
-					for index in assignedCircles.size():
-						var assignedCircle = assignedCircles[index]
-						var assignedQuarter = assignedQuarters[index]
-						if assignedCircle == circle and assignedQuarter == quarter:
-							free = false
-					if playersAssignedCircles.has(circle):
-						free = false
-					if free:
-						break
-					else:
-						circle = randi_range(0, 8)
-				playersAssignedCircles.append(circle)
-				assignedQuarters.append(quarter)
-				assignedCircles.append(circle)
-				var sectio : Sectio = Decks.sectios[circle][quarter]
-				for peer in Connection.peers:
-					RpcCalls.occupySectio.rpc_id(peer, playerId, sectio.sectioName)
-
-		# debug
-#		if playerId == 1:
-#			for i in range(Decks.sectioCards.size()-3):
-#				var sectio = Decks.getRandomCard("sectio")
-#				occupySectio.rpc_id(peer, playerId, sectio)
-#		else:
-#			for i in range(3):
-#				var sectio = Decks.getRandomCard("sectio")
-#				occupySectio.rpc_id(peer, playerId, sectio)
-		
-	if not Tutorial.tutorial:
-		for id in Ai.playerIds:
-			var bestSectio : Sectio = Ai.getBestStartSectio(id)
-			map.placeUnit(bestSectio, id, Data.UnitType.Legion)
-
-	
-	print("place units ", Connection.peers)
-	if not Tutorial.tutorial:
-		if not skipUnitPlacing:
-			var peers : Array = Connection.peers.duplicate()
-			peers.shuffle()
-			for playerId in peers:
-				# 8 place one legion
-				map.placeFirstLegion.rpc_id(playerId)
-				for peer in peers:
-					RpcCalls.toogleWaitForPlayer.rpc_id(peer, playerId, true)
-				for peer in Connection.peers:
-					ui.updateRankTrackCurrentPlayer.rpc_id(peer, playerId)
-				await map.unitPlacingDone
-				for peer in peers:
-					RpcCalls.toogleWaitForPlayer.rpc_id(peer, playerId, false)
-		
-#	return
-		# debug
-#		map._on_sectioClicked(Decks.sectioNodes[player.sectios[0]])
-	
-	for peer in Connection.peers:
-		RpcCalls.updateRankTrack.rpc_id(peer, rankTrackNode.rankTrack)
-	
-	var phase : int = 0
-	match Tutorial.chapter:
-		Tutorial.Chapter.Introduction:
-			phase = 0
-		Tutorial.Chapter.Soul:
-			phase = 1
-		Tutorial.Chapter.Summoning:
-			phase = 2
-		Tutorial.Chapter.Actions:
-			phase = 3
-		Tutorial.Chapter.Combat:
-			phase = 4
-		Tutorial.Chapter.Petitions:
-			phase = 5
-		
-	sequenceOfPlay(phase)
 
 
 func sequenceOfPlay(phase : int = 0):

@@ -56,12 +56,11 @@ func StartServer():
 				network.peer_disconnected.connect(func(id): peer_disconnected(id))
 				serverActive = true
 				
-#				print(_on_incomeChanged.get_method())
-#				sendFunction(rpcFunction)
-#				sendFunction(rpcFunction.bind("testString"))
+				print(rpcFunction.get_method())
+				sendFunction(rpcFunction, rpcFunction.bind("testString"))
 
 
-func sendFunction(f : Callable):
+func sendFunction(f : Callable, bindingF : Callable):
 	print(f)
 	print(f.get_method())
 	var args : Array = f.get_bound_arguments()
