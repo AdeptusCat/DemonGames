@@ -1,6 +1,20 @@
 extends Node
 
 
+func getSectiosWithoutEnemies(sectios : Array, playerId : int) -> Array:
+	var sectiosWithoutEnemies : Array = []
+	for sectioName in sectios:
+		var sectio : Sectio = Decks.sectioNodes[sectioName]
+		var enemyInSectio = false
+		for unitName in sectio.troops:
+			if not Data.troops[unitName].triumphirate == playerId:
+				enemyInSectio = true
+				break
+		if not enemyInSectio:
+			sectiosWithoutEnemies.append(sectio)
+	return sectiosWithoutEnemies
+
+
 func sectioClickable(sectioName : String):
 	Decks.sectioNodes[sectioName].changeClickable(true)
 

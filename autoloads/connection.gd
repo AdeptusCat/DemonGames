@@ -31,6 +31,13 @@ func _ready():
 	Signals.returnToMainMenu.connect(_on_returnToMainMenu)
 
 
+func isAiPlayer(playerId) -> bool:
+	if playerId < 0:
+		return true
+	else:
+		return false
+
+
 func sendToPeers(function : Callable):
 	for peer in Connection.peers:
 		function.rpc_id(peer)
