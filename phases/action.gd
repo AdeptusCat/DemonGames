@@ -59,35 +59,17 @@ func tutorialStart(rankTrack, rankTrackNode) -> void:
 	Signals.tutorial.emit(Tutorial.Topic.Phase, "This is the Action Phase. \nHere the Demons of the Players will take turns to march Legions through Hell, Walk with them on the Earth or do other feindish things.")
 	await Signals.tutorialRead
 
-
-func tutorial1(tutorialSequence : int) -> void:
-	if tutorialSequence == 0:
-		Signals.tutorial.emit(Tutorial.Topic.NextDemon, "The first Demon is 'Beelzebub'.")
-		await Signals.tutorialRead
-		
-		Signals.tutorial.emit(Tutorial.Topic.ClickDemonOnRankTrack, "To see in which order the Demons take their actions, \nhover the mouse over the Rank Track to the right. \nHere you see that the current Demon is 'Beelzebub'. \nClick on its name to have a closer look at its Attributes.")
-		await Signals.tutorialRead
-
-		Signals.tutorial.emit(Tutorial.Topic.DemonDetails, "On the bottom of the Details Card are the important Attributes: \nThe Skulls show the number of Legions/Lieutenants that can be moved by the Demon. They are also relevant in Combat. \nThe Hearts show the ability to collect Souls/Favors on Earth and influence other Units in Hell. \nThe status shows if the Demon is currently in Hell, on Earth or incapacitated. \nThe Sex symbol next to the Demon's name is relevant for specific Arcana/Hell cards and events. \nThe Rank is relevant to the position of the Demon in the Rank Track at the beginning of the Game. \nClick on the Card to close it.")
-		await Signals.tutorialRead
-
-		Signals.tutorial.emit(Tutorial.Topic.PassAction, "On the left you can see the various Actions the Demon can perform. \nSometimes its preferable to make an action after an enemy Demon. \nTo do so, click the Pass Button.")
-		await Signals.tutorialRead
-
-		Signals.tutorial.emit(Tutorial.Topic.Pass, "Now cast a Pass Spell by clicking on the Card. \nObserve the Rank Track to see the change in the Order.")
-	
+func tutorial2(tutorialSequence : int, nextDemonRank : int, playerId : int, map) -> void:
 	if tutorialSequence == 1:
 		for peer in Connection.peers:
 			RpcCalls.demonAction.rpc_id(peer, nextDemonRank, "Marching")
-		
-#					Signals.tutorial.emit(Tutorial.Topic.NextDemon, "The next Demon is 'Ashtaroth'.")
-#					await Signals.tutorialRead
 		
 		Signals.tutorial.emit(Tutorial.Topic.MarchEnemy, "The enemy Demon 'Ashtaroth' chose to use the March Action. Lets see where it will move its Legion to.")
 		await Signals.tutorialRead
 		
 		var sectioToMoveTo : Sectio = Decks.sectioNodes["Megalomaniacs"]
 		Ai.worldStates[playerId].set_state("sectio_to_move_to", sectioToMoveTo)
+		var player : Player = Data.players[playerId]
 		var unitsWithoutPlan : Array = player.troops.values()
 		var unit : Unit = unitsWithoutPlan.pop_back()
 		var occupiedSectio : Sectio = Decks.sectioNodes[unit.occupiedSectio]
@@ -171,6 +153,25 @@ func tutorial1(tutorialSequence : int) -> void:
 			
 				occupiedSectio = nextSectio
 	
+
+
+func tutorial1(tutorialSequence : int) -> void:
+	if tutorialSequence == 0:
+		Signals.tutorial.emit(Tutorial.Topic.NextDemon, "The first Demon is 'Beelzebub'.")
+		await Signals.tutorialRead
+		
+		Signals.tutorial.emit(Tutorial.Topic.ClickDemonOnRankTrack, "To see in which order the Demons take their actions, \nhover the mouse over the Rank Track to the right. \nHere you see that the current Demon is 'Beelzebub'. \nClick on its name to have a closer look at its Attributes.")
+		await Signals.tutorialRead
+
+		Signals.tutorial.emit(Tutorial.Topic.DemonDetails, "On the bottom of the Details Card are the important Attributes: \nThe Skulls show the number of Legions/Lieutenants that can be moved by the Demon. They are also relevant in Combat. \nThe Hearts show the ability to collect Souls/Favors on Earth and influence other Units in Hell. \nThe status shows if the Demon is currently in Hell, on Earth or incapacitated. \nThe Sex symbol next to the Demon's name is relevant for specific Arcana/Hell cards and events. \nThe Rank is relevant to the position of the Demon in the Rank Track at the beginning of the Game. \nClick on the Card to close it.")
+		await Signals.tutorialRead
+
+		Signals.tutorial.emit(Tutorial.Topic.PassAction, "On the left you can see the various Actions the Demon can perform. \nSometimes its preferable to make an action after an enemy Demon. \nTo do so, click the Pass Button.")
+		await Signals.tutorialRead
+
+		Signals.tutorial.emit(Tutorial.Topic.Pass, "Now cast a Pass Spell by clicking on the Card. \nObserve the Rank Track to see the change in the Order.")
+	
+	
 	if tutorialSequence == 2:
 		Signals.tutorial.emit(Tutorial.Topic.NextDemon, "The next Demon is 'Caim'.")
 		await Signals.tutorialRead
@@ -195,6 +196,217 @@ func tutorial1(tutorialSequence : int) -> void:
 		
 		Signals.tutorial.emit(Tutorial.Topic.March, "For the cost a Skull, a Legion can move up to two Sectios. \nLieutenants can move up to three Sectios and can carry other Legions with them for free. \n Click on a (flashing) Sectio with Units in them and select the Unit you want to move. Right Click if you want to cancel/finish the Unit's move. \nTry it out until you have no Skulls left or click the 'End March' Button.")
 
+
+func getAffordableWalkTheEarthCards(arcanaCardsNames : Array, player : Player) -> Array:
+	var affordableWalkTheEarthCardNames : Array = []
+	for cardName in arcanaCardsNames:
+		var arcanaCard = Data.arcanaCards[cardName]
+		if arcanaCard:
+			if not player.hasEnoughSouls(arcanaCard.cost):
+				continue
+			var MinorSpell = Decks.MinorSpell
+			if arcanaCard.minorSpell == MinorSpell.WalkTheEarth or arcanaCard.minorSpell == MinorSpell.WalkTheEarthSafely:
+				affordableWalkTheEarthCardNames.append(cardName)
+	return affordableWalkTheEarthCardNames
+
+
+func getHeartScoresOfDemons(demonRanks : Array) -> Array:
+	var heartScore : Array = []
+	for demonRank in demonRanks:
+		var demon : Demon = Data.demons[demonRank]
+		var score : float = demon.hearts - demon.skulls * 0.25
+		heartScore.append(demon.hearts)
+	return heartScore
+
+
+func hasDemonOnEarth(demonRanks : Array) -> bool:
+	var hasDemonOnEarth : bool = false
+	for demonRank in demonRanks:
+		var demon : Demon = Data.demons[demonRank]
+		if demon.onEarth:
+			hasDemonOnEarth = true
+	return hasDemonOnEarth
+
+
+func getNameOfCheapestCard(cardNames) -> String:
+	var cheapestCardName : String = ""
+	var minCost : int = 100
+	for cardName in cardNames:
+		var card : ArcanaCard = Data.arcanaCards[cardName]
+		if card.cost < minCost:
+			minCost = card.cost
+			cheapestCardName = cardName
+	return cheapestCardName
+
+
+func isDemonWithMaxHeartScore(nextDemonRank : int, demonRanks : Array, heartScore : Array) -> bool:
+	var maxHearts : int = heartScore.max()
+	var i : int = heartScore.find(maxHearts)
+	if Data.demons[demonRanks[i]] == Data.demons[nextDemonRank]:
+		return true
+	else:
+		return false
+
+
+func sendsDemonToEarth():
+	var randomNr : int = randi_range(1, 100)
+	if randomNr < 90:
+		return true
+	else:
+		return false
+
+
+func sendingDemonToEarth(nextDemonRank : int, playerId : int, cheapestCardName : String) -> void:
+	for peer in Connection.peers:
+		RpcCalls.demonStatusChange.rpc_id(peer, nextDemonRank, "earth")
+	Signals.incomeChanged.emit(playerId)
+	for peer in Connection.peers:
+		RpcCalls.discardArcanaCard.rpc_id(peer, cheapestCardName, playerId)
+	for peer in Connection.peers:
+		RpcCalls.demonAction.rpc_id(peer, nextDemonRank, "Walk The Earth")
+
+
+func doEvilDeeds(demon : Demon) -> void:
+	var rollResult = Dice.roll(demon.hearts)
+	var favorsGathered = 0
+	for roll in rollResult:
+		if roll >= 6:
+			favorsGathered += 1
+			var favors = Data.players[demon.player].favors + 1
+			Signals.changeFavors.emit(demon.player, favors)
+			print(demon, " evil deeds earned a favor on earth")
+		else:
+			print(demon, " evil deeds didnt earn a favor on earth")
+	for peer in Connection.peers:
+		RpcCalls.demonAction.rpc_id(peer, demon.rank, "Do Evil Deeds: " + str(favorsGathered))
+	Signals.doEvilDeedsResult.emit(demon.player, demon.demonName, favorsGathered)
+
+
+func getSectioToMoveToInCircle(circle : int, playerId : int) -> Sectio:
+	var sectio_to_move_to : Sectio
+	for sectioName in Decks.sectioNodes:
+		var sectio : Sectio = Decks.sectioNodes[sectioName]
+		if not circle == sectio.circle:
+			continue
+		if sectio.player == playerId:
+			continue
+		sectio_to_move_to = sectio
+		break
+	return sectio_to_move_to
+
+
+func removeUnitsThatCannotMove(unitsWithoutPlan : Dictionary, sectio : Sectios, playerId : int) -> Dictionary:
+	for unitName in sectio.troops:
+		var unit = Data.troops[unitName]
+		if not unit.triumphirate == playerId:
+			for unitNr in sectio.troops:
+				unitsWithoutPlan.erase(unitNr)
+			break
+	return unitsWithoutPlan
+
+
+func getQuarterClockwise(quarter : int) -> int:
+	var quarterClockwise : int = posmod((quarter + 1), 5)
+	return quarterClockwise
+
+
+func getQuarterCounterclockwise(quarter : int) -> int:
+	var quarterCounterclockwise : int = posmod((quarter + 1), 5)
+	return quarterCounterclockwise
+
+
+func getSectioFromCircleAndQuarter(circle, quarter) -> Sectio:
+	var sectio : Sectio = Decks.sectios[circle][quarter]
+	return sectio
+
+
+func removeUnitsAlreadyInPosition(unitsWithoutPlan : Dictionary, sectio : Sectio, playerId : int) -> Dictionary:
+	var quarterClockwise = getQuarterClockwise(sectio.quarter)
+	var sectioClockwise = getSectioFromCircleAndQuarter(sectio.circle, quarterClockwise)
+	if not sectioClockwise.player == playerId:
+		for unitName in sectioClockwise.troops:
+			var unit = Data.troops[unitName]
+			if unit.occupiedSectio == sectioClockwise.sectioName:
+				unitsWithoutPlan.erase(unitName)
+	
+	var quarterCounterclockwise = getQuarterCounterclockwise(sectio.quarter)
+	var sectioCounterclockwise = getSectioFromCircleAndQuarter(sectio.circle, quarterCounterclockwise)
+	if not sectioCounterclockwise.player == playerId:
+		for unitName in sectioCounterclockwise.troops:
+			var unit = Data.troops[unitName]
+			if unit.occupiedSectio == sectioCounterclockwise.sectioName:
+				unitsWithoutPlan.erase(unitName)
+	
+	return unitsWithoutPlan
+
+
+func sectioIsOwnedByPlayer(sectioPlayerId : int, playerId : int) -> bool:
+	if sectioPlayerId == playerId:
+		return true
+	else:
+		return false
+
+
+func moveUnit(unitsWithoutPlan : Dictionary, occupiedSectioByClosestUnit : Sectio, closestUnit : Unit, startingSectioId : int, targetSectioId : int, map) -> Dictionary:
+	var path : Array = Astar.astar.get_id_path(startingSectioId, targetSectioId)
+	if path.size() > 1:
+		path.pop_front()
+		closestUnit.sectiosMoved = 0
+		var pathIndex : int = 0
+		for sectioId in path:
+			if closestUnit.sectiosMoved >= closestUnit.maxSectiosMoved:
+				break
+			if closestUnit.sectiosMoved == 0:
+				Data.currentDemon.skullsUsed += 1
+			closestUnit.sectiosMoved += 1
+			var nextSectio = Astar.sectioIdsNodeDict[sectioId]
+			Signals.moveUnits.emit([closestUnit], occupiedSectioByClosestUnit, nextSectio)
+			await closestUnit.arrivedAtDestination
+			
+			pathIndex += 1
+			if pathIndex >= path.size(): 
+				unitsWithoutPlan.erase(closestUnit.unitNr)
+			
+			var enemies = 0
+			var enemiesFled = 0
+			var fleeingConfirmed = false
+			for unitNr in nextSectio.troops:
+				var unit = Data.troops[unitNr]
+				if unitNr == closestUnit.unitNr:
+					continue
+				if not unit.triumphirate == closestUnit.triumphirate:
+					# solitary lieutenant would have to flee automatically
+					print("enemy in sectio")
+					enemies += 1
+					if Connection.peers.has(unit.triumphirate):
+						map.promtToFlee.rpc_id(unit.triumphirate, unit.triumphirate, nextSectio.sectioName, occupiedSectioByClosestUnit.sectioName)
+					else:
+						map.promtToFlee.rpc_id(Connection.host, unit.triumphirate, nextSectio.sectioName, occupiedSectioByClosestUnit.sectioName)
+					if Connection.peers.has(unit.triumphirate):
+						fleeingConfirmed = await map.fleeConfirmation
+					if fleeingConfirmed:
+						enemiesFled += 1
+					print("result of flee ", fleeingConfirmed)
+					break
+				else:
+					print("friend in sectio")
+			
+			if enemies > 0 and not fleeingConfirmed:
+				unitsWithoutPlan.erase(closestUnit.unitNr)
+				break
+			
+			var  troopsRemaining = false
+			for troopName in nextSectio.troops:
+				var troop = Data.troops[troopName]
+				if not troop.triumphirate == closestUnit.triumphirate:
+					troopsRemaining = true
+				
+			if troopsRemaining and fleeingConfirmed:
+				unitsWithoutPlan.erase(closestUnit.unitNr)
+				break
+			
+			occupiedSectioByClosestUnit = nextSectio
+	return unitsWithoutPlan
 
 
 func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
@@ -232,31 +444,12 @@ func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 			var playerId = Data.demons[nextDemonRank].player
 			var player : Player = Data.players[playerId]
 			if Tutorial.tutorial:
-				tutorial1(tutorialSequence)
+				tutorial2(tutorialSequence, nextDemonRank, playerId, map)
 			else:
-				var arcanaCardsNames = player.arcanaCards
-				var walkTheEarthCardNames : Array = []
-				for cardName in arcanaCardsNames:
-					var arcanaCard = Data.arcanaCards[cardName]
-					if arcanaCard:
-						if not player.hasEnoughSouls(arcanaCard.cost):
-							continue
-						var MinorSpell = Decks.MinorSpell
-						if arcanaCard.minorSpell == MinorSpell.WalkTheEarth or arcanaCard.minorSpell == MinorSpell.WalkTheEarthSafely:
-							walkTheEarthCardNames.append(cardName)
+				var affordableWalkTheEarthCardNames : Array = getAffordableWalkTheEarthCards(player.arcanaCards, player)
 				
-				var hasDemonOnEarth : bool = false
-				var heartScore : Array = []
-				for demonRank in player.demons:
-		#						if not rankTrack.has(demonRank):
-		#							continue
-					var demon = Data.demons[demonRank]
-					if demon.onEarth:
-						hasDemonOnEarth = true
-					var score = demon.hearts - demon.skulls * 0.25
-					heartScore.append(demon.hearts)
-					print("demonhearts ", demon.demonName, demon.hearts, " ", demon.skulls, " ", score)
-				
+				var hasDemonOnEarth : bool = hasDemonOnEarth(player.demons)
+				var heartScore : Array = getHeartScoresOfDemons(player.demons)
 				var demonNode = Data.demons[nextDemonRank]
 				demonNode.skullsUsed = 0
 				Data.currentDemon = demonNode
@@ -270,118 +463,60 @@ func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 		#						if not walkTheEarthCardNames.is_empty():
 					# just make it very likely to get one on the earth the first turn
 					
+					var cheapestWalkTheEarthCardName : String = getNameOfCheapestCard(affordableWalkTheEarthCardNames)
 					
-					var maxHearts = heartScore.max()
-					var i = heartScore.find(maxHearts)
-					
-					var minCost = 100
-					var cheapestCardName = ""
-					
-					for cardName in walkTheEarthCardNames:
-						var card = Data.arcanaCards[cardName]
-						if card.cost < minCost:
-							minCost = card.cost
-							cheapestCardName = cardName
-					if Data.demons[player.demons[i]] == Data.demons[nextDemonRank]:
-						var randomNr = randi_range(1, 100)
-						if randomNr < 90:
-							for peer in Connection.peers:
-								RpcCalls.demonStatusChange.rpc_id(peer, nextDemonRank, "earth")
-							Signals.incomeChanged.emit(playerId)
-							for peer in Connection.peers:
-								RpcCalls.discardArcanaCard.rpc_id(peer, cheapestCardName, playerId)
+					if isDemonWithMaxHeartScore(nextDemonRank, player.demons, heartScore):
+						if sendsDemonToEarth():
+							sendingDemonToEarth(nextDemonRank, playerId, cheapestWalkTheEarthCardName)
 							madeAction = true
-							for peer in Connection.peers:
-								RpcCalls.demonAction.rpc_id(peer, nextDemonRank, "Walk The Earth")
 				else:
 					# do evil deeds
 					var demon = Data.demons[nextDemonRank]
 					if demon.onEarth:
-						
-						var rollResult = Dice.roll(demon.hearts)
-						var favorsGathered = 0
-						for roll in rollResult:
-							if roll >= 6:
-								favorsGathered += 1
-								var favors = Data.players[demon.player].favors + 1
-								Signals.changeFavors.emit(demon.player, favors)
-								print(demon, " evil deeds earned a favor on earth")
-							else:
-								print(demon, " evil deeds didnt earn a favor on earth")
-						for peer in Connection.peers:
-							RpcCalls.demonAction.rpc_id(peer, nextDemonRank, "Do Evil Deeds: " + str(favorsGathered))
-						Signals.doEvilDeedsResult.emit(demon.player, demon.demonName, favorsGathered)
+						doEvilDeeds(demon)
 						madeAction = true
 				
 				if not madeAction:
+					
 					for peer in Connection.peers:
 						RpcCalls.demonAction.rpc_id(peer, nextDemonRank, "Marching")
 					var circle : int = Ai.getBestCircle(playerId)
-					var sectio_to_move_to : Sectio
-					for sectioName in Decks.sectioNodes:
-						var sectio : Sectio = Decks.sectioNodes[sectioName]
-						if not circle == sectio.circle:
-							continue
-						if sectio.player == playerId:
-							continue
-						sectio_to_move_to = sectio
-						break
+					var sectio_to_move_to : Sectio = getSectioToMoveToInCircle(circle, playerId)
 					
 					Ai.worldStates[playerId].set_state("circle_to_capture", circle)
 					Ai.worldStates[playerId].set_state("active_player", playerId)
 					Ai.worldStates[playerId].set_state("sectio_to_move_to", sectio_to_move_to)
-		#						WorldState.set_state("circle_to_capture", circle)
-		#						WorldState.set_state("active_player", playerId)
-		#						WorldState.set_state("sectio_to_move_to", sectio_to_move_to)
 					
 					var sectiosNextToFriendlySectioInSameCircle : Array = [] 
 					var sectiosNextToFriendlySectioInSameCircleWithoutFriendlies : Array = [] 
 					var unitsWithoutPlan : Dictionary = Data.players[playerId].troops.duplicate()
 					for sectioName in Decks.sectioNodes:
 						var sectio = Decks.sectioNodes[sectioName]
-						# units with enemies in same sectio cant move
-						for unitName in sectio.troops:
-							var unit = Data.troops[unitName]
-							if not unit.triumphirate == playerId:
-								for unitNr in sectio.troops:
-									unitsWithoutPlan.erase(unitNr)
-								break
+						
 						# ignore sectios not in the preferred circle
 						if not circle == sectio.circle:
 							continue
 						
+						# units with enemies in same sectio cant move
+						unitsWithoutPlan = removeUnitsThatCannotMove(unitsWithoutPlan, sectio, playerId)
+						
 						# friendly units already next to friendly sectios can stay
-						var quarterClockwise = posmod((sectio.quarter + 1), 5)
-						var sectioClockwise = Decks.sectios[sectio.circle][quarterClockwise]
-						if not sectioClockwise.player == playerId:
-							for unitName in sectioClockwise.troops:
-								var unit = Data.troops[unitName]
-								if unit.occupiedSectio == sectioClockwise.sectioName:
-									unitsWithoutPlan.erase(unitName)
-							
-						var quarterCounterclockwise = posmod((sectio.quarter - 1), 5)
-						var sectioCounterclockwise = Decks.sectios[sectio.circle][quarterCounterclockwise]
-						if not sectioCounterclockwise.player == playerId:
-							for unitName in sectioCounterclockwise.troops:
-								var unit = Data.troops[unitName]
-								if unit.occupiedSectio == sectioCounterclockwise.sectioName:
-									unitsWithoutPlan.erase(unitName)
+						unitsWithoutPlan = removeUnitsAlreadyInPosition(unitsWithoutPlan, sectio, playerId)
 						
 						# get sectios next to friendly sectios that can be moved to
-						if sectio.player == playerId:
-							if not sectioClockwise.player == playerId and not sectiosNextToFriendlySectioInSameCircle.has(sectioClockwise):
+						if sectioIsOwnedByPlayer(sectio.player, playerId):
+							var quarterClockwise : int = getQuarterClockwise(sectio.quarter)
+							var sectioClockwise : Sectio = getSectioFromCircleAndQuarter(sectio.circle, quarterClockwise)
+							if isSectioNotFriendlyAndNotYetTargetedToMoveThere(sectioClockwise, playerId, sectiosNextToFriendlySectioInSameCircle):
 								print("moving sectio clockwise ", sectioClockwise.sectioName)
-								var friendlyUnitInSectio : bool = false
-								for unitName in sectioClockwise.troops:
-									var unit = Data.troops[unitName]
-									if unit.occupiedSectio == sectioClockwise.sectioName:
-										unitsWithoutPlan.erase(unitName)
-										friendlyUnitInSectio = true
+								var friendlyUnitInSectio : bool = false #noFriendlyInSectio()
 								sectiosNextToFriendlySectioInSameCircle.append(sectioClockwise)
 								if not friendlyUnitInSectio:
 									sectiosNextToFriendlySectioInSameCircleWithoutFriendlies.append(sectioClockwise)
 							
-							if not sectioCounterclockwise.player == playerId and not sectiosNextToFriendlySectioInSameCircle.has(sectioCounterclockwise):
+							var quarterCounterclockwise = getQuarterCounterclockwise(sectio.quarter)
+							var sectioCounterclockwise = getSectioFromCircleAndQuarter(sectio.circle, quarterCounterclockwise)
+							if isSectioNotFriendlyAndNotYetTargetedToMoveThere(sectioCounterclockwise, playerId, sectiosNextToFriendlySectioInSameCircle):
 								print("moving sectio counter clockwise ", sectioCounterclockwise.sectioName)
 								var friendlyUnitInSectio : bool = false
 								for unitName in sectioCounterclockwise.troops:
@@ -392,7 +527,7 @@ func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 								sectiosNextToFriendlySectioInSameCircle.append(sectioCounterclockwise)
 								if not friendlyUnitInSectio:
 									sectiosNextToFriendlySectioInSameCircleWithoutFriendlies.append(sectioCounterclockwise)
-							if not sectiosNextToFriendlySectioInSameCircleWithoutFriendlies.is_empty():
+							if neighbouringSectioHasNoFriendlyUnits(sectiosNextToFriendlySectioInSameCircleWithoutFriendlies):
 								sectiosNextToFriendlySectioInSameCircle = sectiosNextToFriendlySectioInSameCircleWithoutFriendlies
 					
 					
@@ -419,102 +554,56 @@ func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 							
 							if not closestUnit:
 								break
-							var path : Array = Astar.astar.get_id_path(occupiedSectioByClosestUnit.id, closestSectio.id)
-							print("moving unit start ", closestUnit.occupiedSectio)
-							print("moving demon ", nextDemonRank)
-							print("moving unit path size ", path.size())
-							print("moving unit from1 ", occupiedSectioByClosestUnit.sectioName, " to ", closestSectio.sectioName)
-							if path.size() > 1:
-								path.pop_front()
-								closestUnit.sectiosMoved = 0
-								var pathIndex : int = 0
-								for sectioId in path:
-									print("moving unit moved ", closestUnit.sectiosMoved)
-									if closestUnit.sectiosMoved >= closestUnit.maxSectiosMoved:
-										break
-									if closestUnit.sectiosMoved == 0:
-										Data.currentDemon.skullsUsed += 1
-									closestUnit.sectiosMoved += 1
-									var nextSectio = Astar.sectioIdsNodeDict[sectioId]
-									print("moving unit from2 ", occupiedSectioByClosestUnit.sectioName, " to ", nextSectio.sectioName)
-									Signals.moveUnits.emit([closestUnit], occupiedSectioByClosestUnit, nextSectio)
-									await closestUnit.arrivedAtDestination
-									
-									pathIndex += 1
-									if pathIndex >= path.size(): 
-										print("moving unit done erasing ", closestUnit.unitNr, " from ", unitsWithoutPlan, " true? ", unitsWithoutPlan.has(closestUnit.unitNr))
-										unitsWithoutPlan.erase(closestUnit.unitNr)
-										print("moving unit done", closestUnit.unitNr, unitsWithoutPlan)
-									
-									var enemies = 0
-									var enemiesFled = 0
-									var fleeingConfirmed = false
-									for unitNr in nextSectio.troops:
-										var unit = Data.troops[unitNr]
-										if unitNr == closestUnit.unitNr:
-											continue
-										if not unit.triumphirate == closestUnit.triumphirate:
-											# solitary lieutenant would have to flee automatically
-											print("enemy in sectio")
-											enemies += 1
-											if Connection.peers.has(unit.triumphirate):
-												map.promtToFlee.rpc_id(unit.triumphirate, unit.triumphirate, nextSectio.sectioName, occupiedSectioByClosestUnit.sectioName)
-											else:
-												map.promtToFlee.rpc_id(Connection.host, unit.triumphirate, nextSectio.sectioName, occupiedSectioByClosestUnit.sectioName)
-											if Connection.peers.has(unit.triumphirate):
-												fleeingConfirmed = await map.fleeConfirmation
-											if fleeingConfirmed:
-												enemiesFled += 1
-								#						%EventDialog.dialog_text = "The Enemy fled."
-											print("result of flee ", fleeingConfirmed)
-											break
-										else:
-											print("friend in sectio")
-									
-									if enemies > 0 and not fleeingConfirmed:
-		#											map.neightboursClickable(false)
-										unitsWithoutPlan.erase(closestUnit.unitNr)
-										break
-									
-									var  troopsRemaining = false
-									for troopName in nextSectio.troops:
-										var troop = Data.troops[troopName]
-										if not troop.triumphirate == closestUnit.triumphirate:
-											troopsRemaining = true
-										
-									if troopsRemaining and fleeingConfirmed:
-		#											%EventDialog.dialog_text = "The Enemy tried to flee but failed, stopping."
-						#				_on_unitMovedMax(closestUnit)3
-										unitsWithoutPlan.erase(closestUnit.unitNr)
-										break
-
-		#										if not troopsRemaining:
-		#											%EventDialog.dialog_text = "The Enemy fled."
-								
-									occupiedSectioByClosestUnit = nextSectio
-						
+							
+							moveUnit(unitsWithoutPlan, occupiedSectioByClosestUnit, closestUnit, occupiedSectioByClosestUnit.id, closestSectio.id, map)
 		tutorialSequence += 1
 		
 		for peer in Connection.peers:
 			RpcCalls.toogleWaitForPlayer.rpc_id(peer, Data.demons[nextDemonRank].player, false)
-		print("done",nextDemonRank)
 
 		if result:
 			if result == 0:
 				pass # pass for good
-#					elif result = "Walk The Earth":
-#
 			else:
 				print("if I dont print I bug")
+				
 				newRankTrack.erase(nextDemonRank)
-				if result > rankTrack.size():
-					rankTrack.append(nextDemonRank)
-				else:
-					rankTrack.insert(result, nextDemonRank)
-#				actionsNode.toggleActionMenu(false)
+				rankTrack = sortRankTrack(result, rankTrack, nextDemonRank)
 	rankTrackNode.updateRankTrack(newRankTrack)
 	
 	if Tutorial.tutorial:
 		await get_tree().create_timer(0.1).timeout
 		Signals.returnToMainMenu.emit()
 		await Signals.tutorialRead
+
+
+func noFriendlyInSectio(sectio : Sectio, playerId : int) -> bool:
+	var friendlyUnitInSectio : bool = false
+	for unitName in sectio.troops:
+		var unit : Unit = Data.troops[unitName]
+		if unit.occupiedSectio == sectio.sectioName:
+			unitsWithoutPlan.erase(unitName)
+			friendlyUnitInSectio = true
+	return friendlyUnitInSectio
+
+
+func isSectioNotFriendlyAndNotYetTargetedToMoveThere(sectio, playerId, sectiosNextToFriendlySectioInSameCircle) -> bool:
+	if not sectioIsOwnedByPlayer(sectio.player, playerId) and not sectiosNextToFriendlySectioInSameCircle.has(sectio):
+		return true
+	else:
+		return false
+
+
+func neighbouringSectioHasNoFriendlyUnits(sectios : Array) -> bool:
+	if not sectios.is_empty():
+		return true
+	else:
+		return false
+
+
+func sortRankTrack(passedDemons : int, rankTrack : Array, demonRank : int) -> Array:
+	if passedDemons > rankTrack.size():
+		rankTrack.append(demonRank)
+	else:
+		rankTrack.insert(passedDemons, demonRank)
+	return rankTrack

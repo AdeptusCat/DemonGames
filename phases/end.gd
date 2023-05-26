@@ -1,9 +1,8 @@
 extends Node
 
 
-func phase() -> bool:
-	var winCondition = false
-	var winner
+func getWinnersIds() -> Array:
+	var winnerIds : Array = []
 	for playerId in Data.players:
 		var player = Data.players[playerId]
 		var circleCount = {}
@@ -14,12 +13,42 @@ func phase() -> bool:
 			else:
 				circleCount[sectio.circle] = 1
 			if circleCount[sectio.circle] >= 5:
-				winCondition = true
-				winner = playerId
-				
-	if winCondition: 
-		for peer in Connection.peers:
-			RpcCalls.win.rpc_id(peer, winner)
-		return true
-	else:
+				winnerIds.append(playerId)
+	return winnerIds
+
+
+func getPlayerIdWithMostFavorsAndFewerDisfavors(winnerIds : Array) -> int:
+	var mostFavors : int = 0
+	var winnerDisfavors : int = 0
+	var winnerId : int
+	for playerId in winnerIds:
+		var player : Player = Data.players[playerId]
+		if player.favors > mostFavors:
+			mostFavors = player.favors
+			winnerDisfavors = player.disfavors
+			winnerId = playerId
+		elif player.favors == mostFavors:
+			if player.disfavors < winnerDisfavors:
+				mostFavors = player.favors
+				winnerDisfavors = player.disfavors
+				winnerId = playerId
+	return winnerId
+
+
+func phase() -> bool:
+	var winCondition = false
+	var winnerIds : Array = getWinnersIds()
+	
+	# players can get rid of disfavors 
+	# price is two favors for one disfavor
+	
+	# recover from incapacitation
+	# every demon that rolls 5 or 6 to recovers
+	
+	if winnerIds.is_empty(): 
 		return false
+	else:
+		var winnerId : int = getPlayerIdWithMostFavorsAndFewerDisfavors(winnerIds)
+		for peer in Connection.peers:
+			RpcCalls.win.rpc_id(peer, winnerId)
+		return true

@@ -247,10 +247,10 @@ func _on_actionThroughArcana(minorSpell : Decks.MinorSpell):
 			walkTheEarth()
 
 
-func passTurns(turnsPassed):
+func passTurns(demonsPassed):
 	for peer in Connection.peers:
 		RpcCalls.demonAction.rpc_id(peer, currentDemon, "Pass")
-	Signals.demonDone.emit(turnsPassed)
+	Signals.demonDone.emit(demonsPassed)
 	AudioSignals.passAction.emit()
 
 
