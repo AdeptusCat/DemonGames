@@ -50,6 +50,7 @@ func unitsKilled(unitNamesDict : Dictionary):
 func combatPhase():
 	Signals.combatPhaseStarted.emit()
 
+
 @rpc("any_peer", "call_local")
 func combatOver():
 	Signals.combatOver.emit()

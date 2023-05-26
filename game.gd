@@ -48,16 +48,16 @@ func _ready():
 	
 	#debug 
 	Server.playerjoinedRoom.connect(_on_playerjoinedRoom)
-#	skipHell = true
-#	skipSouls = true
-#	skipSummoning = true
-#	skipAction = true
+	skipHell = true
+	skipSouls = true
+	skipSummoning = true
+	skipAction = true
 #	skipCombat = true
 #	skipPetitions = true
 #	skipEnd = true
 
-#	skipUnitPlacing = true
-#	debugTroops = true
+	skipUnitPlacing = true
+	debugTroops = true
 #
 #	Settings.tooltips = false
 #	Settings.skipScreens = true
@@ -481,13 +481,13 @@ func sequenceOfPlay(phase : int = 0):
 		if phase == Data.phases.Hell and not skipHell:
 			await $Hell.phase()
 		
-		nextPhase(phase, Data.phases.Hell)
+		phase = await nextPhase(phase, Data.phases.Hell)
 		
 		print("soul phase ",phase, " ", Data.phases.Soul)
 		if phase == Data.phases.Soul and not skipSouls:
 			await $Soul.phase(ui)
 		
-		nextPhase(phase, Data.phases.Soul)
+		phase = await nextPhase(phase, Data.phases.Soul)
 		
 		print("Summoning phase ",phase, " ", Data.phases.Summoning)
 		for peer in Connection.peers:
@@ -495,7 +495,7 @@ func sequenceOfPlay(phase : int = 0):
 		if phase == Data.phases.Summoning and not skipSummoning:
 			await $Summoning.phase(phase, ui)
 		
-		nextPhase(phase, Data.phases.Summoning)
+		phase = await nextPhase(phase, Data.phases.Summoning)
 		
 		print("Action phase ",phase, " ", Data.phases.Action)
 		for peer in Connection.peers:
@@ -504,10 +504,12 @@ func sequenceOfPlay(phase : int = 0):
 			var rankTrack : Array = rankTrackNode.rankTrack.duplicate()
 			await $Action.phase(phase, rankTrack, ui, map, rankTrackNode)
 #
-		nextPhase(phase, Data.phases.Action)
+		phase = await nextPhase(phase, Data.phases.Action)
+		for peer in Connection.peers:
+			RpcCalls.combatPhase.rpc_id(peer)
 		
 		print("Combat phase ",phase, " ", Data.phases.Combat)
-		$Combat.combatWinner = {}
+		$Combat.combatWinner.clear()
 		if phase == Data.phases.Combat and not skipCombat:
 			if Tutorial.tutorial:
 				rankTrack = await Tutorial.combat(rankTrackNode)
@@ -515,13 +517,13 @@ func sequenceOfPlay(phase : int = 0):
 		for peer in Connection.peers:
 			RpcCalls.combatOver.rpc_id(peer)
 			
-		nextPhase(phase, Data.phases.Combat)
+		phase = await nextPhase(phase, Data.phases.Combat)
 		
 		print("Petitions phase ",phase, " ", Data.phases.Petitions)
 		if phase == Data.phases.Petitions and not skipPetitions:
 			await $Petition.phase($Combat.combatWinner, ui)
 			
-		nextPhase(phase, Data.phases.Petitions)
+		phase = await nextPhase(phase, Data.phases.Petitions)
 		
 		print("End phase ",phase, " ", Data.phases.Petitions)
 		if phase == Data.phases.End and not skipEnd:

@@ -1027,6 +1027,7 @@ func placeUnit(sectio, playerId : int = Data.id, unitType : Data.UnitType = Data
 		var nr = randi()
 		spawnUnit(sectio.sectioName, nr, playerId, Data.UnitType.Legion)
 		updateTroopInSectio(sectio.sectioName, sectio.troops)
+		print("troops in sectio ", sectio.sectioName, sectio.troops)
 		Signals.incomeChanged.emit(playerId)
 		for peer in Connection.peers:
 			if not peer == playerId:

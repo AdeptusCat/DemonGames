@@ -26,19 +26,18 @@ func spawnDebugTroops1(ai : int = 0):
 	if not ai == 0:
 		sectio = Decks.sectioNodes["Megalomaniacs"]
 		sectio = Decks.sectioNodes["Bad People"]
-		Signals.placeUnit.emit(sectio, ai, Data.UnitType.Legion)
-		Signals.placeUnit.emit(sectio, ai, Data.UnitType.Legion)
-		Signals.placeUnit.emit(sectio, ai, Data.UnitType.Legion)
-		Signals.placeUnit.emit(sectio, ai, Data.UnitType.Legion)
-		Signals.placeUnit.emit(sectio, ai, Data.UnitType.Legion)
+		Signals.placeLegion.emit(sectio, ai)
+#		Signals.placeLegion.emit(sectio, ai)
+#		Signals.placeLegion.emit(sectio, ai)
+#		Signals.placeLegion.emit(sectio, ai)
+#		Signals.placeLegion.emit(sectio, ai)
 		return
 #	return
 #	if Data.id == 1:
 	if Data.player.playerName == "Player 1":
 		sectio = Decks.sectioNodes["Bad People"]
-		Signals.placeUnit.emit(sectio, Data.id, Data.UnitType.Lieutenant, "Shalmaneser")
-		Signals.placeUnit.emit(sectio, Data.id, Data.UnitType.Legion)
-#		map.placeUnit(sectio, Data.id, Data.UnitType.Legion)
+		Signals.placeLieutenant.emit(sectio, Data.id, "Shalmaneser")
+		Signals.placeLegion.emit(sectio, Data.id)
 #		map.placeUnit(sectio, Data.id, Data.UnitType.Legion)
 #		map.placeUnit(sectio, Data.id, Data.UnitType.Legion)
 		
@@ -65,11 +64,11 @@ func spawnDebugTroops1(ai : int = 0):
 	else:
 		sectio = Decks.sectioNodes["Megalomaniacs"]
 		sectio = Decks.sectioNodes["Bad People"]
-		Signals.placeUnit.emit(sectio, Data.UnitType.Legion)
-		Signals.placeUnit.emit(sectio, Data.UnitType.Legion)
-		Signals.placeUnit.emit(sectio, Data.UnitType.Legion)
-		Signals.placeUnit.emit(sectio, Data.UnitType.Legion)
-		Signals.placeUnit.emit(sectio, Data.UnitType.Legion)
+		Signals.placeLegion.emit(sectio, Data.id)
+#		Signals.placeLegion.emit(sectio, Data.id)
+#		Signals.placeLegion.emit(sectio, Data.id)
+#		Signals.placeLegion.emit(sectio, Data.id)
+#		Signals.placeLegion.emit(sectio, Data.id)
 		
 #
 #		sectio = Decks.sectioNodes["Basement Of Wanton Killers"]

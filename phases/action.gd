@@ -295,14 +295,26 @@ func getSectioToMoveToInCircle(circle : int, playerId : int) -> Sectio:
 	return sectio_to_move_to
 
 
-func removeUnitsThatCannotMove(unitsWithoutPlan : Dictionary, sectio : Sectio, playerId : int) -> Dictionary:
-	for unitName in sectio.troops:
-		var unit = Data.troops[unitName]
-		if not unit.triumphirate == playerId:
-			for unitNr in sectio.troops:
-				unitsWithoutPlan.erase(unitNr)
-			break
+func removeUnitsThatCannotMove(unitsWithoutPlan : Dictionary, playerId : int) -> Dictionary:
+	for friendlyUnitName in unitsWithoutPlan:
+		var friendlyUnit : Unit = unitsWithoutPlan[friendlyUnitName]
+		var sectio : Sectio = Decks.sectioNodes[friendlyUnit.occupiedSectio]
+		for unitName in sectio.troops:
+			var unit : Unit = Data.troops[unitName]
+			if not unit.triumphirate == playerId:
+				unitsWithoutPlan.erase(friendlyUnitName)
+				break
 	return unitsWithoutPlan
+
+
+#func removeUnitsThatCannotMove(unitsWithoutPlan : Dictionary, sectio : Sectio, playerId : int) -> Dictionary:
+#	for unitName in sectio.troops:
+#		var unit = Data.troops[unitName]
+#		if not unit.triumphirate == playerId:
+#			for unitNr in sectio.troops:
+#				unitsWithoutPlan.erase(unitNr)
+#			break
+#	return unitsWithoutPlan
 
 
 func getQuarterClockwise(quarter : int) -> int:
@@ -433,7 +445,7 @@ func moveUnitLoop(unitsWithoutPlan : Dictionary, sectiosNextToFriendlySectioInSa
 		if not closestUnit:
 			break
 		
-		moveUnit(unitsWithoutPlan, occupiedSectioByClosestUnit, closestUnit, occupiedSectioByClosestUnit.id, closestSectio.id, map)
+		await moveUnit(unitsWithoutPlan, occupiedSectioByClosestUnit, closestUnit, occupiedSectioByClosestUnit.id, closestSectio.id, map)
 
 
 func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
@@ -517,6 +529,9 @@ func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 					var sectiosNextToFriendlySectioInSameCircle : Array = [] 
 					var sectiosNextToFriendlySectioInSameCircleWithoutFriendlies : Array = [] 
 					var unitsWithoutPlan : Dictionary = Data.players[playerId].troops.duplicate()
+					
+					unitsWithoutPlan = removeUnitsThatCannotMove(unitsWithoutPlan, playerId)
+					
 					for sectioName in Decks.sectioNodes:
 						var sectio = Decks.sectioNodes[sectioName]
 						
@@ -525,7 +540,7 @@ func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 							continue
 						
 						# units with enemies in same sectio cant move
-						unitsWithoutPlan = removeUnitsThatCannotMove(unitsWithoutPlan, sectio, playerId)
+#						unitsWithoutPlan = removeUnitsThatCannotMove(unitsWithoutPlan, sectio, playerId)
 						
 						# friendly units already next to friendly sectios can stay
 						unitsWithoutPlan = removeUnitsAlreadyInPosition(unitsWithoutPlan, sectio, playerId)
@@ -579,7 +594,7 @@ func noFriendlyUnitInSectio(sectio : Sectio, playerId : int) -> bool:
 	var noFriendlyUnitInSectio : bool = true
 	for unitName in sectio.troops:
 		var unit : Unit = Data.troops[unitName]
-		if unit.player == playerId:
+		if unit.triumphirate == playerId:
 			noFriendlyUnitInSectio = false
 	return noFriendlyUnitInSectio
 
@@ -587,7 +602,7 @@ func noFriendlyUnitInSectio(sectio : Sectio, playerId : int) -> bool:
 func removeUnitAlreadyInSectio(unitsWithoutPlan : Dictionary, sectio : Sectio, playerId : int) -> Dictionary:
 	for unitName in sectio.troops:
 		var unit : Unit = Data.troops[unitName]
-		if unit.player == playerId:
+		if unit.triumphirate == playerId:
 			unitsWithoutPlan.erase(unitName)
 	return unitsWithoutPlan
 

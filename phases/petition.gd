@@ -63,7 +63,7 @@ func phase(combatWinner : Dictionary, ui):
 	var petitionSectiosWithWinners : Dictionary = getPetitionSectios()
 	var petitionSectiosWithoutWinners : Dictionary = removeWinnersFromPetitionSectios(petitionSectiosWithWinners, combatWinner)
 	
-	petitions(petitionSectiosWithoutWinners, ui)
+	await petitions(petitionSectiosWithoutWinners, ui)
 
 	tutorialEnd()
 
