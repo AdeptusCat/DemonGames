@@ -21,16 +21,16 @@ class_name Player
 		Signals.changePlayerDisplayValue.emit(playerId, "income", income)
 @export var arcanaCards = []
 @export var sectios : Array[String] = []
-@export var troops = {}
+@export var troops : Dictionary = {}
 var color : Color = Color8(255, 255, 255)
 var colorName = ""
 var playerName : String = ""
 var playerId : int = 0
-var sectiosWithoutEnemies : Array:
+var sectiosWithoutEnemies : Array[String]:
 	set(_sectiosWithoutEnemies):
 		sectiosWithoutEnemies = _sectiosWithoutEnemies
 		sectiosWithoutEnemiesLeft = sectiosWithoutEnemies.duplicate()
-var sectiosWithoutEnemiesLeft : Array
+var sectiosWithoutEnemiesLeft : Array[String]
 
 
 func _ready():

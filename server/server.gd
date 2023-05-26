@@ -56,8 +56,8 @@ func StartServer():
 				network.peer_disconnected.connect(func(id): peer_disconnected(id))
 				serverActive = true
 				
-				print(rpcFunction.get_method())
-				sendFunction(rpcFunction, rpcFunction.bind("testString"))
+#				print(rpcFunction.get_method())
+#				sendFunction(rpcFunction, rpcFunction.bind("testString"))
 
 
 func sendFunction(f : Callable, bindingF : Callable):

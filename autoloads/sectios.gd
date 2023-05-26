@@ -1,8 +1,8 @@
 extends Node
 
 
-func getSectiosWithoutEnemies(sectios : Array, playerId : int) -> Array:
-	var sectiosWithoutEnemies : Array = []
+func getSectiosWithoutEnemies(sectios : Array, playerId : int) -> Array[String]:
+	var sectiosWithoutEnemies : Array[String] = []
 	for sectioName in sectios:
 		var sectio : Sectio = Decks.sectioNodes[sectioName]
 		var enemyInSectio = false
@@ -11,7 +11,7 @@ func getSectiosWithoutEnemies(sectios : Array, playerId : int) -> Array:
 				enemyInSectio = true
 				break
 		if not enemyInSectio:
-			sectiosWithoutEnemies.append(sectio)
+			sectiosWithoutEnemies.append(sectio.sectioName)
 	return sectiosWithoutEnemies
 
 
@@ -28,7 +28,7 @@ func sectiosClickable(sectioNames : Array):
 		Decks.sectioNodes[sectioName].changeClickable(true)
 
 
-func sectiosUnlickable(sectioNames : Array):
+func sectiosUnclickable(sectioNames : Array):
 	for sectioName in sectioNames:
 		Decks.sectioNodes[sectioName].changeClickable(false)
 
@@ -37,7 +37,7 @@ func remainingSectiosClickable(sectiosNotAvailable : Array):
 	for sectioName in Data.player.sectiosWithoutEnemiesLeft:
 		sectiosNotAvailable.erase(sectioName)
 	sectiosClickable(Data.player.sectiosWithoutEnemiesLeft)
-	sectiosUnlickable(sectiosNotAvailable)
+	sectiosUnclickable(sectiosNotAvailable)
 
 
 func sectiosWithoutEnemiesClickable():
@@ -55,6 +55,6 @@ func sectiosLeftClickable(sectioName : String):
 		sectioClickable(sectioName)
 	else:
 		sectiosWithoutEnemiesLeft = Data.player.sectiosWithoutEnemies.duplicate()
-		sectiosUnlickable(Data.player.sectiosWithoutEnemiesLeft)
+		sectiosUnclickable(Data.player.sectiosWithoutEnemiesLeft)
 	
 	

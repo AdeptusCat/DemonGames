@@ -130,7 +130,8 @@ signal pickedDemonForCombat
 signal updateRankTrack(arr : Array)
 signal doneGatheringSouls
 signal proceedSignal
-signal placeUnit(sectio, playerId, unitType)
+signal placeLegion(sectio, playerId, lieutenantName)
+signal placeLieutenant(sectio, playerId)
 
 signal unitsKilled(unitsDict)
 signal unitsHit(unitsDict)

@@ -109,7 +109,7 @@ func sortPlayersBySouls() -> Array:
 	return playersSortedBySouls
 
 
-func setupTutorialArcanaCards(player : Player):
+func setupTutorialArcanaCards(player : Player) -> void:
 	var cardsToDraw : int = 5 - player.arcanaCards.size()
 	var cardNames : Array = ["Reincarnation", "Rotten Sweetness", "Sisyphus' Rock", "The Frenzied Feeder", "The Shaker"]
 	for i in range(cardsToDraw):
@@ -118,7 +118,7 @@ func setupTutorialArcanaCards(player : Player):
 			RpcCalls.addArcanaCard.rpc_id(peer, player.playerId, CardName)
 
 
-func hasLegionInAnteHell(unitNames : Array) -> bool:
+func hasLegionInAnteHell(unitNames : Dictionary) -> bool:
 	var hasLegionInAnteHell : bool = false
 	for unitName in unitNames:
 			var unit = Data.troops[unitName]

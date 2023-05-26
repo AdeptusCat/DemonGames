@@ -106,7 +106,6 @@ func occupySectio(id : int, sectio):
 	
 	Decks.sectioNodes[sectio].player = id
 	Data.players[id].addSectio(sectio)
-	print(Data.id, " adding sectio ", id, " ", sectio)
 	
 	if Data.id == Connection.host:
 		Signals.incomeChanged.emit(id)

@@ -43,7 +43,6 @@ func canAffordRecruitLieutenants(playerNr, cardNameToIgnore = ""):
 
 
 func _on_changeSouls(playerId : int, value : int):
-	print("change soulssss")
 	for peer in Connection.peers:
 		changeSouls.rpc_id(peer, playerId, value)
 
@@ -65,7 +64,6 @@ func _on_changeDisfavors(playerId : int, value : int):
 
 @rpc("any_peer", "call_local")
 func changeSouls(playerId : int, value : int):
-	print("change souls ", Data.id, " ", playerId, " ",value)
 	Data.players[playerId].souls = value
 #	if playerId == Data.id:
 #		Data.player.souls = value
@@ -73,7 +71,6 @@ func changeSouls(playerId : int, value : int):
 
 @rpc("any_peer", "call_local")
 func changeIncome(playerId : int, value : String):
-	print("change income ", Data.id, " ", playerId, " ",value)
 	Data.players[playerId].income = value
 #	if playerId == Data.id:
 #		Data.player.souls = value

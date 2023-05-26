@@ -28,10 +28,10 @@ func perform(actor, delta) -> bool:
 		return false
 	if Data.currentAiPlayer.sectiosWithoutEnemiesLeft.is_empty():
 		Data.currentAiPlayer.sectiosWithoutEnemiesLeft = Data.currentAiPlayer.sectiosWithoutEnemies.duplicate()
-	var sectioName = Data.currentAiPlayer.sectiosWithoutEnemiesLeft.pop_back()
-	var sectio = Decks.sectioNodes[sectioName]
+	var sectioName : String = Data.currentAiPlayer.sectiosWithoutEnemiesLeft.pop_back()
+	var sectio : Sectio = Decks.sectioNodes[sectioName]
 	
-	Signals.placeUnit.emit(sectio, Data.currentAiPlayer.playerId, Data.UnitType.Legion)
+	Signals.placeLegion.emit(sectio, Data.currentAiPlayer.playerId)
 	
 	var souls = Data.currentAiPlayer.souls - 3
 	Signals.changeSouls.emit(Data.currentAiPlayer.playerId, souls)

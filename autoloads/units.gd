@@ -19,7 +19,7 @@ func _on_recruit_legions():
 		if sectio == null:
 			break
 		if Data.player.hasEnoughSouls(3):
-			Signals.placeUnit.emit(sectio, Data.id, Data.UnitType.Legion)
+			Signals.placeLegion.emit(sectio, Data.id)
 			var souls = Data.players[sectio.player].souls - 3
 			Signals.changeSouls.emit(sectio.player, souls)
 			if not Data.player.hasEnoughSouls(3):
@@ -52,7 +52,7 @@ func _on_recruit_lieutenant(lieutenantName : String):
 	
 	var sectio = await Signals.sectioClicked
 	
-	Signals.placeUnit.emit(sectio, Data.id, Data.UnitType.Lieutenant, lieutenantName)
+	Signals.placeLieutenant.emit(sectio, Data.id, lieutenantName)
 	
 	if Data.player.hasEnoughSouls(3):
 		Sectios.remainingSectiosClickable(Data.player.sectiosWithoutEnemies.duplicate())

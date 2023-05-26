@@ -35,7 +35,8 @@ func _ready():
 	Signals.neighbours.connect(on_neighbours)
 	Signals.changeSectioBackground.connect(_on_changeSectioBackground)
 	Signals.march.connect(_on_march)
-	Signals.placeUnit.connect(_on_placeUnit)
+	Signals.placeLegion.connect(_on_placeLegion)
+	Signals.placeLieutenant.connect(_on_placeLieutenant)
 	Signals.moveUnits.connect(moveUnits)
 	Signals.summoningDone.connect(_on_summoningDone)
 	Signals.buildCircles.connect(buildCircles)
@@ -146,9 +147,12 @@ func call2():
 	tw1.tween_callback(call1).set_delay(t)
 
 
+func _on_placeLegion(sectio : Sectio, playerId : int):
+	placeUnit(sectio, playerId, Data.UnitType.Legion)
 
-func _on_placeUnit(sectio, playerId, unitType):
-	placeUnit(sectio, playerId, unitType)
+
+func _on_placeLieutenant(sectio : Sectio, playerId : int, lieutenantName : String):
+	placeUnit(sectio, playerId, Data.UnitType.Lieutenant, lieutenantName)
 
 
 func _on_demonActionDone():

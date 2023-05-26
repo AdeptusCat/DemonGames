@@ -127,22 +127,21 @@ func setup():
 	
 	addSpawner(playerIds)
 	
-	setupMouseLights()
-	
 	if Save.savegame.size() == 0:
-		setupColors(playerIds)
+		setupPlayers(playerIds)
 		setupSouls()
 		setupFavors()
 	else:
-		setupColorsFromSavegame(playerIds)
+		setupPlayersFromSavegame(playerIds)
 		setupSoulsFromSavegame()
 		setupFavorsFromSavegame()
 	
+	setupMouseLights()
 	
 	if not Tutorial.tutorial:
 		if Save.savegame.size() == 0:
 			setupDemons()
-			confirmStartDemon()
+			await confirmStartDemon()
 		
 			#debug
 			debug.debugSectios()
@@ -151,7 +150,7 @@ func setup():
 			
 			fillAvailableLieutenantsBox()
 			
-			setupStartLegions()
+			await setupStartLegions()
 			
 			for peer in Connection.peers:
 				RpcCalls.updateRankTrack.rpc_id(peer, rankTrackNode.rankTrack)
@@ -199,7 +198,7 @@ func addSpawner(playerIds : Array) -> void:
 			map.addSpawner.rpc_id(peer, id)
 
 
-func setupColorsFromSavegame(playerIds : Array) -> void:
+func setupPlayersFromSavegame(playerIds : Array) -> void:
 	var colorNamesLeft = Data.colorsNames.duplicate()
 	colorNamesLeft.remove_at(0) # remove "Random" color
 	colorNamesLeft.shuffle()
@@ -229,7 +228,7 @@ func setupColorsFromSavegame(playerIds : Array) -> void:
 			RpcCalls.changePlayerName.rpc_id(peer, id, Connection.playerIdNamesDict[id])
 
 
-func setupColors(playerIds : Array) -> void:
+func setupPlayers(playerIds : Array) -> void:
 	var colorNamesLeft = Data.colorsNames.duplicate()
 	colorNamesLeft.remove_at(0) # remove "Random" color
 	colorNamesLeft.shuffle()
@@ -304,13 +303,14 @@ func setupDemonsFromSavegame():
 					RpcCalls.addDemon.rpc_id(peer, playerId, demonName + ".tres", Save.savegame.demons[demonName])
 
 
-func confirmStartDemon():
+func confirmStartDemon() -> void:
 	for peer in Connection.peers:
 		RpcCalls.toogleWaitForPlayer.rpc_id(peer, 0, true)
 	if not Settings.skipScreens:
 		for peer in Connection.peers:
 			ui.confirmStartDemon.rpc_id(peer)
 		for peer in Connection.peers:
+			print("waiting for demon")
 			await Signals.proceedSignal
 	for peer in Connection.peers:
 		RpcCalls.toogleWaitForPlayer.rpc_id(peer, 0, false)
@@ -370,7 +370,6 @@ func setupArcanaCardsFromSavegame():
 		RpcCalls.showStartScreen.rpc_id(peer)
 
 
-
 func setupStartLegions():
 	if not skipUnitPlacing:
 		var playerIds : Array = Connection.peers.duplicate()
@@ -378,7 +377,7 @@ func setupStartLegions():
 		playerIds.shuffle()
 		for playerId in playerIds:
 			if playerId > 0:
-				playerPlaceStartLegion(playerId)
+				await playerPlaceStartLegion(playerId)
 			else:
 				aiPlaceStartLegion(playerId)
 
@@ -599,8 +598,6 @@ func _on_playerjoinedRoom(roomId : int, room_name : String, player_id : int, pla
 
 func _on_start():
 	Server.request_start_game.rpc_id(1, Data.id)
-
-
 
 
 func _on_proceed():

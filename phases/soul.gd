@@ -132,7 +132,6 @@ func getArcanaCardsForTheWiseMen(playerId : int) -> void:
 		var cardName : String = Decks.getRandomCard("arcana")
 		for peer in Connection.peers:
 			RpcCalls.addArcanaCard.rpc_id(peer, playerId, cardName)
-		print("add arcana the wisea", result[0])
 
 
 func gatherSoulsForSectio(sectioName : String, playerId : int, soulSummary : Dictionary) -> Dictionary:

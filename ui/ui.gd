@@ -425,8 +425,10 @@ func _on_wait_for_player_button_pressed():
 	%WaitForPlayerControl.hide()
 	Signals.proceed.emit()
 
+
 func _on_pickUnit(sectio):
 	%PickMoveUnitControl.highlight(sectio)
+
 
 func pickUnitToMove(sectio):
 	%PickMoveUnitControl.highlight(sectio)

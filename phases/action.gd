@@ -232,7 +232,7 @@ func getNameOfCheapestCard(cardNames) -> String:
 	var cheapestCardName : String = ""
 	var minCost : int = 100
 	for cardName in cardNames:
-		var card : ArcanaCard = Data.arcanaCards[cardName]
+		var card : Dictionary = Data.arcanaCards[cardName]
 		if card.cost < minCost:
 			minCost = card.cost
 			cheapestCardName = cardName
@@ -256,12 +256,12 @@ func sendsDemonToEarth():
 		return false
 
 
-func sendingDemonToEarth(nextDemonRank : int, playerId : int, cheapestCardName : String) -> void:
+func sendingDemonToEarth(nextDemonRank : int, playerId : int, walkTheEarthCardName : String) -> void:
 	for peer in Connection.peers:
 		RpcCalls.demonStatusChange.rpc_id(peer, nextDemonRank, "earth")
 	Signals.incomeChanged.emit(playerId)
 	for peer in Connection.peers:
-		RpcCalls.discardArcanaCard.rpc_id(peer, cheapestCardName, playerId)
+		RpcCalls.discardArcanaCard.rpc_id(peer, walkTheEarthCardName, playerId)
 	for peer in Connection.peers:
 		RpcCalls.demonAction.rpc_id(peer, nextDemonRank, "Walk The Earth")
 
@@ -295,7 +295,7 @@ func getSectioToMoveToInCircle(circle : int, playerId : int) -> Sectio:
 	return sectio_to_move_to
 
 
-func removeUnitsThatCannotMove(unitsWithoutPlan : Dictionary, sectio : Sectios, playerId : int) -> Dictionary:
+func removeUnitsThatCannotMove(unitsWithoutPlan : Dictionary, sectio : Sectio, playerId : int) -> Dictionary:
 	for unitName in sectio.troops:
 		var unit = Data.troops[unitName]
 		if not unit.triumphirate == playerId:
@@ -409,6 +409,33 @@ func moveUnit(unitsWithoutPlan : Dictionary, occupiedSectioByClosestUnit : Secti
 	return unitsWithoutPlan
 
 
+func moveUnitLoop(unitsWithoutPlan : Dictionary, sectiosNextToFriendlySectioInSameCircle : Array, map):
+	while Data.currentDemon.skullsUsed < Data.currentDemon.skulls:
+		var shortestPhaseSize : int = 100
+		var closestUnit
+		var occupiedSectioByClosestUnit
+		var closestSectio
+		print("moving units without plan 1 ", unitsWithoutPlan)
+		for unitName in unitsWithoutPlan:
+			sectiosNextToFriendlySectioInSameCircle.shuffle()
+			for sectioNextToFriendlySectioInSameCircle in sectiosNextToFriendlySectioInSameCircle:
+				var unit = Data.troops[unitName]
+				var occupiedSectio = Decks.sectioNodes[unit.occupiedSectio]
+#										print("moving sectiosNextToFriendlySectioInSameCircle ", sectioNextToFriendlySectioInSameCircle.sectioName)
+				var path = Astar.astar.get_id_path(occupiedSectio.id, sectioNextToFriendlySectioInSameCircle.id)
+				print("moving comparing", path.size(), " from ", occupiedSectio.sectioName, " to ", sectioNextToFriendlySectioInSameCircle.sectioName)
+				if path.size() < shortestPhaseSize and path.size() > 1:
+					shortestPhaseSize = path.size()
+					occupiedSectioByClosestUnit = occupiedSectio
+					closestUnit = unit
+					closestSectio = sectioNextToFriendlySectioInSameCircle
+		
+		if not closestUnit:
+			break
+		
+		moveUnit(unitsWithoutPlan, occupiedSectioByClosestUnit, closestUnit, occupiedSectioByClosestUnit.id, closestSectio.id, map)
+
+
 func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 	if Tutorial.tutorial:
 		tutorialStart(rankTrack, rankTrackNode)
@@ -509,53 +536,24 @@ func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 							var sectioClockwise : Sectio = getSectioFromCircleAndQuarter(sectio.circle, quarterClockwise)
 							if isSectioNotFriendlyAndNotYetTargetedToMoveThere(sectioClockwise, playerId, sectiosNextToFriendlySectioInSameCircle):
 								print("moving sectio clockwise ", sectioClockwise.sectioName)
-								var friendlyUnitInSectio : bool = false #noFriendlyInSectio()
+								unitsWithoutPlan = removeUnitAlreadyInSectio(unitsWithoutPlan, sectioClockwise, playerId)
 								sectiosNextToFriendlySectioInSameCircle.append(sectioClockwise)
-								if not friendlyUnitInSectio:
+								if noFriendlyUnitInSectio(sectioClockwise, playerId):
 									sectiosNextToFriendlySectioInSameCircleWithoutFriendlies.append(sectioClockwise)
 							
-							var quarterCounterclockwise = getQuarterCounterclockwise(sectio.quarter)
-							var sectioCounterclockwise = getSectioFromCircleAndQuarter(sectio.circle, quarterCounterclockwise)
+							var quarterCounterclockwise : int = getQuarterCounterclockwise(sectio.quarter)
+							var sectioCounterclockwise : Sectio = getSectioFromCircleAndQuarter(sectio.circle, quarterCounterclockwise)
 							if isSectioNotFriendlyAndNotYetTargetedToMoveThere(sectioCounterclockwise, playerId, sectiosNextToFriendlySectioInSameCircle):
 								print("moving sectio counter clockwise ", sectioCounterclockwise.sectioName)
-								var friendlyUnitInSectio : bool = false
-								for unitName in sectioCounterclockwise.troops:
-									var unit = Data.troops[unitName]
-									if unit.occupiedSectio == sectioCounterclockwise.sectioName:
-										unitsWithoutPlan.erase(unitName)
-										friendlyUnitInSectio = true
-								sectiosNextToFriendlySectioInSameCircle.append(sectioCounterclockwise)
-								if not friendlyUnitInSectio:
+								unitsWithoutPlan = removeUnitAlreadyInSectio(unitsWithoutPlan, sectioCounterclockwise, playerId)
+								if noFriendlyUnitInSectio(sectioCounterclockwise, playerId):
 									sectiosNextToFriendlySectioInSameCircleWithoutFriendlies.append(sectioCounterclockwise)
 							if neighbouringSectioHasNoFriendlyUnits(sectiosNextToFriendlySectioInSameCircleWithoutFriendlies):
 								sectiosNextToFriendlySectioInSameCircle = sectiosNextToFriendlySectioInSameCircleWithoutFriendlies
 					
 					
 					if not sectiosNextToFriendlySectioInSameCircle.is_empty():
-						while Data.currentDemon.skullsUsed < Data.currentDemon.skulls:
-							var shortestPhaseSize : int = 100
-							var closestUnit
-							var occupiedSectioByClosestUnit
-							var closestSectio
-							print("moving units without plan 1 ", unitsWithoutPlan)
-							for unitName in unitsWithoutPlan:
-								sectiosNextToFriendlySectioInSameCircle.shuffle()
-								for sectioNextToFriendlySectioInSameCircle in sectiosNextToFriendlySectioInSameCircle:
-									var unit = Data.troops[unitName]
-									var occupiedSectio = Decks.sectioNodes[unit.occupiedSectio]
-		#										print("moving sectiosNextToFriendlySectioInSameCircle ", sectioNextToFriendlySectioInSameCircle.sectioName)
-									var path = Astar.astar.get_id_path(occupiedSectio.id, sectioNextToFriendlySectioInSameCircle.id)
-									print("moving comparing", path.size(), " from ", occupiedSectio.sectioName, " to ", sectioNextToFriendlySectioInSameCircle.sectioName)
-									if path.size() < shortestPhaseSize and path.size() > 1:
-										shortestPhaseSize = path.size()
-										occupiedSectioByClosestUnit = occupiedSectio
-										closestUnit = unit
-										closestSectio = sectioNextToFriendlySectioInSameCircle
-							
-							if not closestUnit:
-								break
-							
-							moveUnit(unitsWithoutPlan, occupiedSectioByClosestUnit, closestUnit, occupiedSectioByClosestUnit.id, closestSectio.id, map)
+						await moveUnitLoop(unitsWithoutPlan, sectiosNextToFriendlySectioInSameCircle, map)
 		tutorialSequence += 1
 		
 		for peer in Connection.peers:
@@ -577,14 +575,21 @@ func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 		await Signals.tutorialRead
 
 
-func noFriendlyInSectio(sectio : Sectio, playerId : int) -> bool:
-	var friendlyUnitInSectio : bool = false
+func noFriendlyUnitInSectio(sectio : Sectio, playerId : int) -> bool:
+	var noFriendlyUnitInSectio : bool = true
 	for unitName in sectio.troops:
 		var unit : Unit = Data.troops[unitName]
-		if unit.occupiedSectio == sectio.sectioName:
+		if unit.player == playerId:
+			noFriendlyUnitInSectio = false
+	return noFriendlyUnitInSectio
+
+
+func removeUnitAlreadyInSectio(unitsWithoutPlan : Dictionary, sectio : Sectio, playerId : int) -> Dictionary:
+	for unitName in sectio.troops:
+		var unit : Unit = Data.troops[unitName]
+		if unit.player == playerId:
 			unitsWithoutPlan.erase(unitName)
-			friendlyUnitInSectio = true
-	return friendlyUnitInSectio
+	return unitsWithoutPlan
 
 
 func isSectioNotFriendlyAndNotYetTargetedToMoveThere(sectio, playerId, sectiosNextToFriendlySectioInSameCircle) -> bool:
