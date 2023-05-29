@@ -1,6 +1,6 @@
 extends Node
 
-var combatWinner = {}
+var combatWinner : Dictionary = {}
 var canHitLieutenants : bool = true #debug switch
 var lieutenantBonus : bool = true #debug switch
 var triumphiratesThatWantToFlee : Array = []
@@ -205,7 +205,8 @@ func phase(map):
 #							else:
 #								combatWinner[triumphiratesSorted.pop_front()] = sectio.sectioName
 				else:
-					combatWinner[triumphiratesSorted.pop_front()] = sectio.sectioName
+					var winnerId : int = triumphiratesSorted.pop_front()
+					addCombatWinner(winnerId, sectio.sectioName)
 				break
 			
 			for peer in Connection.peers:
@@ -403,7 +404,8 @@ func phase(map):
 #							else:
 #								combatWinner[triumphiratesSorted.pop_front()] = sectio.sectioName
 				else:
-					combatWinner[triumphiratesSorted.pop_front()] = sectio.sectioName
+					var winnerId : int = triumphiratesSorted.pop_front()
+					addCombatWinner(winnerId, sectio.sectioName)
 				break
 			
 			var fleeing = triumphiratesThatWantToFlee
@@ -514,7 +516,8 @@ func phase(map):
 #							else:
 #								combatWinner[triumphiratesSorted.pop_front()] = sectio.sectioName
 				else:
-					combatWinner[triumphiratesSorted.pop_front()] = sectio.sectioName
+					var winnerId : int = triumphiratesSorted.pop_front()
+					addCombatWinner(winnerId, sectio.sectioName)
 				break
 			
 			
@@ -540,6 +543,14 @@ func phase(map):
 #					for triumphirate in triumphiratesSorted.duplicate():
 	
 	await phase(map)
+	print("combatWinner", combatWinner)
+
+
+func addCombatWinner(playerId : int, sectioName : String):
+	if combatWinner.has(playerId):
+		combatWinner[playerId].append(sectioName)
+	else:
+		combatWinner[playerId] = [sectioName]
 
 
 func _on_triumphiratesWantToFlee(triumphirat : int):

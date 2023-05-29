@@ -296,7 +296,8 @@ func getSectioToMoveToInCircle(circle : int, playerId : int) -> Sectio:
 
 
 func removeUnitsThatCannotMove(unitsWithoutPlan : Dictionary, playerId : int) -> Dictionary:
-	for friendlyUnitName in unitsWithoutPlan:
+	var unitsWithoutPlanDuplicate : Dictionary = unitsWithoutPlan.duplicate()
+	for friendlyUnitName in unitsWithoutPlanDuplicate:
 		var friendlyUnit : Unit = unitsWithoutPlan[friendlyUnitName]
 		var sectio : Sectio = Decks.sectioNodes[friendlyUnit.occupiedSectio]
 		for unitName in sectio.troops:

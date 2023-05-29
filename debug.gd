@@ -27,7 +27,10 @@ func spawnDebugTroops1(ai : int = 0):
 		sectio = Decks.sectioNodes["Megalomaniacs"]
 		sectio = Decks.sectioNodes["Bad People"]
 		Signals.placeLegion.emit(sectio, ai)
-#		Signals.placeLegion.emit(sectio, ai)
+		sectio = Decks.sectioNodes["Dogs Of War"]
+		Signals.placeLegion.emit(sectio, ai)
+		sectio = Decks.sectioNodes["Atheists Surprise"]
+		Signals.placeLegion.emit(sectio, ai)
 #		Signals.placeLegion.emit(sectio, ai)
 #		Signals.placeLegion.emit(sectio, ai)
 #		Signals.placeLegion.emit(sectio, ai)
@@ -64,6 +67,10 @@ func spawnDebugTroops1(ai : int = 0):
 	else:
 		sectio = Decks.sectioNodes["Megalomaniacs"]
 		sectio = Decks.sectioNodes["Bad People"]
+		Signals.placeLegion.emit(sectio, Data.id)
+		sectio = Decks.sectioNodes["Megalomaniacs"]
+		Signals.placeLegion.emit(sectio, Data.id)
+		sectio = Decks.sectioNodes["Dogs Of War"]
 		Signals.placeLegion.emit(sectio, Data.id)
 #		Signals.placeLegion.emit(sectio, Data.id)
 #		Signals.placeLegion.emit(sectio, Data.id)

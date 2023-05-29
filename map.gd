@@ -402,7 +402,6 @@ func changeClickableNeighbours(possibleNeighbours):
 	neightboursClickable(true)
 
 
-
 func _on_changeSectioBackground(id , playerPolygon):
 	if not playerpolygons.has(id):
 		playerpolygons[id] = playerPolygonsLeft.pop_back()
@@ -410,7 +409,6 @@ func _on_changeSectioBackground(id , playerPolygon):
 		c[1] = Data.players[id].color
 		print("colors_set ", Data.players[id].color)
 		playerpolygons[id].get_material().get_shader_parameter("colorTexture").get_gradient().set_colors(c) 
-#		playerPolygon.texture_offset = playerPolygon.position
 		
 	for polygons in %Polygons.get_children():
 		for polygon in polygons.get_children():
@@ -418,10 +416,7 @@ func _on_changeSectioBackground(id , playerPolygon):
 				polygons.remove_child(polygon)
 	playerpolygons[id].add_child(playerPolygon)
 	playerPolygon.set_light_mask(4) # this might be better at init
-	print("colors_? ")
-	for polygon in playerpolygons:
-		print("colors_? ", playerpolygons[polygon].get_material().get_shader_parameter("colorTexture").get_gradient().get_colors())
-	
+
 
 func sectiosUnclickable():
 	for sectio in Decks.sectioNodes.values():

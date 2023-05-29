@@ -26,8 +26,10 @@ func removeWinnersFromPetitionSectios(petitionSectios : Dictionary, combatWinner
 	var petitionSectiosByTriumphirate : Dictionary = {}
 	for sectioName in petitionSectios:
 		# dont ask for a Favor if the sectio was occupied in battle
-		if combatWinner.values().has(sectioName):
-			continue
+		for sectioNamesWonInBattle in combatWinner.values():
+			for sectioNameWonInBattle in sectioNamesWonInBattle:
+				if sectioNameWonInBattle == sectioName:
+					continue
 		if petitionSectiosByTriumphirate.has(petitionSectios[sectioName]):
 			petitionSectiosByTriumphirate[petitionSectios[sectioName]].append(sectioName)
 		else:
@@ -78,8 +80,9 @@ func petitions(petitionSectiosByPlayerId : Dictionary, ui) -> void:
 
 func winnersOccupySectios(combatWinner : Dictionary) -> void:
 	for winner in combatWinner:
-		for peer in Connection.peers:
-			RpcCalls.occupySectio.rpc_id(peer, winner, combatWinner[winner])
+		for sectioName in combatWinner[winner]:
+			for peer in Connection.peers:
+				RpcCalls.occupySectio.rpc_id(peer, winner, sectioName)
 
 
 func aiPlayerChoosePetitions(playerId : int,  petitionSectiosByTriumphirate):
