@@ -1,6 +1,149 @@
 extends Node
 
 
+
+func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
+	if Tutorial.tutorial:
+		tutorialStart(rankTrack, rankTrackNode)
+	
+	for peer in Connection.peers:
+		RpcCalls.demonAction.rpc_id(peer, 0, "Reset")
+	
+	var tutorialSequence : int = 0
+	var newRankTrack : Array = []
+	while not rankTrack.size() == 0:
+		var nextDemonRank = rankTrack.pop_front()
+		newRankTrack.append(nextDemonRank)
+		
+		for peer in Connection.peers:
+			RpcCalls.updateRankTrack.rpc_id(peer, newRankTrack + rankTrack)
+		for peer in Connection.peers:
+			ui.updateRankTrackCurrentDemon.rpc_id(peer, nextDemonRank)
+		if Connection.peers.has(Data.demons[nextDemonRank].player):
+			ui.nextDemon.rpc_id(Data.demons[nextDemonRank].player, nextDemonRank)
+		for peer in Connection.peers:
+			RpcCalls.nextDemon.rpc_id(peer, nextDemonRank)
+			RpcCalls.toogleWaitForPlayer.rpc_id(peer, Data.demons[nextDemonRank].player, true, phase)
+		
+		var result
+		if not Connection.isAiPlayer(Data.demons[nextDemonRank].player):
+			if Tutorial.tutorial:
+				tutorial1(tutorialSequence)
+			result = await Signals.demonDoneWithPhase
+			for sectio in Decks.sectioNodes.values():
+				sectio.changeClickable.rpc_id(Data.demons[nextDemonRank].player, false)
+		else:
+			# AI Player
+			var playerId = Data.demons[nextDemonRank].player
+			var player : Player = Data.players[playerId]
+			if Tutorial.tutorial:
+				tutorial2(tutorialSequence, nextDemonRank, playerId, map)
+			else:
+				var affordableWalkTheEarthCardNames : Array = getAffordableWalkTheEarthCards(player.arcanaCards, player)
+				
+				var hasDemonOnEarth : bool = hasDemonOnEarth(player.demons)
+				var heartScore : Array = getHeartScoresOfDemons(player.demons)
+				var demonNode = Data.demons[nextDemonRank]
+				demonNode.skullsUsed = 0
+				Data.currentDemon = demonNode
+				
+				# wait for the current demon screen to disappear 
+				if not Settings.skipScreens:
+					await get_tree().create_timer(3).timeout
+				var madeAction : bool = false
+				if not hasDemonOnEarth:
+					# AI doesnt know how to handle cards
+		#						if not walkTheEarthCardNames.is_empty():
+					# just make it very likely to get one on the earth the first turn
+					
+					var cheapestWalkTheEarthCardName : String = getNameOfCheapestCard(affordableWalkTheEarthCardNames)
+					
+					if isDemonWithMaxHeartScore(nextDemonRank, player.demons, heartScore):
+						if sendsDemonToEarth():
+							sendingDemonToEarth(nextDemonRank, playerId, cheapestWalkTheEarthCardName)
+							madeAction = true
+				else:
+					# do evil deeds
+					var demon = Data.demons[nextDemonRank]
+					if demon.onEarth:
+						doEvilDeeds(demon)
+						madeAction = true
+				
+				if not madeAction:
+					
+					for peer in Connection.peers:
+						RpcCalls.demonAction.rpc_id(peer, nextDemonRank, "Marching")
+					var circle : int = Ai.getBestCircle(playerId)
+					var sectio_to_move_to : Sectio = getSectioToMoveToInCircle(circle, playerId)
+					
+					Ai.worldStates[playerId].set_state("circle_to_capture", circle)
+					Ai.worldStates[playerId].set_state("active_player", playerId)
+					Ai.worldStates[playerId].set_state("sectio_to_move_to", sectio_to_move_to)
+					
+					var sectiosNextToFriendlySectioInSameCircle : Array = [] 
+					var sectiosNextToFriendlySectioInSameCircleWithoutFriendlies : Array = [] 
+					var unitsWithoutPlan : Dictionary = Data.players[playerId].troops.duplicate()
+					
+					unitsWithoutPlan = removeUnitsThatCannotMove(unitsWithoutPlan, playerId)
+					
+					for sectioName in Decks.sectioNodes:
+						var sectio = Decks.sectioNodes[sectioName]
+						
+						# ignore sectios not in the preferred circle
+						if not circle == sectio.circle:
+							continue
+						
+						# units with enemies in same sectio cant move
+#						unitsWithoutPlan = removeUnitsThatCannotMove(unitsWithoutPlan, sectio, playerId)
+						
+						# friendly units already next to friendly sectios can stay
+						unitsWithoutPlan = removeUnitsAlreadyInPosition(unitsWithoutPlan, sectio, playerId)
+						
+						# get sectios next to friendly sectios that can be moved to
+						if sectioIsOwnedByPlayer(sectio.player, playerId):
+							var quarterClockwise : int = getQuarterClockwise(sectio.quarter)
+							var sectioClockwise : Sectio = getSectioFromCircleAndQuarter(sectio.circle, quarterClockwise)
+							if isSectioNotFriendlyAndNotYetTargetedToMoveThere(sectioClockwise, playerId, sectiosNextToFriendlySectioInSameCircle):
+								print("moving sectio clockwise ", sectioClockwise.sectioName)
+								unitsWithoutPlan = removeUnitAlreadyInSectio(unitsWithoutPlan, sectioClockwise, playerId)
+								sectiosNextToFriendlySectioInSameCircle.append(sectioClockwise)
+								if noFriendlyUnitInSectio(sectioClockwise, playerId):
+									sectiosNextToFriendlySectioInSameCircleWithoutFriendlies.append(sectioClockwise)
+							
+							var quarterCounterclockwise : int = getQuarterCounterclockwise(sectio.quarter)
+							var sectioCounterclockwise : Sectio = getSectioFromCircleAndQuarter(sectio.circle, quarterCounterclockwise)
+							if isSectioNotFriendlyAndNotYetTargetedToMoveThere(sectioCounterclockwise, playerId, sectiosNextToFriendlySectioInSameCircle):
+								print("moving sectio counter clockwise ", sectioCounterclockwise.sectioName)
+								unitsWithoutPlan = removeUnitAlreadyInSectio(unitsWithoutPlan, sectioCounterclockwise, playerId)
+								if noFriendlyUnitInSectio(sectioCounterclockwise, playerId):
+									sectiosNextToFriendlySectioInSameCircleWithoutFriendlies.append(sectioCounterclockwise)
+							if neighbouringSectioHasNoFriendlyUnits(sectiosNextToFriendlySectioInSameCircleWithoutFriendlies):
+								sectiosNextToFriendlySectioInSameCircle = sectiosNextToFriendlySectioInSameCircleWithoutFriendlies
+					
+					
+					if not sectiosNextToFriendlySectioInSameCircle.is_empty():
+						await moveUnitLoop(unitsWithoutPlan, sectiosNextToFriendlySectioInSameCircle, map)
+		tutorialSequence += 1
+		
+		for peer in Connection.peers:
+			RpcCalls.toogleWaitForPlayer.rpc_id(peer, Data.demons[nextDemonRank].player, false)
+
+		if result:
+			if result == 0:
+				pass # pass for good
+			else:
+				print("if I dont print I bug")
+				
+				newRankTrack.erase(nextDemonRank)
+				rankTrack = sortRankTrack(result, rankTrack, nextDemonRank)
+	rankTrackNode.updateRankTrack(newRankTrack)
+	
+	if Tutorial.tutorial:
+		await get_tree().create_timer(0.1).timeout
+		Signals.returnToMainMenu.emit()
+		await Signals.tutorialRead
+
+
 func tutorialStart(rankTrack, rankTrackNode) -> void:
 	var cardNames : Array = ["Rotten Sweetness", "Sisyphus' Rock", "The Frenzied Feeder", "The Shaker"]
 	var cardsToDraw : int = cardNames.size()
@@ -308,16 +451,6 @@ func removeUnitsThatCannotMove(unitsWithoutPlan : Dictionary, playerId : int) ->
 	return unitsWithoutPlan
 
 
-#func removeUnitsThatCannotMove(unitsWithoutPlan : Dictionary, sectio : Sectio, playerId : int) -> Dictionary:
-#	for unitName in sectio.troops:
-#		var unit = Data.troops[unitName]
-#		if not unit.triumphirate == playerId:
-#			for unitNr in sectio.troops:
-#				unitsWithoutPlan.erase(unitNr)
-#			break
-#	return unitsWithoutPlan
-
-
 func getQuarterClockwise(quarter : int) -> int:
 	var quarterClockwise : int = posmod((quarter + 1), 5)
 	return quarterClockwise
@@ -447,148 +580,6 @@ func moveUnitLoop(unitsWithoutPlan : Dictionary, sectiosNextToFriendlySectioInSa
 			break
 		
 		await moveUnit(unitsWithoutPlan, occupiedSectioByClosestUnit, closestUnit, occupiedSectioByClosestUnit.id, closestSectio.id, map)
-
-
-func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
-	if Tutorial.tutorial:
-		tutorialStart(rankTrack, rankTrackNode)
-	
-	for peer in Connection.peers:
-		RpcCalls.demonAction.rpc_id(peer, 0, "Reset")
-	
-	var tutorialSequence : int = 0
-	var newRankTrack : Array = []
-	while not rankTrack.size() == 0:
-		var nextDemonRank = rankTrack.pop_front()
-		newRankTrack.append(nextDemonRank)
-		
-		for peer in Connection.peers:
-			RpcCalls.updateRankTrack.rpc_id(peer, newRankTrack + rankTrack)
-		for peer in Connection.peers:
-			ui.updateRankTrackCurrentDemon.rpc_id(peer, nextDemonRank)
-		if Connection.peers.has(Data.demons[nextDemonRank].player):
-			ui.nextDemon.rpc_id(Data.demons[nextDemonRank].player, nextDemonRank)
-		for peer in Connection.peers:
-			RpcCalls.nextDemon.rpc_id(peer, nextDemonRank)
-			RpcCalls.toogleWaitForPlayer.rpc_id(peer, Data.demons[nextDemonRank].player, true, phase)
-		
-		var result
-		if not Connection.isAiPlayer(Data.demons[nextDemonRank].player):
-			if Tutorial.tutorial:
-				tutorial1(tutorialSequence)
-			result = await Signals.demonDoneWithPhase
-			for sectio in Decks.sectioNodes.values():
-				sectio.changeClickable.rpc_id(Data.demons[nextDemonRank].player, false)
-		else:
-			# AI Player
-			var playerId = Data.demons[nextDemonRank].player
-			var player : Player = Data.players[playerId]
-			if Tutorial.tutorial:
-				tutorial2(tutorialSequence, nextDemonRank, playerId, map)
-			else:
-				var affordableWalkTheEarthCardNames : Array = getAffordableWalkTheEarthCards(player.arcanaCards, player)
-				
-				var hasDemonOnEarth : bool = hasDemonOnEarth(player.demons)
-				var heartScore : Array = getHeartScoresOfDemons(player.demons)
-				var demonNode = Data.demons[nextDemonRank]
-				demonNode.skullsUsed = 0
-				Data.currentDemon = demonNode
-				
-				# wait for the current demon screen to disappear 
-				if not Settings.skipScreens:
-					await get_tree().create_timer(3).timeout
-				var madeAction : bool = false
-				if not hasDemonOnEarth:
-					# AI doesnt know how to handle cards
-		#						if not walkTheEarthCardNames.is_empty():
-					# just make it very likely to get one on the earth the first turn
-					
-					var cheapestWalkTheEarthCardName : String = getNameOfCheapestCard(affordableWalkTheEarthCardNames)
-					
-					if isDemonWithMaxHeartScore(nextDemonRank, player.demons, heartScore):
-						if sendsDemonToEarth():
-							sendingDemonToEarth(nextDemonRank, playerId, cheapestWalkTheEarthCardName)
-							madeAction = true
-				else:
-					# do evil deeds
-					var demon = Data.demons[nextDemonRank]
-					if demon.onEarth:
-						doEvilDeeds(demon)
-						madeAction = true
-				
-				if not madeAction:
-					
-					for peer in Connection.peers:
-						RpcCalls.demonAction.rpc_id(peer, nextDemonRank, "Marching")
-					var circle : int = Ai.getBestCircle(playerId)
-					var sectio_to_move_to : Sectio = getSectioToMoveToInCircle(circle, playerId)
-					
-					Ai.worldStates[playerId].set_state("circle_to_capture", circle)
-					Ai.worldStates[playerId].set_state("active_player", playerId)
-					Ai.worldStates[playerId].set_state("sectio_to_move_to", sectio_to_move_to)
-					
-					var sectiosNextToFriendlySectioInSameCircle : Array = [] 
-					var sectiosNextToFriendlySectioInSameCircleWithoutFriendlies : Array = [] 
-					var unitsWithoutPlan : Dictionary = Data.players[playerId].troops.duplicate()
-					
-					unitsWithoutPlan = removeUnitsThatCannotMove(unitsWithoutPlan, playerId)
-					
-					for sectioName in Decks.sectioNodes:
-						var sectio = Decks.sectioNodes[sectioName]
-						
-						# ignore sectios not in the preferred circle
-						if not circle == sectio.circle:
-							continue
-						
-						# units with enemies in same sectio cant move
-#						unitsWithoutPlan = removeUnitsThatCannotMove(unitsWithoutPlan, sectio, playerId)
-						
-						# friendly units already next to friendly sectios can stay
-						unitsWithoutPlan = removeUnitsAlreadyInPosition(unitsWithoutPlan, sectio, playerId)
-						
-						# get sectios next to friendly sectios that can be moved to
-						if sectioIsOwnedByPlayer(sectio.player, playerId):
-							var quarterClockwise : int = getQuarterClockwise(sectio.quarter)
-							var sectioClockwise : Sectio = getSectioFromCircleAndQuarter(sectio.circle, quarterClockwise)
-							if isSectioNotFriendlyAndNotYetTargetedToMoveThere(sectioClockwise, playerId, sectiosNextToFriendlySectioInSameCircle):
-								print("moving sectio clockwise ", sectioClockwise.sectioName)
-								unitsWithoutPlan = removeUnitAlreadyInSectio(unitsWithoutPlan, sectioClockwise, playerId)
-								sectiosNextToFriendlySectioInSameCircle.append(sectioClockwise)
-								if noFriendlyUnitInSectio(sectioClockwise, playerId):
-									sectiosNextToFriendlySectioInSameCircleWithoutFriendlies.append(sectioClockwise)
-							
-							var quarterCounterclockwise : int = getQuarterCounterclockwise(sectio.quarter)
-							var sectioCounterclockwise : Sectio = getSectioFromCircleAndQuarter(sectio.circle, quarterCounterclockwise)
-							if isSectioNotFriendlyAndNotYetTargetedToMoveThere(sectioCounterclockwise, playerId, sectiosNextToFriendlySectioInSameCircle):
-								print("moving sectio counter clockwise ", sectioCounterclockwise.sectioName)
-								unitsWithoutPlan = removeUnitAlreadyInSectio(unitsWithoutPlan, sectioCounterclockwise, playerId)
-								if noFriendlyUnitInSectio(sectioCounterclockwise, playerId):
-									sectiosNextToFriendlySectioInSameCircleWithoutFriendlies.append(sectioCounterclockwise)
-							if neighbouringSectioHasNoFriendlyUnits(sectiosNextToFriendlySectioInSameCircleWithoutFriendlies):
-								sectiosNextToFriendlySectioInSameCircle = sectiosNextToFriendlySectioInSameCircleWithoutFriendlies
-					
-					
-					if not sectiosNextToFriendlySectioInSameCircle.is_empty():
-						await moveUnitLoop(unitsWithoutPlan, sectiosNextToFriendlySectioInSameCircle, map)
-		tutorialSequence += 1
-		
-		for peer in Connection.peers:
-			RpcCalls.toogleWaitForPlayer.rpc_id(peer, Data.demons[nextDemonRank].player, false)
-
-		if result:
-			if result == 0:
-				pass # pass for good
-			else:
-				print("if I dont print I bug")
-				
-				newRankTrack.erase(nextDemonRank)
-				rankTrack = sortRankTrack(result, rankTrack, nextDemonRank)
-	rankTrackNode.updateRankTrack(newRankTrack)
-	
-	if Tutorial.tutorial:
-		await get_tree().create_timer(0.1).timeout
-		Signals.returnToMainMenu.emit()
-		await Signals.tutorialRead
 
 
 func noFriendlyUnitInSectio(sectio : Sectio, playerId : int) -> bool:
