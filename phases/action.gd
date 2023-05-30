@@ -93,9 +93,6 @@ func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 						if not circle == sectio.circle:
 							continue
 						
-						# units with enemies in same sectio cant move
-#						unitsWithoutPlan = removeUnitsThatCannotMove(unitsWithoutPlan, sectio, playerId)
-						
 						# friendly units already next to friendly sectios can stay
 						unitsWithoutPlan = removeUnitsAlreadyInPosition(unitsWithoutPlan, sectio, playerId)
 						
