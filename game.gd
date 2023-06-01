@@ -25,6 +25,7 @@ var skipPetitions = false
 var skipEnd = false
 var skipUnitPlacing = false
 var debugTroops = false
+var debugSouls : int = 0
 
 var loadSaveGame = false
 
@@ -48,16 +49,17 @@ func _ready():
 	
 	#debug 
 	Server.playerjoinedRoom.connect(_on_playerjoinedRoom)
-	skipHell = true
-	skipSouls = true
-	skipSummoning = true
-	skipAction = true
+#	skipHell = true
+#	skipSouls = true
+#	skipSummoning = true
+#	skipAction = true
 #	skipCombat = true
 #	skipPetitions = true
 #	skipEnd = true
 
-	skipUnitPlacing = true
-	debugTroops = true
+#	skipUnitPlacing = true
+#	debugTroops = true
+	debugSouls = 100
 #
 #	Settings.tooltips = false
 #	Settings.skipScreens = true
@@ -138,50 +140,52 @@ func setup():
 	
 	setupMouseLights()
 	
-	if not Tutorial.tutorial:
-		if Save.savegame.size() == 0:
+	if Save.savegame.size() == 0:
+		if not Tutorial.tutorial:
 			setupDemons()
 			await confirmStartDemon()
-		
-			#debug
-			debug.debugSectios()
-			
-			setupSectios()
-			
-			fillAvailableLieutenantsBox()
-			
-			await setupStartLegions()
-			
-			for peer in Connection.peers:
-				RpcCalls.updateRankTrack.rpc_id(peer, rankTrackNode.rankTrack)
-			
-			var phase : int = 0
-			if Tutorial.tutorial:
-				phase = setupPhaseforTutorial()
-			
-			sequenceOfPlay(phase)
-		else:
-			setupDemonsFromSavegame()
 	
-			setupSectiosFromSavegame()
-			
-			setupLegionsFromSavegame()
-			setupLieutenantsFromSavegame()
-			fillAvailableLieutenantsBox()
-			
-			setupArcanaCardsFromSavegame()
-			
+		#debug
+		debug.debugSectios()
+		
+		if not Tutorial.tutorial:
+			setupSectios()
+		
+		fillAvailableLieutenantsBox()
+		
+		if not Tutorial.tutorial:
+			await setupStartLegions()
+		
+		for peer in Connection.peers:
+			RpcCalls.updateRankTrack.rpc_id(peer, rankTrackNode.rankTrack)
+		
+		var phase : int = 0
+		if Tutorial.tutorial:
+			phase = setupPhaseforTutorial()
+		
+		sequenceOfPlay(phase)
+	else:
+		setupDemonsFromSavegame()
+
+		setupSectiosFromSavegame()
+		
+		setupLegionsFromSavegame()
+		setupLieutenantsFromSavegame()
+		fillAvailableLieutenantsBox()
+		
+		setupArcanaCardsFromSavegame()
+		
+		for peer in Connection.peers:
+			RpcCalls.toogleWaitForPlayer.rpc_id(peer, 66, true)
+		if not Settings.skipScreens:
 			for peer in Connection.peers:
-				RpcCalls.toogleWaitForPlayer.rpc_id(peer, 66, true)
-			if not Settings.skipScreens:
-				for peer in Connection.peers:
-					await Signals.proceedSignal
-			for peer in Connection.peers:
-				RpcCalls.toogleWaitForPlayer.rpc_id(peer, 66, false)
-			
-			if Save.savegame.game:
-				loadGame(Save.savegame.game)
-			sequenceOfPlay(Data.phase)
+				await Signals.proceedSignal
+		for peer in Connection.peers:
+			RpcCalls.toogleWaitForPlayer.rpc_id(peer, 66, false)
+		
+		if Save.savegame.game:
+			loadGame(Save.savegame.game)
+		sequenceOfPlay(Data.phase)
 
 
 func setupAiPlayer(playerIds : Array, aiPlayersIds : Array) -> Array:
@@ -266,7 +270,7 @@ func setupSoulsFromSavegame():
 func setupSouls():
 	for playerId in Data.players:
 		var player = Data.players[playerId]
-		var souls = player.souls + 10
+		var souls = player.souls + 10 + debugSouls
 		Signals.changeSouls.emit(playerId, souls)
 
 

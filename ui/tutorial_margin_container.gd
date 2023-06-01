@@ -20,6 +20,7 @@ func _on_tutorial(topic, text : String):
 		
 		Tutorial.Topic.RecruitLegion:
 			%Button.hide()
+			%ColorRect.hide()
 		Tutorial.Topic.PlaceLegion:
 			%Button.hide()
 			%ColorRect.hide()

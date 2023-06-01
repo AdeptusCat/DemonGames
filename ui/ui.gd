@@ -79,7 +79,50 @@ func _on_removeLieutenantFromAvailableLieutenantsBox(lieutenantName : String):
 	removeLieutenantFromAvailableLieutenantsBox(lieutenantName)
 
 
+func disableActionButtons():
+	# Summoning Actions
+	%RecruitLegionsButton.disabled = true
+	%RecruitLegionsButton.get_material().set_shader_parameter("active", false)
+	
+	%BuyArcanaCardButton.disabled = true
+	%BuyArcanaCardButton.get_material().set_shader_parameter("active", false)
+	
+	%EndPhaseButton.disabled = true
+	%EndPhaseButton.get_material().set_shader_parameter("active", false)
+	
+	# Demon Actions
+	%MarchButton.disabled = true
+	%MarchButton.get_material().set_shader_parameter("active", false)
+	
+	%WalkTheEarthButton.disabled = true
+	%WalkTheEarthButton.get_material().set_shader_parameter("active", false)
+	
+	%PassButton.disabled = true
+	%PassButton.get_material().set_shader_parameter("active", false)
+	
+	%PassForGoodButton.disabled = true
+	%PassForGoodButton.get_material().set_shader_parameter("active", false)
+	
+	%DoEvilDeedsButton.disabled = true
+	%DoEvilDeedsButton.get_material().set_shader_parameter("active", false)
+	
+	%ConspireButton.disabled = true
+	%ConspireButton.get_material().set_shader_parameter("active", false)
+	
+	%InfluenceUnitsButton.disabled = true
+	%InfluenceUnitsButton.get_material().set_shader_parameter("active", false)
+	
+	%AtonementAndSuplicationButton.disabled = true
+	%AtonementAndSuplicationButton.get_material().set_shader_parameter("active", false)
+	
+	%UseMagicButton.disabled = true
+	%UseMagicButton.get_material().set_shader_parameter("active", false)
+
+
+
+
 func _on_tutorial(topic, text : String):
+	disableActionButtons()
 	match topic:
 		Tutorial.Topic.PlayersTree:
 			var pos : Transform2D = %PlayersTree.get_global_transform_with_canvas()
@@ -97,9 +140,12 @@ func _on_tutorial(topic, text : String):
 		Tutorial.Topic.PlayerStatus:
 			%PlayersTree.z_index = 1
 		Tutorial.Topic.RecruitLegion:
-			var pos : Transform2D = %RecruitLegionsButton.get_global_transform_with_canvas()
-			%RecruitLegionsButton.top_level = true
-			%RecruitLegionsButton.global_position = pos.origin
+			%RecruitLegionsButton.disabled = false
+			%RecruitLegionsButton.get_material().set_shader_parameter("active", true)
+	
+#			var pos : Transform2D = %RecruitLegionsButton.get_global_transform_with_canvas()
+#			%RecruitLegionsButton.top_level = true
+#			%RecruitLegionsButton.global_position = pos.origin
 		Tutorial.Topic.PlaceLegion:
 			%BuyArcanaCardButton.disabled = true
 			%EndPhaseButton.disabled = true
@@ -189,10 +235,10 @@ func _on_tutorialRead():
 		%PlayersTree.visible = false
 		%PlayersTree.visible = true
 	
-	if %RecruitLegionsButton.top_level:
-		%RecruitLegionsButton.top_level = false
-		%RecruitLegionsButton.visible = false
-		%RecruitLegionsButton.visible = true
+#	if %RecruitLegionsButton.top_level:
+#		%RecruitLegionsButton.top_level = false
+#		%RecruitLegionsButton.visible = false
+#		%RecruitLegionsButton.visible = true
 	if %BuyArcanaCardButton.top_level:
 		%BuyArcanaCardButton.top_level = false
 		%BuyArcanaCardButton.visible = false
@@ -245,6 +291,8 @@ func _on_updateRankTrack(arr : Array):
 
 
 func _on_toggleEndPhaseButton(boolean : bool):
+#	if Tutorial.tutorial:
+#		return
 	if boolean:
 		%EndPhaseButton.disabled = false
 	else:
@@ -502,6 +550,8 @@ func _on_hidePickArcanaCardContainer(cardName):
 
 
 func _on_toggleBuyArcanaCardButtonEnabled(boolean : bool):
+#	if Tutorial.tutorial:
+#		return
 	if boolean:
 		%BuyArcanaCardButton.disabled = false
 	else:
@@ -598,6 +648,8 @@ func _on_recruit_legions_button_pressed():
 
 
 func _on_toggleRecruitLegionsButtonEnabled(boolean : bool):
+#	if Tutorial.tutorial:
+#		return
 	if boolean:
 		%RecruitLegionsButton.disabled = false
 	else:

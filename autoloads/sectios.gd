@@ -19,7 +19,7 @@ func sectioClickable(sectioName : String):
 	Decks.sectioNodes[sectioName].changeClickable(true)
 
 
-func sectioUnlickable(sectioName : String):
+func sectioUnclickable(sectioName : String):
 	Decks.sectioNodes[sectioName].changeClickable(false)
 
 
@@ -49,12 +49,11 @@ func sectiosWithoutEnemiesClickable():
 
 
 func sectiosLeftClickable(sectioName : String):
-	var sectiosWithoutEnemiesLeft : Array = Data.player.sectiosWithoutEnemiesLeft
-	if sectiosWithoutEnemiesLeft.size() > 1:
-		sectiosWithoutEnemiesLeft.erase(sectioName)
-		sectioClickable(sectioName)
+	if Data.player.sectiosWithoutEnemiesLeft.size() > 1:
+		Data.player.sectiosWithoutEnemiesLeft.erase(sectioName)
+		sectioUnclickable(sectioName)
 	else:
-		sectiosWithoutEnemiesLeft = Data.player.sectiosWithoutEnemies.duplicate()
-		sectiosUnclickable(Data.player.sectiosWithoutEnemiesLeft)
+		Data.player.sectiosWithoutEnemiesLeft = Data.player.sectiosWithoutEnemies.duplicate()
+		sectiosClickable(Data.player.sectiosWithoutEnemiesLeft)
 	
 	
