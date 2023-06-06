@@ -90,6 +90,7 @@ func connectToServer():
 	multiplayer.connected_to_server.connect(_on_connection_succeeded)
 #	multiplayer.server_disconnected.connect(_on_server_disconnected)
 
+
 func _on_connection_failed():
 	connected = false
 	print("connection failed")

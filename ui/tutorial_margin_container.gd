@@ -27,6 +27,7 @@ func _on_tutorial(topic, text : String):
 		Tutorial.Topic.PlaceLegionTwice:
 			%ColorRect.hide()
 		Tutorial.Topic.BuyArcanaCard:
+			%ColorRect.hide()
 			%Button.hide()
 		Tutorial.Topic.PickArcanaCard:
 			%Button.hide()
@@ -51,6 +52,7 @@ func _on_tutorial(topic, text : String):
 		Tutorial.Topic.DemonDetails:
 			%Button.hide()
 		Tutorial.Topic.PassAction:
+			%ColorRect.hide()
 			%Button.hide()
 		Tutorial.Topic.Pass:
 			%Button.hide()
@@ -70,12 +72,15 @@ func _on_tutorial(topic, text : String):
 			%Button.hide()
 			%ColorRect.hide()
 		Tutorial.Topic.WalkTheEarthAttempt:
+			%ColorRect.hide()
 			%Button.hide()
 		Tutorial.Topic.WalkTheEarth:
 			%Button.hide()
 		Tutorial.Topic.DoEvilDeeds:
+			%ColorRect.hide()
 			%Button.hide()
 		Tutorial.Topic.MarchAction:
+			%ColorRect.hide()
 			%Button.hide()
 		Tutorial.Topic.March:
 			%ColorRect.hide()

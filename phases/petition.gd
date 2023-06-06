@@ -56,18 +56,18 @@ func getPetitionSectios() -> Dictionary:
 
 
 func phase(combatWinner : Dictionary, ui):
-	tutorialStart()
+	await tutorialStart()
 	
 	winnersOccupySectios(combatWinner)
 	
-	tutorial1()
+	await tutorial1()
 	
 	var petitionSectiosWithWinners : Dictionary = getPetitionSectios()
 	var petitionSectiosWithoutWinners : Dictionary = removeWinnersFromPetitionSectios(petitionSectiosWithWinners, combatWinner)
 	
 	await petitions(petitionSectiosWithoutWinners, ui)
 
-	tutorialEnd()
+	await tutorialEnd()
 
 
 func petitions(petitionSectiosByPlayerId : Dictionary, ui) -> void:

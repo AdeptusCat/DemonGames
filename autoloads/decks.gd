@@ -19,6 +19,18 @@ var cardsNotToLoad : Array = []
 
 enum MinorSpell {WalkTheEarth, RecruitLieutenants, NonaryPass, Pass, DoublePass, TriplePass, QuadruplePass, QuinaryPass, SenaryPass, SeptenaryPass, OctonaryPass, PlayRightAway, WalkTheEarthSafely}
 
+var PassSpells = {
+	MinorSpell.Pass : 1, 
+	MinorSpell.DoublePass : 2, 
+	MinorSpell.TriplePass : 3, 
+	MinorSpell.QuadruplePass : 4, 
+	MinorSpell.QuinaryPass : 5, 
+	MinorSpell.SenaryPass : 6, 
+	MinorSpell.SeptenaryPass : 7, 
+	MinorSpell.OctonaryPass : 8,
+	}
+
+
 func _ready():
 	Signals.resetGame.connect(_on_resetGame)
 #	for nr in range(2,9):

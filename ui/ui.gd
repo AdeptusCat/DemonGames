@@ -119,8 +119,6 @@ func disableActionButtons():
 	%UseMagicButton.get_material().set_shader_parameter("active", false)
 
 
-
-
 func _on_tutorial(topic, text : String):
 	disableActionButtons()
 	match topic:
@@ -142,10 +140,6 @@ func _on_tutorial(topic, text : String):
 		Tutorial.Topic.RecruitLegion:
 			%RecruitLegionsButton.disabled = false
 			%RecruitLegionsButton.get_material().set_shader_parameter("active", true)
-	
-#			var pos : Transform2D = %RecruitLegionsButton.get_global_transform_with_canvas()
-#			%RecruitLegionsButton.top_level = true
-#			%RecruitLegionsButton.global_position = pos.origin
 		Tutorial.Topic.PlaceLegion:
 			%BuyArcanaCardButton.disabled = true
 			%EndPhaseButton.disabled = true
@@ -154,9 +148,8 @@ func _on_tutorial(topic, text : String):
 			%ArcanaCardsMarginContainer.top_level = true
 			%ArcanaCardsMarginContainer.global_position = pos.origin
 		Tutorial.Topic.BuyArcanaCard:
-			var pos : Transform2D = %BuyArcanaCardButton.get_global_transform_with_canvas()
-			%BuyArcanaCardButton.top_level = true
-			%BuyArcanaCardButton.global_position = pos.origin
+			%BuyArcanaCardButton.disabled = false
+			%BuyArcanaCardButton.get_material().set_shader_parameter("active", true)
 		Tutorial.Topic.PickArcanaCard:
 			var pos : Transform2D = %PickArcanaCardContainer.get_global_transform_with_canvas()
 			%PickArcanaCardContainer.top_level = true
@@ -166,9 +159,8 @@ func _on_tutorial(topic, text : String):
 			%ArcanaCardsMarginContainer.top_level = true
 			%ArcanaCardsMarginContainer.global_position = pos.origin
 		Tutorial.Topic.EndSummoningPhase:
-			var pos : Transform2D = %EndPhaseButton.get_global_transform_with_canvas()
-			%EndPhaseButton.top_level = true
-			%EndPhaseButton.global_position = pos.origin
+			%EndPhaseButton.disabled = false
+			%EndPhaseButton.get_material().set_shader_parameter("active", true)
 		Tutorial.Topic.RankTrack:
 			var pos : Transform2D = %RankTrackMarginContainer.get_global_transform_with_canvas()
 			%RankTrackMarginContainer.top_level = true
@@ -182,45 +174,33 @@ func _on_tutorial(topic, text : String):
 			%DemonDetailsControl.top_level = true
 			%DemonDetailsControl.global_position = pos.origin
 		Tutorial.Topic.PassAction:
-			var pos : Transform2D = %PassButton.get_global_transform_with_canvas()
-			%PassButton.top_level = true
-			%PassButton.global_position = pos.origin
+			%PassButton.disabled = false
+			%PassButton.get_material().set_shader_parameter("active", true)
 		Tutorial.Topic.Pass:
 			var pos : Transform2D = %ArcanaCardsMarginContainer.get_global_transform_with_canvas()
 			%ArcanaCardsMarginContainer.top_level = true
 			%ArcanaCardsMarginContainer.global_position = pos.origin
 		Tutorial.Topic.WalkTheEarthAttempt:
-			var pos : Transform2D = %WalkTheEarthButton.get_global_transform_with_canvas()
-			%WalkTheEarthButton.top_level = true
-			%WalkTheEarthButton.global_position = pos.origin
+			%WalkTheEarthButton.disabled = false
+			%WalkTheEarthButton.get_material().set_shader_parameter("active", true)
 		Tutorial.Topic.WalkTheEarth:
 			var pos : Transform2D = %ArcanaCardsMarginContainer.get_global_transform_with_canvas()
 			%ArcanaCardsMarginContainer.top_level = true
 			%ArcanaCardsMarginContainer.global_position = pos.origin
 		Tutorial.Topic.DoEvilDeeds:
-			var pos : Transform2D = %DoEvilDeedsButton.get_global_transform_with_canvas()
-			%DoEvilDeedsButton.top_level = true
-			%DoEvilDeedsButton.global_position = pos.origin
+			%DoEvilDeedsButton.disabled = false
+			%DoEvilDeedsButton.get_material().set_shader_parameter("active", true)
 		Tutorial.Topic.DoEvilDeedsResult:
 			var pos : Transform2D = %RankTrackMarginContainer.get_global_transform_with_canvas()
 			%RankTrackMarginContainer.top_level = true
 			%RankTrackMarginContainer.global_position = pos.origin
 			%DoEvilDeedsButton.global_position = pos.origin
 		Tutorial.Topic.MarchAction:
-			var pos : Transform2D = %MarchButton.get_global_transform_with_canvas()
-			%MarchButton.top_level = true
-			%MarchButton.global_position = pos.origin
-			
-#		Tutorial.Topic.TooManyArcanaCards:
-#			var pos : Transform2D = %DiscardArcanaCardControl.get_global_transform_with_canvas()
-#			%DiscardArcanaCardControl.top_level = true
-#			%DiscardArcanaCardControl.global_position = pos.origin
-			
-#		Tutorial.Topic.SummonLieutenant:
-
-			
-#		Tutorial.Topic.PlaceLegion:
-#
+			%MarchButton.disabled = false
+			%MarchButton.get_material().set_shader_parameter("active", true)
+		Tutorial.Topic.March:
+			%MarchButton.disabled = false
+			%MarchButton.get_material().set_shader_parameter("active", true)
 
 
 func _on_tutorialRead():

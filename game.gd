@@ -415,8 +415,6 @@ func setupPhaseforTutorial() -> int:
 			phase = 3
 		Tutorial.Chapter.Combat:
 			phase = 4
-		Tutorial.Chapter.Petitions:
-			phase = 5
 	return phase
 
 
@@ -470,7 +468,7 @@ func sequenceOfPlay(phase : int = 0):
 				debug.spawnDebugTroops1(playerId)
 	
 	if Tutorial.tutorial and Tutorial.chapter == Tutorial.Chapter.Introduction:
-		Tutorial.introduction()
+		await Tutorial.introduction()
 	
 	await get_tree().create_timer(0.1).timeout
 	for peer in Connection.peers:
@@ -517,6 +515,9 @@ func sequenceOfPlay(phase : int = 0):
 		if phase == Data.phases.Combat and not skipCombat:
 			if Tutorial.tutorial:
 				rankTrack = await Tutorial.combat(rankTrackNode)
+				# otherwise the "On Earth" Demon doesnt get his Label
+				for peer in Connection.peers:
+					RpcCalls.combatPhase.rpc_id(peer)
 			await $Combat.phase(map)
 		for peer in Connection.peers:
 			RpcCalls.combatOver.rpc_id(peer)

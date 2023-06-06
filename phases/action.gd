@@ -4,7 +4,7 @@ extends Node
 
 func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 	if Tutorial.tutorial:
-		tutorialStart(rankTrack, rankTrackNode)
+		rankTrack = await tutorialStart(rankTrack, rankTrackNode)
 	
 	for peer in Connection.peers:
 		RpcCalls.demonAction.rpc_id(peer, 0, "Reset")
@@ -28,7 +28,7 @@ func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 		var result
 		if not Connection.isAiPlayer(Data.demons[nextDemonRank].player):
 			if Tutorial.tutorial:
-				tutorial1(tutorialSequence)
+				await tutorial1(tutorialSequence)
 			result = await Signals.demonDoneWithPhase
 			for sectio in Decks.sectioNodes.values():
 				sectio.changeClickable.rpc_id(Data.demons[nextDemonRank].player, false)
@@ -37,7 +37,7 @@ func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 			var playerId = Data.demons[nextDemonRank].player
 			var player : Player = Data.players[playerId]
 			if Tutorial.tutorial:
-				tutorial2(tutorialSequence, nextDemonRank, playerId, map)
+				await tutorial2(tutorialSequence, nextDemonRank, playerId, map)
 			else:
 				var affordableWalkTheEarthCardNames : Array = getAffordableWalkTheEarthCards(player.arcanaCards, player)
 				
@@ -70,7 +70,6 @@ func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 						madeAction = true
 				
 				if not madeAction:
-					
 					for peer in Connection.peers:
 						RpcCalls.demonAction.rpc_id(peer, nextDemonRank, "Marching")
 					var circle : int = Ai.getBestCircle(playerId)
@@ -141,7 +140,7 @@ func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 		await Signals.tutorialRead
 
 
-func tutorialStart(rankTrack, rankTrackNode) -> void:
+func tutorialStart(rankTrack, rankTrackNode) -> Array:
 	var cardNames : Array = ["Rotten Sweetness", "Sisyphus' Rock", "The Frenzied Feeder", "The Shaker"]
 	var cardsToDraw : int = cardNames.size()
 	for i in range(cardsToDraw):
@@ -186,7 +185,9 @@ func tutorialStart(rankTrack, rankTrackNode) -> void:
 #					RpcCalls.addDemon.rpc_id(peer, playerId, nr)
 #				nr = Decks.getSpecificCard("demon", "Xaphan") #59
 #				for peer in Connection.peers:
-#					RpcCalls.addDemon.rpc_id(peer, playerId, nr)
+#					RpcCalls.addDemon.rpc_id(peer, playerId, nr
+	
+	
 	for peer in Connection.peers:
 		RpcCalls.updateRankTrack.rpc_id(peer, rankTrackNode.rankTrack)
 	rankTrack = rankTrackNode.rankTrack.duplicate()
@@ -198,6 +199,9 @@ func tutorialStart(rankTrack, rankTrackNode) -> void:
 	
 	Signals.tutorial.emit(Tutorial.Topic.Phase, "This is the Action Phase. \nHere the Demons of the Players will take turns to march Legions through Hell, Walk with them on the Earth or do other feindish things.")
 	await Signals.tutorialRead
+	
+	return rankTrack
+
 
 func tutorial2(tutorialSequence : int, nextDemonRank : int, playerId : int, map) -> void:
 	if tutorialSequence == 1:
@@ -310,8 +314,8 @@ func tutorial1(tutorialSequence : int) -> void:
 		await Signals.tutorialRead
 
 		Signals.tutorial.emit(Tutorial.Topic.Pass, "Now cast a Pass Spell by clicking on the Card. \nObserve the Rank Track to see the change in the Order.")
-	
-	
+
+
 	if tutorialSequence == 2:
 		Signals.tutorial.emit(Tutorial.Topic.NextDemon, "The next Demon is 'Caim'.")
 		await Signals.tutorialRead

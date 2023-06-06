@@ -70,7 +70,6 @@ func _on_MinorSpell(arcanaCard : ArcanaCard):
 
 
 func _on_arcanaClicked(arcanaCard : ArcanaCard, mode):
-	print(mode, "lul")
 	if mode == "discard":
 		if Tutorial.tutorial:
 			if arcanaCard.minorSpell == Decks.MinorSpell.RecruitLieutenants:

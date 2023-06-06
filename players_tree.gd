@@ -61,7 +61,6 @@ func _on_changeValue(playerId, column, value):
 		"souls":
 			line.set_text(1, str(value))
 		"income":
-			print("changed income ", value)
 			line.set_text(2, value)
 		"favors":
 			line.set_text(3, str(value))

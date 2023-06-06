@@ -58,35 +58,35 @@ shader_parameter/shine_size = 0.01
 shader_parameter/active = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i8445"]
-shader = ExtResource("11_atr4v")
+shader = ExtResource("10_bh8fp")
 shader_parameter/shine_color = Color(1, 1, 1, 1)
 shader_parameter/shine_speed = 5.0
 shader_parameter/shine_size = 0.01
 shader_parameter/active = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w6yy2"]
-shader = ExtResource("11_atr4v")
+shader = ExtResource("10_bh8fp")
 shader_parameter/shine_color = Color(1, 1, 1, 1)
 shader_parameter/shine_speed = 5.0
 shader_parameter/shine_size = 0.01
 shader_parameter/active = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sylf8"]
-shader = ExtResource("11_atr4v")
+shader = ExtResource("10_bh8fp")
 shader_parameter/shine_color = Color(1, 1, 1, 1)
 shader_parameter/shine_speed = 5.0
 shader_parameter/shine_size = 0.01
 shader_parameter/active = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vrvro"]
-shader = ExtResource("11_atr4v")
+shader = ExtResource("10_bh8fp")
 shader_parameter/shine_color = Color(1, 1, 1, 1)
 shader_parameter/shine_speed = 5.0
 shader_parameter/shine_size = 0.01
 shader_parameter/active = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m67av"]
-shader = ExtResource("11_atr4v")
+shader = ExtResource("10_bh8fp")
 shader_parameter/shine_color = Color(1, 1, 1, 1)
 shader_parameter/shine_speed = 5.0
 shader_parameter/shine_size = 0.01
@@ -100,21 +100,21 @@ shader_parameter/shine_size = 0.01
 shader_parameter/active = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6w3pa"]
-shader = ExtResource("11_atr4v")
+shader = ExtResource("10_bh8fp")
 shader_parameter/shine_color = Color(1, 1, 1, 1)
 shader_parameter/shine_speed = 1.0
 shader_parameter/shine_size = 0.01
 shader_parameter/active = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lvntu"]
-shader = ExtResource("11_atr4v")
+shader = ExtResource("10_bh8fp")
 shader_parameter/shine_color = Color(1, 1, 1, 1)
 shader_parameter/shine_speed = 5.0
 shader_parameter/shine_size = 0.01
 shader_parameter/active = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bpobq"]
-shader = ExtResource("11_atr4v")
+shader = ExtResource("10_bh8fp")
 shader_parameter/shine_color = Color(1, 1, 1, 1)
 shader_parameter/shine_speed = 5.0
 shader_parameter/shine_size = 0.01

@@ -84,6 +84,7 @@ func toggleActionMenu(boolean : bool):
 					pass
 		%MarchButton.text = "March"
 		%MarchButton.disabled = false
+		print("march disabled y")
 		
 		for child in %SkullsHBoxContainer.get_children():
 			child.queue_free()
@@ -178,6 +179,7 @@ func _on_march_button_pressed():
 		Signals.march.emit()
 		%MarchButton.text = "End March"
 		%MarchButton.disabled = false
+		print("march disabled z")
 		if Tutorial.tutorial:
 			if Tutorial.currentTopic == Tutorial.Topic.MarchAction:
 				Signals.tutorialRead.emit()
@@ -240,7 +242,21 @@ func _on_actionThroughArcana(minorSpell : Decks.MinorSpell):
 	var MinorSpell = Decks.MinorSpell
 	match minorSpell:
 		MinorSpell.Pass:
-			passTurns(1)
+			passTurns(Decks.PassSpells[MinorSpell.Pass])
+		MinorSpell.DoublePass:
+			passTurns(Decks.PassSpells[MinorSpell.DoublePass])
+		MinorSpell.TriplePass:
+			passTurns(Decks.PassSpells[MinorSpell.TriplePass])
+		MinorSpell.QuadruplePass:
+			passTurns(Decks.PassSpells[MinorSpell.QuadruplePass])
+		MinorSpell.QuinaryPass:
+			passTurns(Decks.PassSpells[MinorSpell.QuinaryPass])
+		MinorSpell.SenaryPass:
+			passTurns(Decks.PassSpells[MinorSpell.SenaryPass])
+		MinorSpell.SeptenaryPass:
+			passTurns(Decks.PassSpells[MinorSpell.SeptenaryPass])
+		MinorSpell.OctonaryPass:
+			passTurns(Decks.PassSpells[MinorSpell.OctonaryPass])
 		MinorSpell.WalkTheEarth:
 			walkTheEarth()
 		MinorSpell.WalkTheEarthSafely:
@@ -436,6 +452,7 @@ func _on_end_button_pressed():
 
 func disableActions():
 	%MarchButton.disabled = true
+	print("march disabled1")
 	%WalkTheEarthButton.disabled = true
 	%PassButton.disabled = true
 	%PassForGoodButton.disabled = true

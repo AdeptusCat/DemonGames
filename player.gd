@@ -17,7 +17,6 @@ class_name Player
 @export var income : String = "": 
 	set(value):
 		income = value
-		print("changed income on player ", income)
 		Signals.changePlayerDisplayValue.emit(playerId, "income", income)
 @export var arcanaCards = []
 @export var sectios : Array[String] = []
@@ -34,7 +33,6 @@ var sectiosWithoutEnemiesLeft : Array[String]
 
 
 func _ready():
-	print("new player ", name)
 	playerId = str(name).to_int()
 
 func saveGame():
