@@ -26,6 +26,8 @@ var skipEnd = false
 var skipUnitPlacing = false
 var debugTroops = false
 var debugSouls : int = 0
+var debugFavors : int = 0
+var debugDisfavors : int = 0
 
 var loadSaveGame = false
 
@@ -49,17 +51,19 @@ func _ready():
 	
 	#debug 
 	Server.playerjoinedRoom.connect(_on_playerjoinedRoom)
-#	skipHell = true
-#	skipSouls = true
-#	skipSummoning = true
-#	skipAction = true
-#	skipCombat = true
+	skipHell = true
+	skipSouls = true
+	skipSummoning = true
+	skipAction = true
+	skipCombat = true
 #	skipPetitions = true
 #	skipEnd = true
 
 #	skipUnitPlacing = true
 #	debugTroops = true
-	debugSouls = 100
+#	debugSouls = 100
+	debugFavors = 1
+#	debugDisfavors = 1
 #
 #	Settings.tooltips = false
 #	Settings.skipScreens = true
@@ -138,18 +142,21 @@ func setup():
 		setupSoulsFromSavegame()
 		setupFavorsFromSavegame()
 	
+	debug.debugFavors()
+	debug.debugDisfavors()
+	
 	setupMouseLights()
 	
 	if Save.savegame.size() == 0:
 		if not Tutorial.tutorial:
 			setupDemons()
 			await confirmStartDemon()
-	
-		#debug
-		debug.debugSectios()
 		
 		if not Tutorial.tutorial:
 			setupSectios()
+		
+		#debug
+		debug.debugSectios()
 		
 		fillAvailableLieutenantsBox()
 		

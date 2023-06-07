@@ -20,7 +20,7 @@ func getWinnersIds() -> Array:
 func getPlayerIdWithMostFavorsAndFewerDisfavors(winnerIds : Array) -> int:
 	var mostFavors : int = 0
 	var winnerDisfavors : int = 0
-	var winnerId : int
+	var winnerId : int = winnerIds[0]
 	for playerId in winnerIds:
 		var player : Player = Data.players[playerId]
 		if player.favors > mostFavors:
@@ -49,6 +49,7 @@ func phase() -> bool:
 		return false
 	else:
 		var winnerId : int = getPlayerIdWithMostFavorsAndFewerDisfavors(winnerIds)
+		print("winner ", winnerId, winnerIds)
 		for peer in Connection.peers:
 			RpcCalls.win.rpc_id(peer, winnerId)
 		return true
