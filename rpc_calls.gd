@@ -67,8 +67,11 @@ func moveCamera(_position : Vector2):
 
 
 @rpc ("any_peer", "call_local")
-func sendSectiosWithoutEnemies(sectioNames : Array):
-	Data.player.sectiosWithoutEnemies = sectioNames
+func sendSectiosWithoutEnemies(sectioNames : Array[String]):
+	var sectioNamesTyped : Array[String] = []
+	for sectioName in sectioNames:
+		sectioNamesTyped.append(sectioName)
+	Data.player.sectiosWithoutEnemies = sectioNamesTyped
 
 
 @rpc ("any_peer", "call_local")
@@ -337,9 +340,7 @@ func petitionsDone():
 @rpc("any_peer", "call_local")
 func discardArcanaCard(arcanaCardName, playerId):
 	var player = Data.players[playerId]
-	print("erase arcana 1 ", arcanaCardName, " ", player.arcanaCards)
 	player.arcanaCards.erase(arcanaCardName)
-	print("erase arcana 2 ", arcanaCardName, " ", player.arcanaCards)
 
 
 @rpc("any_peer", "call_local")

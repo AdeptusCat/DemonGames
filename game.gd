@@ -51,18 +51,18 @@ func _ready():
 	
 	#debug 
 	Server.playerjoinedRoom.connect(_on_playerjoinedRoom)
-	skipHell = true
-	skipSouls = true
-	skipSummoning = true
-	skipAction = true
-	skipCombat = true
+#	skipHell = true
+#	skipSouls = true
+#	skipSummoning = true
+#	skipAction = true
+#	skipCombat = true
 #	skipPetitions = true
 #	skipEnd = true
 
 #	skipUnitPlacing = true
 #	debugTroops = true
 #	debugSouls = 100
-	debugFavors = 1
+#	debugFavors = 1
 #	debugDisfavors = 1
 #
 #	Settings.tooltips = false
