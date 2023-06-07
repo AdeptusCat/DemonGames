@@ -49,7 +49,6 @@ func phase() -> bool:
 		return false
 	else:
 		var winnerId : int = getPlayerIdWithMostFavorsAndFewerDisfavors(winnerIds)
-		print("winner ", winnerId, winnerIds)
 		for peer in Connection.peers:
 			RpcCalls.win.rpc_id(peer, winnerId)
 		return true

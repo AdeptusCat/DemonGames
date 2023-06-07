@@ -2,7 +2,7 @@ extends Node
 
 
 func debugSectios():
-#	return
+	return
 	for peer in Connection.peers:
 #		occupySectio.rpc_id(peer, Ai.playerIds[0], "The Wise Men")
 #		RpcCalls.occupySectio.rpc_id(peer, Data.id, "The Wise Men")
@@ -24,11 +24,13 @@ func debugSectios():
 
 
 func debugFavors():
+	return
 	Signals.changeFavors.emit(Connection.aiPlayersId[0], 3)
 	Signals.changeFavors.emit(Data.id, 3)
 
 
 func debugDisfavors():
+	return
 	Signals.changeDisfavors.emit(Connection.aiPlayersId[0], 1)
 	Signals.changeDisfavors.emit(Data.id, 2)
 
