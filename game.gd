@@ -51,6 +51,7 @@ func _ready():
 	
 	#debug 
 	Server.playerjoinedRoom.connect(_on_playerjoinedRoom)
+	
 #	skipHell = true
 #	skipSouls = true
 #	skipSummoning = true

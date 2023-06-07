@@ -35,6 +35,7 @@ signal startGame(room_idm, peers)
 func player_connected(playerName : String, playerId : int):
 	playerJoined.emit(playerName, playerId)
 
+
 @rpc("call_local")
 func player_disconnected(playerId : int):
 	playerLeft.emit(playerId)
@@ -44,9 +45,11 @@ func player_disconnected(playerId : int):
 func create_room(room_name : String):
 	createRoom.emit(room_name)
 
+
 @rpc("call_local")
 func room_created(player_id : int, roomName : String):
 	roomCreated.emit(player_id, roomName)
+
 
 @rpc("call_local")
 func room_closed(roomId : int, roomName : String):

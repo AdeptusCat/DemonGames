@@ -49,7 +49,8 @@ func _ready():
 #	while not ResourceLoader.load_threaded_get_status(map_fx_path) == 3:
 #		print("loading")
 #	var fxScene = ResourceLoader.load_threaded_get(map_fx_path)
-
+	
+	Settings.debug = true
 	if OS.has_feature("editor"):
 		if not Settings.debug:
 			var fx = load("res://map_fx/map_fx.tscn")

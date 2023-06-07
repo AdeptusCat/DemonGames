@@ -63,6 +63,8 @@ func _ready():
 	Signals.tutorialRead.connect(_on_tutorialRead)
 	
 	Signals.removeLieutenantFromAvailableLieutenantsBox.connect(_on_removeLieutenantFromAvailableLieutenantsBox)
+	
+	Server.playerLeft.connect(_on_playerLeft)
 #	%WaitForPlayerControl.modulate.a = 1.0
 #	%WaitForPlayerControl.show()
 ##			await get_tree().create_timer(10.0).timeout
@@ -72,6 +74,12 @@ func _ready():
 #	tw1.set_ease(Tween.EASE_IN)
 #	tw1.tween_property(%WaitForPlayerControl, "modulate", Color(1,1,1,0), 2.0)#.set_delay(0.5)
 #	tw1.tween_callback(turn)
+
+
+func _on_playerLeft(playerId : int):
+	if Data.players.has(playerId):
+		%PlayerDisconnectedMarginContainer.show()
+		%PlayerDisconnectedLabel.text = "Player " + Data.players[playerId].playerName + " left the Game. \nNote that this Game saves after every Phase. \n You can create a new Room in the Lobby and load the Savegame."
 
 
 func _on_removeLieutenantFromAvailableLieutenantsBox(lieutenantName : String):
@@ -665,3 +673,7 @@ func _on_showPlayerStatusMarginContainer():
 
 func _on_updateTurnTrack(turn : int):
 	%TurnLabel.text = str(turn)
+
+
+func _on_player_disconnected_button_pressed():
+	%PlayerDisconnectedMarginContainer.hide()

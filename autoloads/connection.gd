@@ -29,6 +29,12 @@ var local = true
 func _ready():
 	Signals.resetGame.connect(_on_resetGame)
 	Signals.returnToMainMenu.connect(_on_returnToMainMenu)
+	Server.playerLeft.connect(_on_playerLeft)
+
+
+func _on_playerLeft(playerId : int):
+	if Data.players.has(playerId):
+		print("player left game")
 
 
 func isAiPlayer(playerId) -> bool:

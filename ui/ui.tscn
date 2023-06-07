@@ -1971,6 +1971,49 @@ layout_mode = 2
 visible = false
 layout_mode = 1
 
+[node name="PlayerDisconnectedMarginContainer" type="MarginContainer" parent="Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -84.0
+offset_top = -66.0
+offset_right = 84.0
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FrameBackgroundMarginContainer" parent="Control/PlayerDisconnectedMarginContainer" instance=ExtResource("25_jfpsm")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/PlayerDisconnectedMarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 80
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PlayerDisconnectedMarginContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="PlayerDisconnectedLabel" type="Label" parent="Control/PlayerDisconnectedMarginContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "A Player"
+horizontal_alignment = 1
+
+[node name="PlayerDisconnectedButton" type="Button" parent="Control/PlayerDisconnectedMarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Ok
+"
+
+[node name="FrameMarginContainer" parent="Control/PlayerDisconnectedMarginContainer" instance=ExtResource("26_vv66b")]
+layout_mode = 2
+
 [connection signal="pressed" from="Control/WaitForPlayerControl/MarginContainer/VBoxContainer/WaitForPlayerButton" to="." method="_on_wait_for_player_button_pressed"]
 [connection signal="mouse_entered" from="Control/RankTrackMarginContainer/RankTrack" to="Control/RankTrackMarginContainer/RankTrack" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Control/RankTrackMarginContainer/RankTrack" to="Control/RankTrackMarginContainer/RankTrack" method="_on_mouse_exited"]
@@ -2015,3 +2058,4 @@ layout_mode = 1
 [connection signal="pressed" from="Control/HelpSequenceOfPlayContainer/MarginContainer/VBoxContainer/Button" to="Control/HelpSequenceOfPlayContainer" method="_on_button_pressed"]
 [connection signal="pressed" from="Control/GoalMarginContainer/MarginContainer/MarginContainer/VBoxContainer/Button" to="Control/GoalMarginContainer" method="_on_button_pressed"]
 [connection signal="pressed" from="Control/GoalMarginContainer/MarginContainer/MarginContainer/VBoxContainer/Button2" to="Control/GoalMarginContainer" method="_on_button_2_pressed"]
+[connection signal="pressed" from="Control/PlayerDisconnectedMarginContainer/MarginContainer/VBoxContainer/PlayerDisconnectedButton" to="." method="_on_player_disconnected_button_pressed"]

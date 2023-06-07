@@ -128,6 +128,7 @@ func _on_playerLeft(playerId : int):
 	var item : TreeItem = playersInLobbyTreeItems[playerId]
 	playersInLobbyTreeRoot.remove_child(item)
 	playersInLobbyTreeItems.erase(playerId)
+
 	
 #	for index in %PlayersInLobbyList.item_count:
 #		var playerNameEntry = %PlayersInLobbyList.get_item_text(index)
@@ -537,6 +538,10 @@ func change_ai(player_id : int, loaded_player_name : String, loaded_player_id : 
 func _on_start_game_button_pressed():
 	var aiPlayers : int = 0
 	var humanPlayers : int = 0
+	if OS.has_feature("standalone"):
+		if playersInRoomTreeItems.size() < 3:
+			%NotEnoughPlayersMarginContainer.show()
+			return
 	for id in playersInRoomTreeItems:
 		if id > 0:
 			aiPlayers += 1
@@ -1040,3 +1045,7 @@ func _on_savegame_tree_item_activated():
 
 func _on_button_pressed():
 	%CannotStartMarginContainer.hide()
+
+
+func _on_not_enough_players_button_pressed():
+	%NotEnoughPlayersMarginContainer.hide()
