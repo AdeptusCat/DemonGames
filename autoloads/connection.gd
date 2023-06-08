@@ -90,10 +90,12 @@ func connectToServer():
 	multiplayer.multiplayer_peer = network
 	Data.id = multiplayer.get_unique_id()
 	print("client started ", Data.id)
+	if not multiplayer.connection_failed.is_connected(_on_connection_failed):
+		multiplayer.connection_failed.connect(_on_connection_failed)
+	if not multiplayer.connected_to_server.is_connected(_on_connection_succeeded):
+		multiplayer.connected_to_server.connect(_on_connection_succeeded)
 #	network.peer_connected.connect(func(id): peer_connected(id))
 #	network.peer_disconnected.connect(func(id): peer_disconnected(id))
-	multiplayer.connection_failed.connect(_on_connection_failed)
-	multiplayer.connected_to_server.connect(_on_connection_succeeded)
 #	multiplayer.server_disconnected.connect(_on_server_disconnected)
 
 
