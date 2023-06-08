@@ -538,7 +538,7 @@ func change_ai(player_id : int, loaded_player_name : String, loaded_player_id : 
 func _on_start_game_button_pressed():
 	var aiPlayers : int = 0
 	var humanPlayers : int = 0
-	if OS.has_feature("standalone"):
+	if not OS.has_feature("editor") and not Tutorial.tutorial:
 		if playersInRoomTreeItems.size() < 3:
 			%NotEnoughPlayersMarginContainer.show()
 			return
