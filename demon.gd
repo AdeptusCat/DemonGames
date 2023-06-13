@@ -69,7 +69,6 @@ var sex : Sex = Sex.Male:
 var player : int = 0:
 	set(_player):
 		player = _player
-		print("demon color ", player, Data.players)
 		if Data.players.has(player):
 			var color : Color = Data.players[player].color
 			%ColorRect.modulate = color

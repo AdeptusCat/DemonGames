@@ -1,8 +1,8 @@
 extends Node
 
 
-func getSectiosWithoutEnemies(sectios : Array, playerId : int) -> Array[String]:
-	var sectiosWithoutEnemies : Array[String] = []
+func getSectiosWithoutEnemies(sectios : Array, playerId : int) -> Array:
+	var sectiosWithoutEnemies : Array = []
 	for sectioName in sectios:
 		var sectio : Sectio = Decks.sectioNodes[sectioName]
 		var enemyInSectio = false

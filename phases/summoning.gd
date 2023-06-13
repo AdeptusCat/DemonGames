@@ -61,7 +61,7 @@ func phase(phase : int, ui : UI):
 		if hasLegionInAnteHell(player.troops):
 			RpcCalls.toogleTameHellhound.rpc_id(playerId, true)
 		
-		var sectiosWithoutEnemies : Array[String] = Sectios.getSectiosWithoutEnemies(player.sectios, playerId)
+		var sectiosWithoutEnemies : Array = Sectios.getSectiosWithoutEnemies(player.sectios, playerId)
 		RpcCalls.sendSectiosWithoutEnemies.rpc_id(playerId, sectiosWithoutEnemies)
 		
 		highlightAffordableLieutenantCards(player)

@@ -67,12 +67,12 @@ func moveCamera(_position : Vector2):
 
 
 @rpc ("any_peer", "call_local")
-func sendSectiosWithoutEnemies(sectioNames : Array[String]):
+func sendSectiosWithoutEnemies(sectioNames : Array):
 	# this is stupid. you cant pass a typed array properly without doing this shit
-	var sectioNamesTyped : Array[String] = []
-	for sectioName in sectioNames:
-		sectioNamesTyped.append(sectioName)
-	Data.player.sectiosWithoutEnemies = sectioNamesTyped
+#	var sectioNamesTyped : Array[String] = []
+#	for sectioName in sectioNames:
+#		sectioNamesTyped.append(sectioName)
+	Data.player.sectiosWithoutEnemies = sectioNames
 
 
 @rpc ("any_peer", "call_local")

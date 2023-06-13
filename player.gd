@@ -25,11 +25,11 @@ var color : Color = Color8(255, 255, 255)
 var colorName = ""
 var playerName : String = ""
 var playerId : int = 0
-var sectiosWithoutEnemies : Array[String]:
+var sectiosWithoutEnemies : Array:
 	set(_sectiosWithoutEnemies):
 		sectiosWithoutEnemies = _sectiosWithoutEnemies
 		sectiosWithoutEnemiesLeft = sectiosWithoutEnemies.duplicate()
-var sectiosWithoutEnemiesLeft : Array[String]
+var sectiosWithoutEnemiesLeft : Array
 
 
 func _ready():
