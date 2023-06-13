@@ -32,6 +32,8 @@ var playerIcon = preload("res://assets/icons/pentagram.png")
 var game_res_path : String = "res://game.tscn"
 @onready var thread = Thread.new() 
 
+var playerNameTextEditSelected : bool = false
+
 func _ready():
 #	if Connection.host:
 ##		if not Connection.dedicatedServer:
@@ -100,8 +102,14 @@ func _ready():
 	%SavegameTree.set_column_title(3, "Turn")
 	%SavegameTree.set_column_title(4, "Phase")
 	
-	
-	
+
+
+func _input(event):
+	if Input.is_key_pressed(KEY_ENTER):
+		if playerNameTextEditSelected:
+			get_viewport().set_input_as_handled()
+
+
 #func _on_connected():
 #	Connection.fetch_players(get_instance_id())
 #	Connection.fetch_rooms(get_instance_id())
@@ -1049,3 +1057,11 @@ func _on_button_pressed():
 
 func _on_not_enough_players_button_pressed():
 	%NotEnoughPlayersMarginContainer.hide()
+
+
+func _on_player_name_text_edit_focus_entered():
+	playerNameTextEditSelected = true
+
+
+func _on_player_name_text_edit_focus_exited():
+	playerNameTextEditSelected = false

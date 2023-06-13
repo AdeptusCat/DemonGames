@@ -343,11 +343,18 @@ layout_mode = 2
 text = "Change Player Name
 "
 
-[node name="PlayerNameTextEdit" type="TextEdit" parent="LobbyContainer/VBoxContainer2/HBoxContainer2"]
-unique_name_in_owner = true
+[node name="PlayerNameTextEditOld" type="TextEdit" parent="LobbyContainer/VBoxContainer2/HBoxContainer2"]
+visible = false
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 placeholder_text = "Player Name"
+
+[node name="PlayerNameTextEdit" type="LineEdit" parent="LobbyContainer/VBoxContainer2/HBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+placeholder_text = "Player  Name"
+max_length = 25
 
 [node name="BackButton" type="Button" parent="LobbyContainer/VBoxContainer2"]
 layout_mode = 2
@@ -571,6 +578,8 @@ layout_mode = 2
 [connection signal="pressed" from="LobbyContainer/VBoxContainer2/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="LobbyContainer/VBoxContainer2/JoinButton" to="." method="_on_join_button_pressed"]
 [connection signal="pressed" from="LobbyContainer/VBoxContainer2/HBoxContainer2/ChangePlayerNameButton" to="." method="_on_change_player_name_button_pressed"]
+[connection signal="focus_entered" from="LobbyContainer/VBoxContainer2/HBoxContainer2/PlayerNameTextEdit" to="." method="_on_player_name_text_edit_focus_entered"]
+[connection signal="focus_exited" from="LobbyContainer/VBoxContainer2/HBoxContainer2/PlayerNameTextEdit" to="." method="_on_player_name_text_edit_focus_exited"]
 [connection signal="pressed" from="LobbyContainer/VBoxContainer2/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="item_activated" from="LoadSavegameContainer/VBoxContainer2/HBoxContainer/SavegameTree" to="." method="_on_savegame_tree_item_activated"]
 [connection signal="pressed" from="LoadSavegameContainer/VBoxContainer2/HBoxContainer/VBoxContainer/SelectSavegameButton" to="." method="_on_select_savegame_button_pressed"]
