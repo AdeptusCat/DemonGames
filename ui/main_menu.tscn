@@ -66,25 +66,23 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 15
 text = "Connect To Online Lobby"
 
-[node name="ConnectToLocalButton" type="Button" parent="MarginContainer2/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 15
-text = "Connect to Local Lobby
-"
-
 [node name="HostLocalGameButton" type="Button" parent="MarginContainer2/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 15
 text = "Host Local Game"
 
+[node name="ConnectToLocalButton" type="Button" parent="MarginContainer2/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+text = "Connect to Local Lobby"
+
 [node name="ProfileButton" type="Button" parent="MarginContainer2/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 15
-text = "Profile
-"
+text = "Profile"
 
 [node name="MarginContainer3" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -176,8 +174,8 @@ theme_override_font_sizes/font_size = 20
 text = "Visit the Community on Discord"
 
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/VBoxContainer/ConnectToLobbyButton" to="." method="_on_connect_button_pressed"]
-[connection signal="pressed" from="MarginContainer2/VBoxContainer/VBoxContainer/ConnectToLocalButton" to="." method="_on_connect_to_local_button_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/VBoxContainer/HostLocalGameButton" to="." method="_on_host_game_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/VBoxContainer/ConnectToLocalButton" to="." method="_on_connect_to_local_button_pressed"]
 [connection signal="pressed" from="MarginContainer5/VBoxContainer2/ItchButton" to="." method="_on_itch_button_pressed"]
 [connection signal="pressed" from="MarginContainer5/VBoxContainer2/RedditButton" to="." method="_on_reddit_button_pressed"]
 [connection signal="pressed" from="MarginContainer5/VBoxContainer2/RedditButton2" to="." method="_on_reddit_button_2_pressed"]

@@ -130,8 +130,7 @@ expand_mode = 1
 
 [node name="Label" type="Label" parent="LegionMarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Legion
-"
+text = "Legion"
 horizontal_alignment = 1
 
 [connection signal="path_changed" from="NavigationAgent2D" to="." method="_on_navigation_agend_2d_path_changed"]

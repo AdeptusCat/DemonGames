@@ -601,8 +601,7 @@ unique_name_in_owner = true
 material = SubResource("ShaderMaterial_5u6ho")
 layout_mode = 2
 tooltip_text = "Legions can be spawned inside Sectios that are owned by your Triumphirate and not occupied by enemy units."
-text = "Recuit Legions for 3 Souls each
-"
+text = "Recuit Legions for 3 Souls each"
 
 [node name="BuyArcanaCardButton" type="Button" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
