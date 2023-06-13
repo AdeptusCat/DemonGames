@@ -324,8 +324,7 @@ hide_root = true
 [node name="HostButton" type="Button" parent="LobbyContainer/VBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Host
-"
+text = "Host"
 
 [node name="JoinButton" type="Button" parent="LobbyContainer/VBoxContainer2"]
 unique_name_in_owner = true
