@@ -42,8 +42,8 @@ func introduction():
 	await Signals.tutorialRead
 	
 	Signals.tutorial.emit(Tutorial.Topic.Introduction, 
-		"The map shows Hell and its vicinity. \n
-		Hell itself is divided in nine concentric Circles and is surrounded by the AnteHell. \n
+		"The map shows Hell and its vicinity.
+		Hell itself is divided in nine concentric Circles and is surrounded by the AnteHell.
 		Each Circle is named after the predominant kind of sinners it cares for and is in
 		turn divided into five Sectio, each named after the special kind of sinners the
 		Sectio contains.")
