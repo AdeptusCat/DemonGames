@@ -27,6 +27,11 @@ enum Topic {
 
 func _ready():
 	Signals.tutorial.connect(_on_tutorial)
+	Signals.resetGame.connect(_on_resetGame)
+
+
+func _on_resetGame():
+	Tutorial.tutorial = false
 
 
 func _on_tutorial(topic, text : String):

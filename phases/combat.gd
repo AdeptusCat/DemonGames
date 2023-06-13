@@ -45,6 +45,7 @@ func phase(map):
 	var battleCount : int = 0
 	# battle for each sectio
 	for sectio in battleSectiosSorted:
+		triumphiratesThatWantToFlee.clear()
 		# which triumphirate has the most legions in the sectio
 		# first, a dict with Playerid and unitCount
 		for peer in Connection.peers:

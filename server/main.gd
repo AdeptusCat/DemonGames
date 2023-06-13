@@ -83,9 +83,6 @@ func peer_disconnected(player_id):
 						Server.player_left_room.rpc_id(playerId, player_id)
 				rooms[room]["players"].erase(id)
 				break
-	
-	
-	
 
 
 func _on_returnToLobby():

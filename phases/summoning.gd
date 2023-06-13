@@ -163,7 +163,7 @@ func tutorial2():
 	Signals.tutorial.emit(Tutorial.Topic.PlaceLegion, "Click on a highlighted Sectio to place a Legion. \nYou can place Legions only in Sectio that you own and that have no enemy Units inside.")
 	await Signals.tutorialRead
 
-	Signals.tutorial.emit(Tutorial.Topic.PlaceLegionTwice, "Notice that you have to place a Legions in each Sectio you own, bevore you can place another Legion in the same Sectio.")
+	Signals.tutorial.emit(Tutorial.Topic.PlaceLegionTwice, "Notice that you have to place a Legions in each Sectio you own, before you can place another Legion in the same Sectio.")
 	await Signals.tutorialRead
 
 	Signals.tutorial.emit(Tutorial.Topic.RecruitLieutenantAttempt, "To summon a Lieutenant, you need the appropriate Arcana Card. \nIt seems you dont have the right Arcana Card.")
@@ -175,7 +175,7 @@ func tutorial2():
 	Signals.tutorial.emit(Tutorial.Topic.PickArcanaCard, "Now pick one of the three shown Arcana Cards that sais 'Recruit Lieutenant'.")
 	await Signals.tutorialRead
 
-	Signals.tutorial.emit(Tutorial.Topic.TooManyArcanaCards, "You can only have five Arcana Cards at all times. Click one to discards it. \nNotice, it can also be the one you just bought. But we need still need it so keep it for now.")
+	Signals.tutorial.emit(Tutorial.Topic.TooManyArcanaCards, "You can only have five Arcana Cards at all times. Click one to discards it. \nNotice, it can also be the one you just bought. But we will need soon, so keep it for now.")
 	await Signals.tutorialRead
 
 	Signals.tutorial.emit(Tutorial.Topic.RecruitLieutenantCard, "Now you can recruit a Lieutenant by clicking on the Card that sais 'Recruit Lieutenant'.")
