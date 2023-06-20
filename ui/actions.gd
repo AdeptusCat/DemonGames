@@ -51,47 +51,61 @@ func _on_cancelMarch():
 
 func toggleActionMenu(boolean : bool):
 	if boolean:
-		for cardName in player.arcanaCards:
-			if not Data.arcanaCards.has(cardName):
-				continue
-			var arcanaCard : Dictionary = Data.arcanaCards[cardName]
-			if not player.hasEnoughSouls(arcanaCard.cost):
-				continue
-			if not spellObject.objects.has(arcanaCard.minorSpell):
-				continue
-			spellObject.objects[arcanaCard.minorSpell].activatePassButton(%PassButton)
-			spellObject.objects[arcanaCard.minorSpell].activateWalkTheEarthButton(%WalkTheEarthButton)
-		%MarchButton.text = "March"
-		%MarchButton.disabled = false
+		activateActionButtons()
+		
 		removeSkullsFromMenu()
 		addSkullsToMenu()
 		
 		removeHeartsFromMenu()
 		addHeartsToMenu()
 		
-		
-		%PassForGoodButton.disabled = false
-		
-		# not implemented yet
-#		%AtonementAndSuplicationButton.disabled = true
-		%InfluenceUnitsButton.disabled = true
-		%UseMagicButton.disabled = true
-		
-		if currentDemonNode.onEarth:
-			%DoEvilDeedsButton.disabled = false
-#			%ConspireButton.disabled = false
-			%WalkTheEarthButton.disabled = true
-		else:
-			%DoEvilDeedsButton.disabled = true
-#			%ConspireButton.disabled = true
 		show()
 	else:
-		%PassButton.disabled = true
-		%WalkTheEarthButton.disabled = true
-		for cardName in player.arcanaCards:
-			var arcanaCard = Data.arcanaCardNodes[cardName]
-			arcanaCard.disable()
+		deactivateActionButtons()
+		deactivateArcanaCards()
 		hide()
+
+
+func deactivateArcanaCards():
+	for cardName in player.arcanaCards:
+		var arcanaCard = Data.arcanaCardNodes[cardName]
+		arcanaCard.disable()
+
+
+func activateActionButtons():
+	for cardName in player.arcanaCards:
+		if not Data.arcanaCards.has(cardName):
+			continue
+		var arcanaCard : Dictionary = Data.arcanaCards[cardName]
+		if not player.hasEnoughSouls(arcanaCard.cost):
+			continue
+		if not spellObject.objects.has(arcanaCard.minorSpell):
+			continue
+		spellObject.objects[arcanaCard.minorSpell].activatePassButton(%PassButton)
+		spellObject.objects[arcanaCard.minorSpell].activateWalkTheEarthButton(%WalkTheEarthButton)
+	
+	%MarchButton.text = "March"
+	%MarchButton.disabled = false
+	
+	%PassForGoodButton.disabled = false
+		
+	# not implemented yet
+#		%AtonementAndSuplicationButton.disabled = true
+	%InfluenceUnitsButton.disabled = true
+	%UseMagicButton.disabled = true
+	
+	if currentDemonNode.onEarth:
+		%DoEvilDeedsButton.disabled = false
+#			%ConspireButton.disabled = false
+		%WalkTheEarthButton.disabled = true
+	else:
+		%DoEvilDeedsButton.disabled = true
+#			%ConspireButton.disabled = true
+
+
+func deactivateActionButtons():
+	%PassButton.disabled = true
+	%WalkTheEarthButton.disabled = true
 
 
 func removeSkullsFromMenu():
@@ -145,12 +159,6 @@ func _input(event):
 			if Input.is_action_pressed("ui_accept"):
 				if Data.state == Data.States.MARCHING:
 					%MarchButton.pressed.emit()
-
-
-func deactivateArcanaCards():
-	for cardName in player.arcanaCards:
-		var arcanaCard = Data.arcanaCardNodes[cardName]
-		arcanaCard.disable()
 
 
 func _on_march_button_pressed():
