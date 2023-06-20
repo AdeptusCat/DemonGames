@@ -169,7 +169,7 @@ func setup():
 		
 		var phase : int = 0
 		if Tutorial.tutorial:
-			phase = setupPhaseforTutorial()
+			phase = Tutorial.chapter
 		
 		sequenceOfPlay(phase)
 	else:
@@ -408,22 +408,6 @@ func playerPlaceStartLegion(playerId : int) -> void:
 	await map.unitPlacingDone
 	for peer in Connection.peers:
 		RpcCalls.toogleWaitForPlayer.rpc_id(peer, playerId, false)
-
-
-func setupPhaseforTutorial() -> int:
-	var phase : int = 0
-	match Tutorial.chapter:
-		Tutorial.Chapter.Introduction:
-			phase = 0
-		Tutorial.Chapter.Soul:
-			phase = 1
-		Tutorial.Chapter.Summoning:
-			phase = 2
-		Tutorial.Chapter.Actions:
-			phase = 3
-		Tutorial.Chapter.Combat:
-			phase = 4
-	return phase
 
 
 func setupLegionsFromSavegame():

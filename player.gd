@@ -18,7 +18,7 @@ class_name Player
 	set(value):
 		income = value
 		Signals.changePlayerDisplayValue.emit(playerId, "income", income)
-@export var arcanaCards = []
+@export var arcanaCards : Array = []
 @export var sectios : Array[String] = []
 @export var troops : Dictionary = {}
 var color : Color = Color8(255, 255, 255)

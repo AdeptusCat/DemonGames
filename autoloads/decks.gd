@@ -28,6 +28,7 @@ var PassSpells = {
 	MinorSpell.SenaryPass : 6, 
 	MinorSpell.SeptenaryPass : 7, 
 	MinorSpell.OctonaryPass : 8,
+	MinorSpell.NonaryPass : 9,
 	}
 
 

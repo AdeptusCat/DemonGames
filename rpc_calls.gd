@@ -130,7 +130,7 @@ func addArcanaCard(id, cardName):
 	# this was used in the naming of the card
 	# to be able to habe multiple cards of the same type
 	# weird huh
-	var cardReference = Decks.arcanaCardsReference[cardName.strip_edges(false, true)]
+	var cardReference : Dictionary = Decks.arcanaCardsReference[cardName.strip_edges(false, true)]
 	# add only the cardName : cardReference to the dict, 
 	# and overwrite the dict for the actual player with 
 	# cardName : cardNode
@@ -140,7 +140,10 @@ func addArcanaCard(id, cardName):
 	# some cards are twice in the game
 	# solution is to give the second card a whitespace at the end
 	# this gets removed with 'strip_edges' if the referenceCard is needed
-	Data.arcanaCards[cardName] = cardReference
+	var newCardReference : Dictionary = {}
+	for key in cardReference:
+		newCardReference[key] = int(cardReference[key])
+	Data.arcanaCards[cardName] = newCardReference
 	if Data.id == id:
 		Signals.addArcanaCardToUi.emit(id, cardName)
 		if Data.phase == Data.phases.Summoning:

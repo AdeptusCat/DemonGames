@@ -13,9 +13,6 @@ var mode = "":
 				%TextureRect.get_material().set_shader_parameter("active", true)
 				
 
-#signal minorSpellSignal(node)
-#signal arcanaClicked(node)
-
 @export var cardName : String = "Sacred Music"
 @export var minorSpell : int = 0
 @export var cost : int = 1
@@ -23,6 +20,8 @@ var mode = "":
 
 var tw1
 var tw2
+var spellObject : Spells = Spells.new()
+
 
 func _ready():
 	%MinorSpellButton.pivot_offset = %MinorSpellButton.size / 2
@@ -76,45 +75,17 @@ func disable():
 #		tween1.play()
 
 
-
-
 func loadStats(_cardName):
 	var card = Decks.arcanaCardsReference[_cardName.strip_edges(false, true)]
 	cardName = _cardName
 	minorSpell = card["minorSpell"]
 	cost = card["cost"]
-#	print(cardName)
 	$MarginContainer/VBoxContainer/Label.text = cardName
 	%MinorSpellButton.text = Decks.MinorSpell.keys()[minorSpell]
 	$MarginContainer/VBoxContainer/HBoxContainer/CostLabel.text = str(cost)
-	var text : String = ""
-	match minorSpell:
-		Decks.MinorSpell.Pass:
-			text = "The current Demon will take its action after the next Demon."
-		Decks.MinorSpell.DoublePass:
-			text = "The current Demon will take its action after the next two Demons."
-		Decks.MinorSpell.TriplePass:
-			text = "The current Demon will take its action after the next three Demons."
-		Decks.MinorSpell.QuadruplePass:
-			text = "The current Demon will take its action after the next four Demons."
-		Decks.MinorSpell.QuinaryPass:
-			text = "The current Demon will take its action after the next five Demons."
-		Decks.MinorSpell.SenaryPass:
-			text = "The current Demon will take its action after the next six Demons."
-		Decks.MinorSpell.SeptenaryPass:
-			text = "The current Demon will take its action after the next seven Demons."
-		Decks.MinorSpell.OctonaryPass:
-			text = "The current Demon will take its action after the next eight Demons."
-		Decks.MinorSpell.NonaryPass:
-			text = "The current Demon will take its action after the next nine Demons."
-		Decks.MinorSpell.WalkTheEarth:
-			text = "The Demon will walk on the earth where it can collect Souls and Favors."
-		Decks.MinorSpell.WalkTheEarthSafely:
-			text = "The Demon will walk on the earth, unaffected by Hell Cards, where it can collect Souls and Favors."
-		Decks.MinorSpell.RecruitLieutenants:
-			text = "Recruit a Lieutenant and place it on one of your Sectios, that is not occupied by enemy units."
+	var text : String = spellObject.tooltipTexts[minorSpell]
 	%MinorSpellButton.tooltip_text = text
-	
+
 
 func _on_minor_spell_button_pressed():
 	var souls = Data.players[player].souls - cost
@@ -130,5 +101,6 @@ func _on_minor_spell_button_pressed():
 
 func _on_gui_input(event):
 	if Input.is_action_just_pressed("click"):
-		print("clicked arcana ",cardName)
 		Signals.arcanaClicked.emit(self, mode)
+
+

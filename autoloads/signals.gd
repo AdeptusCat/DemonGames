@@ -108,6 +108,10 @@ signal followUnit(unit)
 signal stopFollowingUnit(unit)
 
 
+# arcana Cards
+signal passArcanaCard
+signal walkTheEarthArcanaCard
+
 # Game
 signal updateTurnTrack(turn : int)
 signal actionThroughArcana(action : String)
