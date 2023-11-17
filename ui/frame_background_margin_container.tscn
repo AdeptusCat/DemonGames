@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cx4qcdfkx2x46" path="res://assets/frames/bg.png" id="1_a31ro"]
 
 [node name="FrameBackgroundMarginContainer" type="MarginContainer"]
+mouse_filter = 2
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 30

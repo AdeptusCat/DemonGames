@@ -149,6 +149,7 @@ func setup():
 	setupMouseLights()
 	
 	if Save.savegame.size() == 0:
+		Data.chooseDemon = true
 		if not Tutorial.tutorial:
 			setupDemons()
 			await confirmStartDemon()
@@ -173,6 +174,7 @@ func setup():
 		
 		sequenceOfPlay(phase)
 	else:
+		Data.chooseDemon = false
 		setupDemonsFromSavegame()
 
 		setupSectiosFromSavegame()
@@ -600,6 +602,7 @@ func _on_start():
 
 
 func _on_proceed():
+	Data.chooseDemon = false
 	RpcCalls.proceed.rpc_id(Connection.host)
 
 
@@ -620,3 +623,11 @@ func _on_addPlayer(playerScene : Player):
 
 func _on_updateTurnTrack(_turn : int):
 	turn = _turn
+
+
+# cheats
+func _input(event):
+	return
+	if Input.is_action_just_pressed("right_click"):
+		for peer in Connection.peers:
+			RpcCalls.addArcanaCard.rpc_id(peer, Data.id, "Blood Money")

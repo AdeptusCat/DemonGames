@@ -13,15 +13,16 @@ var troops : Dictionary = {}
 var currentAiPlayer : Player
 var aiPlayers : int = 0
 var pickDemon : bool = false
-var colorsNames : Array = ["Random", "Red", "Green", "Blue", "Violet", "Yellow" ,"Turquoise"]
+var colorsNames : Array = ["Random", "Red", "Green", "Blue", "Violet", "Yellow" ,"Grey"]
 var colors : Dictionary = {
 	"Red" : Color8(140, 31, 31),
 	"Green": Color8(86, 120, 48),
 	"Blue": Color8(24, 46, 120),
 	"Violet": Color8(62, 0, 70),
 	"Yellow": Color8(210, 142, 8),
-	"Turquoise": Color8(0, 107, 112),
+	"Grey": Color8(128,128,128),
 }
+var chooseDemon : bool = false
 
 @onready var normalMaps = {
 	colorsNames[0] : preload("res://assets/triumphirates/00080-1662389051_n.png"),
@@ -30,7 +31,7 @@ var colors : Dictionary = {
 	colorsNames[3] : preload("res://assets/triumphirates/00785-1487385261-symbol of an tribal rune with blue background_n.png"),
 	colorsNames[4] : preload("res://assets/triumphirates/00053-710634660_n.png"),
 	colorsNames[5] : preload("res://assets/triumphirates/00061-2959265132_n.png"),
-	colorsNames[6] : preload("res://assets/triumphirates/00065-4056802531_n.png"),
+	colorsNames[6] : preload("res://assets/triumphirates/00000-1487385261_n.png"),
 }
 
 @onready var icons = {
@@ -40,7 +41,7 @@ var colors : Dictionary = {
 	colorsNames[3] : preload("res://assets/triumphirates/00785-1487385261-symbol of an tribal rune with blue background.png"),
 	colorsNames[4] : preload("res://assets/triumphirates/00053-710634660.png"),
 	colorsNames[5] : preload("res://assets/triumphirates/00061-2959265132.png"),
-	colorsNames[6] : preload("res://assets/triumphirates/00065-40568025311.png"),
+	colorsNames[6] : preload("res://assets/triumphirates/00000-1487385261.png"),
 }
 
 @onready var icons_small = {
@@ -50,7 +51,7 @@ var colors : Dictionary = {
 	colorsNames[3] : preload("res://assets/icons/00785-1487385261-symbol of an tribal rune with blue background.png"),
 	colorsNames[4] : preload("res://assets/icons/00053-710634660.png"),
 	colorsNames[5] : preload("res://assets/icons/00061-2959265132.png"),
-	colorsNames[6] : preload("res://assets/icons/00065-40568025311.png"),
+	colorsNames[6] : preload("res://assets/icons/00000-1487385261.png"),
 }
 
 enum UnitType {Legion, Lieutenant, Hellhound}

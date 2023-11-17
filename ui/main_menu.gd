@@ -19,6 +19,9 @@ func _on_host_game_button_pressed():
 	Main.StartServer()
 	get_tree().change_scene_to_file("res://ui/lobby.tscn")
 	
+	#var lobby = load("res://ui/lobby.tscn")
+	#get_tree().change_scene_to_packed(lobby)
+	
 #	get_tree().change_scene_to_file("res://ui/lobby.tscn")
 
 #	var serverTree = SceneTree.new()

@@ -15,6 +15,7 @@ var entries : Dictionary = {}
 var mouseEntered : bool = false
 var demonActions : Dictionary = {}
 
+
 var rankTrack: Array:
 	set(array):
 		print(Data.id, " updating rank track")
@@ -324,9 +325,31 @@ func collapse():
 	tw1.tween_property(%DemonTree, "custom_minimum_size", Vector2(350, 0), 0.3)
 
 
+func _process(delta):
+	if mouseEntered:
+		if get_global_mouse_position().x < global_position.x or get_global_mouse_position().y < global_position.y:
+			mouseEntered = false
+			collapse()
+	#if get_global_mouse_position().y > mouseEnteredPositiony + 10:
+		##return
+##			position -= Vector2(0, 650)
+		#hovering = false
+		#tw1 = get_tree().create_tween()
+		#tw1.set_trans(Tween.TRANS_QUAD)
+		#tw1.set_ease(Tween.EASE_IN_OUT)
+		#tw1.parallel().tween_property(self, "position", startPosition - Vector2(0, 550), 0.2)
+	#print("exited rank track")
+	#mouseEntered = false
+	#collapse()
+
+
 func _on_mouse_exited():
-	mouseEntered = false
-	collapse()
+	return
+	#print(get_global_mouse_position(), global_position)
+	#if get_global_mouse_position().x < global_position.x or get_global_mouse_position().y < global_position.y:
+		#print("exited rank track")
+		#mouseEntered = false
+		#collapse()
 
 func _on_current_demon_tree_item_selected():
 	var item : TreeItem = %CurrentDemonTree.get_next_selected(root)

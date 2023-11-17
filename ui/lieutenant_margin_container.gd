@@ -28,8 +28,11 @@ func _ready():
 
 func _input(event):
 	if event is InputEventMouseMotion:
+		#print(event.global_position)
+		var x = remap(event.global_position.x, 0, DisplayServer.window_get_size().x, 0, 1920)
+		var y = remap(event.global_position.y, 0, DisplayServer.window_get_size().y, 0, 1080)
 		if followMouse:
-			global_position = event.global_position + Vector2(10, 10)
+			global_position = Vector2(x, y) + Vector2(10, 10)
 
 
 func _on_removeLieutenantFromAvailableLieutenantsBox(_lieutenantName : String):

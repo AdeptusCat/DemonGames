@@ -34,7 +34,13 @@ var game_res_path : String = "res://game.tscn"
 
 var playerNameTextEditSelected : bool = false
 
+func _process(delta):
+	if ResourceLoader.load_threaded_get_status(game_res_path) == 3:
+		%LoadingControl.hide()
+
+
 func _ready():
+	%LoadingControl.show()
 #	if Connection.host:
 ##		if not Connection.dedicatedServer:
 ##			Connection.peers.append(1)
@@ -460,12 +466,14 @@ func showSavegamePlayers(_playerIdNamesDict : Dictionary):
 	
 	%PlayerMenuButton.get_popup().clear()
 	%PlayerMenuButton.get_popup().index_pressed.connect(_on_PlayerMenuButton_index_pressed)
+	playerMenuButtonIndices.clear()
 	playerMenuButtonIndices[0] = 0
 	%PlayerMenuButton.get_popup().add_item("Random")
 	%PlayerMenuButton.get_popup().set_item_metadata(0, 0)
 	
 	%AiMenuButton.get_popup().clear()
 	%AiMenuButton.get_popup().index_pressed.connect(_on_AiMenuButton_index_pressed)
+	aiMenuButtonIndices.clear()
 	aiMenuButtonIndices[0] = 0
 	%AiMenuButton.get_popup().add_item("Random")
 	%AiMenuButton.get_popup().set_item_metadata(0, 0)
@@ -550,14 +558,17 @@ func _on_start_game_button_pressed():
 		if playersInRoomTreeItems.size() < 3:
 			%NotEnoughPlayersMarginContainer.show()
 			return
+	print("ids ", playersInRoomTreeItems)
 	for id in playersInRoomTreeItems:
 		if id > 0:
-			aiPlayers += 1
-		else:
 			humanPlayers += 1
+		else:
+			aiPlayers += 1
 	if loadedPlayerIdNamesDict.size() > 0:
 		if not aiPlayers == aiMenuButtonIndices.size() - 1 or not humanPlayers == playerMenuButtonIndices.size() - 1:
-			print(loadedPlayerIdNamesDict.size(), playerMenuButtonIndices.size() + aiMenuButtonIndices.size() - 2)
+			print(aiPlayers, aiMenuButtonIndices.size())
+			print(humanPlayers, playerMenuButtonIndices.size())
+			#print(loadedPlayerIdNamesDict.size(), playerMenuButtonIndices.size() + aiMenuButtonIndices.size() - 2)
 			%CannotStartMarginContainer.show()
 			return
 	Server.request_start_game.rpc_id(1, Data.id)

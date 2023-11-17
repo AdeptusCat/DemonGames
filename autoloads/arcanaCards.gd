@@ -9,7 +9,8 @@ func _ready():
 func _on_MinorSpell(arcanaCard : ArcanaCard):
 	Signals.sectioClicked.emit(null)
 	for cardName in Data.player.arcanaCards:
-		Data.arcanaCardNodes[cardName].disable()
+		if Data.arcanaCardNodes.has(cardName):
+			Data.arcanaCardNodes[cardName].disable()
 	var MinorSpell = Decks.MinorSpell
 	if arcanaCard.minorSpell == MinorSpell.Pass:
 		Signals.actionThroughArcana.emit(arcanaCard.minorSpell)

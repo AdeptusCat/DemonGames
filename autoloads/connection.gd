@@ -87,6 +87,7 @@ func connectToServer():
 		network.create_client("localhost", port)
 	else:
 		network.create_client("adeptuscat.ddns.net", port)
+		#network.create_client("217.160.68.18", port)
 	multiplayer.multiplayer_peer = network
 	Data.id = multiplayer.get_unique_id()
 	print("client started ", Data.id)

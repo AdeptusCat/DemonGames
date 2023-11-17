@@ -328,7 +328,7 @@ func nextDemon(nextDemon : int):
 	demonNode.skullsUsed = 0
 	currentPlayerLabel.text = str(demonNode.stats.player)
 	print("action for demon")
-	actionsNode.currentDemon = demonNode.stats.rank
+	actionsNode.currentDemonRank = demonNode.stats.rank
 	Data.currentDemon = demonNode
 	print(demonNode.stats.rank)
 	var action = await Signals.demonDone

@@ -4,7 +4,7 @@ var hovering = false
 var expand = false
 var button
 var startPosition 
-
+var mouseEnteredPositiony : int = 0
 
 var buttonTextCombat = "Pick Demons to fight in Battle or"
 var buttonTextNormal = "Demons of your Triumphirate"
@@ -19,6 +19,9 @@ func _ready():
 	Signals.addDemonToUi.connect(_on_addDemon)
 	startPosition = position
 	%DemonHeaderLabel.text = buttonTextNormal
+	if not Data.chooseDemon:
+		collapse()
+
 
 func _on_addDemon(demon):
 	%DemonHBoxContainer.add_child(demon)
@@ -26,7 +29,8 @@ func _on_addDemon(demon):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if hovering and not expand:
-		if get_global_mouse_position().y > 200:
+		if get_global_mouse_position().y > mouseEnteredPositiony + 10:
+			#return
 #			position -= Vector2(0, 650)
 			hovering = false
 			tw1 = get_tree().create_tween()
@@ -50,6 +54,8 @@ func removeDemon(rank : int):
 
 
 func _on_mouse_entered():
+	print("entered")
+	mouseEnteredPositiony = get_global_mouse_position().y
 	hovering = true
 #	position = startPosition
 	tw1 = get_tree().create_tween()
@@ -94,3 +100,13 @@ func _on_noDemonClicked():
 	button.queue_free()
 	Data.pickDemon = false
 	RpcCalls.pickedDemonForCombat.rpc_id(Connection.host, 0)
+
+
+func _on_mouse_exited():
+	return
+	if hovering and not expand:
+		hovering = false
+		tw1 = get_tree().create_tween()
+		tw1.set_trans(Tween.TRANS_QUAD)
+		tw1.set_ease(Tween.EASE_IN_OUT)
+		tw1.parallel().tween_property(self, "position", startPosition - Vector2(0, 550), 0.2)

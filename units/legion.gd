@@ -25,6 +25,11 @@ func _ready():
 #	%TextureRect.normal_texture = texture
 #	%TextureRect.texture = texture
 	set_process(false)
+	
+	# to avoid trying to get navigation path before navigation is initalized
+	set_physics_process(false)
+	await get_tree().process_frame
+	set_physics_process(true)
 
 
 func saveGame():

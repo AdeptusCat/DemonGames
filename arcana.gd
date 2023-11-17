@@ -102,5 +102,5 @@ func _on_minor_spell_button_pressed():
 func _on_gui_input(event):
 	if Input.is_action_just_pressed("click"):
 		Signals.arcanaClicked.emit(self, mode)
-
+	
 

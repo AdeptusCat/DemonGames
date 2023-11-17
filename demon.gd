@@ -136,7 +136,27 @@ func loadStats():
 	player = stats.player
 	incapacitated = stats.incapacitated
 	onEarth = stats.onEarth
-	image = stats.image
+	
+	var demonImages : Array = []
+	var dir = DirAccess.open("demon_assets/" + demonName)
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			if dir.current_is_dir():
+				print("Found directory: " + file_name)
+			else:
+				if not file_name.ends_with(".import"):
+					print("Found file: " + file_name)
+					demonImages.append(file_name)
+				#else:
+					#print("Found file: " + file_name)
+			file_name = dir.get_next()
+	else:
+		print("An error occurred when trying to access the path.")
+	demonImages.shuffle()
+	image = load("demon_assets/" + demonName.to_lower() + "/" + demonImages.pop_back())
+	#image = stats.image
 	description = stats.description
 
 
@@ -168,7 +188,7 @@ func _on_gui_input(event):
 
 
 func _on_demonClicked(demonNode):
-	if Data.phase == null:
+	if Data.chooseDemon:
 		if Data.player.hasFavor():
 			Data.player.favors = Data.player.favors - 1
 			RpcCalls.requestNewDemon.rpc_id(Connection.host, Data.id, demonNode.rank)
