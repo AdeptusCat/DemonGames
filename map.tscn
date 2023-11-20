@@ -27,6 +27,7 @@
 vertices = PackedVector2Array(3809, -1321, 4071, 2801, -1392, 2731, -1574, -1241)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-1574, -1241, -1392, 2731, 4071, 2801, 3809, -1321)])
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="Gradient" id="Gradient_m4tf3"]
 offsets = PackedFloat32Array(0, 0.508834, 1)

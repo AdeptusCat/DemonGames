@@ -5,7 +5,39 @@ func _ready():
 	%TutorialMenuButton.get_popup().id_pressed.connect(_on_TutorialMenuButton_id_pressed)
 	for chapter in Tutorial.Chapter.values():
 		%TutorialMenuButton.get_popup().add_item(Tutorial.chapterNames[chapter], chapter)
-
+	
+	#var demonName : String = "Andras"
+	#var demonImages : Array = []
+	#var dir = DirAccess.open("res://demon_assets/" + demonName.to_lower() )#+ demonName
+	##var dir = DirAccess.open("res://")
+	#print("res://demon_assets/" + demonName.to_lower() )
+	#print(dir)
+	#print(demonName)
+	#if dir:
+		#dir.list_dir_begin()
+		#var file_name = dir.get_next()
+		#while file_name != "":
+			#if dir.current_is_dir():
+				#print("Found directory: " + file_name)
+			#else:
+				##if not file_name.ends_with(".import"):
+					##print("Found file: " + file_name)
+					##demonImages.append(file_name)
+				#demonImages.append(file_name)
+				#print("Found file: " + file_name)
+				##else:
+					##print("Found file: " + file_name)
+			#file_name = dir.get_next()
+	#else:
+		#print("An error occurred when trying to access the path.")
+	#demonImages.shuffle()
+	#print(demonImages)
+	#print("demon_assets/" + demonName.to_lower() + "/" + demonImages.pop_back())
+	##var image = load("demon_assets/" + demonName.to_lower() + "/" + demonImages.pop_back())
+	#var img = Image.new()
+	#img.load("res://00354-3473751642.png")
+	#var texture = ImageTexture.new()
+	#texture.create_from_image(img)
 
 func _on_TutorialMenuButton_id_pressed(id):
 	Tutorial.chapter = id
