@@ -706,6 +706,7 @@ tooltip_text = "Earn Favors while on Earth."
 text = "DoEvilDeeds"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="ConspireButton" type="Button" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/HBoxContainer2"]
@@ -718,6 +719,7 @@ text = "Conspire"
 
 [node name="InfluenceUnitsButton" type="Button" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
 material = SubResource("ShaderMaterial_6w3pa")
 layout_mode = 2
 tooltip_text = "Try to influence the Units of other Players to either disband or change allegiance. More Hearts, higher chance to succeed. Influencing Units that are in their own Sectio will cost a Favor. (Not implemented)"
@@ -725,6 +727,7 @@ text = "InfluenceUnits"
 
 [node name="AtonementAndSuplicationButton" type="Button" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
 material = SubResource("ShaderMaterial_lvntu")
 layout_mode = 2
 tooltip_text = "Try to get rid of Disfavors."
@@ -732,6 +735,7 @@ text = "AtonementAndSuplication"
 
 [node name="UseMagicButton" type="Button" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
 material = SubResource("ShaderMaterial_bpobq")
 layout_mode = 2
 tooltip_text = "Play Arcana Cards that affect Units, Demons or Sectios."
