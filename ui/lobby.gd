@@ -113,6 +113,7 @@ func _ready():
 func _input(event):
 	if Input.is_key_pressed(KEY_ENTER):
 		if playerNameTextEditSelected:
+			_on_change_player_name_button_pressed()
 			get_viewport().set_input_as_handled()
 
 
