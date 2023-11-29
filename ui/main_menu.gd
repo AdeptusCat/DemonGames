@@ -52,11 +52,11 @@ func connectAudio() -> void:
 
 
 func _on_mouseEntered():
-	$MouseEnteredAudio.play()
+	$AudioManager.playMouseEntered()
 
 
 func _on_buttonClicked():
-	$ButtonClickAudio.play()
+	$AudioManager.playButtonClicked()
 
 
 func _on_TutorialMenuButton_id_pressed(id):
