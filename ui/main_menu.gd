@@ -1,6 +1,7 @@
 extends Control
 
 
+
 func _ready():
 	%TutorialMenuButton.get_popup().id_pressed.connect(_on_TutorialMenuButton_id_pressed)
 	for chapter in Tutorial.Chapter.values():
@@ -38,6 +39,25 @@ func _ready():
 	#img.load("res://00354-3473751642.png")
 	#var texture = ImageTexture.new()
 	#texture.create_from_image(img)
+	connectAudio()
+
+
+func connectAudio() -> void:
+	var res : Array = []
+	res = Functions.findByClass(self, "Button", res)
+	for child : Button in res:
+		child.mouse_entered.connect(_on_mouseEntered)
+	for child : Button in res:
+		child.pressed.connect(_on_buttonClicked)
+
+
+func _on_mouseEntered():
+	$MouseEnteredAudio.play()
+
+
+func _on_buttonClicked():
+	$ButtonClickAudio.play()
+
 
 func _on_TutorialMenuButton_id_pressed(id):
 	Tutorial.chapter = id

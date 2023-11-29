@@ -108,7 +108,24 @@ func _ready():
 	%SavegameTree.set_column_title(2, "Players")
 	%SavegameTree.set_column_title(3, "Turn")
 	%SavegameTree.set_column_title(4, "Phase")
+	connectAudio()
 
+
+func connectAudio() -> void:
+	var res : Array = []
+	res = Functions.findByClass(self, "Button", res)
+	for child : Button in res:
+		child.mouse_entered.connect(_on_mouseEntered)
+	for child : Button in res:
+		child.pressed.connect(_on_buttonClicked)
+
+
+func _on_mouseEntered():
+	$MouseEnteredAudio.play()
+
+
+func _on_buttonClicked():
+	$ButtonClickAudio.play()
 
 
 func _input(event):

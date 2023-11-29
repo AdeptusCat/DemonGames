@@ -39,6 +39,7 @@ Sectios="*res://autoloads/sectios.gd"
 Demons="*res://autoloads/demons.gd"
 Units="*res://autoloads/units.gd"
 ArcanaCards="*res://autoloads/arcanaCards.gd"
+Functions="*res://autoloads/functions.gd"
 
 [display]
 
