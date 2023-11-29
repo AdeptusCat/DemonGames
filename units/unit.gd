@@ -49,7 +49,6 @@ func setup():
 	unitNr = str(name).to_int()
 	triumphirate = str(get_parent().name).to_int()
 	Data.troops[unitNr] = self
-	print("data.troops set ", unitNr)
 	Data.players[triumphirate].troops[unitNr] = self
 	set_process(false)
 
