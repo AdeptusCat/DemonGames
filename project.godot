@@ -40,7 +40,6 @@ Demons="*res://autoloads/demons.gd"
 Units="*res://autoloads/units.gd"
 ArcanaCards="*res://autoloads/arcanaCards.gd"
 Functions="*res://autoloads/functions.gd"
-Audio="*res://autoloads/audio.gd"
 
 [display]
 

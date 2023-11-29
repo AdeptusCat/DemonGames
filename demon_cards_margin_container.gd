@@ -28,6 +28,7 @@ func _on_addDemon(demon):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	return
 	if hovering and not expand:
 		if get_global_mouse_position().y > mouseEnteredPositiony + 10:
 			#return
@@ -103,7 +104,7 @@ func _on_noDemonClicked():
 
 
 func _on_mouse_exited():
-	return
+	#return
 	if hovering and not expand:
 		hovering = false
 		tw1 = get_tree().create_tween()
