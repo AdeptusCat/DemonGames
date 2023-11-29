@@ -2,14 +2,14 @@ extends Camera2D
 
 
 
-var START_POSITION : Vector2 = position
-var _target_zoom : float = 0.3
+var START_POSITION : Vector2 = Vector2(1050, -100)
+var _target_zoom : float = 0.2
 const MIN_ZOOM : float = 0.2
 const MAX_ZOOM : float = 2.0
 const ZOOM_INCREMENT : float = 0.1
 const ZOOM_RATE : float = 8.0
 const MOVE_RATE : float = 200.0
-var _target_position : Vector2 = Vector2.ZERO
+var _target_position : Vector2 = START_POSITION
 var arrived = false
 
 const NORMAL_CAMERA : float = 0.5
@@ -34,6 +34,7 @@ func _ready():
 	Signals.resetCamera.connect(reset)
 	Signals.followUnit.connect(_on_followUnit)
 	Signals.stopFollowingUnit.connect(_on_stopFollowingUnit)
+	reset()
 
 func _physics_process(delta):
 	zoom = lerp(zoom, _target_zoom * Vector2.ONE, ZOOM_RATE * delta)
@@ -152,11 +153,11 @@ func reset():
 	tw2.set_trans(Tween.TRANS_CUBIC)
 	tw2.set_ease(Tween.EASE_IN)
 	tw2.parallel().tween_property(self, "position", START_POSITION, 1.0)
-	tw2.parallel().tween_property(self, "_target_zoom", 0.3, 1.0)
+	tw2.parallel().tween_property(self, "_target_zoom", 0.2, 1.0)
 	tw2.play()
 	_target_position = START_POSITION
 	arrived = false
-	_target_zoom = 0.3
+	_target_zoom = 0.2
 	set_physics_process(true)
 
 
