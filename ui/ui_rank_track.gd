@@ -1,7 +1,7 @@
 extends MarginContainer
 
 @onready var demonLabel = preload("res://demon_rank_track_label.tscn")
-var playerIcon = preload("res://assets/icons/pentagram.png")
+var playerIcon = preload("res://assets/icons/pentagram_white.png")
 
 var tw1 : Tween
 #var currentDemonLabel : Label
@@ -14,6 +14,9 @@ var currentDemonEntries : Dictionary = {}
 var entries : Dictionary = {}
 var mouseEntered : bool = false
 var demonActions : Dictionary = {}
+
+var iconColorVisible : Color = Color8(200,200,200,255)
+var iconColorInvisible : Color = Color8(200,200,200,0)
 
 
 var rankTrack: Array:
@@ -139,7 +142,7 @@ func highlightCurrentPlayer(player : Player = null):
 	%CurrentActionLabel.text = "Current Player"
 	var line = %CurrentDemonTree.create_item(currentDemonRoot)
 	line.set_icon(0, playerIcon)
-	line.set_icon_modulate(0, Color8(255,255,255,255))
+	line.set_icon_modulate(0, iconColorVisible)
 	line.set_text_alignment(0, HORIZONTAL_ALIGNMENT_CENTER)
 	line.set_selectable(0, false)
 	line.set_text(1, player.playerName)
@@ -170,7 +173,7 @@ func highlightCurrentDemon(rank):
 	%CurrentActionLabel.text = "Current Demon"
 	for entry in entries:
 		if entry == rank:
-			entries[entry].set_icon_modulate(0, Color8(255,255,255,255))
+			entries[entry].set_icon_modulate(0, iconColorVisible)
 			for entryD in currentDemonEntries:
 				if currentDemonEntries.has(entryD):
 					if is_instance_valid(currentDemonEntries[entryD]):
@@ -178,7 +181,7 @@ func highlightCurrentDemon(rank):
 						currentDemonEntries.erase(entryD)
 			_on_addCurrentDemonLine(rank)
 		else:
-			entries[entry].set_icon_modulate(0, Color8(255,255,255,0))
+			entries[entry].set_icon_modulate(0, iconColorInvisible)
 			
 #	var line = entries[rank]
 #	line.set_custom_bg_color(0, Data.players[demonLabelsByRank[rank].player].color, true)
@@ -198,7 +201,7 @@ func _on_addCurrentDemonLine(demonRank):
 	var color = player.color
 	var line = %CurrentDemonTree.create_item(currentDemonRoot)
 	line.set_icon(0, playerIcon)
-	line.set_icon_modulate(0, Color8(255,255,255,255))
+	line.set_icon_modulate(0, iconColorVisible)
 	line.set_text_alignment(0, HORIZONTAL_ALIGNMENT_CENTER)
 	line.set_selectable(0, false)
 	line.set_text(1, demonName)
@@ -244,7 +247,7 @@ func _on_addLine(demonRank):
 	var color = player.color
 	var line = %DemonTree.create_item(root)
 	line.set_icon(0, playerIcon)
-	line.set_icon_modulate(0, Color8(255,255,255,0))
+	line.set_icon_modulate(0, iconColorInvisible)
 	line.set_text_alignment(0, HORIZONTAL_ALIGNMENT_CENTER)
 	line.set_selectable(0, false)
 	line.set_text(1, demonName)
