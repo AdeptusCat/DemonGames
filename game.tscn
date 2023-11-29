@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cccosrsc7gc5w"]
+[gd_scene load_steps=25 format=3 uid="uid://cccosrsc7gc5w"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_e2grr"]
 [ext_resource type="AudioStream" uid="uid://dsjykmjg2eiw6" path="res://assets/audio/pass.wav" id="3_2ki4d"]
@@ -20,6 +20,8 @@
 [ext_resource type="Script" path="res://phases/combat.gd" id="18_j7r7q"]
 [ext_resource type="Script" path="res://phases/petition.gd" id="19_gjj7y"]
 [ext_resource type="Script" path="res://phases/end.gd" id="20_orwt7"]
+[ext_resource type="Texture2D" uid="uid://qr14kucrashs" path="res://icon.svg" id="21_x0rao"]
+[ext_resource type="Texture2D" uid="uid://ci5eh16k1xid8" path="res://demon_assets - Kopie/agares/01797-1837376349-painting of a demon commander with legions in the background.png" id="22_2dn8i"]
 
 [sub_resource type="Gradient" id="Gradient_s7p8l"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
@@ -125,3 +127,19 @@ script = ExtResource("19_gjj7y")
 
 [node name="End" type="Node" parent="."]
 script = ExtResource("20_orwt7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+self_modulate = Color(50, 50, 50, 1)
+position = Vector2(822, 1442)
+texture = ExtResource("21_x0rao")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+self_modulate = Color(2, 2, 2, 1)
+layout_mode = 0
+offset_left = 61.0
+offset_top = 310.0
+offset_right = 573.0
+offset_bottom = 822.0
+texture = ExtResource("22_2dn8i")
