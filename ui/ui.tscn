@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://d00aywoo0y4ld"]
+[gd_scene load_steps=50 format=3 uid="uid://d00aywoo0y4ld"]
 
 [ext_resource type="Script" path="res://ui/ui.gd" id="1_o55j0"]
 [ext_resource type="Theme" uid="uid://ct12aengaa7cl" path="res://themes/default_theme.tres" id="2_q6b3g"]
@@ -35,6 +35,12 @@
 [ext_resource type="Script" path="res://ui/help_sequence_of_play_container.gd" id="30_54wyv"]
 [ext_resource type="Script" path="res://ui/goal_margin_container.gd" id="32_4llok"]
 [ext_resource type="PackedScene" uid="uid://bnipkihjqnak" path="res://ui/tutorial_margin_container.tscn" id="33_0fyc6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2yxpw"]
+bg_color = Color(0.372549, 0.372549, 0.372549, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_42ncp"]
+bg_color = Color(0.372549, 0.372549, 0.372549, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5u6ho"]
 shader = ExtResource("10_bh8fp")
@@ -327,6 +333,7 @@ mouse_filter = 1
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 20
+theme_override_styles/panel = SubResource("StyleBoxFlat_2yxpw")
 columns = 4
 column_titles_visible = true
 allow_reselect = true
@@ -351,6 +358,7 @@ mouse_filter = 1
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 20
+theme_override_styles/panel = SubResource("StyleBoxFlat_42ncp")
 columns = 4
 column_titles_visible = true
 allow_reselect = true
@@ -1201,6 +1209,7 @@ layout_mode = 2
 
 [node name="AvailableLieutenantsMarginContainer" type="MarginContainer" parent="Control"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
