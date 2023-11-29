@@ -41,6 +41,7 @@ func _process(delta):
 
 func _ready():
 	%LoadingControl.show()
+	%RoomsTree.item_activated.connect(_on_roomDoubleClicked)
 #	if Connection.host:
 ##		if not Connection.dedicatedServer:
 ##			Connection.peers.append(1)
@@ -107,7 +108,7 @@ func _ready():
 	%SavegameTree.set_column_title(2, "Players")
 	%SavegameTree.set_column_title(3, "Turn")
 	%SavegameTree.set_column_title(4, "Phase")
-	
+
 
 
 func _input(event):
@@ -766,7 +767,11 @@ func _on_join_button_pressed():
 	%PlayerTree.set_column_clip_content(2, true)
 	%PlayerTree.set_column_expand(2, false)
 	Server.join_room.rpc_id(1, roomId)
-	
+
+
+func _on_roomDoubleClicked():
+	_on_join_button_pressed()
+
 
 func _on_playerjoinedRoom(roomId : int, room_name : String, player_id : int, playerIdNamesDict : Dictionary, is_ai):
 	if playersInRoomTreeItems.size() >= 6 and Connection.host == Data.id:
