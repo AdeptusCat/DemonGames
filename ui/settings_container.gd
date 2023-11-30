@@ -3,6 +3,7 @@ extends MarginContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	%PotatoPcCheckBox.button_pressed = Settings.potatoPc
 	%TooltipsCheckBox.button_pressed = Settings.tooltips
 	%SkipScreensCheckBox.button_pressed = Settings.skipScreens
 	%SkipSoulSummaryCheckBox.button_pressed = Settings.skipSoulsSummary
@@ -37,3 +38,8 @@ func _on_skip_wait_for_players_check_box_toggled(button_pressed):
 
 func _on_skip_phase_reminder_check_box_toggled(button_pressed):
 	Settings.skipPhaseReminder = button_pressed
+
+
+func _on_potato_pc_check_box_toggled(toggled_on):
+	Signals.potatoPc.emit(toggled_on)
+	Settings.potatoPc = toggled_on

@@ -43,14 +43,16 @@ func _ready():
 	Signals.initSectios.connect(initSectios)
 	Signals.initMouseLights.connect(_on_initMouseLights)
 	Signals.spawnUnit.connect(_on_spawnUnit)
+	Signals.potatoPc.connect(_on_potatoPc)
 	
 	# Engine.is_editor_hint()
 	# only useful for tool scripts
 #	while not ResourceLoader.load_threaded_get_status(map_fx_path) == 3:
 #		print("loading")
 #	var fxScene = ResourceLoader.load_threaded_get(map_fx_path)
+
 	
-	Settings.debug = true
+	Settings.debug = false
 	if OS.has_feature("editor"):
 		if not Settings.debug:
 			var fx = load("res://map_fx/map_fx.tscn")
@@ -408,7 +410,6 @@ func _on_changeSectioBackground(id , playerPolygon):
 		playerpolygons[id] = playerPolygonsLeft.pop_back()
 		var c = playerpolygons[id].get_material().get_shader_parameter("colorTexture").get_gradient().get_colors()
 		c[1] = Data.players[id].color
-		print("colors_set ", Data.players[id].color)
 		playerpolygons[id].get_material().get_shader_parameter("colorTexture").get_gradient().set_colors(c) 
 		
 	for polygons in %Polygons.get_children():
@@ -1191,3 +1192,12 @@ func _on_lightning_timer_timeout():
 	setupLightning()
 
 
+func _on_potatoPc(boolean : bool):
+	if boolean:
+		%PentagramSprite2D.use_parent_material = boolean
+		for playerpolygon in playerpolygons.values():
+			playerpolygon.get_material().set_shader_parameter("speed", 0.0)
+	else:
+		%PentagramSprite2D.use_parent_material = boolean
+		for playerpolygon in playerpolygons.values():
+			playerpolygon.get_material().set_shader_parameter("speed", 0.03)

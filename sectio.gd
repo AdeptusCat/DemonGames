@@ -64,6 +64,7 @@ var innerPoints = []
 
 
 func _ready():
+	Signals.potatoPc.connect(_on_potatoPc)
 	%SoulsRing.self_modulate = colors[circle]
 	%SoulsRingLabel.text = str(souls)
 	remove_child(sectioPolygon)
@@ -336,3 +337,7 @@ func _on_area_2d_mouse_entered():
 
 func _on_area_2d_mouse_exited():
 	Signals.hideSectioPreview.emit(sectioName)
+
+
+func _on_potatoPc(boolean : bool):
+	pass

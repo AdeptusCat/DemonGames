@@ -3,6 +3,9 @@ extends Node
 signal save
 signal allPlayersReady
 
+# settings
+signal potatoPc(on : bool)
+
 # GOAP
 signal planDone
 signal moveUnits(unitsToMove, oldSectio, sectio)

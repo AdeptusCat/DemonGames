@@ -5,21 +5,23 @@ var menuOpen : bool = false
 var debug : bool = false
 #var debug : bool = true
 
-var tooltips = true
-var skipScreens = false
-var skipSoulsSummary = false
-var skipWaitForPlayers = false
-var skipPhaseReminder = false
+var tooltips : bool = true
+var skipScreens : bool = false
+var skipSoulsSummary : bool = false
+var skipWaitForPlayers : bool = false
+var skipPhaseReminder : bool = false
 
-var skipHell = false
-var skipSouls = false
-var skipSummoning = false
-var skipAction = false
-var skipCombat = false
-var skipPetitions = false
-var skipEnd = false
-var skipUnitPlacing = false
-var debugTroops = false
+var skipHell : bool = false
+var skipSouls : bool = false
+var skipSummoning : bool = false
+var skipAction : bool = false
+var skipCombat : bool = false
+var skipPetitions : bool = false
+var skipEnd : bool = false
+var skipUnitPlacing : bool = false
+var debugTroops : bool = false
+
+var potatoPc : bool = false
 
 func _ready():
 	Signals.resetGame.connect(_on_resetGame)

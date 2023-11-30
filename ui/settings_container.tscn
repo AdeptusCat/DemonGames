@@ -30,6 +30,11 @@ theme_override_constants/margin_bottom = 10
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
+[node name="PotatoPcCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Potato PC"
+
 [node name="TooltipsCheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -59,6 +64,7 @@ text = "Skip 'Wait for Players' Screens"
 layout_mode = 2
 text = "Back"
 
+[connection signal="toggled" from="MarginContainer/VBoxContainer/PotatoPcCheckBox" to="." method="_on_potato_pc_check_box_toggled"]
 [connection signal="toggled" from="MarginContainer/VBoxContainer/TooltipsCheckBox" to="." method="_on_tooltips_check_box_toggled"]
 [connection signal="toggled" from="MarginContainer/VBoxContainer/SkipScreensCheckBox" to="." method="_on_skip_screens_check_box_toggled"]
 [connection signal="toggled" from="MarginContainer/VBoxContainer/SkipSoulSummaryCheckBox" to="." method="_on_skip_soul_summary_check_box_toggled"]

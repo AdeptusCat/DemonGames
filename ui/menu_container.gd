@@ -6,6 +6,7 @@ const settingsContainer = preload("res://ui/settings_container.tscn")
 func _ready():
 	Settings.menuOpen = true
 	Signals.menu.connect(_on_menu)
+	
 
 
 func _on_menu():
@@ -31,3 +32,5 @@ func _on_return_to_main_menu_button_pressed():
 	Settings.menuOpen = false
 	Signals.returnToLobby.emit()
 	queue_free()
+
+

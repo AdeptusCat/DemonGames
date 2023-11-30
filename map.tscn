@@ -2366,7 +2366,8 @@ material = SubResource("ShaderMaterial_sgioc")
 scale = Vector2(1.35, 1.35)
 texture = ExtResource("27_tb867")
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
+[node name="PentagramSprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
 texture_filter = 4
 texture_repeat = 2
 material = SubResource("ShaderMaterial_37onp")
