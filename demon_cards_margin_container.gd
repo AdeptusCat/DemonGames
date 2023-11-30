@@ -55,7 +55,6 @@ func removeDemon(rank : int):
 
 
 func _on_mouse_entered():
-	print("entered")
 	mouseEnteredPositiony = get_global_mouse_position().y
 	hovering = true
 #	position = startPosition

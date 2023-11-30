@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://d00aywoo0y4ld"]
+[gd_scene load_steps=51 format=3 uid="uid://d00aywoo0y4ld"]
 
 [ext_resource type="Script" path="res://ui/ui.gd" id="1_o55j0"]
 [ext_resource type="Theme" uid="uid://ct12aengaa7cl" path="res://themes/default_theme.tres" id="2_q6b3g"]
@@ -35,6 +35,7 @@
 [ext_resource type="Script" path="res://ui/help_sequence_of_play_container.gd" id="30_54wyv"]
 [ext_resource type="Script" path="res://ui/goal_margin_container.gd" id="32_4llok"]
 [ext_resource type="PackedScene" uid="uid://bnipkihjqnak" path="res://ui/tutorial_margin_container.tscn" id="33_0fyc6"]
+[ext_resource type="Script" path="res://ui/phases_container.gd" id="35_vehc2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2yxpw"]
 bg_color = Color(0.372549, 0.372549, 0.372549, 1)
@@ -368,8 +369,99 @@ hide_root = true
 [node name="FrameMarginContainer" parent="Control/RankTrackMarginContainer" instance=ExtResource("26_vv66b")]
 layout_mode = 2
 
+[node name="SectioPreviewMarginContainer" type="MarginContainer" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -282.0
+offset_top = -47.0
+offset_bottom = 47.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/SectioPreviewMarginContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("3_mnku2")
+stretch_mode = 6
+
+[node name="ColorRect" type="ColorRect" parent="Control/SectioPreviewMarginContainer"]
+layout_mode = 2
+color = Color(0.14902, 0.14902, 0.14902, 0.815686)
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/SectioPreviewMarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/SectioPreviewMarginContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="SectioTextureRect" type="TextureRect" parent="Control/SectioPreviewMarginContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="UnitsVBoxContainer" type="VBoxContainer" parent="Control/SectioPreviewMarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="NamePreviewLabel" type="Label" parent="Control/SectioPreviewMarginContainer/MarginContainer/HBoxContainer/UnitsVBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Sectio Name"
+horizontal_alignment = 1
+
+[node name="CirclePreviewLabel" type="Label" parent="Control/SectioPreviewMarginContainer/MarginContainer/HBoxContainer/UnitsVBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/SectioPreviewMarginContainer/MarginContainer/HBoxContainer/UnitsVBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="SoulsPreviewLabel1" type="Label" parent="Control/SectioPreviewMarginContainer/MarginContainer/HBoxContainer/UnitsVBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Souls per Turn:"
+
+[node name="SoulsPreviewLabel2" type="Label" parent="Control/SectioPreviewMarginContainer/MarginContainer/HBoxContainer/UnitsVBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="YourUnitsPreviewHBoxContainer" type="HBoxContainer" parent="Control/SectioPreviewMarginContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="EnemyPreviewUnitsHBoxContainer" type="HBoxContainer" parent="Control/SectioPreviewMarginContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="Control"]
+layout_mode = 2
+offset_right = 58.0
+offset_bottom = 20.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
 [node name="PlayerStatusMarginContainer" type="MarginContainer" parent="Control"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -403,84 +495,13 @@ size_flags_horizontal = 8
 alignment = 1
 
 [node name="SectioPreviewControl" type="Control" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="SectioPreviewMarginContainer" type="MarginContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_right = 282.0
-offset_bottom = 94.0
-
-[node name="TextureRect" type="TextureRect" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer"]
-visible = false
-layout_mode = 2
-texture = ExtResource("3_mnku2")
-stretch_mode = 6
-
-[node name="ColorRect" type="ColorRect" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer"]
-layout_mode = 2
-color = Color(0.14902, 0.14902, 0.14902, 0.815686)
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer/MarginContainer"]
-layout_mode = 2
-
-[node name="SectioTextureRect" type="TextureRect" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer/MarginContainer/HBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(130, 0)
-layout_mode = 2
-expand_mode = 1
-stretch_mode = 5
-
-[node name="UnitsVBoxContainer" type="VBoxContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="NamePreviewLabel" type="Label" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer/MarginContainer/HBoxContainer/UnitsVBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Sectio Name"
-horizontal_alignment = 1
-
-[node name="CirclePreviewLabel" type="Label" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer/MarginContainer/HBoxContainer/UnitsVBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-horizontal_alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer/MarginContainer/HBoxContainer/UnitsVBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="SoulsPreviewLabel1" type="Label" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer/MarginContainer/HBoxContainer/UnitsVBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Souls per Turn:"
-
-[node name="SoulsPreviewLabel2" type="Label" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer/MarginContainer/HBoxContainer/UnitsVBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="YourUnitsPreviewHBoxContainer" type="HBoxContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer/MarginContainer/HBoxContainer"]
-unique_name_in_owner = true
-clip_contents = true
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 1
-
-[node name="EnemyPreviewUnitsHBoxContainer" type="HBoxContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer/MarginContainer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 1
-
 [node name="StatusControl" type="Control" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/StatusControl"]
@@ -490,6 +511,7 @@ anchor_right = 1.0
 grow_horizontal = 2
 
 [node name="PlayerControl" type="MarginContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 0
 
@@ -509,18 +531,6 @@ theme_override_constants/margin_bottom = 10
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/PlayerControl/MarginContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/PlayerControl/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/PlayerControl/MarginContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-text = "Turn: "
-
-[node name="TurnLabel" type="Label" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/PlayerControl/MarginContainer/VBoxContainer/HBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "1"
-
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/PlayerControl/MarginContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
@@ -533,12 +543,9 @@ text = "Triumphirate of : "
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="PlayersTree" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/PlayerControl/MarginContainer/VBoxContainer" instance=ExtResource("6_2gjeq")]
-unique_name_in_owner = true
-layout_mode = 2
-
 [node name="PhaseMarginContainer" type="MarginContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 script = ExtResource("7_206wb")
 
@@ -637,6 +644,10 @@ alignment = 1
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 script = ExtResource("10_vmoye")
 
 [node name="BackToHellConfirmationDialog" type="ConfirmationDialog" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions"]
@@ -1318,10 +1329,10 @@ grow_vertical = 0
 [node name="DemonCardsMarginContainer" type="MarginContainer" parent="Control/CardsControl"]
 unique_name_in_owner = true
 layout_mode = 2
-offset_left = -1922.0
-offset_top = -2116.0
-offset_right = -1409.0
-offset_bottom = -2020.0
+offset_left = -1662.0
+offset_top = -2077.0
+offset_right = -1149.0
+offset_bottom = -1957.0
 script = ExtResource("27_q5h8k")
 
 [node name="FrameBackgroundMarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer" instance=ExtResource("25_jfpsm")]
@@ -2029,13 +2040,104 @@ text = "Ok
 [node name="FrameMarginContainer" parent="Control/PlayerDisconnectedMarginContainer" instance=ExtResource("26_vv66b")]
 layout_mode = 2
 
+[node name="TopBannerMarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control/TopBannerMarginContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/TopBannerMarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/TopBannerMarginContainer/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Turn: "
+
+[node name="TurnLabel" type="Label" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "1"
+
+[node name="Label" type="Label" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "                    "
+
+[node name="PhasesHBoxContainer" type="HBoxContainer" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("35_vehc2")
+
+[node name="PhasesLabel" type="Label" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer/PhasesHBoxContainer"]
+layout_mode = 2
+text = "Phases:"
+
+[node name="SoulPhaseLabel" type="Label" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer/PhasesHBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 1
+text = "Soul"
+
+[node name="SummoningPhaseLabel" type="Label" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer/PhasesHBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 0
+text = "Summoning"
+
+[node name="ActionPhaseLabel" type="Label" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer/PhasesHBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 0
+text = "Action"
+
+[node name="CombatPhaseLabel" type="Label" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer/PhasesHBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 0
+text = "Combat
+"
+
+[node name="PetitionPhaseLabel" type="Label" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer/PhasesHBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Petition"
+
+[node name="Control" type="Control" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="PlayerStatsMarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+offset_right = 20.0
+offset_bottom = 20.0
+
+[node name="ColorRect" type="ColorRect" parent="Control/PlayerStatsMarginContainer"]
+layout_mode = 2
+color = Color(0.34902, 0.34902, 0.34902, 1)
+
+[node name="PlayersTree" parent="Control/PlayerStatsMarginContainer" instance=ExtResource("6_2gjeq")]
+unique_name_in_owner = true
+layout_mode = 2
+scroll_horizontal_enabled = false
+scroll_vertical_enabled = false
+
 [connection signal="pressed" from="Control/WaitForPlayerControl/MarginContainer/VBoxContainer/WaitForPlayerButton" to="." method="_on_wait_for_player_button_pressed"]
 [connection signal="mouse_entered" from="Control/RankTrackMarginContainer/RankTrack" to="Control/RankTrackMarginContainer/RankTrack" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Control/RankTrackMarginContainer/RankTrack" to="Control/RankTrackMarginContainer/RankTrack" method="_on_mouse_exited"]
 [connection signal="item_selected" from="Control/RankTrackMarginContainer/RankTrack/MarginContainer/VBoxContainer/CurrentDemonTree" to="Control/RankTrackMarginContainer/RankTrack" method="_on_current_demon_tree_item_selected"]
 [connection signal="item_selected" from="Control/RankTrackMarginContainer/RankTrack/MarginContainer/VBoxContainer/DemonTree" to="Control/RankTrackMarginContainer/RankTrack" method="_on_demon_tree_item_selected"]
-[connection signal="mouse_entered" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/PlayerControl/MarginContainer/VBoxContainer/PlayersTree" to="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/PlayerControl/MarginContainer/VBoxContainer/PlayersTree" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/PlayerControl/MarginContainer/VBoxContainer/PlayersTree" to="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/PlayerControl/MarginContainer/VBoxContainer/PlayersTree" method="_on_mouse_exited"]
 [connection signal="pressed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer/RecruitLegionsButton" to="." method="_on_recruit_legions_button_pressed"]
 [connection signal="pressed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer/BuyArcanaCardButton" to="." method="_on_buy_arcana_card_button_pressed"]
 [connection signal="pressed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer/EndPhaseButton" to="." method="_on_end_phase_button_pressed"]
@@ -2075,3 +2177,5 @@ layout_mode = 2
 [connection signal="pressed" from="Control/GoalMarginContainer/MarginContainer/MarginContainer/VBoxContainer/Button" to="Control/GoalMarginContainer" method="_on_button_pressed"]
 [connection signal="pressed" from="Control/GoalMarginContainer/MarginContainer/MarginContainer/VBoxContainer/Button2" to="Control/GoalMarginContainer" method="_on_button_2_pressed"]
 [connection signal="pressed" from="Control/PlayerDisconnectedMarginContainer/MarginContainer/VBoxContainer/PlayerDisconnectedButton" to="." method="_on_player_disconnected_button_pressed"]
+[connection signal="mouse_entered" from="Control/PlayerStatsMarginContainer/PlayersTree" to="Control/PlayerStatsMarginContainer/PlayersTree" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Control/PlayerStatsMarginContainer/PlayersTree" to="Control/PlayerStatsMarginContainer/PlayersTree" method="_on_mouse_exited"]

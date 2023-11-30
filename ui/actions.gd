@@ -51,6 +51,7 @@ func _on_cancelMarch():
 
 func toggleActionMenu(boolean : bool):
 	if boolean:
+		%PlayerStatusMarginContainer.show()
 		activateActionButtons()
 		
 		removeSkullsFromMenu()
@@ -61,6 +62,7 @@ func toggleActionMenu(boolean : bool):
 		
 		show()
 	else:
+		%PlayerStatusMarginContainer.hide()
 		deactivateActionButtons()
 		deactivateArcanaCards()
 		hide()
