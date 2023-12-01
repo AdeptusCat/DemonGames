@@ -330,8 +330,9 @@ func _on_roomCreated(playerId : int, roomName : String):
 		item.set_selectable(1, true)
 		item.set_text_alignment(1, HORIZONTAL_ALIGNMENT_FILL)
 		%PlayerTree.set_column_title(2, "Kick Player")
-		item.set_text(2, "Kick Player")
-		item.set_selectable(2, true)
+		item.set_text(2, "")
+		item.set_selectable(2, false)
+		
 		item.set_text_alignment(2, HORIZONTAL_ALIGNMENT_CENTER)
 		playersInRoomTreeItems[playerId] = item
 #		item.set_custom_bg_color(0, bgColor, false)
