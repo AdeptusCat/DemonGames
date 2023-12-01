@@ -37,11 +37,15 @@ func phase(map):
 				battleSectiosSorted.insert(battleSectiosSorted.find(sortedSectio), sectio)
 				break
 	
-	print("sorted 1")
 	if battleSectiosSorted.size() <= 0:
 		return
 	
-	print("sorted 2")
+	var battleSectiosNamesSorted : Array = []
+	for sectio : Sectio in battleSectiosSorted:
+		battleSectiosNamesSorted.append(sectio.sectioName)
+	for peer in Connection.peers:
+		RpcCalls.sendCombatSectios.rpc_id(peer, battleSectiosNamesSorted)
+	
 	var battleCount : int = 0
 	# battle for each sectio
 	for sectio in battleSectiosSorted:
@@ -51,7 +55,6 @@ func phase(map):
 		for peer in Connection.peers:
 			RpcCalls.moveCamera.rpc_id(peer, sectio.global_position)
 		await Signals.doneMoving
-		print("first")
 		var unitsDict = {}
 		var unitsNameDict = {}
 		for unitName in sectio.troops:
@@ -67,14 +70,14 @@ func phase(map):
 				unitsNameDict[unit.triumphirate] = unitsNameDict[unit.triumphirate] + [unitName]
 			else:
 				unitsNameDict[unit.triumphirate] = [unitName]
-		print("second")
+		
 		# second, two array with parallel the Playerid and unitCount
 		var triumphirates = []
 		var unitCount = []
 		for triumphirate in unitsDict:
 			triumphirates.append(triumphirate)
 			unitCount.append(unitsDict[triumphirate])
-		print("third")
+		
 		# third, sort the two array by finding the index of the maxValue
 		var triumphiratesSorted = []
 		var range = unitCount.size()
@@ -88,7 +91,7 @@ func phase(map):
 		for peer in Connection.peers:
 			RpcCalls.startCombat.rpc_id(peer, unitsNameDict, sectio.sectioName)
 		
-		print("pick demon")
+		
 		# all this, so that the triumphirate with the most legion, can pick his demon first
 		var demonDict = {}
 		for triumphirate in triumphiratesSorted:

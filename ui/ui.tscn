@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://d00aywoo0y4ld"]
+[gd_scene load_steps=52 format=3 uid="uid://d00aywoo0y4ld"]
 
 [ext_resource type="Script" path="res://ui/ui.gd" id="1_o55j0"]
 [ext_resource type="Theme" uid="uid://ct12aengaa7cl" path="res://themes/default_theme.tres" id="2_q6b3g"]
@@ -36,6 +36,7 @@
 [ext_resource type="Script" path="res://ui/goal_margin_container.gd" id="32_4llok"]
 [ext_resource type="PackedScene" uid="uid://bnipkihjqnak" path="res://ui/tutorial_margin_container.tscn" id="33_0fyc6"]
 [ext_resource type="Script" path="res://ui/phases_container.gd" id="35_vehc2"]
+[ext_resource type="Script" path="res://ui/CombatOverviewMarginContainer.gd" id="37_2s8h0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2yxpw"]
 bg_color = Color(0.372549, 0.372549, 0.372549, 1)
@@ -2134,6 +2135,52 @@ layout_mode = 2
 scroll_horizontal_enabled = false
 scroll_vertical_enabled = false
 
+[node name="CombatOverviewMarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+script = ExtResource("37_2s8h0")
+
+[node name="ColorRect" type="ColorRect" parent="CombatOverviewMarginContainer"]
+layout_mode = 2
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="CombatOverviewMarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CombatOverviewMarginContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CombatOverviewMarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CombatOverviewMarginContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Nr -"
+
+[node name="Label2" type="Label" parent="CombatOverviewMarginContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Sectio Name -"
+
+[node name="Label3" type="Label" parent="CombatOverviewMarginContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Participants"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CombatOverviewMarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="CombatOverviewMarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Hide Combat Overview"
+
 [connection signal="pressed" from="Control/WaitForPlayerControl/MarginContainer/VBoxContainer/WaitForPlayerButton" to="." method="_on_wait_for_player_button_pressed"]
 [connection signal="mouse_entered" from="Control/RankTrackMarginContainer/RankTrack" to="Control/RankTrackMarginContainer/RankTrack" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Control/RankTrackMarginContainer/RankTrack" to="Control/RankTrackMarginContainer/RankTrack" method="_on_mouse_exited"]
@@ -2180,3 +2227,4 @@ scroll_vertical_enabled = false
 [connection signal="pressed" from="Control/PlayerDisconnectedMarginContainer/MarginContainer/VBoxContainer/PlayerDisconnectedButton" to="." method="_on_player_disconnected_button_pressed"]
 [connection signal="mouse_entered" from="Control/PlayerStatsMarginContainer/PlayersTree" to="Control/PlayerStatsMarginContainer/PlayersTree" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Control/PlayerStatsMarginContainer/PlayersTree" to="Control/PlayerStatsMarginContainer/PlayersTree" method="_on_mouse_exited"]
+[connection signal="pressed" from="CombatOverviewMarginContainer/MarginContainer/VBoxContainer/Button" to="CombatOverviewMarginContainer" method="_on_button_pressed"]

@@ -520,3 +520,8 @@ func demonAction(demonRank : int, action : String):
 @rpc("any_peer", "call_local")
 func updateTurnTrack(turn : int):
 	Signals.updateTurnTrack.emit(turn)
+
+
+@rpc("any_peer", "call_local")
+func sendCombatSectios(battleSectiosNames : Array):
+	Signals.showCombatSectios.emit(battleSectiosNames)
