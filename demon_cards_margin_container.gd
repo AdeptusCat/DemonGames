@@ -85,6 +85,7 @@ func expandDemonCards(battle : bool = true):
 		button.pressed.connect(_on_proceedClicked)
 		button.pressed.disconnect(_on_noDemonClicked)
 		button.show()
+	reset_size()
 	#%DemonVBoxContainer.add_child(button)
 
 
@@ -94,6 +95,7 @@ func collapseDemonCards():
 	collapse()
 	button.hide()
 	button_collapse.hide()
+	reset_size()
 	#if is_instance_valid(button):
 		#button.queue_free()
 	#if is_instance_valid(button_collapse):
@@ -109,7 +111,9 @@ func _on_proceedClicked():
 func _on_noDemonClicked():
 	%DemonHeaderLabel.text = buttonTextNormal
 	expand = false
-	button.queue_free()
+	#button.queue_free()
+	button.hide()
+	reset_size()
 	Data.pickDemon = false
 	RpcCalls.pickedDemonForCombat.rpc_id(Connection.host, 0)
 
