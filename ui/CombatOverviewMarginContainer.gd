@@ -2,16 +2,18 @@ extends MarginContainer
 
 const combatEntryScene = preload("res://combat_entry.tscn")
 var entries = {}
-
+var showEntries : bool = false
 
 func _ready():
 	Signals.showCombatSectios.connect(_on_showCombatSectios)
+	Signals.hideCombatSectios.connect(_on_hideCombatSectios)
 	hide()
 
 
 func _on_showCombatSectios(sectioNames : Array):
 	for node in $MarginContainer/VBoxContainer/VBoxContainer.get_children():
 		node.queue_free()
+	showEntries = true
 	show()
 	
 	entries = {}
@@ -28,5 +30,18 @@ func _on_showCombatSectios(sectioNames : Array):
 		#RpcCalls.petitionsDone.rpc_id(Connection.host)
 
 
-func _on_button_pressed():
+func _on_hideCombatSectios():
 	hide()
+
+
+func _on_button_pressed():
+	if showEntries:
+		showEntries = false
+		%HBoxContainer.hide()
+		%VBoxContainer.hide()
+		%HideButton.text = "Show Combat Overview"
+	else:
+		%HBoxContainer.show()
+		%VBoxContainer.show()
+		showEntries = true
+		%HideButton.text = "Hide Combat Overview"

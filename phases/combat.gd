@@ -38,6 +38,8 @@ func phase(map):
 				break
 	
 	if battleSectiosSorted.size() <= 0:
+		for peer in Connection.peers:
+			RpcCalls.hideCombatSectios.rpc_id(peer)
 		return
 	
 	var battleSectiosNamesSorted : Array = []

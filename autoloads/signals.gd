@@ -145,6 +145,7 @@ signal unitsHit(unitsDict)
 signal unitsAttack()
 
 signal showCombatSectios
+signal hideCombatSectios
 signal showCombat
 signal hideCombat
 signal endCombat

@@ -525,3 +525,9 @@ func updateTurnTrack(turn : int):
 @rpc("any_peer", "call_local")
 func sendCombatSectios(battleSectiosNames : Array):
 	Signals.showCombatSectios.emit(battleSectiosNames)
+
+
+@rpc("any_peer", "call_local")
+func hideCombatSectios():
+	Signals.hideCombatSectios.emit()
+

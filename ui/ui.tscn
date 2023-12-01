@@ -1386,6 +1386,17 @@ theme_override_font_sizes/font_size = 15
 text = "Demons of your Triumphirat"
 horizontal_alignment = 1
 
+[node name="CollapseButton" type="Button" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 1
+
+[node name="Button" type="Button" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 1
+
 [node name="FrameMarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer" instance=ExtResource("26_vv66b")]
 layout_mode = 2
 
@@ -2160,6 +2171,7 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CombatOverviewMarginContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Label" type="Label" parent="CombatOverviewMarginContainer/MarginContainer/VBoxContainer/HBoxContainer"]
@@ -2175,9 +2187,11 @@ layout_mode = 2
 text = "Participants"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CombatOverviewMarginContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Button" type="Button" parent="CombatOverviewMarginContainer/MarginContainer/VBoxContainer"]
+[node name="HideButton" type="Button" parent="CombatOverviewMarginContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Hide Combat Overview"
 
@@ -2214,6 +2228,7 @@ text = "Hide Combat Overview"
 [connection signal="timeout" from="Control/NextDemonContainer/Timer" to="Control/NextDemonContainer" method="_on_timer_timeout"]
 [connection signal="mouse_entered" from="Control/CardsControl/DemonCardsMarginContainer" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Control/CardsControl/DemonCardsMarginContainer" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_mouse_exited"]
+[connection signal="pressed" from="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/CollapseButton" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_collapse_button_pressed"]
 [connection signal="pressed" from="Control/PickMoveUnitControl/MarginContainer/MarginContainer/VBoxContainer/ExitButton" to="Control/PickMoveUnitControl" method="_on_exit_button_pressed"]
 [connection signal="pressed" from="Control/CombatControl/CombatParticipantsControl/MarginContainer/VBoxContainer/FleeButton" to="Control/CombatControl/CombatParticipantsControl" method="_on_flee_button_pressed"]
 [connection signal="pressed" from="Control/SaveButton" to="." method="_on_save_button_pressed"]
@@ -2227,4 +2242,4 @@ text = "Hide Combat Overview"
 [connection signal="pressed" from="Control/PlayerDisconnectedMarginContainer/MarginContainer/VBoxContainer/PlayerDisconnectedButton" to="." method="_on_player_disconnected_button_pressed"]
 [connection signal="mouse_entered" from="Control/PlayerStatsMarginContainer/PlayersTree" to="Control/PlayerStatsMarginContainer/PlayersTree" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Control/PlayerStatsMarginContainer/PlayersTree" to="Control/PlayerStatsMarginContainer/PlayersTree" method="_on_mouse_exited"]
-[connection signal="pressed" from="CombatOverviewMarginContainer/MarginContainer/VBoxContainer/Button" to="CombatOverviewMarginContainer" method="_on_button_pressed"]
+[connection signal="pressed" from="CombatOverviewMarginContainer/MarginContainer/VBoxContainer/HideButton" to="CombatOverviewMarginContainer" method="_on_button_pressed"]

@@ -2,7 +2,8 @@ extends MarginContainer
 
 var hovering = false
 var expand = false
-var button
+@onready var button : Button = %Button
+@onready var button_collapse : Button = %CollapseButton
 var startPosition 
 var mouseEnteredPositiony : int = 0
 
@@ -12,7 +13,7 @@ var buttonTextStart = "Examine your Triumphirate"
 
 var tw1
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	Signals.expandDemonCards.connect(expandDemonCards)
 	Signals.collapseDemonCards.connect(collapseDemonCards)
@@ -26,7 +27,7 @@ func _ready():
 func _on_addDemon(demon):
 	%DemonHBoxContainer.add_child(demon)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
 func _process(delta):
 	return
 	if hovering and not expand:
@@ -65,34 +66,45 @@ func _on_mouse_entered():
 
 
 func expandDemonCards(battle : bool = true):
-	button = Button.new()
+	#button = Button.new()
 	if battle:
 		expand = true
 		_on_mouse_entered()
 		%DemonHeaderLabel.text = buttonTextCombat
 		button.text = "Click me to go to Battle without Demon."
 		button.pressed.connect(_on_noDemonClicked)
+		button.pressed.disconnect(_on_proceedClicked)
+		button.show()
+		button_collapse.text = "Collapse"
+		button_collapse.show()
 	else:
 		expand = true
 		_on_mouse_entered()
 		%DemonHeaderLabel.text = buttonTextStart
 		button.text = "Proceed."
 		button.pressed.connect(_on_proceedClicked)
-	%DemonVBoxContainer.add_child(button)
+		button.pressed.disconnect(_on_noDemonClicked)
+		button.show()
+	#%DemonVBoxContainer.add_child(button)
 
 
 func collapseDemonCards():
 	%DemonHeaderLabel.text = buttonTextNormal
 	expand = false
 	collapse()
-	if is_instance_valid(button):
-		button.queue_free()
+	button.hide()
+	button_collapse.hide()
+	#if is_instance_valid(button):
+		#button.queue_free()
+	#if is_instance_valid(button_collapse):
+		#button_collapse.queue_free()
 
 
 func _on_proceedClicked():
 	Signals.proceed.emit()
 	%DemonHeaderLabel.text = buttonTextNormal
 	collapseDemonCards()
+
 
 func _on_noDemonClicked():
 	%DemonHeaderLabel.text = buttonTextNormal
@@ -110,3 +122,13 @@ func _on_mouse_exited():
 		tw1.set_trans(Tween.TRANS_QUAD)
 		tw1.set_ease(Tween.EASE_IN_OUT)
 		tw1.parallel().tween_property(self, "position", startPosition - Vector2(0, 550), 0.2)
+
+
+func _on_collapse_button_pressed():
+	if expand:
+		expand = false
+		collapse()
+		button_collapse.text = "Expand"
+	else:
+		expand = true
+		button_collapse.text = "Collapse"
