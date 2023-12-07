@@ -1,7 +1,7 @@
 extends MarginContainer
 
+@onready var _bus := AudioServer.get_bus_index("Master")
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	%PotatoPcCheckBox.button_pressed = Settings.potatoPc
 	%TooltipsCheckBox.button_pressed = Settings.tooltips
@@ -9,6 +9,10 @@ func _ready():
 	%SkipSoulSummaryCheckBox.button_pressed = Settings.skipSoulsSummary
 	%SkipWaitForPlayersCheckBox.button_pressed = Settings.skipWaitForPlayers
 	%SkipPhaseReminderCheckBox.button_pressed = Settings.skipPhaseReminder
+	
+	%HSlider.value = Settings.volume
+	%AudioOffCheckBox.button_pressed = Settings.audioOff
+	
 	Signals.menu.connect(_on_menu)
 
 
@@ -43,3 +47,16 @@ func _on_skip_phase_reminder_check_box_toggled(button_pressed):
 func _on_potato_pc_check_box_toggled(toggled_on):
 	Signals.potatoPc.emit(toggled_on)
 	Settings.potatoPc = toggled_on
+
+
+func _on_h_slider_value_changed(value):
+	AudioServer.set_bus_volume_db(_bus, linear_to_db(value))
+	Settings.volume = value
+
+
+func _on_check_box_toggled(toggled_on):
+	Settings.audioOff = toggled_on
+	if toggled_on:
+		AudioServer.set_bus_volume_db(_bus, linear_to_db(0.0))
+	else:
+		AudioServer.set_bus_volume_db(_bus, linear_to_db(Settings.volume))

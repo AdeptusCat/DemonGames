@@ -23,6 +23,9 @@ var debugTroops : bool = false
 
 var potatoPc : bool = false
 
+@onready var volume : float = 1.0
+var audioOff : bool = false
+
 func _ready():
 	Signals.resetGame.connect(_on_resetGame)
 #	tooltips = false

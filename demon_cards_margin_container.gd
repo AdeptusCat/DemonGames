@@ -22,11 +22,12 @@ func _ready():
 	%DemonHeaderLabel.text = buttonTextNormal
 	if not Data.chooseDemon:
 		collapse()
+	reset_size()
 
 
 func _on_addDemon(demon):
 	%DemonHBoxContainer.add_child(demon)
-
+	reset_size()
 
 func _process(delta):
 	return
@@ -53,7 +54,7 @@ func removeDemon(rank : int):
 		if not child is Label:
 			if child.rank == rank:
 				child.queue_free()
-
+	reset_size()
 
 func _on_mouse_entered():
 	mouseEnteredPositiony = get_global_mouse_position().y
@@ -82,8 +83,10 @@ func expandDemonCards(battle : bool = true):
 		_on_mouse_entered()
 		%DemonHeaderLabel.text = buttonTextStart
 		button.text = "Proceed."
-		button.pressed.connect(_on_proceedClicked)
-		button.pressed.disconnect(_on_noDemonClicked)
+		if not button.pressed.is_connected(_on_proceedClicked):
+			button.pressed.connect(_on_proceedClicked)
+		if button.pressed.is_connected(_on_noDemonClicked):
+			button.pressed.disconnect(_on_noDemonClicked)
 		button.show()
 	reset_size()
 	#%DemonVBoxContainer.add_child(button)
