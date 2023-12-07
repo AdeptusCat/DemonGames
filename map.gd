@@ -497,6 +497,7 @@ func promtToFlee(triumphirate : int, sectioName : String, sectioAttackedFromName
 			sectioAttackedFrom = Decks.sectioNodes[sectioAttackedFromName]
 
 		Signals.fleeDialog.emit(sectioName, fleeFromCombat)
+		AudioSignals.enemyEnteringSectio.emit()
 		
 		var fleeing = await Signals.confirmFlee
 		if Tutorial.tutorial:
@@ -744,6 +745,7 @@ func _on_march():
 		#						%EventDialog.dialog_text = "The Enemy fled."
 					else:
 						%EventDialog.dialog_text = "The Enemy is choosing to stay and fight."
+					AudioSignals.enemyEnteringSectioResult.emit(fleeingConfirmed)
 					print("result of flee ", fleeingConfirmed)
 					break
 				else:

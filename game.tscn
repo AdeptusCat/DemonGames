@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cccosrsc7gc5w"]
+[gd_scene load_steps=26 format=3 uid="uid://cccosrsc7gc5w"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_e2grr"]
 [ext_resource type="AudioStream" uid="uid://dsjykmjg2eiw6" path="res://assets/audio/pass.wav" id="3_2ki4d"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://d00aywoo0y4ld" path="res://ui/ui.tscn" id="10_kjlhk"]
 [ext_resource type="Script" path="res://camera.gd" id="11_oe2ei"]
 [ext_resource type="PackedScene" uid="uid://bs53uu056xcwu" path="res://sequence_of_play.tscn" id="12_hn5jr"]
+[ext_resource type="AudioStream" uid="uid://b8iv5j6jeo6p8" path="res://assets/audio/voice/it_is_our_turn.mp3" id="12_i5u37"]
 [ext_resource type="Script" path="res://debug.gd" id="13_0j48s"]
 [ext_resource type="Script" path="res://phases/hell.gd" id="14_qsi5j"]
 [ext_resource type="Script" path="res://phases/soul.gd" id="15_hlf63"]
@@ -100,6 +101,61 @@ max_polyphony = 4
 unique_name_in_owner = true
 stream = ExtResource("5_jo5lo")
 max_polyphony = 4
+
+[node name="playerTurnAudio" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("12_i5u37")
+volume_db = -8.0
+
+[node name="HellPhaseAudio" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("12_i5u37")
+volume_db = -8.0
+
+[node name="SoulPhaseAudio" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("12_i5u37")
+volume_db = -8.0
+
+[node name="SummoningPhaseAudio" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("12_i5u37")
+volume_db = -8.0
+
+[node name="ActionPhaseAudio" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("12_i5u37")
+volume_db = -8.0
+
+[node name="CombatPhaseAudio" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("12_i5u37")
+volume_db = -8.0
+
+[node name="PetitionPhaseAudio" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("12_i5u37")
+volume_db = -8.0
+
+[node name="EnemyEnteringSectioAudio" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("12_i5u37")
+volume_db = -8.0
+
+[node name="EnemyFleeingAudio" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("12_i5u37")
+volume_db = -8.0
+
+[node name="EnemyStayingAudio" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("12_i5u37")
+volume_db = -8.0
+
+[node name="CombatWonAudio" type="AudioStreamPlayer" parent="Audio"]
+unique_name_in_owner = true
+stream = ExtResource("12_i5u37")
+volume_db = -8.0
 
 [node name="SequenceOfPlay" parent="." instance=ExtResource("12_hn5jr")]
 

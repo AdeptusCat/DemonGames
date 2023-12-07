@@ -553,6 +553,8 @@ func phase(map):
 
 
 func addCombatWinner(playerId : int, sectioName : String):
+	if playerId > 0:
+		RpcCalls.combatWon.rpc_id(playerId)
 	if combatWinner.has(playerId):
 		combatWinner[playerId].append(sectioName)
 	else:

@@ -32,6 +32,11 @@ func hideCombat():
 
 
 @rpc ("any_peer", "call_local")
+func combatWon():
+	AudioSignals.combatWon.emit()
+
+
+@rpc ("any_peer", "call_local")
 func unitsAttack():
 	Signals.unitsAttack.emit()
 
@@ -86,6 +91,7 @@ func win(playerId):
 @rpc ("any_peer", "call_local")
 func petitionSectiosRequest(sectioNames : Array):
 	Signals.populatePetitionsContainer.emit(sectioNames)
+	AudioSignals.playerTurn.emit()
 
 
 @rpc ("any_peer", "call_local")
@@ -169,10 +175,11 @@ func checkEndPhaseCondition():
 		
 
 @rpc("any_peer", "call_local")
-func updatePhaseLabel(phase, phaseText):
+func updatePhaseLabel(phase : int, phaseText : String):
 	Data.phase = phase
 	Signals.phaseReminder.emit(phaseText)
 	Signals.phaseDescription.emit(phase, phaseText)
+	AudioSignals.phaseChange.emit(phase)
 
 
 @rpc("any_peer", "call_local")
@@ -204,6 +211,8 @@ func phaseStart(phase : Data.phases):
 		Data.player.sectiosWithoutEnemiesLeft = Data.player.sectiosWithoutEnemies.duplicate()
 		
 		Signals.help.emit(Data.HelpSubjects.SummoningPhase)
+		
+		AudioSignals.playerTurn.emit()
 
 
 @rpc ("any_peer", "call_local")

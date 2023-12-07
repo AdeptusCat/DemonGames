@@ -324,6 +324,7 @@ func confirmStartDemon():
 @rpc("any_peer", "call_local")
 func nextDemon(nextDemon : int):
 	Signals.help.emit(Data.HelpSubjects.ActionPhase)
+	AudioSignals.playerTurn.emit()
 	var demonNode = Data.demons[nextDemon]
 	demonNode.skullsUsed = 0
 	currentPlayerLabel.text = str(demonNode.stats.player)
