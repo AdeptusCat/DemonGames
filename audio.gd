@@ -1,6 +1,10 @@
 extends Node
 
 
+var audioQueue : Array[AudioStreamPlayer] = []
+var currentAudio : AudioStreamPlayer = AudioStreamPlayer.new()
+
+
 func _ready():
 	AudioSignals.walkTheEarth.connect(_on_walkTheEarth)
 	AudioSignals.passAction.connect(_on_passAction)
@@ -13,6 +17,14 @@ func _ready():
 	AudioSignals.enemyEnteringSectio.connect(_on_enemyEnteringSectio)
 	AudioSignals.enemyEnteringSectioResult.connect(_on_enemyEnteringSectioResult)
 	AudioSignals.combatWon.connect(_on_combatWon)
+
+
+func _process(delta):
+	if not audioQueue.is_empty():
+		if not currentAudio.playing:
+			currentAudio = audioQueue.pop_front()
+			currentAudio.play()
+
 
 func _on_walkTheEarth():
 	%WalkTheEarthAudio.play()
@@ -30,22 +42,29 @@ func _on_castArcana():
 	%CastArcanaAudio.play()
 
 func _on_playerTurn():
-	%playerTurnAudio.play()
+	audioQueue.append(%playerTurnAudio)
+	#%playerTurnAudio.play()
 
 func _on_phaseChange(phase : int):
 	match phase:
 		Data.phases.Hell:
-			%HellPhaseAudio.play()
+			audioQueue.append(%HellPhaseAudio)
+			#%HellPhaseAudio.play()
 		Data.phases.Soul:
-			%SoulPhaseAudio.play()
+			audioQueue.append(%SoulPhaseAudio)
+			#%SoulPhaseAudio.play()
 		Data.phases.Summoning:
-			%SummoningPhaseAudio.play()
+			audioQueue.append(%SummoningPhaseAudio)
+			#%SummoningPhaseAudio.play()
 		Data.phases.Action:
-			%ActionPhaseAudio.play()
+			audioQueue.append(%ActionPhaseAudio)
+			#%ActionPhaseAudio.play()
 		Data.phases.Combat:
-			%CombatPhaseAudio.play()
+			audioQueue.append(%CombatPhaseAudio)
+			#%CombatPhaseAudio.play()
 		Data.phases.Petitions:
-			%PetitionPhaseAudio.play()
+			audioQueue.append(%PetitionPhaseAudio)
+			#%PetitionPhaseAudio.play()
 
 func _on_enemyEnteringSectio():
 	%EnemyEnteringSectioAudio.play()
