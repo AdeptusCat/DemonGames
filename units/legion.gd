@@ -1,11 +1,12 @@
+class_name Legion
 extends Unit
 
 var lieutenant = null
 var tw3
 
 const soulsGatherScene = preload("res://ui/souls_gather_container.tscn")
-
 func _ready():
+	
 	marginContainer = $LegionMarginContainer
 	setup()
 	unitType = Data.UnitType.Legion
@@ -30,7 +31,31 @@ func _ready():
 	set_physics_process(false)
 	await get_tree().process_frame
 	set_physics_process(true)
+	
+	Signals.showUnitAttackChance.connect(_on_showUnitAttackChance)
+	Signals.hideUnitAttackChance.connect(_on_hideUnitAttackChance)
+	
+	Signals.showUnitDefendChance.connect(_on_showUnitDefendChance)
+	Signals.hideUnitDefendChance.connect(_on_hideUnitDefendChance)
+	
+	
 
+func _on_showUnitAttackChance(_unitNr : int, chance : int = 0):
+	if _unitNr == unitNr:
+		%LegionMarginContainer.showHitChance(chance)
+
+func _on_hideUnitAttackChance(chance : int = 0):
+	if %LegionMarginContainer.has_method("hideHitChance"):
+		%LegionMarginContainer.hideHitChance()
+
+
+func _on_showUnitDefendChance(_unitNr : int, chance : int = 0):
+	if _unitNr == unitNr:
+		%LegionMarginContainer.showDefendChance(chance)
+
+func _on_hideUnitDefendChance(chance : int = 0):
+	if %LegionMarginContainer.has_method("hideDefendChance"):
+		%LegionMarginContainer.hideDefendChance()
 
 func saveGame():
 	var save_dict = {"legions" : {unitNr : {

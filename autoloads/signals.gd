@@ -144,6 +144,12 @@ signal unitsKilled(unitsDict)
 signal unitsHit(unitsDict)
 signal unitsAttack()
 
+signal showAttackResult
+signal showDefendResult
+signal showUnitAttackChance
+signal hideUnitAttackChance
+signal showUnitDefendChance
+signal hideUnitDefendChance
 signal showCombatSectios
 signal hideCombatSectios
 signal showCombat

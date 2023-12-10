@@ -13,13 +13,50 @@ func populate(_troopNode):
 	unitNr = troopNode.unitNr
 #	$TextureRect.texture = troopNode.texture
 #	$TextureRect.modulate = Data.players[troopNode.triumphirate].color
-	marginContainer = troopNode.marginContainer.duplicate(4) # duplicate scripts
+	marginContainer = troopNode.marginContainer.duplicate(5) # duplicate scripts and signals
 	add_child(marginContainer)
 	modulateBefore = marginContainer.modulate
 	marginContainer.setScale()
 	startPosition = marginContainer.position
 #	await get_tree().process_frame
 #	marginContainer.scale = Vector2(0.3, 0.3)
+	Signals.showUnitAttackChance.connect(_on_showUnitAttackChance)
+	Signals.hideUnitAttackChance.connect(_on_hideUnitAttackChance)
+	
+	Signals.showUnitDefendChance.connect(_on_showUnitDefendChance)
+	Signals.hideUnitDefendChance.connect(_on_hideUnitDefendChance)
+	
+	Signals.showAttackResult.connect(_on_showAttackResult)
+	Signals.showDefendResult.connect(_on_showDefendResult)
+
+func _on_showUnitAttackChance(_unitNr : int, chance : int = 0):
+	if _unitNr == unitNr:
+		marginContainer.showHitChance(chance)
+
+func _on_hideUnitAttackChance(chance : int = 0):
+	if marginContainer.has_method("hideHitChance"):
+		marginContainer.hideHitChance()
+
+
+func _on_showUnitDefendChance(_unitNr : int, chance : int = 0):
+	if _unitNr == unitNr:
+		marginContainer.showDefendChance(chance)
+
+func _on_hideUnitDefendChance(chance : int = 0):
+	if marginContainer.has_method("hideDefendChance"):
+		marginContainer.hideDefendChance()
+
+
+func _on_showAttackResult(_unitNr : int, attackResult : int):
+	if _unitNr == unitNr:
+		if marginContainer.has_method("showAttackResult"):
+			marginContainer.showAttackResult(attackResult)
+
+
+func _on_showDefendResult(_unitNr : int, defendResult : int):
+	if _unitNr == unitNr:
+		if marginContainer.has_method("showDefendResult"):
+			marginContainer.showDefendResult(defendResult)
 
 
 func _on_gui_input(event):

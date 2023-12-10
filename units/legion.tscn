@@ -119,6 +119,7 @@ texture_under = ExtResource("2_7xjy2")
 texture_over = ExtResource("3_1243l")
 
 [node name="LegionMarginContainer" type="MarginContainer" parent="."]
+unique_name_in_owner = true
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -187,11 +188,32 @@ custom_minimum_size = Vector2(90, 90)
 layout_mode = 2
 texture = SubResource("CanvasTexture_8vbvs")
 expand_mode = 1
+stretch_mode = 5
 
-[node name="Label" type="Label" parent="LegionMarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="LegionMarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="HitChanceLabel" type="Label" parent="LegionMarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+tooltip_text = "Chance to Hit an enemy Unit on a roll of a 6 sides Dice."
+mouse_filter = 1
+text = "?"
+
+[node name="NameLabel" type="Label" parent="LegionMarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Legion"
 horizontal_alignment = 1
+
+[node name="DefendChanceLabel" type="Label" parent="LegionMarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+tooltip_text = "Chance to Defend on a roll of a 6 sides Dice."
+mouse_filter = 1
+text = "?"
 
 [connection signal="path_changed" from="NavigationAgent2D" to="." method="_on_navigation_agend_2d_path_changed"]
 [connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_navigation_agend_2d_target_reached"]

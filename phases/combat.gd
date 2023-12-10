@@ -50,24 +50,24 @@ func phase(map):
 	
 	var battleCount : int = 0
 	# battle for each sectio
-	for sectio in battleSectiosSorted:
+	for sectio : Sectio in battleSectiosSorted:
 		triumphiratesThatWantToFlee.clear()
 		# which triumphirate has the most legions in the sectio
 		# first, a dict with Playerid and unitCount
 		for peer in Connection.peers:
 			RpcCalls.moveCamera.rpc_id(peer, sectio.global_position)
 		await Signals.doneMoving
-		var unitsDict = {}
+		var legionsDict = {}
 		var unitsNameDict = {}
 		for unitName in sectio.troops:
 			var unitNames = unitName
 			var unit = Data.troops[unitName]
 			# only count legion strength
 			if unit.unitType == Data.UnitType.Legion:
-				if not unitsDict.has(unit.triumphirate):
-					unitsDict[unit.triumphirate] = 1
+				if not legionsDict.has(unit.triumphirate):
+					legionsDict[unit.triumphirate] = [unit.unitNr]
 				else:
-					unitsDict[unit.triumphirate] += 1
+					legionsDict[unit.triumphirate] = legionsDict[unit.triumphirate] + [unit.unitNr]
 			if unitsNameDict.has(unit.triumphirate):
 				unitsNameDict[unit.triumphirate] = unitsNameDict[unit.triumphirate] + [unitName]
 			else:
@@ -76,9 +76,9 @@ func phase(map):
 		# second, two array with parallel the Playerid and unitCount
 		var triumphirates = []
 		var unitCount = []
-		for triumphirate in unitsDict:
+		for triumphirate in legionsDict:
 			triumphirates.append(triumphirate)
-			unitCount.append(unitsDict[triumphirate])
+			unitCount.append(legionsDict[triumphirate].size())
 		
 		# third, sort the two array by finding the index of the maxValue
 		var triumphiratesSorted = []
@@ -109,6 +109,14 @@ func phase(map):
 				if not demonName == 0:
 					demonDict[triumphirate] = demonName
 		
+		for triumphirate : int in triumphiratesSorted:
+			var defendChance : int = 1
+			if demonDict.has(triumphirate):
+				defendChance = Data.demons[demonDict[triumphirate]].skulls
+			for legionNr : int in legionsDict[triumphirate]:
+				for peer in Connection.peers:
+					RpcCalls.showDefendChance.rpc_id(peer, legionNr, defendChance)
+		
 		if Tutorial.tutorial:
 			Signals.tutorial.emit(Tutorial.Topic.Combat, "Lieutenants help your Legions to hit enemy Units. \nThe number with the '+' sign on the left shows the combat bonus. \nThe number on the right shows the number of Legions the Lieutenant can support.")
 			await Signals.tutorialRead
@@ -122,7 +130,7 @@ func phase(map):
 		while not fleeingFromCombat:
 			for peer in Connection.peers:
 				RpcCalls.showCombat.rpc_id(peer)
-			unitsDict = {}
+			legionsDict = {}
 			unitsNameDict = {}
 			var unitsNameHitPropabilityDict = {}
 			var lieutenantsBonusDict = {}
@@ -132,10 +140,14 @@ func phase(map):
 				var triumphirateName = unit.triumphirate
 				# only count legion strength
 				if unit.unitType == Data.UnitType.Legion:
-					if not unitsDict.has(triumphirateName):
-						unitsDict[triumphirateName] = 1
+					if not legionsDict.has(triumphirateName):
+						legionsDict[triumphirateName] = [unit.unitNr]
 					else:
-						unitsDict[triumphirateName] += 1
+						legionsDict[triumphirateName] = legionsDict[triumphirateName] + [unit.unitNr]
+					#if not unitsDict.has(triumphirateName):
+						#unitsDict[triumphirateName] = 1
+					#else:
+						#unitsDict[triumphirateName] += 1
 					if not unitsNameHitPropabilityDict.has(triumphirateName):
 						unitsNameHitPropabilityDict[triumphirateName] = [unitName]
 					else:
@@ -163,7 +175,7 @@ func phase(map):
 			var triumphirateWithSolitaryLieutenants  = []
 			for triumphirate in triumphiratesSorted:
 				# this means there is only a lieutenant left and he has to flee
-				if not unitsDict.has(triumphirate):
+				if not legionsDict.has(triumphirate):
 					if lieutenantsBonusDict.has(triumphirate):
 						triumphirateWithSolitaryLieutenants.append(triumphirate)
 					unitsNameDict.erase(triumphirate)
@@ -220,7 +232,7 @@ func phase(map):
 			
 			for triumphirate in triumphiratesSorted:
 				var units = unitsNameDict[triumphirate]
-				var legions = unitsDict[triumphirate]
+				var legions : Array = legionsDict[triumphirate]
 				var lieutenantsBonus = []
 				if lieutenantsBonusDict.has(triumphirate):
 					lieutenantsBonus = lieutenantsBonusDict[triumphirate]
@@ -235,20 +247,31 @@ func phase(map):
 				lieutenantsBonus.sort()
 #				print(triumphirate, " has legions: ", legions)
 				var hits = 0
-				for legion in legions:
+				for legionNr : int in legions:
+					for peer in Connection.peers:
+						RpcCalls.showHitChance.rpc_id(peer, legionNr, 0)
+				for legionNr : int in legions:
 					for peer in Connection.peers:
 						print("attacking legions ",legions)
 						RpcCalls.unitsAttack.rpc_id(peer)
 					var result = Dice.roll(1)
+					for peer in Connection.peers:
+						RpcCalls.showAttackResult.rpc_id(peer, legionNr, result[0])
 					print(Data.players[triumphirate].playerName, " rolls ", result[0])
 					if lieutenantsBonus.size() > 0:
 #						print("bonus ",lieutenantsBonus)
-						result[0] += lieutenantsBonus.pop_back()
+						var lieutenantBonus : int = lieutenantsBonus.pop_back()
+						for peer in Connection.peers:
+							RpcCalls.showHitChance.rpc_id(peer, legionNr, lieutenantBonus)
+						result[0] += lieutenantBonus
 					print(Data.players[triumphirate].playerName, " after lieutenant ", result[0])
 					if result[0] >= 6: #3
 						hits += 1
 				hitsDict[triumphirate] = hits
 				print(Data.players[triumphirate].playerName, " made ", hits, " hits")
+				
+				
+				
 				# hits will hit every other player, which is not ideal ;)
 #						for id in triumphiratesSorted:
 #							if not id == triumphirate:
@@ -278,6 +301,8 @@ func phase(map):
 						continue
 					var unit = Data.troops[unitName]
 					var result = Dice.roll(1)
+					for peer in Connection.peers:
+						RpcCalls.showDefendResult.rpc_id(peer, unitName, result[0])
 					print("unit type: ", unit.unitType, " ", Data.UnitType.Lieutenant)
 					print("unit name: ", unit.unitName)
 					print("save: ", result[0])
@@ -321,20 +346,25 @@ func phase(map):
 			await get_tree().create_timer(1.1).timeout
 			
 			print("end of round")
-			unitsDict = {}
+			
+			
+			
+			legionsDict = {}
 			unitsNameDict = {}
 			unitsNameHitPropabilityDict = {}
 			lieutenantsBonusDict = {}
 			for unitName in sectio.troops:
+				for peer in Connection.peers:
+					RpcCalls.hideHitChance.rpc_id(peer, unitName)
 				var unitNames = unitName
 				var unit = Data.troops[unitName]
 				var triumphirateName = unit.triumphirate
 				# only count legion strength
 				if unit.unitType == Data.UnitType.Legion:
-					if not unitsDict.has(triumphirateName):
-						unitsDict[triumphirateName] = 1
+					if not legionsDict.has(triumphirateName):
+						legionsDict[triumphirateName] = [unit.unitNr]
 					else:
-						unitsDict[triumphirateName] += 1
+						legionsDict[triumphirateName] = legionsDict[triumphirateName] + [unit.unitNr]
 					if not unitsNameHitPropabilityDict.has(triumphirateName):
 						unitsNameHitPropabilityDict[triumphirateName] = [unitName]
 					else:
@@ -363,7 +393,7 @@ func phase(map):
 			triumphirateWithSolitaryLieutenants  = []
 			for triumphirate in triumphiratesSorted:
 				# this means there is only a lieutenant left and he has to flee
-				if not unitsDict.has(triumphirate):
+				if not legionsDict.has(triumphirate):
 					if lieutenantsBonusDict.has(triumphirate):
 						triumphirateWithSolitaryLieutenants.append(triumphirate)
 					unitsNameDict.erase(triumphirate)
@@ -403,6 +433,9 @@ func phase(map):
 			
 			if noMoreEnemies:
 				print("battle done")
+				for unitName in sectio.troops:
+					for peer in Connection.peers:
+						RpcCalls.hideDefendChance.rpc_id(peer, unitName)
 				if nobodyLeft:
 					if triumphirateWithSolitaryLieutenants.size() == 1:
 						combatWinner[triumphirateWithSolitaryLieutenants.pop_front()] = sectio.sectioName
@@ -432,7 +465,7 @@ func phase(map):
 			
 			
 #			print("check again for a winner after fleeing")
-			unitsDict = {}
+			legionsDict = {}
 			unitsNameDict = {}
 			unitsNameHitPropabilityDict = {}
 			lieutenantsBonusDict = {}
@@ -442,10 +475,10 @@ func phase(map):
 				var triumphirateName = unit.triumphirate
 				# only count legion strength
 				if unit.unitType == Data.UnitType.Legion:
-					if not unitsDict.has(triumphirateName):
-						unitsDict[triumphirateName] = 1
+					if not legionsDict.has(triumphirateName):
+						legionsDict[triumphirateName] = [unit.unitNr]
 					else:
-						unitsDict[triumphirateName] += 1
+						legionsDict[triumphirateName] = legionsDict[triumphirateName] + [unit.unitNr]
 					if not unitsNameHitPropabilityDict.has(triumphirateName):
 						unitsNameHitPropabilityDict[triumphirateName] = [unitName]
 					else:
@@ -475,7 +508,7 @@ func phase(map):
 			triumphirateWithSolitaryLieutenants  = []
 			for triumphirate in triumphiratesSorted:
 				# this means there is only a lieutenant left and he has to flee
-				if not unitsDict.has(triumphirate):
+				if not legionsDict.has(triumphirate):
 					if lieutenantsBonusDict.has(triumphirate):
 						triumphirateWithSolitaryLieutenants.append(triumphirate)
 					unitsNameDict.erase(triumphirate)

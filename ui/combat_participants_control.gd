@@ -51,7 +51,7 @@ func highlight(_unitsDict : Dictionary, sectioName : String):
 				%FriendlyUnitsHBoxContainer.add_child(scene)
 			else:
 				%EnemyUnitsHBoxContainer.add_child(scene)
-		show()
+	show()
 
 
 func endCombat():

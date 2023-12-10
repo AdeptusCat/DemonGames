@@ -73,8 +73,10 @@ func expandDemonCards(battle : bool = true):
 		_on_mouse_entered()
 		%DemonHeaderLabel.text = buttonTextCombat
 		button.text = "Click me to go to Battle without Demon."
-		button.pressed.connect(_on_noDemonClicked)
-		button.pressed.disconnect(_on_proceedClicked)
+		if not button.pressed.is_connected(_on_noDemonClicked):
+			button.pressed.connect(_on_noDemonClicked)
+		if button.pressed.is_connected(_on_proceedClicked):
+			button.pressed.disconnect(_on_proceedClicked)
 		button.show()
 		button_collapse.text = "Collapse"
 		button_collapse.show()

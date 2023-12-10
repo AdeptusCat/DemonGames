@@ -17,6 +17,44 @@ func startCombat(unitNames : Dictionary, sectioName : String):
 
 
 @rpc ("any_peer", "call_local")
+func showHitChance(legionNr : int, lieutenantBonus : int):
+	#var legion : Legion = Data.troops[legionNr]
+	#legion.showHitChance(lieutenantBonus)
+	Signals.showUnitAttackChance.emit(legionNr, lieutenantBonus)
+
+
+@rpc ("any_peer", "call_local")
+func hideHitChance(legionNr : int):
+	#var legion : Legion = Data.troops[legionNr]
+	#legion.hideHitChance()
+	Signals.hideUnitAttackChance.emit()
+
+
+@rpc ("any_peer", "call_local")
+func showAttackResult(legionNr : int, attackResult : int):
+	Signals.showAttackResult.emit(legionNr, attackResult)
+
+
+@rpc ("any_peer", "call_local")
+func showDefendResult(legionNr : int, defendResult : int):
+	Signals.showDefendResult.emit(legionNr, defendResult)
+
+
+@rpc ("any_peer", "call_local")
+func showDefendChance(legionNr : int, lieutenantBonus : int):
+	#var legion : Legion = Data.troops[legionNr]
+	#legion.showDefendChance(lieutenantBonus)
+	Signals.showUnitDefendChance.emit(legionNr, lieutenantBonus)
+
+
+@rpc ("any_peer", "call_local")
+func hideDefendChance(legionNr : int):
+	#var legion : Legion = Data.troops[legionNr]
+	#legion.hideDefendChance()
+	Signals.hideUnitDefendChance.emit()
+
+
+@rpc ("any_peer", "call_local")
 func endCombat():
 	Signals.endCombat.emit()
 

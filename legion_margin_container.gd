@@ -15,11 +15,63 @@ extends MarginContainer
 #
 
 
+
+func showHitChance(chance : int = 0):
+	var formatString = "%s+"
+	if has_node("VBoxContainer/HBoxContainer/HitChanceLabel"):
+		get_node("VBoxContainer/HBoxContainer/HitChanceLabel").text = formatString % str(6 - chance)
+		get_node("VBoxContainer/HBoxContainer/HitChanceLabel").show()
+
+
+func hideHitChance():
+	if has_node("VBoxContainer/HBoxContainer/HitChanceLabel"):
+		get_node("VBoxContainer/HBoxContainer/HitChanceLabel").hide()
+
+
+func showDefendChance(chance : int = 1):
+	var formatString = "%s-"
+	if has_node("VBoxContainer/HBoxContainer/DefendChanceLabel"):
+		get_node("VBoxContainer/HBoxContainer/DefendChanceLabel").text = formatString % str(chance)
+		get_node("VBoxContainer/HBoxContainer/DefendChanceLabel").show()
+
+
+func hideDefendChance():
+	if has_node("VBoxContainer/HBoxContainer/DefendChanceLabel"):
+		get_node("VBoxContainer/HBoxContainer/DefendChanceLabel").hide()
+
+
+func showAttackResult(attackResult : int, attackSuccessful : bool = false):
+	var label : Label = Label.new()
+	label.text = str(attackResult)
+	add_child(label)
+	var tw1 = create_tween()
+	tw1.set_trans(Tween.TRANS_QUAD)
+	tw1.set_ease(Tween.EASE_IN)
+	tw1.tween_property(label, "position", label.position - Vector2(0 ,20), 1.0)
+	tw1.tween_callback(label.queue_free)
+
+
+func showDefendResult(defendResult : int, defendSuccessful : bool = false):
+	var label : Label = Label.new()
+	label.text = str(defendResult)
+	add_child(label)
+	label.position.x = size.x / 2
+	var tw1 = create_tween()
+	tw1.set_trans(Tween.TRANS_QUAD)
+	tw1.set_ease(Tween.EASE_IN)
+	tw1.tween_property(label, "position", label.position - Vector2(0 ,20), 1.0)
+	tw1.tween_callback(label.queue_free)
+
+
 func setScale():
 	var textureRect = get_node("VBoxContainer/MarginContainer/TextureRect")
 	textureRect.custom_minimum_size = Vector2(40, 40)
-	var nameLabel = get_node("VBoxContainer/Label")
+	var nameLabel = get_node("VBoxContainer/HBoxContainer/NameLabel")
 	nameLabel.add_theme_font_size_override("small", 2)
+	var hitChanceLabel = get_node("VBoxContainer/HBoxContainer/HitChanceLabel")
+	hitChanceLabel.add_theme_font_size_override("small", 2)
+	var DefendChanceLabel = get_node("VBoxContainer/HBoxContainer/DefendChanceLabel")
+	DefendChanceLabel.add_theme_font_size_override("small", 2)
 
 
 func attack(playerOwnsUnit : bool):
