@@ -31,13 +31,13 @@ func hideHitChance(legionNr : int):
 
 
 @rpc ("any_peer", "call_local")
-func showAttackResult(legionNr : int, attackResult : int):
-	Signals.showAttackResult.emit(legionNr, attackResult)
+func showAttackResult(legionNr : int, attackResult : int, success : bool):
+	Signals.showAttackResult.emit(legionNr, attackResult, success)
 
 
 @rpc ("any_peer", "call_local")
-func showDefendResult(legionNr : int, defendResult : int):
-	Signals.showDefendResult.emit(legionNr, defendResult)
+func showDefendResult(legionNr : int, defendResult : int, success : bool):
+	Signals.showDefendResult.emit(legionNr, defendResult, success)
 
 
 @rpc ("any_peer", "call_local")

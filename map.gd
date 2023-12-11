@@ -664,6 +664,8 @@ func _on_march():
 			possibleNeighbours = getPossibleNeighbours(selectedUnit.occupiedCircle, selectedUnit.occupiedQuarter)
 			changeClickableNeighbours(possibleNeighbours)
 		else:
+			sectiosUnclickable()
+			neightboursClickable(false)
 			Signals.pickUnit.emit(sectio)
 			selectedUnit = await Signals.unitClicked
 			if selectedUnit:
@@ -676,15 +678,16 @@ func _on_march():
 				changeClickableNeighbours(possibleNeighbours)
 			else:
 				continue
-		
-		print(selectedUnit, " moved1 ", selectedUnit.sectiosMoved)
+		# bug, wait shortly otherwise the sectio gets clicked, this should not happen
+		await get_tree().create_timer(0.01).timeout
+		#print(selectedUnit, " moved1 ", selectedUnit.sectiosMoved)
 		var unitsAlreadyMovingWithLieutenant : Array = []
 		while selectedUnit.sectiosMoved < selectedUnit.maxSectiosMoved:
-			print(selectedUnit, " moved2 ", selectedUnit.sectiosMoved)
+			#print(selectedUnit, " moved2 ", selectedUnit.sectiosMoved)
 			possibleNeighbours = getPossibleNeighbours(sectio.circle, sectio.quarter)
 			changeClickableNeighbours(possibleNeighbours)
 			selectedUnit.showMovesLeft(true, selectedUnit.maxSectiosMoved - selectedUnit.sectiosMoved)
-		
+			
 			sectio = await Signals.sectioClicked
 			if not sectio:
 				neightboursClickable(false)

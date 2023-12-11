@@ -76,4 +76,4 @@ func _on_enemyEnteringSectioResult(fleeingConfirmed : bool):
 		%EnemyStayingAudio.play()
 
 func _on_combatWon():
-	%CombatWonAudio.play()
+	audioQueue.append(%CombatWonAudio)

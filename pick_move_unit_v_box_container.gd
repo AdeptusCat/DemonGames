@@ -47,20 +47,21 @@ func _on_hideUnitDefendChance(chance : int = 0):
 		marginContainer.hideDefendChance()
 
 
-func _on_showAttackResult(_unitNr : int, attackResult : int):
+func _on_showAttackResult(_unitNr : int, attackResult : int, success : bool):
 	if _unitNr == unitNr:
 		if marginContainer.has_method("showAttackResult"):
-			marginContainer.showAttackResult(attackResult)
+			marginContainer.showAttackResult(attackResult, success)
 
 
-func _on_showDefendResult(_unitNr : int, defendResult : int):
+func _on_showDefendResult(_unitNr : int, defendResult : int, success : bool):
 	if _unitNr == unitNr:
 		if marginContainer.has_method("showDefendResult"):
-			marginContainer.showDefendResult(defendResult)
+			marginContainer.showDefendResult(defendResult, success)
 
 
 func _on_gui_input(event):
 	if Input.is_action_just_pressed("click"):
+		get_viewport().set_input_as_handled()
 		clicked.emit(troopNode)
 
 

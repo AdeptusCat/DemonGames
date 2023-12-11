@@ -14,6 +14,9 @@ extends MarginContainer
 #		for troopName in _unitsDict[triumphirate]:
 #
 
+var successColor : Color = Color(0, 0.61353474855423, 0.26302886009216)
+var failureColor : Color = Color(0.93796443939209, 0.11590015143156, 0.00830447953194)
+
 
 
 func showHitChance(chance : int = 0):
@@ -40,9 +43,11 @@ func hideDefendChance():
 		get_node("VBoxContainer/HBoxContainer/DefendChanceLabel").hide()
 
 
-func showAttackResult(attackResult : int, attackSuccessful : bool = false):
+func showAttackResult(attackResult : int, success : bool = false):
 	var label : Label = Label.new()
 	label.text = str(attackResult)
+	if success:
+		label.modulate = successColor
 	add_child(label)
 	var tw1 = create_tween()
 	tw1.set_trans(Tween.TRANS_QUAD)
@@ -51,9 +56,13 @@ func showAttackResult(attackResult : int, attackSuccessful : bool = false):
 	tw1.tween_callback(label.queue_free)
 
 
-func showDefendResult(defendResult : int, defendSuccessful : bool = false):
+func showDefendResult(defendResult : int, success : bool = false):
 	var label : Label = Label.new()
 	label.text = str(defendResult)
+	if success:
+		label.modulate = successColor
+	else:
+		label.modulate = failureColor
 	add_child(label)
 	label.position.x = size.x / 2
 	var tw1 = create_tween()

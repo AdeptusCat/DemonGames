@@ -254,19 +254,22 @@ func phase(map):
 					for peer in Connection.peers:
 						print("attacking legions ",legions)
 						RpcCalls.unitsAttack.rpc_id(peer)
-					var result = Dice.roll(1)
-					for peer in Connection.peers:
-						RpcCalls.showAttackResult.rpc_id(peer, legionNr, result[0])
+					var result : Array = Dice.roll(1)
+					var result_mod : Array = result
+					var hit : bool = false
 					print(Data.players[triumphirate].playerName, " rolls ", result[0])
 					if lieutenantsBonus.size() > 0:
 #						print("bonus ",lieutenantsBonus)
 						var lieutenantBonus : int = lieutenantsBonus.pop_back()
 						for peer in Connection.peers:
 							RpcCalls.showHitChance.rpc_id(peer, legionNr, lieutenantBonus)
-						result[0] += lieutenantBonus
-					print(Data.players[triumphirate].playerName, " after lieutenant ", result[0])
-					if result[0] >= 6: #3
+						result_mod[0] += lieutenantBonus
+					print(Data.players[triumphirate].playerName, " after lieutenant ", result_mod[0])
+					if result_mod[0] >= 6: #3
 						hits += 1
+						hit = true
+					for peer in Connection.peers:
+						RpcCalls.showAttackResult.rpc_id(peer, legionNr, result[0], hit)
 				hitsDict[triumphirate] = hits
 				print(Data.players[triumphirate].playerName, " made ", hits, " hits")
 				
@@ -300,24 +303,25 @@ func phase(map):
 					if not Data.troops.has(unitName):
 						continue
 					var unit = Data.troops[unitName]
-					var result = Dice.roll(1)
-					for peer in Connection.peers:
-						RpcCalls.showDefendResult.rpc_id(peer, unitName, result[0])
+					var result : Array = Dice.roll(1)
+					var result_mod : Array = result
+					var defended : bool = false
+					
 					print("unit type: ", unit.unitType, " ", Data.UnitType.Lieutenant)
 					print("unit name: ", unit.unitName)
 					print("save: ", result[0])
 					if unit.unitType == Data.UnitType.Lieutenant or unit.unitType == Data.UnitType.Hellhound:
-						result[0] -= 3
+						result_mod[0] -= 3
 						print("lieute: ",3)
 					else:
 						if demonDict.has(unit.triumphirate):
 							var demonRank = demonDict[unit.triumphirate]
 	#							print(demonName, " name")
 							# Lieutenants and Hellhound save on a 4. Legions use the Demon's skulls
-							result[0] -= Data.demons[demonRank].skulls
+							result_mod[0] -= Data.demons[demonRank].skulls
 							print("skulls: ",Data.demons[demonRank].skulls)
-					print(result[0])
-					if not result[0] <= 1: #3
+					print(result_mod[0])
+					if not result_mod[0] <= 1: #3
 						print(Data.players[unit.triumphirate].playerName," lost ", unitName)
 						unitsDied.append(unitName)
 						unitNames.erase(unitName)
@@ -333,6 +337,10 @@ func phase(map):
 							unitsKilledNamesDict[unit.triumphirate] = [unitName]
 						if unit.unitType == Data.UnitType.Lieutenant:
 							Decks.addCard(unit.unitName, "lieutenant")
+					else:
+						defended = true
+					for peer in Connection.peers:
+						RpcCalls.showDefendResult.rpc_id(peer, unitName, result[0], defended)
 				var unitsInSectioNames : Array = sectio.troops
 				for unitName in unitsDied:
 					unitsInSectioNames.erase(unitName)
