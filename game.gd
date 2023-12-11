@@ -67,7 +67,7 @@ func _ready():
 #	debugDisfavors = 1
 #
 #	Settings.tooltips = false
-#	Settings.skipScreens = true
+	#Settings.skipScreens = true
 #	Settings.skipSoulsSummary = true
 #	Settings.skipWaitForPlayers = true
 #	Settings.skipPhaseReminder = true

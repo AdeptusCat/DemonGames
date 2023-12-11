@@ -67,7 +67,8 @@ func _ready():
 	setupLightning()
 	
 #	ResourceLoader.load_threaded_request(map_fx_path)
-	
+	await get_tree().create_timer(4.01).timeout
+	promtToFlee(Data.id, "Bad People")
 
 var loaded = false
 func _process(delta):
@@ -827,7 +828,8 @@ func flee(sectioToFleeFrom, sectioAttackedFrom):
 		if tutorialCounter > 0:
 			forceFailTofFlee = true
 		await fleeingLegion(sectioToFleeFrom, fleeingUnit, sectioAttackedFrom, forceFailTofFlee)
-		tutorialCounter += 1
+		if Tutorial.tutorial:
+			tutorialCounter += 1
 	var allFled = true
 	for troopName in sectio.troops:
 		var troop = Data.troops[troopName]
@@ -860,7 +862,7 @@ func getFleeDirection(sectio, sectioAttackedFrom):
 	return neighbour
 
 
-func fleeingLegion(sectioToFleeFrom, fleeingLegion, sectioAttackedFrom, forceToFail : bool = false):
+func fleeingLegion(sectioToFleeFrom : Sectio, fleeingLegion, sectioAttackedFrom, forceToFail : bool = false):
 	if Tutorial.tutorial:
 		Signals.tutorial.emit(Tutorial.Topic.FleeWithLegion, "Legions flee in a random direction. ")
 	var tutorialCounter : int = 0
@@ -868,7 +870,6 @@ func fleeingLegion(sectioToFleeFrom, fleeingLegion, sectioAttackedFrom, forceToF
 	while true:
 		Signals.moveCamera.emit(sectioToFleeFrom.global_position)
 		var neighbour = getFleeDirection(sectioToFleeFrom, sectioAttackedFrom)
-		
 		# force the second legion to fail to flee
 		if forceToFail:
 			neighbour[0] = 666
@@ -882,14 +883,19 @@ func fleeingLegion(sectioToFleeFrom, fleeingLegion, sectioAttackedFrom, forceToF
 			await fleeMessage(str(fleeingLegion.unitName), sectioToFleeFrom.sectioName)
 			Signals.tutorialRead.emit()
 			break
-		var sectioToFleeTo = Decks.sectios[neighbour[0]][neighbour[1]]
+		var sectioToFleeTo : Sectio = Decks.sectios[neighbour[0]][neighbour[1]]
+		
+		for peer in Connection.peers:
+			spinFleeArrows.rpc_id(peer, sectioToFleeFrom.sectioName, sectioToFleeTo.sectioName)
+		await Signals.spinFleeArrowsStopped
 		
 		tutorialCounter += 1
 		moveUnits([fleeingLegion], sectioToFleeFrom, sectioToFleeTo)
 		
 		Signals.moveCamera.emit(sectioToFleeTo.global_position)
 		await fleeingLegion.arrivedAtDestination
-
+		for peer in Connection.peers:
+			hideFleeArrow.rpc_id(peer)
 		var enemyInSectio = false
 		for unitName in sectioToFleeTo.troops:
 			var unit = Data.troops[unitName]
@@ -899,6 +905,16 @@ func fleeingLegion(sectioToFleeFrom, fleeingLegion, sectioAttackedFrom, forceToF
 				enemyInSectio = true
 		if not enemyInSectio:
 			break
+
+
+@rpc("any_peer", "call_local")
+func spinFleeArrows(sectioToFleeFromName : String, sectioToFleeToName : String):
+	Signals.spinFleeArrows.emit(sectioToFleeFromName, sectioToFleeToName)
+
+
+@rpc("any_peer", "call_local")
+func hideFleeArrow():
+	Signals.hideFleeArrow.emit()
 
 
 func fleeingLieutenant(sectioToFleeFrom, fleeingTroops, lieutenant, sectioAttackedFrom):

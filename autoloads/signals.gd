@@ -44,6 +44,9 @@ signal showSectioPreview(node)
 signal hideSectioPreview(sectioName)
 signal showFleeControl
 signal hideFleeControl
+signal spinFleeArrows
+signal spinFleeArrowsStopped
+signal hideFleeArrow
 signal showMessage(message)
 signal hideMessage
 signal pickLegions(possibleLegionsToMoveWithLieutenant, unitsAlreadyMovingWithLieutenant, capacity)

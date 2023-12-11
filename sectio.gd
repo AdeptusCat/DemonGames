@@ -62,6 +62,16 @@ var startpoint
 var outerPoints = []
 var innerPoints = []
 
+var startTime = Time.get_ticks_msec()
+var arrows : Array[Sprite2D] = []
+var activeArrow : Sprite2D
+var intervalDefault : float = 0.1
+var interval : float = intervalDefault
+var startArrows : bool = false
+var fleeToPosition : Vector2
+var spinCounter : int = 0
+var shortestDistance : float = INF
+var goalArrow : Sprite2D
 
 func _ready():
 	Signals.potatoPc.connect(_on_potatoPc)
@@ -126,7 +136,7 @@ func _ready():
 	
 	position = startpoint
 #	print("before ", points)
-
+	
 	clockwisePoint = marker(r * multiplier + middleDistance, angle - baseAngle / 2) - startpoint + global_position
 #	$Sprite2D.global_position = marker(r * multiplier + middleDistance, angle - baseAngle / 2) - startpoint + global_position
 	counterclockwisePoint = marker(r * multiplier + middleDistance, angle + baseAngle / 2) - startpoint + global_position
@@ -186,6 +196,114 @@ func _ready():
 #		unitMarker.position = pos - startpoint
 #		slotPositions.append(unitMarker.global_position)
 #		%UnitsMarginContainer.global_position = unitMarker.global_position + Vector2(0, 50)
+	
+	#var a_right = points[outerPoints.size() - 1]
+	#var b_right = points[outerPoints.size()]
+	#var angle_right_arrow = a_right.angle_to(b_right)
+	var a_right = Vector2(50,0)
+	var b_right = points[outerPoints.size()] - %SoulsRingLabel.position
+	var angle_right_arrow = a_right.angle_to(b_right)
+	%ArrowRightSprite2D.position = points[outerPoints.size()-1] - ((points[outerPoints.size()-1] - points[outerPoints.size()])/2)
+	%ArrowRightSprite2D.rotation = angle_right_arrow
+	
+	var a_left = Vector2(-50,0)
+	var b_left = points[points.size()-1] - %SoulsRingLabel.position
+	var angle_left_arrow = a_left.angle_to(b_left)
+	%ArrowLeftSprite2D.position = points[0] - ((points[0] - points[points.size()-1])/2)
+	%ArrowLeftSprite2D.rotation = angle_left_arrow
+	
+	var a_up = Vector2(50,0)
+	var b_up = points[outerPoints.size() + innerPoints.size()/2] - %SoulsRingLabel.position
+	var angle_up_arrow = a_up.angle_to(b_up)
+	%ArrowUpSprite2D.position = points[outerPoints.size() + innerPoints.size()/2]
+	%ArrowUpSprite2D.rotation = angle_up_arrow
+	
+	var a_down = Vector2(50,0)
+	var b_down = points[outerPoints.size()/2] - %SoulsRingLabel.position
+	var angle_down_arrow = a_down.angle_to(b_down)
+	%ArrowDownSprite2D.position = points[outerPoints.size()/2]
+	%ArrowDownSprite2D.rotation = angle_down_arrow
+	
+	#%ArrowUpSprite2D.position = points[outerPoints.size() + innerPoints.size()/2]
+	#%ArrowUpSprite2D.rotation = rotation
+	#
+	#%ArrowDownSprite2D.position = points[outerPoints.size()/2]
+	#%ArrowDownSprite2D.rotation = rotation
+	add_arrows()
+	#startArrowSpin()
+	Signals.spinFleeArrows.connect(_on_spinFleeArrows)
+	Signals.hideFleeArrow.connect(_on_hideFleeArrow)
+
+
+func _on_spinFleeArrows(sectioToFleeFromName, sectioToFleeToName):
+	if sectioToFleeFromName != sectioName:
+		return
+	var sectioToFleeFrom : Sectio = Decks.sectioNodes[sectioToFleeFromName]
+	var sectioToFleeTo : Sectio = Decks.sectioNodes[sectioToFleeToName]
+	add_arrows()
+	startArrowSpin(sectioToFleeToName)
+
+
+func _on_hideFleeArrow():
+	if activeArrow:
+		activeArrow.hide()
+
+
+func add_arrows():
+	arrows.append(%ArrowRightSprite2D)
+	arrows.append(%ArrowUpSprite2D)
+	arrows.append(%ArrowLeftSprite2D)
+	arrows.append(%ArrowDownSprite2D)
+
+
+func startArrowSpin(sectioToFleeToName : String = ""):
+	var sectioToFleeTo : Sectio = Decks.sectioNodes[sectioToFleeToName]
+	fleeToPosition = sectioToFleeTo.global_position
+	startArrows = true
+	startTime = Time.get_ticks_msec()
+	spinCounter = 0
+	shortestDistance = INF
+	interval = intervalDefault
+
+func stopArrowSpin():
+	startArrows = false
+
+
+func _process(elta):
+	if startArrows:
+		if activeArrow == null:
+			activeArrow = arrows.pop_front()
+			activeArrow.show()
+			spinCounter += 1
+			if activeArrow.global_position.distance_to(fleeToPosition) < shortestDistance:
+				goalArrow = activeArrow
+				shortestDistance = activeArrow.global_position.distance_to(fleeToPosition)
+		else:
+			if Time.get_ticks_msec() > startTime + interval:
+				if spinCounter > 10 and activeArrow == goalArrow:
+					stopArrowSpin()
+					for peer in Connection.peers:
+						spinFleeArrowsStopped.rpc_id(peer)
+				else:
+					startTime = Time.get_ticks_msec()
+					activeArrow.hide()
+					arrows.append(activeArrow)
+					activeArrow = null
+					interval += pow(interval, 1.01)
+			# if it takes too long, skip
+			if Time.get_ticks_msec() > startTime + 5000:
+					if activeArrow:
+						activeArrow.hide()
+					goalArrow.show()
+					stopArrowSpin()
+					for peer in Connection.peers:
+						spinFleeArrowsStopped.rpc_id(peer)
+
+
+@rpc("any_peer", "call_local")
+func spinFleeArrowsStopped():
+	Signals.spinFleeArrowsStopped.emit()
+
 
 func addMarker(pos, _startpoint):
 	var unitMarker = Label.new()
@@ -199,8 +317,6 @@ func marker(radius, angle):
 	var y = radius*cos(angle)
 	return Vector2(x, y)
 
-func _process(delta):
-	pass
 
 
 func highlightTroops():

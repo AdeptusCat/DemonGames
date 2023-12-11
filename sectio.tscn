@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://0jxmw3vgonen"]
+[gd_scene load_steps=9 format=3 uid="uid://0jxmw3vgonen"]
 
 [ext_resource type="Script" path="res://sectio.gd" id="1_0w1n6"]
 [ext_resource type="Texture2D" uid="uid://qr14kucrashs" path="res://icon.svg" id="2_p1h18"]
@@ -7,8 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://ccofwp3squfvf" path="res://assets/pixel.png" id="4_qjako"]
 [ext_resource type="Texture2D" uid="uid://chyx8gsyah2ww" path="res://assets/ring_color.png" id="6_l5600"]
 [ext_resource type="Theme" uid="uid://ct12aengaa7cl" path="res://themes/default_theme.tres" id="7_t73ym"]
+[ext_resource type="Texture2D" uid="uid://bfkug38ydc0vm" path="res://assets/arrow.png" id="8_67oed"]
 
 [node name="Sectio" type="Node2D"]
+position = Vector2(1039, 654)
 script = ExtResource("1_0w1n6")
 Treachery = Color(0.196078, 0.270588, 0.215686, 1)
 Fraud = Color(0.431373, 0.168627, 0, 1)
@@ -123,10 +125,8 @@ unique_name_in_owner = true
 
 [node name="Line2D" type="Line2D" parent="."]
 unique_name_in_owner = true
-visible = false
 material = ExtResource("4_dwt48")
 width = 50.0
-default_color = Color(1, 1, 1, 0)
 texture = ExtResource("4_qjako")
 texture_mode = 2
 
@@ -155,6 +155,35 @@ theme = ExtResource("7_t73ym")
 theme_override_font_sizes/font_size = 50
 text = "1"
 horizontal_alignment = 1
+
+[node name="Node2D2" type="Node2D" parent="."]
+
+[node name="ArrowRightSprite2D" type="Sprite2D" parent="Node2D2"]
+unique_name_in_owner = true
+visible = false
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("8_67oed")
+
+[node name="ArrowLeftSprite2D" type="Sprite2D" parent="Node2D2"]
+unique_name_in_owner = true
+visible = false
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("8_67oed")
+flip_h = true
+
+[node name="ArrowUpSprite2D" type="Sprite2D" parent="Node2D2"]
+unique_name_in_owner = true
+visible = false
+rotation = -1.5708
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("8_67oed")
+
+[node name="ArrowDownSprite2D" type="Sprite2D" parent="Node2D2"]
+unique_name_in_owner = true
+visible = false
+rotation = 1.5708
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("8_67oed")
 
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]

@@ -95,7 +95,7 @@ func spawnDebugTroops1(ai : int = 0):
 	else:
 		sectio = Decks.sectioNodes["Megalomaniacs"]
 		sectio = Decks.sectioNodes["Bad People"]
-		Signals.placeLieutenant.emit(sectio, Data.id, "Shalmaneser")
+		#Signals.placeLieutenant.emit(sectio, Data.id, "Shalmaneser")
 		Signals.placeLegion.emit(sectio, Data.id)
 		Signals.placeLegion.emit(sectio, Data.id)
 		Signals.placeLegion.emit(sectio, Data.id)
