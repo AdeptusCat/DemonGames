@@ -636,7 +636,8 @@ layout_mode = 2
 text = "End Summoning Phase"
 metadata/_edit_use_anchors_ = true
 
-[node name="CheckButton" type="CheckButton" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer"]
+[node name="AvailableLieutenantsCheckButton" type="CheckButton" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Show available Lieutenants"
 alignment = 1
@@ -2207,7 +2208,7 @@ text = "Hide Combat Overview"
 [connection signal="pressed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer/RecruitLegionsButton" to="." method="_on_recruit_legions_button_pressed"]
 [connection signal="pressed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer/BuyArcanaCardButton" to="." method="_on_buy_arcana_card_button_pressed"]
 [connection signal="pressed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer/EndPhaseButton" to="." method="_on_end_phase_button_pressed"]
-[connection signal="toggled" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer/CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="toggled" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer/AvailableLieutenantsCheckButton" to="." method="_on_available_lieutenants_check_button_toggled"]
 [connection signal="confirmed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/BackToHellConfirmationDialog" to="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_back_to_hell_confirmation_dialog_confirmed"]
 [connection signal="pressed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/MarchHBoxContainer/MarchButton" to="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_march_button_pressed"]
 [connection signal="pressed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/WalkTheEarthHBoxContainer/WalkTheEarthButton" to="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_walk_the_earth_button_pressed"]

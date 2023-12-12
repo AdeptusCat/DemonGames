@@ -8,6 +8,7 @@ func _ready():
 
 func _on_MinorSpell(arcanaCard : ArcanaCard):
 	Signals.sectioClicked.emit(null)
+	var arcanaCardName : String = arcanaCard.cardName
 	for cardName in Data.player.arcanaCards:
 		if Data.arcanaCardNodes.has(cardName):
 			Data.arcanaCardNodes[cardName].disable()
@@ -59,14 +60,18 @@ func _on_MinorSpell(arcanaCard : ArcanaCard):
 		if Tutorial.tutorial:
 			Signals.tutorialRead.emit()
 #		actionsNode._recruitLieutenant()
-		var lieutenantName = Decks.availableLieutenants.pop_back()
+		var lieutenantName : String = Decks.availableLieutenants.pop_back()
+		
+		print("recruit lieutenant")
+		Signals.spinLieutenantBox.emit(lieutenantName)
+		await Signals.spinLieutenantBoxStopped
 		
 		Signals.showChosenLieutenantFromAvailableLieutenantsBox.emit(lieutenantName)
 		
 		Signals.recruitLieutenant.emit(lieutenantName)
 
 	for peer in Connection.peers:
-		RpcCalls.discardArcanaCard.rpc_id(peer, arcanaCard.cardName, Data.id)
+		RpcCalls.discardArcanaCard.rpc_id(peer, arcanaCardName, Data.id)
 	AudioSignals.castArcana.emit()
 
 

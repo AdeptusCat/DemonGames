@@ -67,6 +67,15 @@ func populate(unitName, lieutenantTextureDir, combatBonus, capacity, triumphirat
 		var texture = Data.icons[Data.players[triumphirate].colorName]
 		%TextureRect.texture = texture
 
+
+func toggleTriumphirateIcon(boolean : bool, triumphirate : int):
+	if boolean:
+		var texture = Data.icons[Data.players[triumphirate].colorName]
+		%TextureRect.texture = texture
+	else:
+		%TextureRect.texture = null
+
+
 func getLieutenantName():
 	return lieutenantName
 

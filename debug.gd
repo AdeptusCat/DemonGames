@@ -10,17 +10,18 @@ func debugSectios():
 	#	occupySectio.rpc_id(peer, 1, "The Envious")
 	#	occupySectio.rpc_id(peer, 1, "Sugar Hill")
 
-		RpcCalls.occupySectio.rpc_id(peer, Data.id, "Sugar Hill")
-		RpcCalls.occupySectio.rpc_id(peer, Data.id, "Addiction")
-		RpcCalls.occupySectio.rpc_id(peer, Data.id, "Sea Of Lard")
-		RpcCalls.occupySectio.rpc_id(peer, Data.id, "The Insatiable")
-		RpcCalls.occupySectio.rpc_id(peer, Data.id, "Tavern Of Endless Revelry")
-	
-		RpcCalls.occupySectio.rpc_id(peer, Connection.aiPlayersId[0], "Traitors")
-		RpcCalls.occupySectio.rpc_id(peer, Connection.aiPlayersId[0], "Betrayers of Confidence")
-		RpcCalls.occupySectio.rpc_id(peer, Connection.aiPlayersId[0], "Adulterers In Heat")
-		RpcCalls.occupySectio.rpc_id(peer, Connection.aiPlayersId[0], "Desecrators Of The Flesh")
-		RpcCalls.occupySectio.rpc_id(peer, Connection.aiPlayersId[0], "Spies")
+		RpcCalls.occupySectio.rpc_id(peer, Data.id, "The Wise Men")
+		#RpcCalls.occupySectio.rpc_id(peer, Data.id, "Sugar Hill")
+		#RpcCalls.occupySectio.rpc_id(peer, Data.id, "Addiction")
+		#RpcCalls.occupySectio.rpc_id(peer, Data.id, "Sea Of Lard")
+		#RpcCalls.occupySectio.rpc_id(peer, Data.id, "The Insatiable")
+		#RpcCalls.occupySectio.rpc_id(peer, Data.id, "Tavern Of Endless Revelry")
+	#
+		#RpcCalls.occupySectio.rpc_id(peer, Connection.aiPlayersId[0], "Traitors")
+		#RpcCalls.occupySectio.rpc_id(peer, Connection.aiPlayersId[0], "Betrayers of Confidence")
+		#RpcCalls.occupySectio.rpc_id(peer, Connection.aiPlayersId[0], "Adulterers In Heat")
+		#RpcCalls.occupySectio.rpc_id(peer, Connection.aiPlayersId[0], "Desecrators Of The Flesh")
+		#RpcCalls.occupySectio.rpc_id(peer, Connection.aiPlayersId[0], "Spies")
 
 
 func debugFavors():

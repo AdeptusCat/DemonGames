@@ -67,8 +67,8 @@ func _ready():
 	setupLightning()
 	
 #	ResourceLoader.load_threaded_request(map_fx_path)
-	await get_tree().create_timer(4.01).timeout
-	promtToFlee(Data.id, "Bad People")
+	#await get_tree().create_timer(4.01).timeout
+	#promtToFlee(Data.id, "Bad People")
 
 var loaded = false
 func _process(delta):

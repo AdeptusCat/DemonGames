@@ -186,6 +186,8 @@ signal changeDisfavors(playerId : int, disfavors : int)
 signal skullUsed
 signal removeLieutenantFromAvailableLieutenantsBox(lieutenantName)
 signal recruitedLieutenant
+signal spinLieutenantBox
+signal spinLieutenantBoxStopped
 
 signal spawnUnit(sectioName : String, playerId : int, unitType : Data.UnitType, unitName : String)
 

@@ -36,6 +36,7 @@ func _ready():
 	Signals.toggleEndPhaseButton.connect(_on_toggleEndPhaseButton)
 	Signals.toogleSummoningMenu.connect(_on_toogleSummoningMenu)
 	Signals.toogleBuyLieutenant.connect(toogleBuyLieutenant)
+	Signals.spinLieutenantBox.connect(_on_spinLieutenantBox)
 	Signals.toggleDiscardArcanaCardControl.connect(_on_toggleDiscardArcanaCardControl)
 	Signals.hidePickArcanaCardContainer.connect(_on_hidePickArcanaCardContainer)
 	Signals.fleeDialog.connect(_on_fleeDialog)
@@ -473,10 +474,12 @@ func pickUnitToMove(sectio):
 
 func toogleBuyLieutenant(boolean : bool):
 	if boolean:
-		return
+		#return
 		%AvailableLieutenantsMarginContainer.show()
+		%AvailableLieutenantsCheckButton.button_pressed = true
 	else:
 		%AvailableLieutenantsMarginContainer.hide()
+		%AvailableLieutenantsCheckButton.button_pressed = false
 
 
 func addLieutenantToAvailableLieutenantsBox(lieutenantName):
@@ -485,6 +488,59 @@ func addLieutenantToAvailableLieutenantsBox(lieutenantName):
 	var lieutenantMarginContainer = lieutenantMarginContainerScene.instantiate()
 	lieutenantMarginContainer.populate(lieutenantName, lieutenant.texture, str(lieutenant["combat bonus"]), str(lieutenant.capacity))
 	%AvailableLieutenantsHBoxContainer.add_child(lieutenantMarginContainer)
+
+var startTime = Time.get_ticks_msec()
+var lieutenantMarginContainers : Array = []
+var activeLieutenantMarginContainer
+var intervalDefault : float = 0.1
+var interval : float = intervalDefault
+var startSpin : bool = false
+var spinCounter : int = 0
+var goalLieutenantMarginContainer
+
+
+func _on_spinLieutenantBox(lieutenantPicked : String):
+	lieutenantMarginContainers = %AvailableLieutenantsHBoxContainer.get_children()
+	for lieutenantMarginContainer in lieutenantMarginContainers:
+		if lieutenantMarginContainer.lieutenantName == lieutenantPicked:
+			goalLieutenantMarginContainer = lieutenantMarginContainer
+	startArrowSpin()
+
+func startArrowSpin():
+	%AvailableLieutenantsMarginContainer.show()
+	%AvailableLieutenantsCheckButton.button_pressed = true
+	startSpin = true
+	startTime = Time.get_ticks_msec()
+	spinCounter = 0
+	interval = intervalDefault
+
+func stopSpin():
+	startSpin = false
+	await get_tree().create_timer(1.0).timeout
+	Signals.spinLieutenantBoxStopped.emit()
+
+func _process(elta):
+	if startSpin:
+		if activeLieutenantMarginContainer == null:
+			activeLieutenantMarginContainer = lieutenantMarginContainers.pop_front()
+			activeLieutenantMarginContainer.toggleTriumphirateIcon(true, Data.id)
+			spinCounter += 1
+		else:
+			if Time.get_ticks_msec() > startTime + interval:
+				if spinCounter > 10 and activeLieutenantMarginContainer == goalLieutenantMarginContainer:
+					stopSpin()
+				else:
+					startTime = Time.get_ticks_msec()
+					activeLieutenantMarginContainer.toggleTriumphirateIcon(false, Data.id)
+					lieutenantMarginContainers.append(activeLieutenantMarginContainer)
+					activeLieutenantMarginContainer = null
+					interval += pow(interval, 1.01)
+			# if it takes too long, skip
+			if Time.get_ticks_msec() > startTime + 5000:
+					if activeLieutenantMarginContainer:
+						activeLieutenantMarginContainer.toggleTriumphirateIcon(false, Data.id)
+					goalLieutenantMarginContainer.toggleTriumphirateIcon(true, Data.id)
+					stopSpin()
 
 
 func showChosenLieutenantFromAvailableLieutenantsBox(lieutenantName):
@@ -655,11 +711,6 @@ func _on_toogleSummoningMenu(boolean : bool):
 
 
 
-func _on_check_button_toggled(button_pressed):
-	if button_pressed:
-		%AvailableLieutenantsMarginContainer.show()
-	else:
-		%AvailableLieutenantsMarginContainer.hide()
 
 
 func _on_showArcanaCardsContainer():
@@ -680,3 +731,13 @@ func _on_updateTurnTrack(turn : int):
 
 func _on_player_disconnected_button_pressed():
 	%PlayerDisconnectedMarginContainer.hide()
+
+
+func _on_available_lieutenants_check_button_toggled(toggled_on):
+	if toggled_on:
+		%AvailableLieutenantsMarginContainer.show()
+		%AvailableLieutenantsCheckButton.button_pressed = true
+	else:
+		%AvailableLieutenantsMarginContainer.hide()
+		%AvailableLieutenantsCheckButton.button_pressed = false
+

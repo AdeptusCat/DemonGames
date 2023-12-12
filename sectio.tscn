@@ -125,6 +125,7 @@ unique_name_in_owner = true
 
 [node name="Line2D" type="Line2D" parent="."]
 unique_name_in_owner = true
+visible = false
 material = ExtResource("4_dwt48")
 width = 50.0
 texture = ExtResource("4_qjako")
