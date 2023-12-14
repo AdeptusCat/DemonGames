@@ -172,14 +172,14 @@ scale = Vector2(0.3, 0.3)
 texture = ExtResource("8_67oed")
 flip_h = true
 
-[node name="ArrowUpSprite2D" type="Sprite2D" parent="Node2D2"]
+[node name="ArrowDownSprite2D" type="Sprite2D" parent="Node2D2"]
 unique_name_in_owner = true
 visible = false
 rotation = -1.5708
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("8_67oed")
 
-[node name="ArrowDownSprite2D" type="Sprite2D" parent="Node2D2"]
+[node name="ArrowUpSprite2D" type="Sprite2D" parent="Node2D2"]
 unique_name_in_owner = true
 visible = false
 rotation = 1.5708

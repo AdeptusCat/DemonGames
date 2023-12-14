@@ -75,6 +75,8 @@ var goalArrow : Sprite2D
 
 func _ready():
 	Signals.potatoPc.connect(_on_potatoPc)
+	Signals.showArrows.connect(_on_showArrows)
+	Signals.hideArrows.connect(_on_hideArrows)
 	%SoulsRing.self_modulate = colors[circle]
 	%SoulsRingLabel.text = str(souls)
 	remove_child(sectioPolygon)
@@ -215,14 +217,14 @@ func _ready():
 	var a_up = Vector2(50,0)
 	var b_up = points[outerPoints.size() + innerPoints.size()/2] - %SoulsRingLabel.position
 	var angle_up_arrow = a_up.angle_to(b_up)
-	%ArrowUpSprite2D.position = points[outerPoints.size() + innerPoints.size()/2]
-	%ArrowUpSprite2D.rotation = angle_up_arrow
+	%ArrowDownSprite2D.position = points[outerPoints.size() + innerPoints.size()/2]
+	%ArrowDownSprite2D.rotation = angle_up_arrow
 	
 	var a_down = Vector2(50,0)
 	var b_down = points[outerPoints.size()/2] - %SoulsRingLabel.position
 	var angle_down_arrow = a_down.angle_to(b_down)
-	%ArrowDownSprite2D.position = points[outerPoints.size()/2]
-	%ArrowDownSprite2D.rotation = angle_down_arrow
+	%ArrowUpSprite2D.position = points[outerPoints.size()/2]
+	%ArrowUpSprite2D.rotation = angle_down_arrow
 	
 	#%ArrowUpSprite2D.position = points[outerPoints.size() + innerPoints.size()/2]
 	#%ArrowUpSprite2D.rotation = rotation
@@ -233,6 +235,25 @@ func _ready():
 	#startArrowSpin()
 	Signals.spinFleeArrows.connect(_on_spinFleeArrows)
 	Signals.hideFleeArrow.connect(_on_hideFleeArrow)
+
+
+func _on_showArrows(sectio : Sectio, possibleNeighboursDownUpCwCcw : Array):
+	if sectio == self:
+		if possibleNeighboursDownUpCwCcw[0] == 1:
+			%ArrowDownSprite2D.show()
+		if possibleNeighboursDownUpCwCcw[1] == 1:
+			%ArrowUpSprite2D.show()
+		if possibleNeighboursDownUpCwCcw[2] == 1:
+			%ArrowLeftSprite2D.show()
+		if possibleNeighboursDownUpCwCcw[3] == 1:
+			%ArrowRightSprite2D.show()
+
+
+func _on_hideArrows():
+	%ArrowRightSprite2D.hide()
+	%ArrowLeftSprite2D.hide()
+	%ArrowUpSprite2D.hide()
+	%ArrowDownSprite2D.hide()
 
 
 func _on_spinFleeArrows(sectioToFleeFromName, sectioToFleeToName):

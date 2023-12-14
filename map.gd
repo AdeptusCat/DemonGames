@@ -377,7 +377,7 @@ func on_neighbours(node):
 		if node.player == Decks.sectios[neighbour[0]][neighbour[1]].player:
 			isIsolated = false
 	node.isIsolated = isIsolated
-	
+
 
 func getPossibleNeighbours(occupiedCircle, occupiedQuarter):
 	possibleNeighbours.clear()
@@ -401,6 +401,26 @@ func getPossibleNeighbours(occupiedCircle, occupiedQuarter):
 	var quarterCounterclockwise = posmod((occupiedQuarter - 1), 5)
 	possibleNeighbours.append([occupiedCircle, quarterCounterclockwise])
 	return possibleNeighbours
+
+
+func getPossibleNeighboursDownUpCwCcw(occupiedCircle, occupiedQuarter):
+	var possibleNeighboursDownUpCwCcw : Array = [0,0,0,0]
+	var circleDown = occupiedCircle - 1
+	if not circleDown < 0:
+		possibleNeighboursDownUpCwCcw[0] = 1
+	
+	var circleUp = occupiedCircle + 1
+	if not circleUp > 8:
+		possibleNeighboursDownUpCwCcw[1] = 1
+	
+	var quarterClockwise = posmod((occupiedQuarter + 1), 5)
+	possibleNeighboursDownUpCwCcw[2] = 1
+	
+	var quarterCounterclockwise = posmod((occupiedQuarter - 1), 5)
+	possibleNeighboursDownUpCwCcw[3] = 1
+	return possibleNeighboursDownUpCwCcw
+
+
 
 func changeClickableNeighbours(possibleNeighbours):
 	neightboursClickable(true)
@@ -572,16 +592,30 @@ func removeUnit(unitName):
 
 
 func moveUnits(troopsToMove, oldSectio : Sectio, sectio : Sectio):
+	
 	if troopsToMove.is_empty():
 		return
 	
 	var playerId = troopsToMove[0].triumphirate
 	
-	var friendlyUnits : Array = []
+	var friendlyUnitsInNewSectio : Array = []
 	for unitName in sectio.troops:
 		var unit = Data.troops[unitName]
 		if unit.triumphirate == playerId:
-			friendlyUnits.append(unit)
+			# if Lieutenant, put on the bottom of the stack
+			if unit.unitType == Data.UnitType.Lieutenant:
+				friendlyUnitsInNewSectio.insert(0, unit)
+			else:
+				friendlyUnitsInNewSectio.append(unit)
+	
+	var friendlyUnits : Array = friendlyUnitsInNewSectio.duplicate()
+	for unit in troopsToMove:
+		if unit.triumphirate == playerId:
+			# if Lieutenant, put on the bottom of the stack
+			if unit.unitType == Data.UnitType.Lieutenant:
+				friendlyUnits.insert(0, unit)
+			else:
+				friendlyUnits.append(unit)
 	
 	for troop in troopsToMove:
 		oldSectio.troops.erase(troop.unitNr)
@@ -602,34 +636,59 @@ func moveUnits(troopsToMove, oldSectio : Sectio, sectio : Sectio):
 	
 	var zIndex : int = 1
 	for unit in friendlyUnits:
-		destination += Vector2(0, -32)
-		unit.global_position = destination
-		unit.z_index = zIndex
-		zIndex += 1
+		if friendlyUnitsInNewSectio.has(unit):
+			destination += Vector2(0, -32)
+			unit.global_position = destination
+			unit.z_index = zIndex
+			zIndex += 1
+		else:
+			var destinations : Array
+			if oldSectio.global_position.distance_to(destination) < unit.global_position.distance_to(destination):
+				destinations.append(oldSectio.global_position)
+			# clockwise
+			if posmod((oldSectio.quarter + 1), 5) == sectio.quarter:
+				destinations.append(oldSectio.clockwisePoint)
+			# counterclockwise
+			if posmod((oldSectio.quarter - 1), 5) == sectio.quarter:
+				destinations.append(oldSectio.counterclockwisePoint)
+			
+			if unit.global_position.distance_to(sectio.global_position) < unit.global_position.distance_to(destination):
+				destinations.append(sectio.global_position)
+			
+			destination += Vector2(0, -32)
+			destinations.append(destination)
+			unit.z_index = zIndex
+			zIndex += 1
+			
+			unit.set_destinations(destinations)
 	
-	print("destination ", destination, " ",i ," ",sectio.slots, " ",sectio.slotPositions)
-	
-	for troop in troopsToMove:
-		var destinations : Array
-		if oldSectio.global_position.distance_to(destination) < troop.global_position.distance_to(destination):
-			destinations.append(oldSectio.global_position)
-		# clockwise
-		if posmod((oldSectio.quarter + 1), 5) == sectio.quarter:
-			destinations.append(oldSectio.clockwisePoint)
-		# counterclockwise
-		if posmod((oldSectio.quarter - 1), 5) == sectio.quarter:
-			destinations.append(oldSectio.counterclockwisePoint)
-		
-		if troop.global_position.distance_to(sectio.global_position) < troop.global_position.distance_to(destination):
-			destinations.append(sectio.global_position)
-		
-		destination += Vector2(0, -32)
-		destinations.append(destination)
-		troop.z_index = zIndex
-		zIndex += 1
-		
-		troop.set_destinations(destinations)
+	reorderUnitsinSlots(oldSectio)
 
+
+func reorderUnitsinSlots(sectio : Sectio):
+	var slotIndex : int = 0
+	for slot in sectio.slots:
+		var destination : Vector2 = sectio.slotPositions[slotIndex]
+		slotIndex += 1
+		
+		var units : Array = []
+		for unitNr : int in sectio.troops:
+			var unit : Unit = Data.troops[unitNr]
+			if unit.triumphirate == slot:
+				# if Lieutenant, put on the bottom of the stack
+				if unit.unitType == Data.UnitType.Lieutenant:
+					units.insert(0, unit)
+				else:
+					units.append(unit)
+		
+		var zIndex : int = 1
+		for unit : Unit in units:
+			destination += Vector2(0, -32)
+			unit.global_position = destination
+			unit.z_index = zIndex
+			zIndex += 1
+			
+			unit.set_destinations([destination])
 
 @rpc("any_peer", "call_local")
 func placeFirstLegion():
@@ -647,6 +706,7 @@ func placeFirstLegion():
 func _on_march():
 	while Data.currentDemon.skullsUsed < Data.currentDemon.skulls:
 		Signals.sectiosClickable.emit()
+		Signals.hideArrows.emit()
 		Data.changeState(Data.States.IDLE)
 		
 		var sectio = await Signals.sectioClicked
@@ -664,6 +724,8 @@ func _on_march():
 			selectedUnit.sectiosMoved = 0
 			possibleNeighbours = getPossibleNeighbours(selectedUnit.occupiedCircle, selectedUnit.occupiedQuarter)
 			changeClickableNeighbours(possibleNeighbours)
+			var possibleNeighboursDownUpCwCcw : Array = getPossibleNeighboursDownUpCwCcw(selectedUnit.occupiedCircle, selectedUnit.occupiedQuarter)
+			Signals.showArrows.emit(sectio, possibleNeighboursDownUpCwCcw)
 		else:
 			sectiosUnclickable()
 			neightboursClickable(false)
@@ -677,6 +739,8 @@ func _on_march():
 				selectedUnit.sectiosMoved = 0
 				possibleNeighbours = getPossibleNeighbours(selectedUnit.occupiedCircle, selectedUnit.occupiedQuarter)
 				changeClickableNeighbours(possibleNeighbours)
+				var possibleNeighboursDownUpCwCcw : Array = getPossibleNeighboursDownUpCwCcw(selectedUnit.occupiedCircle, selectedUnit.occupiedQuarter)
+				Signals.showArrows.emit(sectio, possibleNeighboursDownUpCwCcw)
 			else:
 				continue
 		# bug, wait shortly otherwise the sectio gets clicked, this should not happen
@@ -684,9 +748,12 @@ func _on_march():
 		#print(selectedUnit, " moved1 ", selectedUnit.sectiosMoved)
 		var unitsAlreadyMovingWithLieutenant : Array = []
 		while selectedUnit.sectiosMoved < selectedUnit.maxSectiosMoved:
+			Signals.hideArrows.emit()
 			#print(selectedUnit, " moved2 ", selectedUnit.sectiosMoved)
 			possibleNeighbours = getPossibleNeighbours(sectio.circle, sectio.quarter)
 			changeClickableNeighbours(possibleNeighbours)
+			var possibleNeighboursDownUpCwCcw : Array = getPossibleNeighboursDownUpCwCcw(selectedUnit.occupiedCircle, selectedUnit.occupiedQuarter)
+			Signals.showArrows.emit(sectio, possibleNeighboursDownUpCwCcw)
 			selectedUnit.showMovesLeft(true, selectedUnit.maxSectiosMoved - selectedUnit.sectiosMoved)
 			
 			sectio = await Signals.sectioClicked
@@ -719,6 +786,7 @@ func _on_march():
 			
 			moveUnits(unitsToMove, oldSectio, sectio)
 			
+			Signals.hideArrows.emit()
 			neightboursClickable(false)
 			
 			%MarchAudio.play()
@@ -749,7 +817,7 @@ func _on_march():
 		#						%EventDialog.dialog_text = "The Enemy fled."
 					else:
 						%EventDialog.dialog_text = "The Enemy is choosing to stay and fight."
-					AudioSignals.enemyEnteringSectioResult.emit(fleeingConfirmed)
+					
 					print("result of flee ", fleeingConfirmed)
 					break
 				else:
@@ -767,11 +835,13 @@ func _on_march():
 				
 			if troopsRemaining and fleeingConfirmed:
 				%EventDialog.dialog_text = "The Enemy tried to flee but failed, stopping."
+				AudioSignals.enemyEnteringSectioResult.emit(false)
 #				_on_unitMovedMax(selectedUnit)
 				break
 
 			if not troopsRemaining:
 				%EventDialog.dialog_text = "The Enemy fled."
+				AudioSignals.enemyEnteringSectioResult.emit(true)
 #		Signals.unitDeselected.emit()
 		selectedUnit.showMovesLeft(false)
 	Data.changeState(Data.States.IDLE)
@@ -779,7 +849,7 @@ func _on_march():
 		Signals.cancelMarch.emit()
 	else:
 		Signals.demonDone.emit(null)
-	
+	Signals.hideArrows.emit()
 
 
 func _on_sectioClicked(sectio):

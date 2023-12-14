@@ -47,6 +47,8 @@ signal hideFleeControl
 signal spinFleeArrows
 signal spinFleeArrowsStopped
 signal hideFleeArrow
+signal showArrows(sectio : Sectio, possibleNeighbours)
+signal hideArrows
 signal showMessage(message)
 signal hideMessage
 signal pickLegions(possibleLegionsToMoveWithLieutenant, unitsAlreadyMovingWithLieutenant, capacity)
