@@ -121,57 +121,57 @@ volume_db = -8.0
 [node name="HellPhaseAudio" type="AudioStreamPlayer" parent="Audio"]
 unique_name_in_owner = true
 stream = ExtResource("13_n4j0r")
-volume_db = -8.0
+volume_db = -3.0
 
 [node name="SoulPhaseAudio" type="AudioStreamPlayer" parent="Audio"]
 unique_name_in_owner = true
 stream = ExtResource("14_lpxvq")
-volume_db = -8.0
+volume_db = -3.0
 
 [node name="SummoningPhaseAudio" type="AudioStreamPlayer" parent="Audio"]
 unique_name_in_owner = true
 stream = ExtResource("15_f0248")
-volume_db = -8.0
+volume_db = -3.0
 
 [node name="ActionPhaseAudio" type="AudioStreamPlayer" parent="Audio"]
 unique_name_in_owner = true
 stream = ExtResource("16_cebjf")
-volume_db = -8.0
+volume_db = -3.0
 
 [node name="CombatPhaseAudio" type="AudioStreamPlayer" parent="Audio"]
 unique_name_in_owner = true
 stream = ExtResource("17_kmq8h")
-volume_db = -8.0
+volume_db = -3.0
 
 [node name="PetitionPhaseAudio" type="AudioStreamPlayer" parent="Audio"]
 unique_name_in_owner = true
 stream = ExtResource("18_sm1dr")
-volume_db = -8.0
+volume_db = -3.0
 
 [node name="EnemyEnteringSectioAudio" type="AudioStreamPlayer" parent="Audio"]
 unique_name_in_owner = true
 stream = ExtResource("19_5khd4")
-volume_db = -8.0
+volume_db = -3.0
 
 [node name="EnemyFleeingAudio" type="AudioStreamPlayer" parent="Audio"]
 unique_name_in_owner = true
 stream = ExtResource("20_mtuf8")
-volume_db = -8.0
+volume_db = -3.0
 
 [node name="EnemyStayingAudio" type="AudioStreamPlayer" parent="Audio"]
 unique_name_in_owner = true
 stream = ExtResource("21_55x66")
-volume_db = -8.0
+volume_db = -3.0
 
 [node name="CombatWonAudio" type="AudioStreamPlayer" parent="Audio"]
 unique_name_in_owner = true
 stream = ExtResource("22_yacxk")
-volume_db = -8.0
+volume_db = -3.0
 
 [node name="CombatLostAudio" type="AudioStreamPlayer" parent="Audio"]
 unique_name_in_owner = true
 stream = ExtResource("23_6lv7b")
-volume_db = -8.0
+volume_db = -5.0
 
 [node name="SequenceOfPlay" parent="." instance=ExtResource("12_hn5jr")]
 

@@ -48,6 +48,7 @@ func _on_playerTurn():
 func _on_phaseChange(phase : int):
 	match phase:
 		Data.phases.Hell:
+			return
 			audioQueue.append(%HellPhaseAudio)
 			#%HellPhaseAudio.play()
 		Data.phases.Soul:
