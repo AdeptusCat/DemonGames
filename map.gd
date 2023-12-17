@@ -638,9 +638,10 @@ func moveUnits(troopsToMove, oldSectio : Sectio, sectio : Sectio):
 	for unit in friendlyUnits:
 		if friendlyUnitsInNewSectio.has(unit):
 			destination += Vector2(0, -32)
-			unit.global_position = destination
+			#unit.global_position = destination
 			unit.z_index = zIndex
 			zIndex += 1
+			unit.set_destinations([destination])
 		else:
 			var destinations : Array
 			if oldSectio.global_position.distance_to(destination) < unit.global_position.distance_to(destination):
@@ -684,7 +685,7 @@ func reorderUnitsinSlots(sectio : Sectio):
 		var zIndex : int = 1
 		for unit : Unit in units:
 			destination += Vector2(0, -32)
-			unit.global_position = destination
+			#unit.global_position = destination
 			unit.z_index = zIndex
 			zIndex += 1
 			
