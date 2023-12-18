@@ -839,10 +839,12 @@ func _on_march():
 				AudioSignals.enemyEnteringSectioResult.emit(false)
 #				_on_unitMovedMax(selectedUnit)
 				break
+			if not troopsRemaining and fleeingConfirmed:
+				AudioSignals.enemyEnteringSectioResult.emit(true)
 
 			if not troopsRemaining:
 				%EventDialog.dialog_text = "The Enemy fled."
-				AudioSignals.enemyEnteringSectioResult.emit(true)
+				
 #		Signals.unitDeselected.emit()
 		selectedUnit.showMovesLeft(false)
 	Data.changeState(Data.States.IDLE)

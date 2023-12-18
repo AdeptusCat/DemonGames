@@ -146,7 +146,7 @@ func _ready():
 	for i in points.size():
 		points[i] = points[i] - startpoint
 	polygonPoints = points
-	%Line2D.points = points
+	%Line2D2.points = points
 #	print("after  ", points)
 	
 #	var marker = Polygon2D.new()
@@ -399,6 +399,9 @@ func changeClickable(boolean):
 
 func highlight(boolean):
 	if boolean:
+		%Line2D2.show()
+		#(%Line2D2.material as ShaderMaterial).set_shader_parameter("on", true)
+		
 		if tw1:
 			tw1.kill()
 #			tw2.kill()
@@ -422,6 +425,8 @@ func highlight(boolean):
 #		tw2.set_ease(Tween.EASE_OUT)
 #		tw2.tween_property(playerPolygon, "scale", Vector2(1.0, 1.0), 2.0)
 	else:
+		%Line2D2.hide()
+		#(%Line2D2.material as ShaderMaterial).set_shader_parameter("on", false)
 		if tw1:
 			tw1.kill()
 #			tw2.kill()
