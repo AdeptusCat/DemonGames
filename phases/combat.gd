@@ -225,6 +225,7 @@ func phase(map):
 				else:
 					var winnerId : int = triumphiratesSorted.pop_front()
 					addCombatWinner(winnerId, sectio.sectioName)
+				sectio.reorderUnitsinSlots()
 				break
 			
 			for peer in Connection.peers:
@@ -453,6 +454,7 @@ func phase(map):
 				else:
 					var winnerId : int = triumphiratesSorted.pop_front()
 					addCombatWinner(winnerId, sectio.sectioName)
+				sectio.reorderUnitsinSlots()
 				break
 			
 			var fleeing = triumphiratesThatWantToFlee
@@ -565,6 +567,7 @@ func phase(map):
 				else:
 					var winnerId : int = triumphiratesSorted.pop_front()
 					addCombatWinner(winnerId, sectio.sectioName)
+				sectio.reorderUnitsinSlots()
 				break
 			
 			

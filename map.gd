@@ -1127,7 +1127,8 @@ func placeUnit(sectio, playerId : int = Data.id, unitType : Data.UnitType = Data
 					continue
 				spawnUnit.rpc_id(peer, sectio.sectioName, nr, playerId, Data.UnitType.Legion)
 				updateTroopInSectio.rpc_id(peer, sectio.sectioName, sectio.troops)
-
+	
+	sectio.reorderUnitsinSlots()
 
 @rpc("any_peer", "call_local")
 func spawnUnit(sectioName : String, nr : int, triumphirate : int, unitType : Data.UnitType, unitName : String = ""):

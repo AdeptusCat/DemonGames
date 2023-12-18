@@ -250,7 +250,8 @@ func _on_walk_the_earth_button_pressed():
 		var arcanaCard = Data.arcanaCardNodes[cardName]
 		if not player.hasEnoughSouls(arcanaCard.cost):
 			continue
-		spellObject.objects[arcanaCard.minorSpell].highlightWalkTheEarthCard(arcanaCard)
+		if spellObject.objects.has(arcanaCard.minorSpell):
+			spellObject.objects[arcanaCard.minorSpell].highlightWalkTheEarthCard(arcanaCard)
 	Signals.tutorialRead.emit()
 
 

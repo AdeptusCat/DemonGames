@@ -483,3 +483,29 @@ func _on_area_2d_mouse_exited():
 
 func _on_potatoPc(boolean : bool):
 	pass
+
+
+func reorderUnitsinSlots():
+	var slotIndex : int = 0
+	for slot in slots:
+		var destination : Vector2 = slotPositions[slotIndex]
+		slotIndex += 1
+		
+		var units : Array = []
+		for unitNr : int in troops:
+			var unit : Unit = Data.troops[unitNr]
+			if unit.triumphirate == slot:
+				# if Lieutenant, put on the bottom of the stack
+				if unit.unitType == Data.UnitType.Lieutenant:
+					units.insert(0, unit)
+				else:
+					units.append(unit)
+		
+		var zIndex : int = 1
+		for unit : Unit in units:
+			destination += Vector2(0, -32)
+			#unit.global_position = destination
+			unit.z_index = zIndex
+			zIndex += 1
+			
+			unit.set_destinations([destination])
