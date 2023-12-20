@@ -173,6 +173,10 @@ unique_name_in_owner = true
 stream = ExtResource("23_6lv7b")
 volume_db = -5.0
 
+[node name="RemindPlayerTimer" type="Timer" parent="Audio"]
+unique_name_in_owner = true
+wait_time = 10.0
+
 [node name="SequenceOfPlay" parent="." instance=ExtResource("12_hn5jr")]
 
 [node name="Debug" type="Node" parent="."]
@@ -214,3 +218,5 @@ offset_top = 310.0
 offset_right = 573.0
 offset_bottom = 822.0
 texture = ExtResource("22_2dn8i")
+
+[connection signal="timeout" from="Audio/RemindPlayerTimer" to="Audio" method="_on_remind_player_timer_timeout"]

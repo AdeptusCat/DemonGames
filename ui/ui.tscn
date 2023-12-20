@@ -103,6 +103,8 @@ shader_parameter/active = false
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8dg5y"]
 shader = ExtResource("11_atr4v")
 shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_color_default = Color(1, 1, 1, 1)
+shader_parameter/shine_color_for_deletion = Color(1, 0, 0, 1)
 shader_parameter/shine_speed = 5.0
 shader_parameter/shine_size = 0.01
 shader_parameter/active = false
@@ -757,6 +759,93 @@ text = "UseMagic"
 [node name="FrameMarginContainer" parent="Control/PlayerStatusMarginContainer" instance=ExtResource("26_vv66b")]
 layout_mode = 2
 
+[node name="CardsControl" type="Control" parent="Control"]
+layout_mode = 2
+anchors_preset = 0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 970.0
+offset_top = 1040.0
+offset_right = 970.0
+offset_bottom = 1040.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="DemonCardsMarginContainer" type="MarginContainer" parent="Control/CardsControl"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = -1662.0
+offset_top = -2077.0
+offset_right = -1191.0
+offset_bottom = -1957.0
+script = ExtResource("27_q5h8k")
+
+[node name="FrameBackgroundMarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer" instance=ExtResource("25_jfpsm")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="DemonVBoxContainer" type="VBoxContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 1
+
+[node name="DemonHBoxContainer" type="HBoxContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ColorRect" type="ColorRect" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/MarginContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 0.501961)
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="DemonHeaderLabel" type="Label" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/MarginContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "Demons of your Triumphirat"
+horizontal_alignment = 1
+
+[node name="CollapseButton" type="Button" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 1
+
+[node name="Button" type="Button" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 1
+
+[node name="FrameMarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer" instance=ExtResource("26_vv66b")]
+layout_mode = 2
+
 [node name="PhaseReminderContainer" type="MarginContainer" parent="Control"]
 unique_name_in_owner = true
 visible = false
@@ -1318,93 +1407,6 @@ horizontal_alignment = 1
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/PetitionsMarginContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="CardsControl" type="Control" parent="Control"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 970.0
-offset_top = 1040.0
-offset_right = 970.0
-offset_bottom = 1040.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="DemonCardsMarginContainer" type="MarginContainer" parent="Control/CardsControl"]
-unique_name_in_owner = true
-layout_mode = 2
-offset_left = -1662.0
-offset_top = -2077.0
-offset_right = -1191.0
-offset_bottom = -1957.0
-script = ExtResource("27_q5h8k")
-
-[node name="FrameBackgroundMarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer" instance=ExtResource("25_jfpsm")]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-mouse_filter = 2
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 50
-
-[node name="DemonVBoxContainer" type="VBoxContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-alignment = 1
-
-[node name="DemonHBoxContainer" type="HBoxContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_constants/separation = 20
-alignment = 1
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="ColorRect" type="ColorRect" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/MarginContainer"]
-layout_mode = 2
-color = Color(0, 0, 0, 0.501961)
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/MarginContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="DemonHeaderLabel" type="Label" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/MarginContainer/MarginContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 15
-text = "Demons of your Triumphirat"
-horizontal_alignment = 1
-
-[node name="CollapseButton" type="Button" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Button" type="Button" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-mouse_filter = 1
-
-[node name="FrameMarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer" instance=ExtResource("26_vv66b")]
-layout_mode = 2
-
 [node name="DiscardArcanaCardControl" type="Control" parent="Control"]
 unique_name_in_owner = true
 visible = false
@@ -1748,7 +1750,6 @@ layout_mode = 2
 theme_override_constants/separation = 30
 
 [node name="HelpCheckBox" type="CheckBox" parent="Control/ColorRect2/QuickHelpControl/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 1
 text = "Dont show again"
@@ -1968,6 +1969,7 @@ layout_mode = 2
 text = "Ok"
 
 [node name="Button2" type="Button" parent="Control/GoalMarginContainer/MarginContainer/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 text = "What is going on?"
 
@@ -2077,7 +2079,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/TopBannerMarginContainer/MarginContainer"]
 layout_mode = 2
-alignment = 1
+alignment = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -2135,6 +2137,23 @@ text = "Petition"
 
 [node name="Control" type="Control" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
+
+[node name="CurrentDemonTopTree" type="Tree" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(450, 75)
+layout_mode = 2
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 20
+theme_override_styles/panel = SubResource("StyleBoxFlat_2yxpw")
+columns = 4
+column_titles_visible = true
+allow_reselect = true
+hide_folding = true
+hide_root = true
+scroll_horizontal_enabled = false
+scroll_vertical_enabled = false
 
 [node name="PlayerStatsMarginContainer" type="MarginContainer" parent="Control"]
 layout_mode = 1
@@ -2219,6 +2238,9 @@ text = "Hide Combat Overview"
 [connection signal="pressed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/InfluenceUnitsButton" to="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_influence_units_button_pressed"]
 [connection signal="pressed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/AtonementAndSuplicationButton" to="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_atonement_and_suplication_button_pressed"]
 [connection signal="pressed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/UseMagicButton" to="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_use_magic_button_pressed"]
+[connection signal="mouse_entered" from="Control/CardsControl/DemonCardsMarginContainer" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Control/CardsControl/DemonCardsMarginContainer" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_mouse_exited"]
+[connection signal="pressed" from="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/CollapseButton" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_collapse_button_pressed"]
 [connection signal="pressed" from="Control/DoEvilDeedsControl/MarginContainer/VBoxContainer/DoEvilDeedsControlButton" to="Control/DoEvilDeedsControl" method="_on_do_evil_deeds_control_button_pressed"]
 [connection signal="pressed" from="Control/NetworkHBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="Control/NetworkHBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
@@ -2231,13 +2253,11 @@ text = "Hide Combat Overview"
 [connection signal="gui_input" from="Control/StartScreenContainer/MarginContainer/VBoxContainer/StartScreenTextureRect" to="Control/StartScreenContainer" method="_on_start_screen_texture_rect_gui_input"]
 [connection signal="pressed" from="Control/StartScreenContainer/MarginContainer/VBoxContainer/StartScreenButton" to="Control/StartScreenContainer" method="_on_start_screen_button_pressed"]
 [connection signal="timeout" from="Control/NextDemonContainer/Timer" to="Control/NextDemonContainer" method="_on_timer_timeout"]
-[connection signal="mouse_entered" from="Control/CardsControl/DemonCardsMarginContainer" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="Control/CardsControl/DemonCardsMarginContainer" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_mouse_exited"]
-[connection signal="pressed" from="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/CollapseButton" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_collapse_button_pressed"]
 [connection signal="pressed" from="Control/PickMoveUnitControl/MarginContainer/MarginContainer/VBoxContainer/ExitButton" to="Control/PickMoveUnitControl" method="_on_exit_button_pressed"]
 [connection signal="pressed" from="Control/CombatControl/CombatParticipantsControl/MarginContainer/VBoxContainer/FleeButton" to="Control/CombatControl/CombatParticipantsControl" method="_on_flee_button_pressed"]
 [connection signal="pressed" from="Control/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="Control/ColorRect2/QuickHelpControl/MarginContainer/HBoxContainer/HelpButton" to="Control/ColorRect2/QuickHelpControl" method="_on_help_button_pressed"]
+[connection signal="toggled" from="Control/ColorRect2/QuickHelpControl/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/HelpCheckBox" to="Control/ColorRect2/QuickHelpControl" method="_on_help_check_box_toggled"]
 [connection signal="pressed" from="Control/ColorRect2/QuickHelpControl/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/CollapseButton" to="Control/ColorRect2/QuickHelpControl" method="_on_button_pressed"]
 [connection signal="pressed" from="Control/ColorRect2/QuickHelpControl/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/SequenceOfPlayButton" to="Control/ColorRect2/QuickHelpControl" method="_on_sequence_of_play_button_pressed"]
 [connection signal="index_pressed" from="Control/ColorRect2/QuickHelpControl/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/HelpPopupMenu" to="Control/ColorRect2/QuickHelpControl" method="_on_help_popup_menu_index_pressed"]
@@ -2245,6 +2265,7 @@ text = "Hide Combat Overview"
 [connection signal="pressed" from="Control/GoalMarginContainer/MarginContainer/MarginContainer/VBoxContainer/Button" to="Control/GoalMarginContainer" method="_on_button_pressed"]
 [connection signal="pressed" from="Control/GoalMarginContainer/MarginContainer/MarginContainer/VBoxContainer/Button2" to="Control/GoalMarginContainer" method="_on_button_2_pressed"]
 [connection signal="pressed" from="Control/PlayerDisconnectedMarginContainer/MarginContainer/VBoxContainer/PlayerDisconnectedButton" to="." method="_on_player_disconnected_button_pressed"]
+[connection signal="item_selected" from="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer/CurrentDemonTopTree" to="Control/RankTrackMarginContainer/RankTrack" method="_on_current_demon_tree_item_selected"]
 [connection signal="mouse_entered" from="Control/PlayerStatsMarginContainer/PlayersTree" to="Control/PlayerStatsMarginContainer/PlayersTree" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Control/PlayerStatsMarginContainer/PlayersTree" to="Control/PlayerStatsMarginContainer/PlayersTree" method="_on_mouse_exited"]
 [connection signal="pressed" from="CombatOverviewMarginContainer/MarginContainer/VBoxContainer/HideButton" to="CombatOverviewMarginContainer" method="_on_button_pressed"]

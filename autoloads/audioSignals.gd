@@ -7,6 +7,7 @@ signal battleStart
 signal castArcana
 
 signal playerTurn
+signal playerTurnDone
 signal phaseChange(phase : int)
 signal enemyEnteringSectio
 signal enemyEnteringSectioResult(fleeingConfirmed : bool)

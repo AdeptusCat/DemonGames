@@ -27,7 +27,6 @@ signal showChosenLieutenantFromAvailableLieutenantsBox(lieutenantName : String)
 signal showStartScreen
 signal showArcanaCardsContainer
 signal showRankTrackMarginContainer
-signal showPlayerStatusMarginContainer
 
 signal addArcanaCardToUi(id, cardName)
 signal toogleWaitForPlayer(playerId, boolean, phase)

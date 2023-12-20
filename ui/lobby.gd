@@ -115,9 +115,19 @@ func connectAudio() -> void:
 	var res : Array = []
 	res = Functions.findByClass(self, "Button", res)
 	for child : Button in res:
-		child.mouse_entered.connect(_on_mouseEntered)
+		if child.disabled:
+			if child.mouse_entered.is_connected(_on_mouseEntered):
+				child.mouse_entered.disconnect(_on_mouseEntered)
+		else:
+			if not child.mouse_entered.is_connected(_on_mouseEntered):
+				child.mouse_entered.connect(_on_mouseEntered)
 	for child : Button in res:
-		child.pressed.connect(_on_buttonClicked)
+		if child.disabled:
+			if child.pressed.is_connected(_on_buttonClicked):
+				child.pressed.disconnect(_on_buttonClicked)
+		else:
+			if not child.pressed.is_connected(_on_buttonClicked):
+				child.pressed.connect(_on_buttonClicked)
 
 
 func _on_mouseEntered():
@@ -126,13 +136,6 @@ func _on_mouseEntered():
 
 func _on_buttonClicked():
 	$AudioManager.playButtonClicked()
-
-
-func _input(event):
-	if Input.is_key_pressed(KEY_ENTER):
-		if playerNameTextEditSelected:
-			_on_change_player_name_button_pressed()
-			get_viewport().set_input_as_handled()
 
 
 #func _on_connected():
@@ -244,6 +247,7 @@ func _on_updateRooms(roomsDict : Dictionary, playersInGame : Array):
 			item.set_text(0, text + " (Started)")
 			item.set_selectable(0, false)
 			item.deselect(0)
+	connectAudio()
 	
 	
 #	var roomsInLobby : Array = []
@@ -353,6 +357,7 @@ func _on_roomCreated(playerId : int, roomName : String):
 			if Tutorial.chapter == Tutorial.Chapter.Actions or Tutorial.chapter == Tutorial.Chapter.Soul or Tutorial.chapter == Tutorial.Chapter.Combat:
 				_on_add_ai_button_pressed()
 			_on_start_game_button_pressed()
+	connectAudio()
 
 
 func _on_roomClosed(playerId : int, roomName : String):
@@ -371,6 +376,7 @@ func _on_roomClosed(playerId : int, roomName : String):
 		%HostButton.disabled = false
 		%ChangePlayerNameButton.disabled = false
 		%PlayerNameTextEdit.editable = true
+	connectAudio()
 #	playerLeftRoomAudio.play()
 #	tween.interpolate_property(gapMarginContainer, "rect_min_size", Vector2(0,30), Vector2(0,300) , 0.5, Tween.TRANS_EXPO, Tween.EASE_OUT)
 #	tween.start()
@@ -934,6 +940,7 @@ func _on_playerjoinedRoom(roomId : int, room_name : String, player_id : int, pla
 				if Data.id == Connection.host:
 					for playerItem in playersInRoomTreeItems.values():
 						change_color.rpc_id(playerId, playerItem.get_metadata(0), playerItem.get_text(1))
+	connectAudio()
 #		var namesToAdd = []
 #		for playerId in playerIdNamesDict:
 ##			Connection.playerIdNamesDict[playerId] = playerIdNamesDict[playerId]
@@ -965,6 +972,7 @@ func _on_playerLeftRoom(playerId : int):
 		%PlayerNameTextEdit.editable = true
 		for roomItem in roomsTreeItems.values():
 			roomItem.set_selectable(0, true)
+	connectAudio()
 #	for index in %PlayerList.item_count:
 #		var playerNameEntry = %PlayerList.get_item_text(index)
 #		if playerNameEntry == playerName:
@@ -974,6 +982,7 @@ func _on_playerLeftRoom(playerId : int):
 func _on_rooms_list_item_selected(index):
 	if not %RoomContainer.visible:
 		%JoinButton.disabled = false
+	connectAudio()
 
 
 func _on_leave_room_button_pressed():
@@ -983,6 +992,7 @@ func _on_leave_room_button_pressed():
 func _on_rooms_tree_item_selected():
 	if not %RoomContainer.visible:
 		%JoinButton.disabled = false
+	connectAudio()
 
 
 func _on_ColorMenuButton_index_pressed(index):
@@ -1099,4 +1109,11 @@ func _on_player_name_text_edit_focus_entered():
 
 
 func _on_player_name_text_edit_focus_exited():
+	if playerNameTextEditSelected:
+		_on_change_player_name_button_pressed()
 	playerNameTextEditSelected = false
+
+
+func _on_player_name_text_edit_text_submitted(new_text):
+	if playerNameTextEditSelected:
+		_on_change_player_name_button_pressed()

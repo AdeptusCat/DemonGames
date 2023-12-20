@@ -591,7 +591,8 @@ func phase(map):
 #							break
 			
 #					for triumphirate in triumphiratesSorted.duplicate():
-	
+	for sectio : Sectio in Decks.sectioNodes.values():
+		sectio.reorderUnitsinSlots()
 	await phase(map)
 	print("combatWinner", combatWinner)
 

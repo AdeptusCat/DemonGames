@@ -2,6 +2,7 @@ extends Node
 
 var profileNames : Array = ["Abaddon", "Botis", "Kimaris", "Dantalion", "Eligos", "Focalor", "Gaap", "Haagenti", "Ipes", "Krampus", "Leraie", "Malphas", "Naberius", "Orobas", "Phenex", "Ronove", "Saleos", "Unclean Spirit", "Vassago", "Ziminiar"]
 var profile : Dictionary = {}
+var settings : Dictionary = {}
 var players : Dictionary = {}
 var demons : Dictionary = {}
 var arcanaCards : Dictionary = {}

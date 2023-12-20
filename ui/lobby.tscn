@@ -583,6 +583,7 @@ layout_mode = 2
 [connection signal="pressed" from="LobbyContainer/VBoxContainer2/HBoxContainer2/ChangePlayerNameButton" to="." method="_on_change_player_name_button_pressed"]
 [connection signal="focus_entered" from="LobbyContainer/VBoxContainer2/HBoxContainer2/PlayerNameTextEdit" to="." method="_on_player_name_text_edit_focus_entered"]
 [connection signal="focus_exited" from="LobbyContainer/VBoxContainer2/HBoxContainer2/PlayerNameTextEdit" to="." method="_on_player_name_text_edit_focus_exited"]
+[connection signal="text_submitted" from="LobbyContainer/VBoxContainer2/HBoxContainer2/PlayerNameTextEdit" to="." method="_on_player_name_text_edit_text_submitted"]
 [connection signal="pressed" from="LobbyContainer/VBoxContainer2/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="item_activated" from="LoadSavegameContainer/VBoxContainer2/HBoxContainer/SavegameTree" to="." method="_on_savegame_tree_item_activated"]
 [connection signal="pressed" from="LoadSavegameContainer/VBoxContainer2/HBoxContainer/VBoxContainer/SelectSavegameButton" to="." method="_on_select_savegame_button_pressed"]

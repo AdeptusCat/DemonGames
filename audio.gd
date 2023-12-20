@@ -3,6 +3,7 @@ extends Node
 
 var audioQueue : Array[AudioStreamPlayer] = []
 var currentAudio : AudioStreamPlayer = AudioStreamPlayer.new()
+var playerTurn : bool = false
 
 
 func _ready():
@@ -13,6 +14,7 @@ func _ready():
 	AudioSignals.castArcana.connect(_on_castArcana)
 	
 	AudioSignals.playerTurn.connect(_on_playerTurn)
+	AudioSignals.playerTurnDone.connect(_on_PlayerTurnDone)
 	AudioSignals.phaseChange.connect(_on_phaseChange)
 	AudioSignals.enemyEnteringSectio.connect(_on_enemyEnteringSectio)
 	AudioSignals.enemyEnteringSectioResult.connect(_on_enemyEnteringSectioResult)
@@ -24,6 +26,17 @@ func _process(delta):
 		if not currentAudio.playing:
 			currentAudio = audioQueue.pop_front()
 			currentAudio.play()
+
+
+func _input(event):
+	if event is InputEventKey:
+		if event.pressed:
+			if not %RemindPlayerTimer.is_stopped():
+				%RemindPlayerTimer.start()
+	if event is InputEventMouseButton:
+		if event.pressed:
+			if not %RemindPlayerTimer.is_stopped():
+				%RemindPlayerTimer.start()
 
 
 func _on_walkTheEarth():
@@ -42,8 +55,13 @@ func _on_castArcana():
 	%CastArcanaAudio.play()
 
 func _on_playerTurn():
+	playerTurn = true
+	%RemindPlayerTimer.start()
 	audioQueue.append(%playerTurnAudio)
 	#%playerTurnAudio.play()
+
+func _on_PlayerTurnDone():
+	playerTurn = false
 
 func _on_phaseChange(phase : int):
 	match phase:
@@ -78,3 +96,9 @@ func _on_enemyEnteringSectioResult(fleeingConfirmed : bool):
 
 func _on_combatWon():
 	audioQueue.append(%CombatWonAudio)
+
+
+func _on_remind_player_timer_timeout():
+	if playerTurn:
+		audioQueue.append(%playerTurnAudio)
+		%RemindPlayerTimer.start()

@@ -1,4 +1,5 @@
 extends Node2D
+class_name Map
 
 const legionScene = preload("res://units/legion.tscn")
 const lieutenantScene = preload("res://units/lieutenant_unit.tscn")
@@ -693,6 +694,7 @@ func reorderUnitsinSlots(sectio : Sectio):
 
 @rpc("any_peer", "call_local")
 func placeFirstLegion():
+	AudioSignals.playerTurn.emit()
 	Signals.help.emit(Data.HelpSubjects.PlaceFirstLegion)
 	for sectioName in Data.player.sectios:
 		Decks.sectioNodes[sectioName].changeClickable(true)
@@ -818,6 +820,7 @@ func _on_march():
 		#						%EventDialog.dialog_text = "The Enemy fled."
 					else:
 						%EventDialog.dialog_text = "The Enemy is choosing to stay and fight."
+						#AudioSignals.enemyEnteringSectioResult.emit(false)
 					
 					print("result of flee ", fleeingConfirmed)
 					break
@@ -826,6 +829,7 @@ func _on_march():
 			
 			if enemies > 0 and not fleeingConfirmed:
 				neightboursClickable(false)
+				AudioSignals.enemyEnteringSectioResult.emit(false)
 				break
 			
 			var  troopsRemaining = false

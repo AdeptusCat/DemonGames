@@ -46,9 +46,19 @@ func connectAudio() -> void:
 	var res : Array = []
 	res = Functions.findByClass(self, "Button", res)
 	for child : Button in res:
-		child.mouse_entered.connect(_on_mouseEntered)
+		if child.disabled:
+			if child.mouse_entered.is_connected(_on_mouseEntered):
+				child.mouse_entered.disconnect(_on_mouseEntered)
+		else:
+			if not child.mouse_entered.is_connected(_on_mouseEntered):
+				child.mouse_entered.connect(_on_mouseEntered)
 	for child : Button in res:
-		child.pressed.connect(_on_buttonClicked)
+		if child.disabled:
+			if child.pressed.is_connected(_on_buttonClicked):
+				child.pressed.disconnect(_on_buttonClicked)
+		else:
+			if not child.pressed.is_connected(_on_buttonClicked):
+				child.pressed.connect(_on_buttonClicked)
 
 
 func _on_mouseEntered():

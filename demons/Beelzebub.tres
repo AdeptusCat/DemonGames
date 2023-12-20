@@ -1,6 +1,6 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dh4ey0qpcb4pb"]
+[gd_resource type="Resource" script_class="DemonResource" load_steps=3 format=3 uid="uid://dh4ey0qpcb4pb"]
 
-[ext_resource type="Texture2D" uid="uid://htkekcj0xpih" path="res://demon_assets/beelzebub/01792-1783547035-a painting of a demon surrounded by flies.png" id="1_56shu"]
+[ext_resource type="Texture2D" uid="uid://htkekcj0xpih" path="res://demon_assets - Kopie/beelzebub/01792-1783547035-a painting of a demon surrounded by flies.png" id="1_56shu"]
 [ext_resource type="Script" path="res://demon_resource.gd" id="1_xcmll"]
 
 [resource]
@@ -15,4 +15,4 @@ player = 0
 incapacitated = false
 onEarth = false
 image = ExtResource("1_56shu")
-description = "Lord of Flies. Chief of false gods. Sovereign Ruler of the INfernal Empire. Grand Master of the Order of the Fly. COmmander of Fifty-Nine Legions."
+description = "Lord of Flies. Chief of false gods. Sovereign Ruler of the Infernal Empire. Grand Master of the Order of the Fly. Commander of Fifty-Nine Legions."

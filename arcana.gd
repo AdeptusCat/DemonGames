@@ -8,8 +8,11 @@ var mode = "":
 		match mode:
 			"":
 				%TextureRect.get_material().set_shader_parameter("active", false)
-				
+			"discard":
+				%TextureRect.get_material().set_shader_parameter("shine_color", Color(1, 0, 0))
+				%TextureRect.get_material().set_shader_parameter("active", true)
 			_:
+				%TextureRect.get_material().set_shader_parameter("shine_color", Color(1, 1, 1))
 				%TextureRect.get_material().set_shader_parameter("active", true)
 				
 
@@ -28,7 +31,13 @@ func _ready():
 
 
 @rpc("any_peer", "call_local")
-func highlight():
+func highlight(markForDeletion : bool = false):
+	%TextureRect.get_material().set_shader_parameter("shine_color", Color(1, 1, 1))
+	#if markForDeletion:
+		#%TextureRect.get_material(1, 0, 0).set_shader_parameter("shine_color", Color(1, 0, 0))
+	#else:
+		#%TextureRect.get_material(1, 1, 1).set_shader_parameter("shine_color", Color(1, 1, 1))
+		
 	%TextureRect.get_material().set_shader_parameter("active", true)
 	%MinorSpellButton.mouse_filter = MOUSE_FILTER_PASS
 	%MinorSpellButton.disabled = false

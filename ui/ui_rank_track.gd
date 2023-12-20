@@ -162,6 +162,7 @@ func highlightCurrentPlayer(player : Player = null):
 	line.set_text_alignment(3, HORIZONTAL_ALIGNMENT_CENTER)
 	currentDemonEntries[0] = line
 
+
 func highlightCurrentDemon(rank):
 	Signals.showRankTrackMarginContainer.emit()
 	%CurrentDemonTree.show()
@@ -219,6 +220,7 @@ func _on_addCurrentDemonLine(demonRank):
 	line.set_text_alignment(3, HORIZONTAL_ALIGNMENT_CENTER)
 	line.set_selectable(3, false)
 	currentDemonEntries[demonRank] = line
+
 
 func _on_demonLabel_mouseEntered(demonName):
 	pass

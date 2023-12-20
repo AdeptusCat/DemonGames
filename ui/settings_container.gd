@@ -3,6 +3,7 @@ extends MarginContainer
 @onready var _bus := AudioServer.get_bus_index("Master")
 
 func _ready():
+	%FullscreenCheckBox.button_pressed = Settings.fullScreen
 	%PotatoPcCheckBox.button_pressed = Settings.potatoPc
 	%TooltipsCheckBox.button_pressed = Settings.tooltips
 	%SkipScreensCheckBox.button_pressed = Settings.skipScreens
@@ -17,10 +18,12 @@ func _ready():
 
 
 func _on_menu():
+	Settings.saveSettings()
 	queue_free()
 
 
 func _on_button_pressed():
+	Settings.saveSettings()
 	queue_free()
 
 
@@ -60,3 +63,7 @@ func _on_check_box_toggled(toggled_on):
 		AudioServer.set_bus_volume_db(_bus, linear_to_db(0.0))
 	else:
 		AudioServer.set_bus_volume_db(_bus, linear_to_db(Settings.volume))
+
+
+func _on_fullscreen_check_box_toggled(toggled_on):
+	Settings.changeWindowMode(toggled_on)

@@ -30,6 +30,7 @@ func populate(sectioNames : Array):
 		hide()
 		await get_tree().create_timer(0.3).timeout
 		RpcCalls.petitionsDone.rpc_id(Connection.host)
+		AudioSignals.playerTurnDone.emit()
 
 
 func _on_reply(sectioName, boolean):
@@ -48,3 +49,4 @@ func _on_reply(sectioName, boolean):
 	if entries.size() <= 0 or not hasFavor:
 		hide()
 		RpcCalls.petitionsDone.rpc_id(Connection.host)
+		AudioSignals.playerTurnDone.emit()

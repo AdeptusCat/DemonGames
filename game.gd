@@ -4,7 +4,7 @@ extends Control
 @onready var rankTrackNode = $RankTrack
 @onready var ui = $UI
 @onready var actionsNode = $UI/Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions
-@onready var map =$Map
+@onready var map : Map = $Map
 @onready var sequence : SequenceOfPlay = $SequenceOfPlay
 @onready var debug = $Debug
 
@@ -81,7 +81,8 @@ func _ready():
 	if Connection.usedMenuToStartGame:
 		RpcCalls.peerReady.rpc_id(Connection.host)
 		ui.start()
-
+	
+	Signals.potatoPc.emit(Settings.potatoPc)
 
 func saveGame():
 	var save_dict = {"game" : {
@@ -486,8 +487,6 @@ func sequenceOfPlay(phase : int = 0):
 		phase = await nextPhase(phase, Data.phases.Soul)
 		
 		print("Summoning phase ",phase, " ", Data.phases.Summoning)
-		for peer in Connection.peers:
-			RpcCalls.showPlayerStatusMarginContainer.rpc_id(peer)
 		if phase == Data.phases.Summoning and not skipSummoning:
 			await $Summoning.phase(phase, ui)
 		

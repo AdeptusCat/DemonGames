@@ -348,11 +348,6 @@ func showArcanaCardsContainer():
 
 
 @rpc("any_peer", "call_local")
-func showPlayerStatusMarginContainer():
-	Signals.showPlayerStatusMarginContainer.emit()
-
-
-@rpc("any_peer", "call_local")
 func showRankTrackMarginContainer():
 	Signals.showRankTrackMarginContainer.emit()
 
