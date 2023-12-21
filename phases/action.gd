@@ -27,9 +27,11 @@ func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 		
 		var result
 		if not Connection.isAiPlayer(Data.demons[nextDemonRank].player):
+			RpcCalls.showArcanaCardsContainer.rpc_id(Data.demons[nextDemonRank].player)
 			if Tutorial.tutorial:
 				await tutorial1(tutorialSequence)
 			result = await Signals.demonDoneWithPhase
+			RpcCalls.hideArcanaCardsContainer.rpc_id(Data.demons[nextDemonRank].player)
 			for sectio in Decks.sectioNodes.values():
 				sectio.changeClickable.rpc_id(Data.demons[nextDemonRank].player, false)
 		else:

@@ -199,6 +199,7 @@ func addArcanaCard(id, cardName):
 @rpc("any_peer", "call_local")
 func checkEndPhaseCondition():
 	if Data.player.arcanaCards.size() > 5:
+		Signals.showArcanaCardsContainer.emit()
 		Data.player.discardModeArcanaCard()
 		Signals.toggleDiscardArcanaCardControl.emit(true)
 		Signals.toggleEndPhaseButton.emit(false)
@@ -207,6 +208,7 @@ func checkEndPhaseCondition():
 			Data.arcanaCardNodes[cardName].disable()
 		Signals.toggleRecruitLegionsButtonEnabled.emit(false)
 	else:
+		Signals.hideArcanaCardsContainer.emit()
 		Data.player.checkPlayerSummoningCapabilities()
 		Signals.toggleDiscardArcanaCardControl.emit(false)
 		Signals.toggleEndPhaseButton.emit(true)
@@ -240,7 +242,6 @@ func phaseStart(phase : Data.phases):
 	if phase == Data.phases.Summoning:
 	#	Signals.toogleBuyLieutenant.emit(true)
 		Signals.toogleTameHellhoundContainer.emit(true)
-		Signals.toogleBuyLieutenant.emit(true)
 		RpcCalls.checkEndPhaseCondition()
 	#	toogleBuyArcanaCard(true)
 		Data.player.checkPlayerSummoningCapabilities(0)
@@ -345,6 +346,11 @@ func showStartScreen():
 @rpc("any_peer", "call_local")
 func showArcanaCardsContainer():
 	Signals.showArcanaCardsContainer.emit()
+
+
+@rpc("any_peer", "call_local")
+func hideArcanaCardsContainer():
+	Signals.hideArcanaCardsContainer.emit()
 
 
 @rpc("any_peer", "call_local")

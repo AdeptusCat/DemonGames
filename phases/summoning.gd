@@ -12,6 +12,7 @@ func phase(phase : int, ui : UI):
 		for peer in Connection.peers:
 			ui.updateRankTrackCurrentPlayer.rpc_id(peer, playerId)
 		
+		
 		if Tutorial.tutorial:
 			await tutorial1()
 		
@@ -70,6 +71,8 @@ func phase(phase : int, ui : UI):
 			RpcCalls.toogleWaitForPlayer.rpc_id(peer, playerId, true, phase)
 		RpcCalls.phaseStart.rpc_id(playerId, Data.phases.Summoning)
 		
+		RpcCalls.showArcanaCardsContainer.rpc_id(playerId)
+		
 		if Tutorial.tutorial:
 			await tutorial2()
 		
@@ -77,6 +80,8 @@ func phase(phase : int, ui : UI):
 		
 		if Tutorial.tutorial:
 			await tutorialEnd()
+		
+		RpcCalls.hideArcanaCardsContainer.rpc_id(playerId)
 		
 		RpcCalls.phaseEnd.rpc_id(playerId, Data.phases.Summoning)
 		for peer in Connection.peers:

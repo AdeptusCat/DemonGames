@@ -941,6 +941,7 @@ text = "Close"
 
 [node name="ArcanaCards" type="Control" parent="Control"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 0
 offset_left = 18.0

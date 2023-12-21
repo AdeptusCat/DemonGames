@@ -381,7 +381,7 @@ func setupArcanaCardsFromSavegame():
 			for peer in Connection.peers:
 				RpcCalls.addArcanaCard.rpc_id(peer, playerId, cardName)
 	for peer in Connection.peers:
-		RpcCalls.showArcanaCardsContainer.rpc_id(peer)
+		#RpcCalls.showArcanaCardsContainer.rpc_id(peer)
 		RpcCalls.showStartScreen.rpc_id(peer)
 
 
@@ -471,8 +471,8 @@ func sequenceOfPlay(phase : int = 0):
 	await get_tree().create_timer(0.1).timeout
 	
 	while(true):
-		for peer in Connection.peers:
-			RpcCalls.showArcanaCardsContainer.rpc_id(peer)
+		#for peer in Connection.peers:
+			#RpcCalls.showArcanaCardsContainer.rpc_id(peer)
 		
 		print("hell phase ",phase, " ", Data.phases.Hell)
 		if phase == Data.phases.Hell and not skipHell:

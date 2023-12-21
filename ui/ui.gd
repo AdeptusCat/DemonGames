@@ -60,6 +60,7 @@ func _ready():
 	Signals.changePlayerName.connect(changePlayerName)
 	
 	Signals.showArcanaCardsContainer.connect(_on_showArcanaCardsContainer)
+	Signals.hideArcanaCardsContainer.connect(_on_hideArcanaCardsContainer)
 	Signals.showRankTrackMarginContainer.connect(_on_showRankTrackMarginContainer)
 	Signals.showChosenLieutenantFromAvailableLieutenantsBox.connect(showChosenLieutenantFromAvailableLieutenantsBox)
 
@@ -644,8 +645,7 @@ func _on_spinLieutenantBox(lieutenantPicked : String):
 	startArrowSpin()
 
 func startArrowSpin():
-	%AvailableLieutenantsMarginContainer.show()
-	%AvailableLieutenantsCheckButton.button_pressed = true
+	toogleBuyLieutenant(true)
 	startSpin = true
 	startTime = Time.get_ticks_msec()
 	spinCounter = 0
@@ -655,6 +655,8 @@ func stopSpin():
 	startSpin = false
 	await get_tree().create_timer(1.0).timeout
 	Signals.spinLieutenantBoxStopped.emit()
+	toogleBuyLieutenant(false)
+	
 
 func _process(elta):
 	if startSpin:
@@ -764,9 +766,6 @@ func start():
 func updateRankTrack():
 	%RankTrack.rankTrack = %RankTrack.rankTrack
 
-func _on_showArcanaCards():
-	%ArcanaCardsMarginContainer.show()
-
 func _on_toggleDiscardArcanaCardControl(boolean : bool):
 	if boolean:
 		%DiscardArcanaCardControl.show()
@@ -854,7 +853,13 @@ func _on_toogleSummoningMenu(boolean : bool):
 
 
 func _on_showArcanaCardsContainer():
+	print("show arcana")
 	%ArcanaCardsMarginContainer.show()
+
+
+func _on_hideArcanaCardsContainer():
+	print("hide arcana")
+	%ArcanaCardsMarginContainer.hide()
 
 
 func _on_showRankTrackMarginContainer():

@@ -26,6 +26,7 @@ signal showChosenLieutenantFromAvailableLieutenantsBox(lieutenantName : String)
 
 signal showStartScreen
 signal showArcanaCardsContainer
+signal hideArcanaCardsContainer
 signal showRankTrackMarginContainer
 
 signal addArcanaCardToUi(id, cardName)
