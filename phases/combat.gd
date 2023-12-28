@@ -12,11 +12,11 @@ func _ready():
 
 func phase(map):
 	# get all sectios with two or more different triumphirates
-	var battleSectios = []
+	var battleSectios : Array[Sectio] = []
 	for sectio in Decks.sectioNodes.values():
 		var playerId = null
 		for unitName in sectio.troops:
-			var unit = Data.troops[unitName]
+			var unit : Unit = Data.troops[unitName]
 			print(sectio, " ",Data.troops[unitName])
 			if not unit.unitType == Data.UnitType.Legion:
 				continue
@@ -27,15 +27,25 @@ func phase(map):
 					battleSectios.append(sectio)
 	print("battle ",battleSectios)
 	# sort the sectios with the most units in it to the fewest
-	var battleSectiosSorted = []
-	for sectio in battleSectios:
+	var battleSectiosSorted : Array[Sectio] = []
+	for sectio : Sectio in battleSectios:
 		if battleSectiosSorted.size() == 0:
 			battleSectiosSorted.append(sectio)
 			continue
-		for sortedSectio in battleSectiosSorted:
-			if sectio.troops.size() >= sortedSectio.troops.size():
-				battleSectiosSorted.insert(battleSectiosSorted.find(sortedSectio), sectio)
-				break
+		var foundASectioToInsert : bool = false
+		var sectioIndexToInsertInto : int = battleSectios.size()
+		var lastTroopSize : int = 0
+		for sortedSectio : Sectio in battleSectiosSorted:
+			if sectio.troops.size() > sortedSectio.troops.size() and sectio.troops.size() > lastTroopSize:
+				lastTroopSize = sortedSectio.troops.size()
+				if battleSectiosSorted.find(sortedSectio) < sectioIndexToInsertInto:
+					sectioIndexToInsertInto = battleSectiosSorted.find(sortedSectio)
+					foundASectioToInsert = true
+		if foundASectioToInsert:
+			battleSectiosSorted.insert(sectioIndexToInsertInto, sectio)
+		else:
+			battleSectiosSorted.append(sectio)
+	print("battle ",battleSectiosSorted)
 	
 	if battleSectiosSorted.size() <= 0:
 		for peer in Connection.peers:
@@ -47,6 +57,8 @@ func phase(map):
 		battleSectiosNamesSorted.append(sectio.sectioName)
 	for peer in Connection.peers:
 		RpcCalls.sendCombatSectios.rpc_id(peer, battleSectiosNamesSorted)
+	
+	
 	
 	var battleCount : int = 0
 	# battle for each sectio
@@ -256,7 +268,7 @@ func phase(map):
 						print("attacking legions ",legions)
 						RpcCalls.unitsAttack.rpc_id(peer)
 					var result : Array = Dice.roll(1)
-					var result_mod : Array = result
+					var result_mod : Array = result.duplicate()
 					var hit : bool = false
 					print(Data.players[triumphirate].playerName, " rolls ", result[0])
 					if lieutenantsBonus.size() > 0:
@@ -305,11 +317,11 @@ func phase(map):
 						continue
 					var unit = Data.troops[unitName]
 					var result : Array = Dice.roll(1)
-					var result_mod : Array = result
+					var result_mod : Array = result.duplicate()
 					var defended : bool = false
 					
-					print("unit type: ", unit.unitType, " ", Data.UnitType.Lieutenant)
-					print("unit name: ", unit.unitName)
+					#print("unit type: ", unit.unitType, " ", Data.UnitType.Lieutenant)
+					#print("unit name: ", unit.unitName)
 					print("save: ", result[0])
 					if unit.unitType == Data.UnitType.Lieutenant or unit.unitType == Data.UnitType.Hellhound:
 						result_mod[0] -= 3

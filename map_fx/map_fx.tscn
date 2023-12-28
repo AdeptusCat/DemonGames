@@ -47,7 +47,10 @@ texture = ExtResource("4_watc5")
 [node name="PointLight2D" type="PointLight2D" parent="Sprite2D6"]
 light_mask = 4
 scale = Vector2(10, 10)
-energy = 5.0
+color = Color(0.686275, 0.258824, 0.0980392, 1)
+energy = 2.0
+blend_mode = 2
 range_item_cull_mask = 2
 texture = ExtResource("5_jgvy2")
-height = 50.0
+texture_scale = 3.0
+height = 1000.0

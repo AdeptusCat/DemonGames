@@ -41,20 +41,33 @@ func spawnDebugTroops1(ai : int = 0):
 	var sectio
 	if Connection.dedicatedServer:
 		return
-	#if not ai == 0:
-		#sectio = Decks.sectioNodes["Megalomaniacs"]
-		#sectio = Decks.sectioNodes["Bad People"]
-		##Signals.placeLieutenant.emit(sectio, ai, "Shalmaneser")
+	if not ai == 0:
+		sectio = Decks.sectioNodes["Megalomaniacs"]
+		Signals.placeLegion.emit(sectio, ai)
+		sectio = Decks.sectioNodes["Bad People"]
+		Signals.placeLieutenant.emit(sectio, ai, "Shalmaneser")
+		Signals.placeLegion.emit(sectio, ai)
 		#Signals.placeLegion.emit(sectio, ai)
 		#Signals.placeLegion.emit(sectio, ai)
 		#Signals.placeLegion.emit(sectio, ai)
 		#Signals.placeLegion.emit(sectio, ai)
 		#Signals.placeLegion.emit(sectio, ai)
-		#Signals.placeLegion.emit(sectio, ai)
-		#sectio = Decks.sectioNodes["Dogs Of War"]
-		#Signals.placeLegion.emit(sectio, ai)
-		#sectio = Decks.sectioNodes["Atheists Surprise"]
-		#Signals.placeLegion.emit(sectio, ai)
+		sectio = Decks.sectioNodes["Dogs Of War"]
+		Signals.placeLegion.emit(sectio, ai)
+		Signals.placeLegion.emit(sectio, ai)
+		sectio = Decks.sectioNodes["Atheists Surprise"]
+		Signals.placeLegion.emit(sectio, ai)
+		Signals.placeLegion.emit(sectio, ai)
+		Signals.placeLegion.emit(sectio, ai)
+		sectio = Decks.sectioNodes["Liars"]
+		Signals.placeLegion.emit(sectio, ai)
+		Signals.placeLegion.emit(sectio, ai)
+		Signals.placeLegion.emit(sectio, ai)
+		Signals.placeLegion.emit(sectio, ai)
+		sectio = Decks.sectioNodes["Sowers Of Scandal"]
+		Signals.placeLegion.emit(sectio, ai)
+		sectio = Decks.sectioNodes["Basement Of Wanton Killers"]
+		Signals.placeLegion.emit(sectio, ai)
 #		Signals.placeLegion.emit(sectio, ai)
 #		Signals.placeLegion.emit(sectio, ai)
 #		Signals.placeLegion.emit(sectio, ai)
@@ -113,12 +126,12 @@ func spawnDebugTroops1(ai : int = 0):
 #		Signals.placeLegion.emit(sectio, Data.id)
 		
 #
-#		sectio = Decks.sectioNodes["Basement Of Wanton Killers"]
-#		map.placeUnit(sectio, Data.UnitType.Legion)
+		sectio = Decks.sectioNodes["Basement Of Wanton Killers"]
+		Signals.placeLegion.emit(sectio, Data.id)
 #		sectio = Decks.sectioNodes["Dogs Of War"]
 #		map.placeUnit(sectio, Data.UnitType.Legion)
-#		sectio = Decks.sectioNodes["Sowers Of Scandal"]
-#		map.placeUnit(sectio, Data.UnitType.Legion)
+		sectio = Decks.sectioNodes["Sowers Of Scandal"]
+		Signals.placeLegion.emit(sectio, Data.id)
 		
 #		sectio = Decks.sectioNodes["Bad People"]
 #		map.placeUnit(sectio, Data.UnitType.Lieutenant)
@@ -156,8 +169,8 @@ func spawnDebugTroops1(ai : int = 0):
 #
 #		map._on_sectioClicked(Decks.sectioNodes["Bad People"])
 #
-		Signals.sectioClicked.emit(Decks.sectioNodes["Liars"])
-#		map._on_sectioClicked(Decks.sectioNodes["Spies"])
+		sectio = Decks.sectioNodes["Liars"]
+		Signals.placeLegion.emit(sectio, Data.id)
 #		map._on_sectioClicked(Decks.sectioNodes["Traitors"])
 	return
 	Signals.sectioClicked.emit(Decks.sectioNodes["Bad People"])
