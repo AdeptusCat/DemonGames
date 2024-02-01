@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://c787lkbpduhss"]
+[gd_scene load_steps=9 format=3 uid="uid://c787lkbpduhss"]
 
 [ext_resource type="Texture2D" uid="uid://ddeosn74dlntq" path="res://assets/map/01391-2308151044-drawing of a field with skulls and swords laying around, top view.png" id="1_4r176"]
+[ext_resource type="Script" path="res://map_fx/map_fx.gd" id="1_ighm6"]
 [ext_resource type="Texture2D" uid="uid://b2lsquhgxnglm" path="res://assets/map/01391-2308151044-drawing of a field with skulls and swords laying around, top view_n.png" id="2_ukx4g"]
 [ext_resource type="PackedScene" uid="uid://b27g577ew11xt" path="res://map_fx/sprite_2d_9.tscn" id="3_eelv3"]
 [ext_resource type="PackedScene" uid="uid://7a7uc3aun4f3" path="res://map_fx/circle_fog.tscn" id="3_gddj2"]
@@ -12,6 +13,7 @@ diffuse_texture = ExtResource("1_4r176")
 normal_texture = ExtResource("2_ukx4g")
 
 [node name="MapFx" type="Node2D"]
+script = ExtResource("1_ighm6")
 
 [node name="TextureRect5" type="TextureRect" parent="."]
 light_mask = 7
@@ -45,7 +47,10 @@ texture = ExtResource("4_watc5")
 [node name="PointLight2D" type="PointLight2D" parent="Sprite2D6"]
 light_mask = 4
 scale = Vector2(10, 10)
-energy = 5.0
+color = Color(0.686275, 0.258824, 0.0980392, 1)
+energy = 2.0
+blend_mode = 2
 range_item_cull_mask = 2
 texture = ExtResource("5_jgvy2")
-height = 50.0
+texture_scale = 3.0
+height = 1000.0

@@ -17,11 +17,10 @@ class_name Player
 @export var income : String = "": 
 	set(value):
 		income = value
-		print("changed income on player ", income)
 		Signals.changePlayerDisplayValue.emit(playerId, "income", income)
-@export var arcanaCards = []
+@export var arcanaCards : Array = []
 @export var sectios : Array[String] = []
-@export var troops = {}
+@export var troops : Dictionary = {}
 var color : Color = Color8(255, 255, 255)
 var colorName = ""
 var playerName : String = ""
@@ -34,7 +33,6 @@ var sectiosWithoutEnemiesLeft : Array
 
 
 func _ready():
-	print("new player ", name)
 	playerId = str(name).to_int()
 
 func saveGame():
@@ -99,6 +97,47 @@ func addArcanaCard(arcanaCard):
 func addSectio(sectio):
 	if not sectios.has(sectio):
 		sectios.append(str(sectio))
+
+
+
+func changeIncome():
+	var income : int = 0
+	var enemyInSectio : bool = false
+	var demonsOnEarth : int = 0
+	var demonHearts : int = 0
+	for demonRank in demons:
+		demonRank = demonRank as int
+		var demon : Demon = Data.demons[demonRank]
+		if not demon.incapacitated:
+			if demon.onEarth:
+				demonsOnEarth += 1
+				demonHearts += demon.hearts
+	
+	for sectioName in sectios:
+		for unitName in Decks.sectioNodes[sectioName].troops:
+			if not Data.troops[unitName].triumphirate == playerId:
+				enemyInSectio = true
+				break
+		if not enemyInSectio:
+			var sectio = Decks.sectioNodes[sectioName]
+			var isIsolated = sectio.isolated()
+			var soulsGathered = sectio.souls
+			# check for hellhounds in sectio as well!! hellhounds  hellhounds  hellhounds  hellhounds  hellhounds  hellhounds 
+			if isIsolated:
+				soulsGathered -= 2
+			soulsGathered = clamp(soulsGathered, 0, 100)
+			income += soulsGathered
+
+	for unitName in troops:
+		var unit = Data.troops[unitName]
+		if not unit.unitType == Data.UnitType.Hellhound:
+			income -= 1
+	
+	income += demonHearts
+	var incomeString = str(income + demonsOnEarth)
+	if demonsOnEarth > 0:
+		incomeString += " - " + str(demonsOnEarth * 6 + income)
+	Signals.changeIncome.emit(playerId, incomeString)
 
 
 func canAffordRecruitLieutenants(cardNameToIgnore = ""):

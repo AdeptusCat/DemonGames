@@ -3,6 +3,9 @@ extends Node
 signal save
 signal allPlayersReady
 
+# settings
+signal potatoPc(on : bool)
+
 # GOAP
 signal planDone
 signal moveUnits(unitsToMove, oldSectio, sectio)
@@ -19,10 +22,12 @@ signal startGame
 signal connected
 
 # UI
+signal showChosenLieutenantFromAvailableLieutenantsBox(lieutenantName : String)
+
 signal showStartScreen
 signal showArcanaCardsContainer
+signal hideArcanaCardsContainer
 signal showRankTrackMarginContainer
-signal showPlayerStatusMarginContainer
 
 signal addArcanaCardToUi(id, cardName)
 signal toogleWaitForPlayer(playerId, boolean, phase)
@@ -39,6 +44,11 @@ signal showSectioPreview(node)
 signal hideSectioPreview(sectioName)
 signal showFleeControl
 signal hideFleeControl
+signal spinFleeArrows
+signal spinFleeArrowsStopped
+signal hideFleeArrow
+signal showArrows(sectio : Sectio, possibleNeighbours)
+signal hideArrows
 signal showMessage(message)
 signal hideMessage
 signal pickLegions(possibleLegionsToMoveWithLieutenant, unitsAlreadyMovingWithLieutenant, capacity)
@@ -106,8 +116,13 @@ signal followUnit(unit)
 signal stopFollowingUnit(unit)
 
 
+# arcana Cards
+signal passArcanaCard
+signal walkTheEarthArcanaCard
+
 # Game
 signal updateTurnTrack(turn : int)
+signal actionThroughArcana(action : String)
 signal action(demonRank : int, action : String)
 signal resetGame
 signal addPlayer(scene : Player)
@@ -127,12 +142,21 @@ signal pickedDemonForCombat
 signal updateRankTrack(arr : Array)
 signal doneGatheringSouls
 signal proceedSignal
-signal placeUnit(sectio, playerId, unitType)
+signal placeLieutenant(sectio, playerId, lieutenantName)
+signal placeLegion(sectio, playerId)
 
 signal unitsKilled(unitsDict)
 signal unitsHit(unitsDict)
 signal unitsAttack()
 
+signal showAttackResult
+signal showDefendResult
+signal showUnitAttackChance
+signal hideUnitAttackChance
+signal showUnitDefendChance
+signal hideUnitDefendChance
+signal showCombatSectios
+signal hideCombatSectios
 signal showCombat
 signal hideCombat
 signal endCombat
@@ -164,6 +188,8 @@ signal changeDisfavors(playerId : int, disfavors : int)
 signal skullUsed
 signal removeLieutenantFromAvailableLieutenantsBox(lieutenantName)
 signal recruitedLieutenant
+signal spinLieutenantBox
+signal spinLieutenantBoxStopped
 
 signal spawnUnit(sectioName : String, playerId : int, unitType : Data.UnitType, unitName : String)
 

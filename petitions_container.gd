@@ -29,13 +29,17 @@ func populate(sectioNames : Array):
 	if not hasFavor:
 		hide()
 		await get_tree().create_timer(0.3).timeout
-		Signals.petitionsDone.emit()
+		RpcCalls.petitionsDone.rpc_id(Connection.host)
+		AudioSignals.playerTurnDone.emit()
 
 
 func _on_reply(sectioName, boolean):
 	entries[sectioName].queue_free()
 	if boolean:
-		Signals.petitionApproved.emit(sectioName)
+		var favors = Data.player.favors - 1
+		Signals.changeFavors.emit(Data.id, favors)
+		for peer in Connection.peers:
+			RpcCalls.occupySectio.rpc_id(peer, Data.id, sectioName)
 	$MarginContainer/VBoxContainer/VBoxContainer2/Label2.text = "You can occupy " + str(Data.player.favors - Data.player.disfavors) + " more Sectios"
 	entries.erase(sectioName)
 	var hasFavor = Data.player.hasFavor()
@@ -44,4 +48,5 @@ func _on_reply(sectioName, boolean):
 			entry.highlight(hasFavor)
 	if entries.size() <= 0 or not hasFavor:
 		hide()
-		Signals.petitionsDone.emit()
+		RpcCalls.petitionsDone.rpc_id(Connection.host)
+		AudioSignals.playerTurnDone.emit()

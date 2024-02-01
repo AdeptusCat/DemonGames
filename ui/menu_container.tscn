@@ -61,7 +61,7 @@ text = "Settings"
 
 [node name="ReturnToMainMenuButton" type="Button" parent="MarginContainer2/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Return to Main Menu"
+text = "Return to Lobby"
 
 [node name="QuitButton" type="Button" parent="MarginContainer2/MarginContainer/VBoxContainer"]
 layout_mode = 2

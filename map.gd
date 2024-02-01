@@ -1,4 +1,5 @@
 extends Node2D
+class_name Map
 
 const legionScene = preload("res://units/legion.tscn")
 const lieutenantScene = preload("res://units/lieutenant_unit.tscn")
@@ -19,8 +20,6 @@ signal unitFinishedFleeing
 var fleeRequestId
 #var sectioAttackedFrom
 
-var lieutenantNameToSpawn : String = ""
-
 var tw1
 
 var map_fx_path : String = "res://map_fx/map_fx.tscn"
@@ -37,13 +36,15 @@ func _ready():
 	Signals.neighbours.connect(on_neighbours)
 	Signals.changeSectioBackground.connect(_on_changeSectioBackground)
 	Signals.march.connect(_on_march)
-	Signals.placeUnit.connect(_on_placeUnit)
+	Signals.placeLegion.connect(_on_placeLegion)
+	Signals.placeLieutenant.connect(_on_placeLieutenant)
 	Signals.moveUnits.connect(moveUnits)
 	Signals.summoningDone.connect(_on_summoningDone)
 	Signals.buildCircles.connect(buildCircles)
 	Signals.initSectios.connect(initSectios)
 	Signals.initMouseLights.connect(_on_initMouseLights)
 	Signals.spawnUnit.connect(_on_spawnUnit)
+	Signals.potatoPc.connect(_on_potatoPc)
 	
 	# Engine.is_editor_hint()
 	# only useful for tool scripts
@@ -51,6 +52,8 @@ func _ready():
 #		print("loading")
 #	var fxScene = ResourceLoader.load_threaded_get(map_fx_path)
 
+	
+	Settings.debug = false
 	if OS.has_feature("editor"):
 		if not Settings.debug:
 			var fx = load("res://map_fx/map_fx.tscn")
@@ -65,7 +68,8 @@ func _ready():
 	setupLightning()
 	
 #	ResourceLoader.load_threaded_request(map_fx_path)
-	
+	#await get_tree().create_timer(4.01).timeout
+	#promtToFlee(Data.id, "Bad People")
 
 var loaded = false
 func _process(delta):
@@ -148,9 +152,12 @@ func call2():
 	tw1.tween_callback(call1).set_delay(t)
 
 
+func _on_placeLegion(sectio : Sectio, playerId : int):
+	placeUnit(sectio, playerId, Data.UnitType.Legion)
 
-func _on_placeUnit(sectio, playerId, unitType):
-	placeUnit(sectio, playerId, unitType)
+
+func _on_placeLieutenant(sectio : Sectio, playerId : int, lieutenantName : String):
+	placeUnit(sectio, playerId, Data.UnitType.Lieutenant, lieutenantName)
 
 
 func _on_demonActionDone():
@@ -371,7 +378,7 @@ func on_neighbours(node):
 		if node.player == Decks.sectios[neighbour[0]][neighbour[1]].player:
 			isIsolated = false
 	node.isIsolated = isIsolated
-	
+
 
 func getPossibleNeighbours(occupiedCircle, occupiedQuarter):
 	possibleNeighbours.clear()
@@ -396,9 +403,28 @@ func getPossibleNeighbours(occupiedCircle, occupiedQuarter):
 	possibleNeighbours.append([occupiedCircle, quarterCounterclockwise])
 	return possibleNeighbours
 
+
+func getPossibleNeighboursDownUpCwCcw(occupiedCircle, occupiedQuarter):
+	var possibleNeighboursDownUpCwCcw : Array = [0,0,0,0]
+	var circleDown = occupiedCircle - 1
+	if not circleDown < 0:
+		possibleNeighboursDownUpCwCcw[0] = 1
+	
+	var circleUp = occupiedCircle + 1
+	if not circleUp > 8:
+		possibleNeighboursDownUpCwCcw[1] = 1
+	
+	var quarterClockwise = posmod((occupiedQuarter + 1), 5)
+	possibleNeighboursDownUpCwCcw[2] = 1
+	
+	var quarterCounterclockwise = posmod((occupiedQuarter - 1), 5)
+	possibleNeighboursDownUpCwCcw[3] = 1
+	return possibleNeighboursDownUpCwCcw
+
+
+
 func changeClickableNeighbours(possibleNeighbours):
 	neightboursClickable(true)
-
 
 
 func _on_changeSectioBackground(id , playerPolygon):
@@ -406,9 +432,7 @@ func _on_changeSectioBackground(id , playerPolygon):
 		playerpolygons[id] = playerPolygonsLeft.pop_back()
 		var c = playerpolygons[id].get_material().get_shader_parameter("colorTexture").get_gradient().get_colors()
 		c[1] = Data.players[id].color
-		print("colors_set ", Data.players[id].color)
 		playerpolygons[id].get_material().get_shader_parameter("colorTexture").get_gradient().set_colors(c) 
-#		playerPolygon.texture_offset = playerPolygon.position
 		
 	for polygons in %Polygons.get_children():
 		for polygon in polygons.get_children():
@@ -416,10 +440,7 @@ func _on_changeSectioBackground(id , playerPolygon):
 				polygons.remove_child(polygon)
 	playerpolygons[id].add_child(playerPolygon)
 	playerPolygon.set_light_mask(4) # this might be better at init
-	print("colors_? ")
-	for polygon in playerpolygons:
-		print("colors_? ", playerpolygons[polygon].get_material().get_shader_parameter("colorTexture").get_gradient().get_colors())
-	
+
 
 func sectiosUnclickable():
 	for sectio in Decks.sectioNodes.values():
@@ -498,6 +519,7 @@ func promtToFlee(triumphirate : int, sectioName : String, sectioAttackedFromName
 			sectioAttackedFrom = Decks.sectioNodes[sectioAttackedFromName]
 
 		Signals.fleeDialog.emit(sectioName, fleeFromCombat)
+		AudioSignals.enemyEnteringSectio.emit()
 		
 		var fleeing = await Signals.confirmFlee
 		if Tutorial.tutorial:
@@ -571,16 +593,30 @@ func removeUnit(unitName):
 
 
 func moveUnits(troopsToMove, oldSectio : Sectio, sectio : Sectio):
+	
 	if troopsToMove.is_empty():
 		return
 	
 	var playerId = troopsToMove[0].triumphirate
 	
-	var friendlyUnits : Array = []
+	var friendlyUnitsInNewSectio : Array = []
 	for unitName in sectio.troops:
 		var unit = Data.troops[unitName]
 		if unit.triumphirate == playerId:
-			friendlyUnits.append(unit)
+			# if Lieutenant, put on the bottom of the stack
+			if unit.unitType == Data.UnitType.Lieutenant:
+				friendlyUnitsInNewSectio.insert(0, unit)
+			else:
+				friendlyUnitsInNewSectio.append(unit)
+	
+	var friendlyUnits : Array = friendlyUnitsInNewSectio.duplicate()
+	for unit in troopsToMove:
+		if unit.triumphirate == playerId:
+			# if Lieutenant, put on the bottom of the stack
+			if unit.unitType == Data.UnitType.Lieutenant:
+				friendlyUnits.insert(0, unit)
+			else:
+				friendlyUnits.append(unit)
 	
 	for troop in troopsToMove:
 		oldSectio.troops.erase(troop.unitNr)
@@ -601,37 +637,64 @@ func moveUnits(troopsToMove, oldSectio : Sectio, sectio : Sectio):
 	
 	var zIndex : int = 1
 	for unit in friendlyUnits:
-		destination += Vector2(0, -32)
-		unit.global_position = destination
-		unit.z_index = zIndex
-		zIndex += 1
+		if friendlyUnitsInNewSectio.has(unit):
+			destination += Vector2(0, -32)
+			#unit.global_position = destination
+			unit.z_index = zIndex
+			zIndex += 1
+			unit.set_destinations([destination])
+		else:
+			var destinations : Array
+			if oldSectio.global_position.distance_to(destination) < unit.global_position.distance_to(destination):
+				destinations.append(oldSectio.global_position)
+			# clockwise
+			if posmod((oldSectio.quarter + 1), 5) == sectio.quarter:
+				destinations.append(oldSectio.clockwisePoint)
+			# counterclockwise
+			if posmod((oldSectio.quarter - 1), 5) == sectio.quarter:
+				destinations.append(oldSectio.counterclockwisePoint)
+			
+			if unit.global_position.distance_to(sectio.global_position) < unit.global_position.distance_to(destination):
+				destinations.append(sectio.global_position)
+			
+			destination += Vector2(0, -32)
+			destinations.append(destination)
+			unit.z_index = zIndex
+			zIndex += 1
+			
+			unit.set_destinations(destinations)
 	
-	print("destination ", destination, " ",i ," ",sectio.slots, " ",sectio.slotPositions)
-	
-	for troop in troopsToMove:
-		var destinations : Array
-		if oldSectio.global_position.distance_to(destination) < troop.global_position.distance_to(destination):
-			destinations.append(oldSectio.global_position)
-		# clockwise
-		if posmod((oldSectio.quarter + 1), 5) == sectio.quarter:
-			destinations.append(oldSectio.clockwisePoint)
-		# counterclockwise
-		if posmod((oldSectio.quarter - 1), 5) == sectio.quarter:
-			destinations.append(oldSectio.counterclockwisePoint)
-		
-		if troop.global_position.distance_to(sectio.global_position) < troop.global_position.distance_to(destination):
-			destinations.append(sectio.global_position)
-		
-		destination += Vector2(0, -32)
-		destinations.append(destination)
-		troop.z_index = zIndex
-		zIndex += 1
-		
-		troop.set_destinations(destinations)
+	reorderUnitsinSlots(oldSectio)
 
+
+func reorderUnitsinSlots(sectio : Sectio):
+	var slotIndex : int = 0
+	for slot in sectio.slots:
+		var destination : Vector2 = sectio.slotPositions[slotIndex]
+		slotIndex += 1
+		
+		var units : Array = []
+		for unitNr : int in sectio.troops:
+			var unit : Unit = Data.troops[unitNr]
+			if unit.triumphirate == slot:
+				# if Lieutenant, put on the bottom of the stack
+				if unit.unitType == Data.UnitType.Lieutenant:
+					units.insert(0, unit)
+				else:
+					units.append(unit)
+		
+		var zIndex : int = 1
+		for unit : Unit in units:
+			destination += Vector2(0, -32)
+			#unit.global_position = destination
+			unit.z_index = zIndex
+			zIndex += 1
+			
+			unit.set_destinations([destination])
 
 @rpc("any_peer", "call_local")
 func placeFirstLegion():
+	AudioSignals.playerTurn.emit()
 	Signals.help.emit(Data.HelpSubjects.PlaceFirstLegion)
 	for sectioName in Data.player.sectios:
 		Decks.sectioNodes[sectioName].changeClickable(true)
@@ -646,6 +709,7 @@ func placeFirstLegion():
 func _on_march():
 	while Data.currentDemon.skullsUsed < Data.currentDemon.skulls:
 		Signals.sectiosClickable.emit()
+		Signals.hideArrows.emit()
 		Data.changeState(Data.States.IDLE)
 		
 		var sectio = await Signals.sectioClicked
@@ -663,7 +727,11 @@ func _on_march():
 			selectedUnit.sectiosMoved = 0
 			possibleNeighbours = getPossibleNeighbours(selectedUnit.occupiedCircle, selectedUnit.occupiedQuarter)
 			changeClickableNeighbours(possibleNeighbours)
+			var possibleNeighboursDownUpCwCcw : Array = getPossibleNeighboursDownUpCwCcw(selectedUnit.occupiedCircle, selectedUnit.occupiedQuarter)
+			Signals.showArrows.emit(sectio, possibleNeighboursDownUpCwCcw)
 		else:
+			sectiosUnclickable()
+			neightboursClickable(false)
 			Signals.pickUnit.emit(sectio)
 			selectedUnit = await Signals.unitClicked
 			if selectedUnit:
@@ -674,17 +742,23 @@ func _on_march():
 				selectedUnit.sectiosMoved = 0
 				possibleNeighbours = getPossibleNeighbours(selectedUnit.occupiedCircle, selectedUnit.occupiedQuarter)
 				changeClickableNeighbours(possibleNeighbours)
+				var possibleNeighboursDownUpCwCcw : Array = getPossibleNeighboursDownUpCwCcw(selectedUnit.occupiedCircle, selectedUnit.occupiedQuarter)
+				Signals.showArrows.emit(sectio, possibleNeighboursDownUpCwCcw)
 			else:
 				continue
-		
-		print(selectedUnit, " moved1 ", selectedUnit.sectiosMoved)
+		# bug, wait shortly otherwise the sectio gets clicked, this should not happen
+		await get_tree().create_timer(0.01).timeout
+		#print(selectedUnit, " moved1 ", selectedUnit.sectiosMoved)
 		var unitsAlreadyMovingWithLieutenant : Array = []
 		while selectedUnit.sectiosMoved < selectedUnit.maxSectiosMoved:
-			print(selectedUnit, " moved2 ", selectedUnit.sectiosMoved)
+			Signals.hideArrows.emit()
+			#print(selectedUnit, " moved2 ", selectedUnit.sectiosMoved)
 			possibleNeighbours = getPossibleNeighbours(sectio.circle, sectio.quarter)
 			changeClickableNeighbours(possibleNeighbours)
+			var possibleNeighboursDownUpCwCcw : Array = getPossibleNeighboursDownUpCwCcw(selectedUnit.occupiedCircle, selectedUnit.occupiedQuarter)
+			Signals.showArrows.emit(sectio, possibleNeighboursDownUpCwCcw)
 			selectedUnit.showMovesLeft(true, selectedUnit.maxSectiosMoved - selectedUnit.sectiosMoved)
-		
+			
 			sectio = await Signals.sectioClicked
 			if not sectio:
 				neightboursClickable(false)
@@ -715,6 +789,7 @@ func _on_march():
 			
 			moveUnits(unitsToMove, oldSectio, sectio)
 			
+			Signals.hideArrows.emit()
 			neightboursClickable(false)
 			
 			%MarchAudio.play()
@@ -745,6 +820,8 @@ func _on_march():
 		#						%EventDialog.dialog_text = "The Enemy fled."
 					else:
 						%EventDialog.dialog_text = "The Enemy is choosing to stay and fight."
+						#AudioSignals.enemyEnteringSectioResult.emit(false)
+					
 					print("result of flee ", fleeingConfirmed)
 					break
 				else:
@@ -752,6 +829,7 @@ func _on_march():
 			
 			if enemies > 0 and not fleeingConfirmed:
 				neightboursClickable(false)
+				AudioSignals.enemyEnteringSectioResult.emit(false)
 				break
 			
 			var  troopsRemaining = false
@@ -762,11 +840,15 @@ func _on_march():
 				
 			if troopsRemaining and fleeingConfirmed:
 				%EventDialog.dialog_text = "The Enemy tried to flee but failed, stopping."
+				AudioSignals.enemyEnteringSectioResult.emit(false)
 #				_on_unitMovedMax(selectedUnit)
 				break
+			if not troopsRemaining and fleeingConfirmed:
+				AudioSignals.enemyEnteringSectioResult.emit(true)
 
 			if not troopsRemaining:
 				%EventDialog.dialog_text = "The Enemy fled."
+				
 #		Signals.unitDeselected.emit()
 		selectedUnit.showMovesLeft(false)
 	Data.changeState(Data.States.IDLE)
@@ -774,7 +856,7 @@ func _on_march():
 		Signals.cancelMarch.emit()
 	else:
 		Signals.demonDone.emit(null)
-	
+	Signals.hideArrows.emit()
 
 
 func _on_sectioClicked(sectio):
@@ -823,7 +905,8 @@ func flee(sectioToFleeFrom, sectioAttackedFrom):
 		if tutorialCounter > 0:
 			forceFailTofFlee = true
 		await fleeingLegion(sectioToFleeFrom, fleeingUnit, sectioAttackedFrom, forceFailTofFlee)
-		tutorialCounter += 1
+		if Tutorial.tutorial:
+			tutorialCounter += 1
 	var allFled = true
 	for troopName in sectio.troops:
 		var troop = Data.troops[troopName]
@@ -856,7 +939,7 @@ func getFleeDirection(sectio, sectioAttackedFrom):
 	return neighbour
 
 
-func fleeingLegion(sectioToFleeFrom, fleeingLegion, sectioAttackedFrom, forceToFail : bool = false):
+func fleeingLegion(sectioToFleeFrom : Sectio, fleeingLegion, sectioAttackedFrom, forceToFail : bool = false):
 	if Tutorial.tutorial:
 		Signals.tutorial.emit(Tutorial.Topic.FleeWithLegion, "Legions flee in a random direction. ")
 	var tutorialCounter : int = 0
@@ -864,7 +947,6 @@ func fleeingLegion(sectioToFleeFrom, fleeingLegion, sectioAttackedFrom, forceToF
 	while true:
 		Signals.moveCamera.emit(sectioToFleeFrom.global_position)
 		var neighbour = getFleeDirection(sectioToFleeFrom, sectioAttackedFrom)
-		
 		# force the second legion to fail to flee
 		if forceToFail:
 			neighbour[0] = 666
@@ -878,14 +960,19 @@ func fleeingLegion(sectioToFleeFrom, fleeingLegion, sectioAttackedFrom, forceToF
 			await fleeMessage(str(fleeingLegion.unitName), sectioToFleeFrom.sectioName)
 			Signals.tutorialRead.emit()
 			break
-		var sectioToFleeTo = Decks.sectios[neighbour[0]][neighbour[1]]
+		var sectioToFleeTo : Sectio = Decks.sectios[neighbour[0]][neighbour[1]]
+		
+		for peer in Connection.peers:
+			spinFleeArrows.rpc_id(peer, sectioToFleeFrom.sectioName, sectioToFleeTo.sectioName)
+		await Signals.spinFleeArrowsStopped
 		
 		tutorialCounter += 1
 		moveUnits([fleeingLegion], sectioToFleeFrom, sectioToFleeTo)
 		
 		Signals.moveCamera.emit(sectioToFleeTo.global_position)
 		await fleeingLegion.arrivedAtDestination
-
+		for peer in Connection.peers:
+			hideFleeArrow.rpc_id(peer)
 		var enemyInSectio = false
 		for unitName in sectioToFleeTo.troops:
 			var unit = Data.troops[unitName]
@@ -895,6 +982,16 @@ func fleeingLegion(sectioToFleeFrom, fleeingLegion, sectioAttackedFrom, forceToF
 				enemyInSectio = true
 		if not enemyInSectio:
 			break
+
+
+@rpc("any_peer", "call_local")
+func spinFleeArrows(sectioToFleeFromName : String, sectioToFleeToName : String):
+	Signals.spinFleeArrows.emit(sectioToFleeFromName, sectioToFleeToName)
+
+
+@rpc("any_peer", "call_local")
+func hideFleeArrow():
+	Signals.hideFleeArrow.emit()
 
 
 func fleeingLieutenant(sectioToFleeFrom, fleeingTroops, lieutenant, sectioAttackedFrom):
@@ -996,12 +1093,11 @@ func _on_unitClicked(legion):
 
 
 func _on_spawnUnit(sectioName : String, playerId : int, unitType : Data.UnitType, unitName : String = ""):
-	lieutenantNameToSpawn = unitName
 	var sectio : Sectio = Decks.sectioNodes[sectioName]
-	placeUnit(sectio, playerId, unitType)
+	placeUnit(sectio, playerId, unitType, unitName)
 
 
-func placeUnit(sectio, playerId : int = Data.id, unitType : Data.UnitType = Data.UnitType.Legion):
+func placeUnit(sectio, playerId : int = Data.id, unitType : Data.UnitType = Data.UnitType.Legion, lieutenantNameToSpawn : String = ""):
 	var player = Data.players[playerId]
 	if unitType == Data.UnitType.Lieutenant:
 		if Decks.availableLieutenants.size() > 0:
@@ -1018,13 +1114,15 @@ func placeUnit(sectio, playerId : int = Data.id, unitType : Data.UnitType = Data
 						continue
 					spawnUnit.rpc_id(peer, sectio.sectioName, nr, playerId, Data.UnitType.Lieutenant, lieutenantNameToSpawn)
 					updateTroopInSectio.rpc_id(peer, sectio.sectioName, sectio.troops)
-				
-			Signals.recruitedLieutenant.emit()
+			
+			Data.players[Data.id].canAffordRecruitLieutenants()
+			RpcCalls.recruitedLieutenant.rpc_id(Connection.host)
 	
 	if unitType == Data.UnitType.Legion:
 		var nr = randi()
 		spawnUnit(sectio.sectioName, nr, playerId, Data.UnitType.Legion)
 		updateTroopInSectio(sectio.sectioName, sectio.troops)
+		print("troops in sectio ", sectio.sectioName, sectio.troops)
 		Signals.incomeChanged.emit(playerId)
 		for peer in Connection.peers:
 			if not peer == playerId:
@@ -1033,7 +1131,8 @@ func placeUnit(sectio, playerId : int = Data.id, unitType : Data.UnitType = Data
 					continue
 				spawnUnit.rpc_id(peer, sectio.sectioName, nr, playerId, Data.UnitType.Legion)
 				updateTroopInSectio.rpc_id(peer, sectio.sectioName, sectio.troops)
-
+	
+	sectio.reorderUnitsinSlots()
 
 @rpc("any_peer", "call_local")
 func spawnUnit(sectioName : String, nr : int, triumphirate : int, unitType : Data.UnitType, unitName : String = ""):
@@ -1192,3 +1291,12 @@ func _on_lightning_timer_timeout():
 	setupLightning()
 
 
+func _on_potatoPc(boolean : bool):
+	if boolean:
+		%PentagramSprite2D.use_parent_material = boolean
+		for playerpolygon in playerpolygons.values():
+			playerpolygon.get_material().set_shader_parameter("speed", 0.0)
+	else:
+		%PentagramSprite2D.use_parent_material = boolean
+		for playerpolygon in playerpolygons.values():
+			playerpolygon.get_material().set_shader_parameter("speed", 0.03)

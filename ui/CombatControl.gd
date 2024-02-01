@@ -27,6 +27,7 @@ func toggleActionMenu(boolean):
 	else:
 		%PickDemonControl.hide()
 
+
 func _on_demonPicked(demonNode):
 	print("picked demon ", demonNode.demonName)
 	Signals.pickedDemon.emit(demonNode)

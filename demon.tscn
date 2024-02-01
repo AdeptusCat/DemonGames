@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://d3tmj8avseoqn"]
+[gd_scene load_steps=10 format=3 uid="uid://d3tmj8avseoqn"]
 
 [ext_resource type="Script" path="res://demon.gd" id="1_kdcug"]
 [ext_resource type="Texture2D" uid="uid://flpex7ihexjj" path="res://assets/tiles/01064-672545990-dark floor background with blood stains.png" id="2_h26fo"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dfgdkoorijh8" path="res://assets/demon.png" id="6_tnnto"]
 [ext_resource type="Texture2D" uid="uid://chyx8gsyah2ww" path="res://assets/ring_color.png" id="7_x4u60"]
 [ext_resource type="Texture2D" uid="uid://gcctfb1h6uij" path="res://assets/demon_genders/undefined.png" id="8_g83cu"]
+[ext_resource type="Texture2D" uid="uid://qr14kucrashs" path="res://icon.svg" id="9_i5827"]
 
 [node name="Demon" type="MarginContainer"]
 anchors_preset = 8
@@ -17,8 +18,8 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -332.0
 offset_top = -358.0
-offset_right = 332.0
-offset_bottom = 358.0
+offset_right = 188.0
+offset_bottom = 256.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_kdcug")
@@ -49,6 +50,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Label3" type="Label" parent="MarginContainer2/HBoxContainer/VBoxContainer2"]
+visible = false
 layout_mode = 2
 text = "Special Rules"
 horizontal_alignment = 1
@@ -313,5 +315,11 @@ layout_mode = 2
 [node name="FavorsGatherControl" type="Control" parent="GatherHBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+self_modulate = Color(50, 50, 50, 1)
+position = Vector2(80, 333)
+texture = ExtResource("9_i5827")
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]

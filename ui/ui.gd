@@ -5,6 +5,7 @@ const PickMoveUnitVBoxContainerScene = preload("res://pick_move_unit_v_box_conta
 const menuContainer = preload("res://ui/menu_container.tscn")
 const pickLegionsScene = preload("res://pick_legions.tscn")
 const arcanaScene = preload("res://arcana.tscn")
+var playerIcon = preload("res://assets/icons/pentagram_white.png")
 
 @onready var currentPlayerLabel = %CurrentPlayerLabel
 @onready var actionsNode = %Actions
@@ -17,6 +18,11 @@ var sectioTextures : Dictionary = {}
 
 #signal demonDone(passAction)
 #signal phaseDone
+var currentDemonRoot : TreeItem
+var currentDemonEntries : Dictionary = {}
+var demonActions : Dictionary = {}
+var iconColorVisible : Color = Color8(200,200,200,255)
+var iconColorInvisible : Color = Color8(200,200,200,0)
 
 var rankTrack: Array:
 	set(array):
@@ -36,6 +42,7 @@ func _ready():
 	Signals.toggleEndPhaseButton.connect(_on_toggleEndPhaseButton)
 	Signals.toogleSummoningMenu.connect(_on_toogleSummoningMenu)
 	Signals.toogleBuyLieutenant.connect(toogleBuyLieutenant)
+	Signals.spinLieutenantBox.connect(_on_spinLieutenantBox)
 	Signals.toggleDiscardArcanaCardControl.connect(_on_toggleDiscardArcanaCardControl)
 	Signals.hidePickArcanaCardContainer.connect(_on_hidePickArcanaCardContainer)
 	Signals.fleeDialog.connect(_on_fleeDialog)
@@ -53,13 +60,29 @@ func _ready():
 	Signals.changePlayerName.connect(changePlayerName)
 	
 	Signals.showArcanaCardsContainer.connect(_on_showArcanaCardsContainer)
+	Signals.hideArcanaCardsContainer.connect(_on_hideArcanaCardsContainer)
 	Signals.showRankTrackMarginContainer.connect(_on_showRankTrackMarginContainer)
-	Signals.showPlayerStatusMarginContainer.connect(_on_showPlayerStatusMarginContainer)
+	Signals.showChosenLieutenantFromAvailableLieutenantsBox.connect(showChosenLieutenantFromAvailableLieutenantsBox)
 
 	Signals.updateTurnTrack.connect(_on_updateTurnTrack)
 	
 	Signals.tutorial.connect(_on_tutorial)
 	Signals.tutorialRead.connect(_on_tutorialRead)
+	
+	Signals.removeLieutenantFromAvailableLieutenantsBox.connect(_on_removeLieutenantFromAvailableLieutenantsBox)
+	
+	Server.playerLeft.connect(_on_playerLeft)
+	
+	Signals.action.connect(_on_action)
+	currentDemonRoot = %CurrentDemonTopTree.create_item()
+	%CurrentDemonTopTree.set_column_title(0, "")
+	%CurrentDemonTopTree.set_column_title(1, "Demon")
+	%CurrentDemonTopTree.set_column_title(2, "Status")
+	%CurrentDemonTopTree.set_column_title(3, "Action")
+	%CurrentDemonTopTree.set_column_expand_ratio(0, 1)
+	%CurrentDemonTopTree.set_column_expand_ratio(1, 3)
+	%CurrentDemonTopTree.set_column_expand_ratio(2, 1)
+	%CurrentDemonTopTree.set_column_expand_ratio(3, 2)
 #	%WaitForPlayerControl.modulate.a = 1.0
 #	%WaitForPlayerControl.show()
 ##			await get_tree().create_timer(10.0).timeout
@@ -70,9 +93,182 @@ func _ready():
 #	tw1.tween_property(%WaitForPlayerControl, "modulate", Color(1,1,1,0), 2.0)#.set_delay(0.5)
 #	tw1.tween_callback(turn)
 
+func highlightCurrentPlayer(player : Player = null):
+	Signals.showRankTrackMarginContainer.emit()
+	for entryD in currentDemonEntries:
+		if currentDemonEntries.has(entryD):
+			if is_instance_valid(currentDemonEntries[entryD]):
+				currentDemonEntries[entryD].free()
+				currentDemonEntries.erase(entryD)
+	if not player:
+		%CurrentDemonTopTree.hide()
+		%CurrentActionLabel.hide()
+		return
+	%CurrentDemonTopTree.show()
+	%CurrentActionLabel.show()
+	%CurrentDemonTopTree.set_column_title(0, "")
+	%CurrentDemonTopTree.set_column_title(1, "Player")
+	%CurrentDemonTopTree.set_column_title(2, "Phase")
+	%CurrentDemonTopTree.set_column_title(3, "")
+	%CurrentActionLabel.text = "Current Player"
+	var line = %CurrentDemonTopTree.create_item(currentDemonRoot)
+	line.set_icon(0, playerIcon)
+	line.set_icon_modulate(0, iconColorVisible)
+	line.set_text_alignment(0, HORIZONTAL_ALIGNMENT_CENTER)
+	line.set_selectable(0, false)
+	line.set_text(1, player.playerName)
+	line.set_metadata(1, 0)
+	line.set_custom_color(1, player.color)
+	line.set_text_alignment(1, HORIZONTAL_ALIGNMENT_CENTER)
+	line.set_selectable(1, true)
+	var phaseName : String
+	if Data.phases.values().has(Data.phase):
+		phaseName = Data.phases.keys()[Data.phase]
+	else:
+		phaseName = "Place Legion"
+	line.set_text(2, phaseName)
+	line.set_text_alignment(2, HORIZONTAL_ALIGNMENT_CENTER)
+	line.set_selectable(2, false)
+	line.set_selectable(3, false)
+	line.set_text_alignment(3, HORIZONTAL_ALIGNMENT_CENTER)
+	currentDemonEntries[0] = line
+
+
+func highlightCurrentDemon(rank):
+	Signals.showRankTrackMarginContainer.emit()
+	%CurrentDemonTopTree.show()
+	%CurrentActionLabel.show()
+	%CurrentDemonTopTree.set_column_title(0, "")
+	%CurrentDemonTopTree.set_column_title(1, "Demon")
+	%CurrentDemonTopTree.set_column_title(2, "Status")
+	%CurrentDemonTopTree.set_column_title(3, "Action")
+	%CurrentActionLabel.text = "Current Demon"
+	for entry in %RankTrack.entries:
+		if entry == rank:
+			%RankTrack.entries[entry].set_icon_modulate(0, iconColorVisible)
+			for entryD in currentDemonEntries:
+				if currentDemonEntries.has(entryD):
+					if is_instance_valid(currentDemonEntries[entryD]):
+						currentDemonEntries[entryD].free()
+						currentDemonEntries.erase(entryD)
+			_on_addCurrentDemonLine(rank)
+		else:
+			%RankTrack.entries[entry].set_icon_modulate(0, iconColorInvisible)
+			
+#	var line = entries[rank]
+#	line.set_custom_bg_color(0, Data.players[demonLabelsByRank[rank].player].color, true)
+
+
+func _on_addCurrentDemonLine(demonRank):
+	var demonName = Data.demons[demonRank].demonName
+	var status = ""
+	if Data.demons[demonRank].onEarth:
+		status = "On Earth"
+	elif Data.demons[demonRank].incapacitated:
+		status = "Incapacitated"
+	else:
+		status = "In Hell"
+	
+	var player = Data.players[Data.demons[demonRank].player]
+	var color = player.color
+	var line = %CurrentDemonTopTree.create_item(currentDemonRoot)
+	line.set_icon(0, playerIcon)
+	line.set_icon_modulate(0, iconColorVisible)
+	line.set_text_alignment(0, HORIZONTAL_ALIGNMENT_CENTER)
+	line.set_selectable(0, false)
+	line.set_text(1, demonName)
+	line.set_metadata(1, demonRank)
+	line.set_custom_color(1, color)
+	line.set_text_alignment(1, HORIZONTAL_ALIGNMENT_CENTER)
+	line.set_selectable(1, true)
+	line.set_text(2, status)
+	line.set_text_alignment(2, HORIZONTAL_ALIGNMENT_CENTER)
+	line.set_selectable(2, false)
+	if demonActions.has(demonRank):
+		line.set_text(3, demonActions[demonRank])
+	else:
+		line.set_text(3, "")
+	line.set_text_alignment(3, HORIZONTAL_ALIGNMENT_CENTER)
+	line.set_selectable(3, false)
+	currentDemonEntries[demonRank] = line
+
+
+func _on_action(demonRank : int, action : String):
+	if demonRank == 0:
+		if currentDemonEntries.size() > 0:
+			for rank in demonActions:
+				demonActions[rank] = ""
+			currentDemonEntries[0].set_text(3, "")
+			for entry in %RankTrack.entries:
+				if %RankTrack.entries[entry]:
+					%RankTrack.entries[entry].set_text(3, "")
+	else:
+		demonActions[demonRank] = action
+		if currentDemonEntries.has(demonRank):
+				if is_instance_valid(currentDemonEntries[demonRank]):
+					currentDemonEntries[demonRank].set_text(3, action)
+		%RankTrack.entries[demonRank].set_text(3, action)
+
+
+func _on_playerLeft(playerId : int):
+	if Data.players.has(playerId):
+		%PlayerDisconnectedMarginContainer.show()
+		%PlayerDisconnectedLabel.text = "Player " + Data.players[playerId].playerName + " left the Game. \nNote that this Game saves after every Phase. \n You can create a new Room in the Lobby and load the Savegame."
+
+
+func _on_removeLieutenantFromAvailableLieutenantsBox(lieutenantName : String):
+	Decks.availableLieutenants.erase(lieutenantName)
+	removeLieutenantFromAvailableLieutenantsBox(lieutenantName)
+
+
+func disableActionButtons():
+	# Summoning Actions
+	%RecruitLegionsButton.disabled = true
+	%RecruitLegionsButton.get_material().set_shader_parameter("active", false)
+	
+	%BuyArcanaCardButton.disabled = true
+	%BuyArcanaCardButton.get_material().set_shader_parameter("active", false)
+	
+	%EndPhaseButton.disabled = true
+	%EndPhaseButton.get_material().set_shader_parameter("active", false)
+	
+	# Demon Actions
+	%MarchButton.disabled = true
+	%MarchButton.get_material().set_shader_parameter("active", false)
+	
+	%WalkTheEarthButton.disabled = true
+	%WalkTheEarthButton.get_material().set_shader_parameter("active", false)
+	
+	%PassButton.disabled = true
+	%PassButton.get_material().set_shader_parameter("active", false)
+	
+	%PassForGoodButton.disabled = true
+	%PassForGoodButton.get_material().set_shader_parameter("active", false)
+	
+	%DoEvilDeedsButton.disabled = true
+	%DoEvilDeedsButton.get_material().set_shader_parameter("active", false)
+	
+	%ConspireButton.disabled = true
+	%ConspireButton.get_material().set_shader_parameter("active", false)
+	
+	%InfluenceUnitsButton.disabled = true
+	%InfluenceUnitsButton.get_material().set_shader_parameter("active", false)
+	
+	%AtonementAndSuplicationButton.disabled = true
+	%AtonementAndSuplicationButton.get_material().set_shader_parameter("active", false)
+	
+	%UseMagicButton.disabled = true
+	%UseMagicButton.get_material().set_shader_parameter("active", false)
+
 
 func _on_tutorial(topic, text : String):
+	disableActionButtons()
 	match topic:
+		Tutorial.Topic.PlayersTree:
+			var pos : Transform2D = %PlayersTree.get_global_transform_with_canvas()
+			%PlayersTree.top_level = true
+			%PlayersTree.global_position = pos.origin
+		
 		Tutorial.Topic.NextDemon:
 			var pos : Transform2D = %NextDemonContainer.get_global_transform_with_canvas()
 			%NextDemonContainer.top_level = true
@@ -84,9 +280,8 @@ func _on_tutorial(topic, text : String):
 		Tutorial.Topic.PlayerStatus:
 			%PlayersTree.z_index = 1
 		Tutorial.Topic.RecruitLegion:
-			var pos : Transform2D = %RecruitLegionsButton.get_global_transform_with_canvas()
-			%RecruitLegionsButton.top_level = true
-			%RecruitLegionsButton.global_position = pos.origin
+			%RecruitLegionsButton.disabled = false
+			%RecruitLegionsButton.get_material().set_shader_parameter("active", true)
 		Tutorial.Topic.PlaceLegion:
 			%BuyArcanaCardButton.disabled = true
 			%EndPhaseButton.disabled = true
@@ -95,9 +290,8 @@ func _on_tutorial(topic, text : String):
 			%ArcanaCardsMarginContainer.top_level = true
 			%ArcanaCardsMarginContainer.global_position = pos.origin
 		Tutorial.Topic.BuyArcanaCard:
-			var pos : Transform2D = %BuyArcanaCardButton.get_global_transform_with_canvas()
-			%BuyArcanaCardButton.top_level = true
-			%BuyArcanaCardButton.global_position = pos.origin
+			%BuyArcanaCardButton.disabled = false
+			%BuyArcanaCardButton.get_material().set_shader_parameter("active", true)
 		Tutorial.Topic.PickArcanaCard:
 			var pos : Transform2D = %PickArcanaCardContainer.get_global_transform_with_canvas()
 			%PickArcanaCardContainer.top_level = true
@@ -107,9 +301,8 @@ func _on_tutorial(topic, text : String):
 			%ArcanaCardsMarginContainer.top_level = true
 			%ArcanaCardsMarginContainer.global_position = pos.origin
 		Tutorial.Topic.EndSummoningPhase:
-			var pos : Transform2D = %EndPhaseButton.get_global_transform_with_canvas()
-			%EndPhaseButton.top_level = true
-			%EndPhaseButton.global_position = pos.origin
+			%EndPhaseButton.disabled = false
+			%EndPhaseButton.get_material().set_shader_parameter("active", true)
 		Tutorial.Topic.RankTrack:
 			var pos : Transform2D = %RankTrackMarginContainer.get_global_transform_with_canvas()
 			%RankTrackMarginContainer.top_level = true
@@ -123,45 +316,33 @@ func _on_tutorial(topic, text : String):
 			%DemonDetailsControl.top_level = true
 			%DemonDetailsControl.global_position = pos.origin
 		Tutorial.Topic.PassAction:
-			var pos : Transform2D = %PassButton.get_global_transform_with_canvas()
-			%PassButton.top_level = true
-			%PassButton.global_position = pos.origin
+			%PassButton.disabled = false
+			%PassButton.get_material().set_shader_parameter("active", true)
 		Tutorial.Topic.Pass:
 			var pos : Transform2D = %ArcanaCardsMarginContainer.get_global_transform_with_canvas()
 			%ArcanaCardsMarginContainer.top_level = true
 			%ArcanaCardsMarginContainer.global_position = pos.origin
 		Tutorial.Topic.WalkTheEarthAttempt:
-			var pos : Transform2D = %WalkTheEarthButton.get_global_transform_with_canvas()
-			%WalkTheEarthButton.top_level = true
-			%WalkTheEarthButton.global_position = pos.origin
+			%WalkTheEarthButton.disabled = false
+			%WalkTheEarthButton.get_material().set_shader_parameter("active", true)
 		Tutorial.Topic.WalkTheEarth:
 			var pos : Transform2D = %ArcanaCardsMarginContainer.get_global_transform_with_canvas()
 			%ArcanaCardsMarginContainer.top_level = true
 			%ArcanaCardsMarginContainer.global_position = pos.origin
 		Tutorial.Topic.DoEvilDeeds:
-			var pos : Transform2D = %DoEvilDeedsButton.get_global_transform_with_canvas()
-			%DoEvilDeedsButton.top_level = true
-			%DoEvilDeedsButton.global_position = pos.origin
+			%DoEvilDeedsButton.disabled = false
+			%DoEvilDeedsButton.get_material().set_shader_parameter("active", true)
 		Tutorial.Topic.DoEvilDeedsResult:
 			var pos : Transform2D = %RankTrackMarginContainer.get_global_transform_with_canvas()
 			%RankTrackMarginContainer.top_level = true
 			%RankTrackMarginContainer.global_position = pos.origin
 			%DoEvilDeedsButton.global_position = pos.origin
 		Tutorial.Topic.MarchAction:
-			var pos : Transform2D = %MarchButton.get_global_transform_with_canvas()
-			%MarchButton.top_level = true
-			%MarchButton.global_position = pos.origin
-			
-#		Tutorial.Topic.TooManyArcanaCards:
-#			var pos : Transform2D = %DiscardArcanaCardControl.get_global_transform_with_canvas()
-#			%DiscardArcanaCardControl.top_level = true
-#			%DiscardArcanaCardControl.global_position = pos.origin
-			
-#		Tutorial.Topic.SummonLieutenant:
-
-			
-#		Tutorial.Topic.PlaceLegion:
-#
+			%MarchButton.disabled = false
+			%MarchButton.get_material().set_shader_parameter("active", true)
+		Tutorial.Topic.March:
+			%MarchButton.disabled = false
+			%MarchButton.get_material().set_shader_parameter("active", true)
 
 
 func _on_tutorialRead():
@@ -171,10 +352,15 @@ func _on_tutorialRead():
 	%BuyArcanaCardButton.disabled = false
 	%EndPhaseButton.disabled = false
 	
-	if %RecruitLegionsButton.top_level:
-		%RecruitLegionsButton.top_level = false
-		%RecruitLegionsButton.visible = false
-		%RecruitLegionsButton.visible = true
+	if %PlayersTree.top_level:
+		%PlayersTree.top_level = false
+		%PlayersTree.visible = false
+		%PlayersTree.visible = true
+	
+#	if %RecruitLegionsButton.top_level:
+#		%RecruitLegionsButton.top_level = false
+#		%RecruitLegionsButton.visible = false
+#		%RecruitLegionsButton.visible = true
 	if %BuyArcanaCardButton.top_level:
 		%BuyArcanaCardButton.top_level = false
 		%BuyArcanaCardButton.visible = false
@@ -227,6 +413,8 @@ func _on_updateRankTrack(arr : Array):
 
 
 func _on_toggleEndPhaseButton(boolean : bool):
+#	if Tutorial.tutorial:
+#		return
 	if boolean:
 		%EndPhaseButton.disabled = false
 	else:
@@ -270,11 +458,12 @@ func confirmStartDemon():
 @rpc("any_peer", "call_local")
 func nextDemon(nextDemon : int):
 	Signals.help.emit(Data.HelpSubjects.ActionPhase)
+	AudioSignals.playerTurn.emit()
 	var demonNode = Data.demons[nextDemon]
 	demonNode.skullsUsed = 0
 	currentPlayerLabel.text = str(demonNode.stats.player)
 	print("action for demon")
-	actionsNode.currentDemon = demonNode.stats.rank
+	actionsNode.currentDemonRank = demonNode.stats.rank
 	Data.currentDemon = demonNode
 	print(demonNode.stats.rank)
 	var action = await Signals.demonDone
@@ -286,21 +475,25 @@ func nextDemon(nextDemon : int):
 		Data.troops[troopName].sectiosMoved = 0
 	actionsNode.toggleActionMenu(false)
 	demonActionDone.rpc_id(Connection.host, action)
+	AudioSignals.playerTurnDone.emit()
 #	return action
 
 
 @rpc("any_peer", "call_local")
 func updateRankTrackCurrentDemon(nextDemon : int):
 	%RankTrack.highlightCurrentDemon(nextDemon)
+	highlightCurrentDemon(nextDemon)
 
 
 @rpc("any_peer", "call_local")
 func updateRankTrackCurrentPlayer(playerId : int):
 	if playerId == 0:
 		%RankTrack.highlightCurrentPlayer(null)
+		highlightCurrentPlayer(null)
 	else:
 		var player : Player = Data.players[playerId]
 		%RankTrack.highlightCurrentPlayer(player)
+		highlightCurrentPlayer(player)
 
 
 @rpc("any_peer", "call_local")
@@ -330,6 +523,7 @@ func hideFleeControl():
 func _on_end_phase_button_pressed():
 	Signals.summoningDone.emit()
 	done.rpc_id(Connection.host)
+	AudioSignals.playerTurnDone.emit()
 
 
 func _input(event):
@@ -407,8 +601,10 @@ func _on_wait_for_player_button_pressed():
 	%WaitForPlayerControl.hide()
 	Signals.proceed.emit()
 
+
 func _on_pickUnit(sectio):
 	%PickMoveUnitControl.highlight(sectio)
+
 
 func pickUnitToMove(sectio):
 	%PickMoveUnitControl.highlight(sectio)
@@ -416,10 +612,12 @@ func pickUnitToMove(sectio):
 
 func toogleBuyLieutenant(boolean : bool):
 	if boolean:
-		return
+		#return
 		%AvailableLieutenantsMarginContainer.show()
+		%AvailableLieutenantsCheckButton.button_pressed = true
 	else:
 		%AvailableLieutenantsMarginContainer.hide()
+		%AvailableLieutenantsCheckButton.button_pressed = false
 
 
 func addLieutenantToAvailableLieutenantsBox(lieutenantName):
@@ -428,6 +626,63 @@ func addLieutenantToAvailableLieutenantsBox(lieutenantName):
 	var lieutenantMarginContainer = lieutenantMarginContainerScene.instantiate()
 	lieutenantMarginContainer.populate(lieutenantName, lieutenant.texture, str(lieutenant["combat bonus"]), str(lieutenant.capacity))
 	%AvailableLieutenantsHBoxContainer.add_child(lieutenantMarginContainer)
+
+var startTime = Time.get_ticks_msec()
+var lieutenantMarginContainers : Array = []
+var activeLieutenantMarginContainer
+var intervalDefault : float = 0.1
+var interval : float = intervalDefault
+var startSpin : bool = false
+var spinCounter : int = 0
+var goalLieutenantMarginContainer
+
+
+func _on_spinLieutenantBox(lieutenantPicked : String):
+	lieutenantMarginContainers = %AvailableLieutenantsHBoxContainer.get_children()
+	for lieutenantMarginContainer in lieutenantMarginContainers:
+		if lieutenantMarginContainer.lieutenantName == lieutenantPicked:
+			goalLieutenantMarginContainer = lieutenantMarginContainer
+	startArrowSpin()
+
+func startArrowSpin():
+	toogleBuyLieutenant(true)
+	startSpin = true
+	startTime = Time.get_ticks_msec()
+	spinCounter = 0
+	interval = intervalDefault
+
+func stopSpin():
+	startSpin = false
+	await get_tree().create_timer(1.0).timeout
+	Signals.spinLieutenantBoxStopped.emit()
+	toogleBuyLieutenant(false)
+	
+
+func _process(elta):
+	if startSpin:
+		if activeLieutenantMarginContainer == null:
+			activeLieutenantMarginContainer = lieutenantMarginContainers.pop_front()
+			activeLieutenantMarginContainer.toggleTriumphirateIcon(true, Data.id)
+			spinCounter += 1
+		else:
+			if Time.get_ticks_msec() > startTime + interval:
+				if spinCounter > 10 and activeLieutenantMarginContainer == goalLieutenantMarginContainer:
+					stopSpin()
+				else:
+					startTime = Time.get_ticks_msec()
+					activeLieutenantMarginContainer.toggleTriumphirateIcon(false, Data.id)
+					lieutenantMarginContainers.append(activeLieutenantMarginContainer)
+					if lieutenantMarginContainers.size() == 0:
+						stopSpin()
+					else:
+						activeLieutenantMarginContainer = null
+						interval += pow(interval, 1.01)
+			# if it takes too long, skip
+			if Time.get_ticks_msec() > startTime + 5000:
+					if activeLieutenantMarginContainer:
+						activeLieutenantMarginContainer.toggleTriumphirateIcon(false, Data.id)
+					goalLieutenantMarginContainer.toggleTriumphirateIcon(true, Data.id)
+					stopSpin()
 
 
 func showChosenLieutenantFromAvailableLieutenantsBox(lieutenantName):
@@ -482,6 +737,8 @@ func _on_hidePickArcanaCardContainer(cardName):
 
 
 func _on_toggleBuyArcanaCardButtonEnabled(boolean : bool):
+#	if Tutorial.tutorial:
+#		return
 	if boolean:
 		%BuyArcanaCardButton.disabled = false
 	else:
@@ -508,9 +765,6 @@ func start():
 
 func updateRankTrack():
 	%RankTrack.rankTrack = %RankTrack.rankTrack
-
-func _on_showArcanaCards():
-	%ArcanaCardsMarginContainer.show()
 
 func _on_toggleDiscardArcanaCardControl(boolean : bool):
 	if boolean:
@@ -578,6 +832,8 @@ func _on_recruit_legions_button_pressed():
 
 
 func _on_toggleRecruitLegionsButtonEnabled(boolean : bool):
+#	if Tutorial.tutorial:
+#		return
 	if boolean:
 		%RecruitLegionsButton.disabled = false
 	else:
@@ -587,29 +843,42 @@ func _on_toggleRecruitLegionsButtonEnabled(boolean : bool):
 func _on_toogleSummoningMenu(boolean : bool):
 	if boolean:
 		%SummoningMenuContainer.show()
+		%PlayerStatusMarginContainer.show()
 	else:
 		%SummoningMenuContainer.hide()
+		%PlayerStatusMarginContainer.hide()
 
 
 
-func _on_check_button_toggled(button_pressed):
-	if button_pressed:
-		%AvailableLieutenantsMarginContainer.show()
-	else:
-		%AvailableLieutenantsMarginContainer.hide()
 
 
 func _on_showArcanaCardsContainer():
+	print("show arcana")
 	%ArcanaCardsMarginContainer.show()
+
+
+func _on_hideArcanaCardsContainer():
+	print("hide arcana")
+	%ArcanaCardsMarginContainer.hide()
 
 
 func _on_showRankTrackMarginContainer():
 	%RankTrackMarginContainer.show()
 
 
-func _on_showPlayerStatusMarginContainer():
-	%PlayerStatusMarginContainer.show()
-
-
 func _on_updateTurnTrack(turn : int):
 	%TurnLabel.text = str(turn)
+
+
+func _on_player_disconnected_button_pressed():
+	%PlayerDisconnectedMarginContainer.hide()
+
+
+func _on_available_lieutenants_check_button_toggled(toggled_on):
+	if toggled_on:
+		%AvailableLieutenantsMarginContainer.show()
+		%AvailableLieutenantsCheckButton.button_pressed = true
+	else:
+		%AvailableLieutenantsMarginContainer.hide()
+		%AvailableLieutenantsCheckButton.button_pressed = false
+

@@ -2,9 +2,10 @@ extends MarginContainer
 
 var hovering = false
 var expand = false
-var button
+@onready var button : Button = %Button
+@onready var button_collapse : Button = %CollapseButton
 var startPosition 
-
+var mouseEnteredPositiony : int = 0
 
 var buttonTextCombat = "Pick Demons to fight in Battle or"
 var buttonTextNormal = "Demons of your Triumphirate"
@@ -12,21 +13,27 @@ var buttonTextStart = "Examine your Triumphirate"
 
 var tw1
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	Signals.expandDemonCards.connect(expandDemonCards)
 	Signals.collapseDemonCards.connect(collapseDemonCards)
 	Signals.addDemonToUi.connect(_on_addDemon)
 	startPosition = position
 	%DemonHeaderLabel.text = buttonTextNormal
+	if not Data.chooseDemon:
+		collapse()
+	reset_size()
+
 
 func _on_addDemon(demon):
 	%DemonHBoxContainer.add_child(demon)
+	reset_size()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	return
 	if hovering and not expand:
-		if get_global_mouse_position().y > 200:
+		if get_global_mouse_position().y > mouseEnteredPositiony + 10:
+			#return
 #			position -= Vector2(0, 650)
 			hovering = false
 			tw1 = get_tree().create_tween()
@@ -47,9 +54,10 @@ func removeDemon(rank : int):
 		if not child is Label:
 			if child.rank == rank:
 				child.queue_free()
-
+	reset_size()
 
 func _on_mouse_entered():
+	mouseEnteredPositiony = get_global_mouse_position().y
 	hovering = true
 #	position = startPosition
 	tw1 = get_tree().create_tween()
@@ -59,28 +67,44 @@ func _on_mouse_entered():
 
 
 func expandDemonCards(battle : bool = true):
-	button = Button.new()
+	#button = Button.new()
 	if battle:
 		expand = true
 		_on_mouse_entered()
 		%DemonHeaderLabel.text = buttonTextCombat
 		button.text = "Click me to go to Battle without Demon."
-		button.pressed.connect(_on_noDemonClicked)
+		if not button.pressed.is_connected(_on_noDemonClicked):
+			button.pressed.connect(_on_noDemonClicked)
+		if button.pressed.is_connected(_on_proceedClicked):
+			button.pressed.disconnect(_on_proceedClicked)
+		button.show()
+		button_collapse.text = "Collapse"
+		button_collapse.show()
 	else:
 		expand = true
 		_on_mouse_entered()
 		%DemonHeaderLabel.text = buttonTextStart
 		button.text = "Proceed."
-		button.pressed.connect(_on_proceedClicked)
-	%DemonVBoxContainer.add_child(button)
+		if not button.pressed.is_connected(_on_proceedClicked):
+			button.pressed.connect(_on_proceedClicked)
+		if button.pressed.is_connected(_on_noDemonClicked):
+			button.pressed.disconnect(_on_noDemonClicked)
+		button.show()
+	reset_size()
+	#%DemonVBoxContainer.add_child(button)
 
 
 func collapseDemonCards():
 	%DemonHeaderLabel.text = buttonTextNormal
 	expand = false
 	collapse()
-	if is_instance_valid(button):
-		button.queue_free()
+	button.hide()
+	button_collapse.hide()
+	reset_size()
+	#if is_instance_valid(button):
+		#button.queue_free()
+	#if is_instance_valid(button_collapse):
+		#button_collapse.queue_free()
 
 
 func _on_proceedClicked():
@@ -88,8 +112,32 @@ func _on_proceedClicked():
 	%DemonHeaderLabel.text = buttonTextNormal
 	collapseDemonCards()
 
+
 func _on_noDemonClicked():
 	%DemonHeaderLabel.text = buttonTextNormal
 	expand = false
-	button.queue_free()
-	Signals.noDemonPicked.emit()
+	#button.queue_free()
+	button.hide()
+	reset_size()
+	Data.pickDemon = false
+	RpcCalls.pickedDemonForCombat.rpc_id(Connection.host, 0)
+
+
+func _on_mouse_exited():
+	#return
+	if hovering and not expand:
+		hovering = false
+		tw1 = get_tree().create_tween()
+		tw1.set_trans(Tween.TRANS_QUAD)
+		tw1.set_ease(Tween.EASE_IN_OUT)
+		tw1.parallel().tween_property(self, "position", startPosition - Vector2(0, 550), 0.2)
+
+
+func _on_collapse_button_pressed():
+	if expand:
+		expand = false
+		collapse()
+		button_collapse.text = "Expand"
+	else:
+		expand = true
+		button_collapse.text = "Collapse"

@@ -69,7 +69,6 @@ var sex : Sex = Sex.Male:
 var player : int = 0:
 	set(_player):
 		player = _player
-		print("demon color ", player, Data.players)
 		if Data.players.has(player):
 			var color : Color = Data.players[player].color
 			%ColorRect.modulate = color
@@ -91,6 +90,7 @@ var onEarth : bool = false:
 var image : Texture:
 	set(_image):
 		%DemonTextureRect.texture = _image
+
 var description : String:
 	set(_description):
 		description = _description
@@ -137,7 +137,74 @@ func loadStats():
 	player = stats.player
 	incapacitated = stats.incapacitated
 	onEarth = stats.onEarth
-	image = stats.image
+	
+	#var demonImages : Array = []
+	#var dir = DirAccess.open("res://demon_assets/" + demonName.to_lower() )#+ demonName
+	#var dir = DirAccess.open("res://")
+	#print("res://demon_assets/" + demonName.to_lower() )
+	#print(dir)
+	#print(demonName)
+	#if dir:
+		#dir.list_dir_begin()
+		#var file_name = dir.get_next()
+		#while file_name != "":
+			#if dir.current_is_dir():
+				#print("Found directory: " + file_name)
+			#else:
+				#if not file_name.ends_with(".import"):
+					#print("Found file: " + file_name)
+					#demonImages.append(file_name)
+				##print("Found file: " + file_name)
+				##demonImages.append(file_name)
+				##else:
+					##print("Found file: " + file_name)
+			#file_name = dir.get_next()
+	#else:
+		#print("An error occurred when trying to access the path.")
+	#demonImages.shuffle()
+	#print(demonImages)
+	#print("demon_assets/" + demonName.to_lower() + "/" + demonImages.pop_back())
+	##image = load("demon_assets/" + demonName.to_lower() + "/" + demonImages.pop_back())
+	##image = stats.image
+	#var img = Image.new()
+	#img.load("demon_assets/" + demonName.to_lower() + "/" + demonImages.pop_back())
+	#var texture = ImageTexture.new()
+	##image = ImageTexture.new()
+	#texture.create_from_image(img)
+	#image = texture
+	##%DemonTextureRect.texture = img
+	
+	var demonImages : Array = []
+	var dir = DirAccess.open("res://demon_assets/" + demonName.to_lower())
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			if dir.current_is_dir():
+				print("Found directory: " + file_name)
+			else:
+				if not file_name.ends_with(".import"):
+					print("Found file: " + file_name)
+					demonImages.append(file_name)
+				#else:
+					#print("Found file: " + file_name)
+			file_name = dir.get_next()
+	else:
+		print("An error occurred when trying to access the path.")
+	demonImages.shuffle()
+	#image = load("demon_assets/" + demonName.to_lower() + "/" + demonImages.pop_back())
+	
+	var image_path = "res://demon_assets/" + demonName.to_lower() + "/" + demonImages.pop_back()
+	var image1 = Image.new()
+	image1.load(image_path)
+	
+	var image_texture = ImageTexture.new()
+	image_texture.set_image(image1)
+	
+	
+	
+	image = image_texture
+	
 	description = stats.description
 
 
@@ -169,7 +236,7 @@ func _on_gui_input(event):
 
 
 func _on_demonClicked(demonNode):
-	if Data.phase == null:
+	if Data.chooseDemon:
 		if Data.player.hasFavor():
 			Data.player.favors = Data.player.favors - 1
 			RpcCalls.requestNewDemon.rpc_id(Connection.host, Data.id, demonNode.rank)

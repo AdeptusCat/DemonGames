@@ -50,7 +50,7 @@ func _on_help(subject):
 			if not helpSubjectsAlreadyDisplayed.has(Data.HelpSubjects.PetitionPhase):
 				helpSubjectsAlreadyDisplayed.append(Data.HelpSubjects.PetitionPhase)
 				showHelp = true
-	if %HelpCheckBox.button_pressed or not Settings.tooltips:
+	if not Settings.showQuickHelp or not Settings.tooltips:
 		return
 	if showHelp:
 		await get_tree().create_timer(0.5).timeout
@@ -90,3 +90,8 @@ func _on_sequence_of_play_button_pressed():
 
 func _on_help_popup_menu_index_pressed(index):
 	Signals.showSequenceOfPlayHelp.emit()
+
+
+func _on_help_check_box_toggled(toggled_on):
+	Settings.showQuickHelp = not toggled_on
+	Settings.saveSettings()

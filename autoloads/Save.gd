@@ -11,6 +11,7 @@ func newSavegame():
 
 func _ready():
 	loadProfile()
+	loadSettings()
 	Signals.resetGame.connect(_on_resetGame)
 
 
@@ -116,6 +117,49 @@ func readFilenames(dirName : String = ""):
 	else:
 		print("An error occurred when trying to access the path.")
 	return fileNames
+
+
+func saveSettings(settings : Dictionary):
+	var profileDir = DirAccess.open("user://settings/")
+	if not profileDir:
+		var userDir = DirAccess.open("user://")
+		userDir.make_dir("settings")
+	
+	var file = FileAccess.open("user://settings/settings.dat", FileAccess.WRITE)
+	var json_string = JSON.stringify(settings)
+	file.store_line(json_string)
+	file.flush()
+
+
+func loadSettings():
+	var profileDir = DirAccess.open("user://settings/")
+	if not profileDir:
+		var userDir = DirAccess.open("user://")
+		userDir.make_dir("settings")
+	
+	var file = FileAccess.open("user://settings/settings.dat", FileAccess.READ_WRITE)
+	if file:
+		var json_string = file.get_as_text()
+		var json = JSON.new()
+		var error = json.parse(json_string)
+		if error == OK:
+			var settings : Dictionary = json.data
+			Data.settings = settings
+			Settings.loadSettings()
+		else:
+			print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
+			resetProfile()
+			json_string = JSON.stringify(Data.settings)
+			file.store_line(json_string)
+			file.flush()
+	else:
+		resetSettings()
+		saveSettings(Data.settings)
+	print("settings ", Data.settings)
+
+
+func resetSettings():
+	pass
 
 
 func saveProfile(profile : Dictionary):

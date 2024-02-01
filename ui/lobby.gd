@@ -32,7 +32,16 @@ var playerIcon = preload("res://assets/icons/pentagram.png")
 var game_res_path : String = "res://game.tscn"
 @onready var thread = Thread.new() 
 
+var playerNameTextEditSelected : bool = false
+
+func _process(delta):
+	if ResourceLoader.load_threaded_get_status(game_res_path) == 3:
+		%LoadingControl.hide()
+
+
 func _ready():
+	%LoadingControl.show()
+	%RoomsTree.item_activated.connect(_on_roomDoubleClicked)
 #	if Connection.host:
 ##		if not Connection.dedicatedServer:
 ##			Connection.peers.append(1)
@@ -99,9 +108,36 @@ func _ready():
 	%SavegameTree.set_column_title(2, "Players")
 	%SavegameTree.set_column_title(3, "Turn")
 	%SavegameTree.set_column_title(4, "Phase")
-	
-	
-	
+	connectAudio()
+
+
+func connectAudio() -> void:
+	var res : Array = []
+	res = Functions.findByClass(self, "Button", res)
+	for child : Button in res:
+		if child.disabled:
+			if child.mouse_entered.is_connected(_on_mouseEntered):
+				child.mouse_entered.disconnect(_on_mouseEntered)
+		else:
+			if not child.mouse_entered.is_connected(_on_mouseEntered):
+				child.mouse_entered.connect(_on_mouseEntered)
+	for child : Button in res:
+		if child.disabled:
+			if child.pressed.is_connected(_on_buttonClicked):
+				child.pressed.disconnect(_on_buttonClicked)
+		else:
+			if not child.pressed.is_connected(_on_buttonClicked):
+				child.pressed.connect(_on_buttonClicked)
+
+
+func _on_mouseEntered():
+	$AudioManager.playMouseEntered()
+
+
+func _on_buttonClicked():
+	$AudioManager.playButtonClicked()
+
+
 #func _on_connected():
 #	Connection.fetch_players(get_instance_id())
 #	Connection.fetch_rooms(get_instance_id())
@@ -128,6 +164,7 @@ func _on_playerLeft(playerId : int):
 	var item : TreeItem = playersInLobbyTreeItems[playerId]
 	playersInLobbyTreeRoot.remove_child(item)
 	playersInLobbyTreeItems.erase(playerId)
+
 	
 #	for index in %PlayersInLobbyList.item_count:
 #		var playerNameEntry = %PlayersInLobbyList.get_item_text(index)
@@ -210,6 +247,7 @@ func _on_updateRooms(roomsDict : Dictionary, playersInGame : Array):
 			item.set_text(0, text + " (Started)")
 			item.set_selectable(0, false)
 			item.deselect(0)
+	connectAudio()
 	
 	
 #	var roomsInLobby : Array = []
@@ -296,8 +334,9 @@ func _on_roomCreated(playerId : int, roomName : String):
 		item.set_selectable(1, true)
 		item.set_text_alignment(1, HORIZONTAL_ALIGNMENT_FILL)
 		%PlayerTree.set_column_title(2, "Kick Player")
-		item.set_text(2, "Kick Player")
-		item.set_selectable(2, true)
+		item.set_text(2, "")
+		item.set_selectable(2, false)
+		
 		item.set_text_alignment(2, HORIZONTAL_ALIGNMENT_CENTER)
 		playersInRoomTreeItems[playerId] = item
 #		item.set_custom_bg_color(0, bgColor, false)
@@ -318,6 +357,7 @@ func _on_roomCreated(playerId : int, roomName : String):
 			if Tutorial.chapter == Tutorial.Chapter.Actions or Tutorial.chapter == Tutorial.Chapter.Soul or Tutorial.chapter == Tutorial.Chapter.Combat:
 				_on_add_ai_button_pressed()
 			_on_start_game_button_pressed()
+	connectAudio()
 
 
 func _on_roomClosed(playerId : int, roomName : String):
@@ -336,6 +376,7 @@ func _on_roomClosed(playerId : int, roomName : String):
 		%HostButton.disabled = false
 		%ChangePlayerNameButton.disabled = false
 		%PlayerNameTextEdit.editable = true
+	connectAudio()
 #	playerLeftRoomAudio.play()
 #	tween.interpolate_property(gapMarginContainer, "rect_min_size", Vector2(0,30), Vector2(0,300) , 0.5, Tween.TRANS_EXPO, Tween.EASE_OUT)
 #	tween.start()
@@ -451,12 +492,14 @@ func showSavegamePlayers(_playerIdNamesDict : Dictionary):
 	
 	%PlayerMenuButton.get_popup().clear()
 	%PlayerMenuButton.get_popup().index_pressed.connect(_on_PlayerMenuButton_index_pressed)
+	playerMenuButtonIndices.clear()
 	playerMenuButtonIndices[0] = 0
 	%PlayerMenuButton.get_popup().add_item("Random")
 	%PlayerMenuButton.get_popup().set_item_metadata(0, 0)
 	
 	%AiMenuButton.get_popup().clear()
 	%AiMenuButton.get_popup().index_pressed.connect(_on_AiMenuButton_index_pressed)
+	aiMenuButtonIndices.clear()
 	aiMenuButtonIndices[0] = 0
 	%AiMenuButton.get_popup().add_item("Random")
 	%AiMenuButton.get_popup().set_item_metadata(0, 0)
@@ -537,14 +580,21 @@ func change_ai(player_id : int, loaded_player_name : String, loaded_player_id : 
 func _on_start_game_button_pressed():
 	var aiPlayers : int = 0
 	var humanPlayers : int = 0
+	if not OS.has_feature("editor") and not Tutorial.tutorial:
+		if playersInRoomTreeItems.size() < 3:
+			%NotEnoughPlayersMarginContainer.show()
+			return
+	print("ids ", playersInRoomTreeItems)
 	for id in playersInRoomTreeItems:
 		if id > 0:
-			aiPlayers += 1
-		else:
 			humanPlayers += 1
+		else:
+			aiPlayers += 1
 	if loadedPlayerIdNamesDict.size() > 0:
 		if not aiPlayers == aiMenuButtonIndices.size() - 1 or not humanPlayers == playerMenuButtonIndices.size() - 1:
-			print(loadedPlayerIdNamesDict.size(), playerMenuButtonIndices.size() + aiMenuButtonIndices.size() - 2)
+			print(aiPlayers, aiMenuButtonIndices.size())
+			print(humanPlayers, playerMenuButtonIndices.size())
+			#print(loadedPlayerIdNamesDict.size(), playerMenuButtonIndices.size() + aiMenuButtonIndices.size() - 2)
 			%CannotStartMarginContainer.show()
 			return
 	Server.request_start_game.rpc_id(1, Data.id)
@@ -741,7 +791,11 @@ func _on_join_button_pressed():
 	%PlayerTree.set_column_clip_content(2, true)
 	%PlayerTree.set_column_expand(2, false)
 	Server.join_room.rpc_id(1, roomId)
-	
+
+
+func _on_roomDoubleClicked():
+	_on_join_button_pressed()
+
 
 func _on_playerjoinedRoom(roomId : int, room_name : String, player_id : int, playerIdNamesDict : Dictionary, is_ai):
 	if playersInRoomTreeItems.size() >= 6 and Connection.host == Data.id:
@@ -886,6 +940,7 @@ func _on_playerjoinedRoom(roomId : int, room_name : String, player_id : int, pla
 				if Data.id == Connection.host:
 					for playerItem in playersInRoomTreeItems.values():
 						change_color.rpc_id(playerId, playerItem.get_metadata(0), playerItem.get_text(1))
+	connectAudio()
 #		var namesToAdd = []
 #		for playerId in playerIdNamesDict:
 ##			Connection.playerIdNamesDict[playerId] = playerIdNamesDict[playerId]
@@ -917,6 +972,7 @@ func _on_playerLeftRoom(playerId : int):
 		%PlayerNameTextEdit.editable = true
 		for roomItem in roomsTreeItems.values():
 			roomItem.set_selectable(0, true)
+	connectAudio()
 #	for index in %PlayerList.item_count:
 #		var playerNameEntry = %PlayerList.get_item_text(index)
 #		if playerNameEntry == playerName:
@@ -926,6 +982,7 @@ func _on_playerLeftRoom(playerId : int):
 func _on_rooms_list_item_selected(index):
 	if not %RoomContainer.visible:
 		%JoinButton.disabled = false
+	connectAudio()
 
 
 func _on_leave_room_button_pressed():
@@ -935,6 +992,7 @@ func _on_leave_room_button_pressed():
 func _on_rooms_tree_item_selected():
 	if not %RoomContainer.visible:
 		%JoinButton.disabled = false
+	connectAudio()
 
 
 func _on_ColorMenuButton_index_pressed(index):
@@ -1040,3 +1098,22 @@ func _on_savegame_tree_item_activated():
 
 func _on_button_pressed():
 	%CannotStartMarginContainer.hide()
+
+
+func _on_not_enough_players_button_pressed():
+	%NotEnoughPlayersMarginContainer.hide()
+
+
+func _on_player_name_text_edit_focus_entered():
+	playerNameTextEditSelected = true
+
+
+func _on_player_name_text_edit_focus_exited():
+	if playerNameTextEditSelected:
+		_on_change_player_name_button_pressed()
+	playerNameTextEditSelected = false
+
+
+func _on_player_name_text_edit_text_submitted(new_text):
+	if playerNameTextEditSelected:
+		_on_change_player_name_button_pressed()

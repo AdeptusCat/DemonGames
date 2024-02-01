@@ -17,6 +17,44 @@ func startCombat(unitNames : Dictionary, sectioName : String):
 
 
 @rpc ("any_peer", "call_local")
+func showHitChance(legionNr : int, lieutenantBonus : int):
+	#var legion : Legion = Data.troops[legionNr]
+	#legion.showHitChance(lieutenantBonus)
+	Signals.showUnitAttackChance.emit(legionNr, lieutenantBonus)
+
+
+@rpc ("any_peer", "call_local")
+func hideHitChance(legionNr : int):
+	#var legion : Legion = Data.troops[legionNr]
+	#legion.hideHitChance()
+	Signals.hideUnitAttackChance.emit()
+
+
+@rpc ("any_peer", "call_local")
+func showAttackResult(legionNr : int, attackResult : int, success : bool):
+	Signals.showAttackResult.emit(legionNr, attackResult, success)
+
+
+@rpc ("any_peer", "call_local")
+func showDefendResult(legionNr : int, defendResult : int, success : bool):
+	Signals.showDefendResult.emit(legionNr, defendResult, success)
+
+
+@rpc ("any_peer", "call_local")
+func showDefendChance(legionNr : int, lieutenantBonus : int):
+	#var legion : Legion = Data.troops[legionNr]
+	#legion.showDefendChance(lieutenantBonus)
+	Signals.showUnitDefendChance.emit(legionNr, lieutenantBonus)
+
+
+@rpc ("any_peer", "call_local")
+func hideDefendChance(legionNr : int):
+	#var legion : Legion = Data.troops[legionNr]
+	#legion.hideDefendChance()
+	Signals.hideUnitDefendChance.emit()
+
+
+@rpc ("any_peer", "call_local")
 func endCombat():
 	Signals.endCombat.emit()
 
@@ -29,6 +67,11 @@ func showCombat():
 @rpc ("any_peer", "call_local")
 func hideCombat():
 	Signals.hideCombat.emit()
+
+
+@rpc ("any_peer", "call_local")
+func combatWon():
+	AudioSignals.combatWon.emit()
 
 
 @rpc ("any_peer", "call_local")
@@ -50,18 +93,28 @@ func unitsKilled(unitNamesDict : Dictionary):
 func combatPhase():
 	Signals.combatPhaseStarted.emit()
 
+
 @rpc("any_peer", "call_local")
 func combatOver():
 	Signals.combatOver.emit()
 
 
 @rpc ("any_peer", "call_local")
+func resetCamera():
+	Signals.resetCamera.emit()
+
+
+@rpc ("any_peer", "call_local")
 func moveCamera(_position : Vector2):
-	Signals.moveCamera.emit((_position))
+	Signals.moveCamera.emit(_position)
 
 
 @rpc ("any_peer", "call_local")
 func sendSectiosWithoutEnemies(sectioNames : Array):
+	# this is stupid. you cant pass a typed array properly without doing this shit
+#	var sectioNamesTyped : Array[String] = []
+#	for sectioName in sectioNames:
+#		sectioNamesTyped.append(sectioName)
 	Data.player.sectiosWithoutEnemies = sectioNames
 
 
@@ -76,6 +129,7 @@ func win(playerId):
 @rpc ("any_peer", "call_local")
 func petitionSectiosRequest(sectioNames : Array):
 	Signals.populatePetitionsContainer.emit(sectioNames)
+	AudioSignals.playerTurn.emit()
 
 
 @rpc ("any_peer", "call_local")
@@ -101,7 +155,6 @@ func occupySectio(id : int, sectio):
 	
 	Decks.sectioNodes[sectio].player = id
 	Data.players[id].addSectio(sectio)
-	print(Data.id, " adding sectio ", id, " ", sectio)
 	
 	if Data.id == Connection.host:
 		Signals.incomeChanged.emit(id)
@@ -121,7 +174,7 @@ func addArcanaCard(id, cardName):
 	# this was used in the naming of the card
 	# to be able to habe multiple cards of the same type
 	# weird huh
-	var cardReference = Decks.arcanaCardsReference[cardName.strip_edges(false, true)]
+	var cardReference : Dictionary = Decks.arcanaCardsReference[cardName.strip_edges(false, true)]
 	# add only the cardName : cardReference to the dict, 
 	# and overwrite the dict for the actual player with 
 	# cardName : cardNode
@@ -131,7 +184,10 @@ func addArcanaCard(id, cardName):
 	# some cards are twice in the game
 	# solution is to give the second card a whitespace at the end
 	# this gets removed with 'strip_edges' if the referenceCard is needed
-	Data.arcanaCards[cardName] = cardReference
+	var newCardReference : Dictionary = {}
+	for key in cardReference:
+		newCardReference[key] = int(cardReference[key])
+	Data.arcanaCards[cardName] = newCardReference
 	if Data.id == id:
 		Signals.addArcanaCardToUi.emit(id, cardName)
 		if Data.phase == Data.phases.Summoning:
@@ -143,6 +199,7 @@ func addArcanaCard(id, cardName):
 @rpc("any_peer", "call_local")
 func checkEndPhaseCondition():
 	if Data.player.arcanaCards.size() > 5:
+		Signals.showArcanaCardsContainer.emit()
 		Data.player.discardModeArcanaCard()
 		Signals.toggleDiscardArcanaCardControl.emit(true)
 		Signals.toggleEndPhaseButton.emit(false)
@@ -151,16 +208,18 @@ func checkEndPhaseCondition():
 			Data.arcanaCardNodes[cardName].disable()
 		Signals.toggleRecruitLegionsButtonEnabled.emit(false)
 	else:
+		Signals.hideArcanaCardsContainer.emit()
 		Data.player.checkPlayerSummoningCapabilities()
 		Signals.toggleDiscardArcanaCardControl.emit(false)
 		Signals.toggleEndPhaseButton.emit(true)
 		
 
 @rpc("any_peer", "call_local")
-func updatePhaseLabel(phase, phaseText):
+func updatePhaseLabel(phase : int, phaseText : String):
 	Data.phase = phase
 	Signals.phaseReminder.emit(phaseText)
 	Signals.phaseDescription.emit(phase, phaseText)
+	AudioSignals.phaseChange.emit(phase)
 
 
 @rpc("any_peer", "call_local")
@@ -183,7 +242,6 @@ func phaseStart(phase : Data.phases):
 	if phase == Data.phases.Summoning:
 	#	Signals.toogleBuyLieutenant.emit(true)
 		Signals.toogleTameHellhoundContainer.emit(true)
-		Signals.toogleBuyLieutenant.emit(true)
 		RpcCalls.checkEndPhaseCondition()
 	#	toogleBuyArcanaCard(true)
 		Data.player.checkPlayerSummoningCapabilities(0)
@@ -192,6 +250,8 @@ func phaseStart(phase : Data.phases):
 		Data.player.sectiosWithoutEnemiesLeft = Data.player.sectiosWithoutEnemies.duplicate()
 		
 		Signals.help.emit(Data.HelpSubjects.SummoningPhase)
+		
+		AudioSignals.playerTurn.emit()
 
 
 @rpc ("any_peer", "call_local")
@@ -215,8 +275,9 @@ func sendSoulSummary(soulSummary : Dictionary):
 		var rank = soulSummary[Data.id]["earth"][demonName]["rank"]
 		var demon : Demon = Data.demons[rank]
 		
-		Signals.tutorial.emit(Tutorial.Topic.Soul, "'" + demon.demonName + "' is one of your Demons on Earth and gathers Souls and a Favor each Turn. \nThe amount of Souls gathered depends on the amount of Hearts of the Demon.")
-		await Signals.tutorialRead
+		if Tutorial.tutorial:
+			Signals.tutorial.emit(Tutorial.Topic.Soul, "'" + demon.demonName + "' is one of your Demons on Earth and gathers Souls and a Favor each Turn. \nThe amount of Souls gathered depends on the amount of Hearts of the Demon.")
+			await Signals.tutorialRead
 		
 		demon.showSoulsGathered(souls, favors)
 		await Signals.animationDone
@@ -229,15 +290,16 @@ func sendSoulSummary(soulSummary : Dictionary):
 		Signals.moveCamera.emit(sectio.global_position)
 		await Signals.doneMoving
 		
-		match sectioNr:
-			0: 
-				Signals.tutorial.emit(Tutorial.Topic.Soul, "'" + sectioName + "' is one of your Sectios and generates three Souls each Soul Phase.")
-			1:
-				Signals.tutorial.emit(Tutorial.Topic.Soul, "In '" + sectioName + "' is an enemy Unit inside, so it generates no Souls until there is no enemy Unit present.")
-			2:
-				Signals.tutorial.emit(Tutorial.Topic.Soul, "'" + sectioName + "' has no friendly Sectio adjacent. So it generates two Souls less, until it is connected with another friendly Sectio.")
-		sectioNr += 1
-		await Signals.tutorialRead
+		if Tutorial.tutorial:
+			match sectioNr:
+				0: 
+					Signals.tutorial.emit(Tutorial.Topic.Soul, "'" + sectioName + "' is one of your Sectios and generates three Souls each Soul Phase.")
+				1:
+					Signals.tutorial.emit(Tutorial.Topic.Soul, "In '" + sectioName + "' is an enemy Unit inside, so it generates no Souls until there is no enemy Unit present.")
+				2:
+					Signals.tutorial.emit(Tutorial.Topic.Soul, "'" + sectioName + "' has no friendly Sectio adjacent. So it generates two Souls less, until it is connected with another friendly Sectio.")
+			sectioNr += 1
+			await Signals.tutorialRead
 		
 		sectio.showSoulsGathered(souls)
 		await Signals.animationDone
@@ -248,8 +310,9 @@ func sendSoulSummary(soulSummary : Dictionary):
 		Signals.moveCamera.emit(unit.global_position)
 		await Signals.doneMoving
 		
-		Signals.tutorial.emit(Tutorial.Topic.Soul, "Every Unit you own costs you one Soul per Turn.")
-		await Signals.tutorialRead
+		if Tutorial.tutorial:
+			Signals.tutorial.emit(Tutorial.Topic.Soul, "Every Unit you own costs you one Soul per Turn.")
+			await Signals.tutorialRead
 		
 		unit.showSoulsPaid(souls)
 		await Signals.animationDone
@@ -257,7 +320,9 @@ func sendSoulSummary(soulSummary : Dictionary):
 	Signals.resetCamera.emit()
 	print("w1 ",Connection.host)
 	doneGatheringSouls.rpc_id(Connection.host)
-	
+
+
+
 
 
 @rpc ("any_peer", "call_local")
@@ -284,8 +349,8 @@ func showArcanaCardsContainer():
 
 
 @rpc("any_peer", "call_local")
-func showPlayerStatusMarginContainer():
-	Signals.showPlayerStatusMarginContainer.emit()
+func hideArcanaCardsContainer():
+	Signals.hideArcanaCardsContainer.emit()
 
 
 @rpc("any_peer", "call_local")
@@ -327,9 +392,7 @@ func petitionsDone():
 @rpc("any_peer", "call_local")
 func discardArcanaCard(arcanaCardName, playerId):
 	var player = Data.players[playerId]
-	print("erase arcana 1 ", arcanaCardName, " ", player.arcanaCards)
 	player.arcanaCards.erase(arcanaCardName)
-	print("erase arcana 2 ", arcanaCardName, " ", player.arcanaCards)
 
 
 @rpc("any_peer", "call_local")
@@ -505,3 +568,14 @@ func demonAction(demonRank : int, action : String):
 @rpc("any_peer", "call_local")
 func updateTurnTrack(turn : int):
 	Signals.updateTurnTrack.emit(turn)
+
+
+@rpc("any_peer", "call_local")
+func sendCombatSectios(battleSectiosNames : Array):
+	Signals.showCombatSectios.emit(battleSectiosNames)
+
+
+@rpc("any_peer", "call_local")
+func hideCombatSectios():
+	Signals.hideCombatSectios.emit()
+

@@ -9,6 +9,8 @@
 resource_local_to_scene = true
 shader = ExtResource("1_5cx53")
 shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_color_default = Color(1, 1, 1, 1)
+shader_parameter/shine_color_for_deletion = Color(1, 0, 0, 1)
 shader_parameter/shine_speed = 5.0
 shader_parameter/shine_size = 0.01
 shader_parameter/active = false

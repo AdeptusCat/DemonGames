@@ -1,4 +1,4 @@
-[gd_scene load_steps=139 format=3 uid="uid://b577200ddlglu"]
+[gd_scene load_steps=140 format=3 uid="uid://b577200ddlglu"]
 
 [ext_resource type="Script" path="res://map.gd" id="1_do3gg"]
 [ext_resource type="PackedScene" uid="uid://0jxmw3vgonen" path="res://sectio.tscn" id="1_kah8n"]
@@ -27,6 +27,7 @@
 vertices = PackedVector2Array(3809, -1321, 4071, 2801, -1392, 2731, -1574, -1241)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-1574, -1241, -1392, 2731, 4071, 2801, 3809, -1321)])
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [sub_resource type="Gradient" id="Gradient_m4tf3"]
 offsets = PackedFloat32Array(0, 0.508834, 1)
@@ -1619,6 +1620,15 @@ shader_parameter/NOISE_PATTERN2 = SubResource("NoiseTexture2D_b3dg4")
 shader_parameter/TONE_MAPPING = SubResource("GradientTexture1D_5dbwc")
 shader_parameter/distortion_noise = SubResource("NoiseTexture2D_4ui5o")
 
+[sub_resource type="Environment" id="Environment_cwa1g"]
+background_mode = 3
+tonemap_mode = 3
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 1.14
+glow_bloom = 0.16
+glow_blend_mode = 0
+
 [node name="Map" type="Node2D"]
 script = ExtResource("1_do3gg")
 
@@ -2365,7 +2375,8 @@ material = SubResource("ShaderMaterial_sgioc")
 scale = Vector2(1.35, 1.35)
 texture = ExtResource("27_tb867")
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
+[node name="PentagramSprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
 texture_filter = 4
 texture_repeat = 2
 material = SubResource("ShaderMaterial_37onp")
@@ -2393,7 +2404,8 @@ position = Vector2(-872, 794)
 position = Vector2(-900, 288)
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
-energy = 0.5
+visible = false
+energy = 5.0
 range_item_cull_mask = 2
 height = 0.1
 
@@ -2412,6 +2424,13 @@ height = 100.0
 
 [node name="MouseLights" type="Node2D" parent="."]
 unique_name_in_owner = true
+
+[node name="DirectionalLight2D2" type="DirectionalLight2D" parent="."]
+energy = 1.3
+height = 1.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_cwa1g")
 
 [connection signal="timeout" from="LightningTimer" to="." method="_on_lightning_timer_timeout"]
 

@@ -29,6 +29,24 @@ var local = true
 func _ready():
 	Signals.resetGame.connect(_on_resetGame)
 	Signals.returnToMainMenu.connect(_on_returnToMainMenu)
+	Server.playerLeft.connect(_on_playerLeft)
+
+
+func _on_playerLeft(playerId : int):
+	if Data.players.has(playerId):
+		print("player left game")
+
+
+func isAiPlayer(playerId) -> bool:
+	if playerId < 0:
+		return true
+	else:
+		return false
+
+
+func sendToPeers(function : Callable):
+	for peer in Connection.peers:
+		function.rpc_id(peer)
 
 
 func _on_returnToMainMenu():
@@ -69,14 +87,18 @@ func connectToServer():
 		network.create_client("localhost", port)
 	else:
 		network.create_client("adeptuscat.ddns.net", port)
+		#network.create_client("217.160.68.18", port)
 	multiplayer.multiplayer_peer = network
 	Data.id = multiplayer.get_unique_id()
 	print("client started ", Data.id)
+	if not multiplayer.connection_failed.is_connected(_on_connection_failed):
+		multiplayer.connection_failed.connect(_on_connection_failed)
+	if not multiplayer.connected_to_server.is_connected(_on_connection_succeeded):
+		multiplayer.connected_to_server.connect(_on_connection_succeeded)
 #	network.peer_connected.connect(func(id): peer_connected(id))
 #	network.peer_disconnected.connect(func(id): peer_disconnected(id))
-	multiplayer.connection_failed.connect(_on_connection_failed)
-	multiplayer.connected_to_server.connect(_on_connection_succeeded)
 #	multiplayer.server_disconnected.connect(_on_server_disconnected)
+
 
 func _on_connection_failed():
 	connected = false

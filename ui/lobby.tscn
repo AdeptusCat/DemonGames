@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://b7y4cij5ot22h"]
+[gd_scene load_steps=7 format=3 uid="uid://b7y4cij5ot22h"]
 
 [ext_resource type="Theme" uid="uid://dw2pduwrnp3pj" path="res://themes/main_menu_theme.tres" id="1_5y7u2"]
 [ext_resource type="Script" path="res://ui/lobby.gd" id="2_lashc"]
 [ext_resource type="Texture2D" uid="uid://33vjdhmtldwa" path="res://assets/boot_splash/generals around table 2.png" id="3_8adfg"]
 [ext_resource type="PackedScene" uid="uid://7p3kfgl06d7y" path="res://ui/frame_margin_container.tscn" id="4_r0tsw"]
 [ext_resource type="PackedScene" uid="uid://dm6xoflw4305t" path="res://ui/frame_background_margin_container.tscn" id="4_ueai2"]
+[ext_resource type="PackedScene" uid="uid://ckmppydi7lfq8" path="res://audio_manager.tscn" id="6_hh8s0"]
 
 [node name="LobbyControl" type="Control"]
 layout_mode = 3
@@ -324,8 +325,7 @@ hide_root = true
 [node name="HostButton" type="Button" parent="LobbyContainer/VBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Host
-"
+text = "Host"
 
 [node name="JoinButton" type="Button" parent="LobbyContainer/VBoxContainer2"]
 unique_name_in_owner = true
@@ -344,11 +344,18 @@ layout_mode = 2
 text = "Change Player Name
 "
 
-[node name="PlayerNameTextEdit" type="TextEdit" parent="LobbyContainer/VBoxContainer2/HBoxContainer2"]
-unique_name_in_owner = true
+[node name="PlayerNameTextEditOld" type="TextEdit" parent="LobbyContainer/VBoxContainer2/HBoxContainer2"]
+visible = false
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 placeholder_text = "Player Name"
+
+[node name="PlayerNameTextEdit" type="LineEdit" parent="LobbyContainer/VBoxContainer2/HBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+placeholder_text = "Player  Name"
+max_length = 25
 
 [node name="BackButton" type="Button" parent="LobbyContainer/VBoxContainer2"]
 layout_mode = 2
@@ -520,6 +527,50 @@ text = "Ok"
 [node name="FrameMarginContainer" parent="CannotStartMarginContainer" instance=ExtResource("4_r0tsw")]
 layout_mode = 2
 
+[node name="NotEnoughPlayersMarginContainer" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -84.5
+offset_right = 500.0
+offset_bottom = 84.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FrameBackgroundMarginContainer" parent="NotEnoughPlayersMarginContainer" instance=ExtResource("4_ueai2")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="NotEnoughPlayersMarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 80
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NotEnoughPlayersMarginContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="NotEnoughPlayersMarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "There have to be at least three Players (inkl. AI) in the Room to start the Game. 
+Add some AI Players if you dont have enough human Players"
+horizontal_alignment = 1
+
+[node name="NotEnoughPlayersButton" type="Button" parent="NotEnoughPlayersMarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "OK"
+
+[node name="FrameMarginContainer" parent="NotEnoughPlayersMarginContainer" instance=ExtResource("4_r0tsw")]
+layout_mode = 2
+
+[node name="AudioManager" parent="." instance=ExtResource("6_hh8s0")]
+
 [connection signal="item_selected" from="LobbyContainer/VBoxContainer2/HBoxContainer/RoomsListContainer/MarginContainer/VBoxContainer/RoomsList" to="." method="_on_rooms_list_item_selected"]
 [connection signal="item_selected" from="LobbyContainer/VBoxContainer2/HBoxContainer/RoomsListContainer/MarginContainer/VBoxContainer/RoomsTree" to="." method="_on_rooms_tree_item_selected"]
 [connection signal="item_selected" from="LobbyContainer/VBoxContainer2/HBoxContainer/RoomContainer/HBoxContainer/PlayersContainer/MarginContainer/MarginContainer/PlayerTree" to="." method="_on_player_tree_item_selected"]
@@ -530,8 +581,12 @@ layout_mode = 2
 [connection signal="pressed" from="LobbyContainer/VBoxContainer2/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="LobbyContainer/VBoxContainer2/JoinButton" to="." method="_on_join_button_pressed"]
 [connection signal="pressed" from="LobbyContainer/VBoxContainer2/HBoxContainer2/ChangePlayerNameButton" to="." method="_on_change_player_name_button_pressed"]
+[connection signal="focus_entered" from="LobbyContainer/VBoxContainer2/HBoxContainer2/PlayerNameTextEdit" to="." method="_on_player_name_text_edit_focus_entered"]
+[connection signal="focus_exited" from="LobbyContainer/VBoxContainer2/HBoxContainer2/PlayerNameTextEdit" to="." method="_on_player_name_text_edit_focus_exited"]
+[connection signal="text_submitted" from="LobbyContainer/VBoxContainer2/HBoxContainer2/PlayerNameTextEdit" to="." method="_on_player_name_text_edit_text_submitted"]
 [connection signal="pressed" from="LobbyContainer/VBoxContainer2/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="item_activated" from="LoadSavegameContainer/VBoxContainer2/HBoxContainer/SavegameTree" to="." method="_on_savegame_tree_item_activated"]
 [connection signal="pressed" from="LoadSavegameContainer/VBoxContainer2/HBoxContainer/VBoxContainer/SelectSavegameButton" to="." method="_on_select_savegame_button_pressed"]
 [connection signal="pressed" from="LoadSavegameContainer/VBoxContainer2/HBoxContainer/VBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]
 [connection signal="pressed" from="CannotStartMarginContainer/MarginContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="NotEnoughPlayersMarginContainer/MarginContainer/VBoxContainer/NotEnoughPlayersButton" to="." method="_on_not_enough_players_button_pressed"]

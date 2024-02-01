@@ -1,10 +1,72 @@
 extends Control
 
 
+
 func _ready():
 	%TutorialMenuButton.get_popup().id_pressed.connect(_on_TutorialMenuButton_id_pressed)
 	for chapter in Tutorial.Chapter.values():
 		%TutorialMenuButton.get_popup().add_item(Tutorial.chapterNames[chapter], chapter)
+	
+	#var demonName : String = "Andras"
+	#var demonImages : Array = []
+	#var dir = DirAccess.open("res://demon_assets/" + demonName.to_lower() )#+ demonName
+	##var dir = DirAccess.open("res://")
+	#print("res://demon_assets/" + demonName.to_lower() )
+	#print(dir)
+	#print(demonName)
+	#if dir:
+		#dir.list_dir_begin()
+		#var file_name = dir.get_next()
+		#while file_name != "":
+			#if dir.current_is_dir():
+				#print("Found directory: " + file_name)
+			#else:
+				##if not file_name.ends_with(".import"):
+					##print("Found file: " + file_name)
+					##demonImages.append(file_name)
+				#demonImages.append(file_name)
+				#print("Found file: " + file_name)
+				##else:
+					##print("Found file: " + file_name)
+			#file_name = dir.get_next()
+	#else:
+		#print("An error occurred when trying to access the path.")
+	#demonImages.shuffle()
+	#print(demonImages)
+	#print("demon_assets/" + demonName.to_lower() + "/" + demonImages.pop_back())
+	##var image = load("demon_assets/" + demonName.to_lower() + "/" + demonImages.pop_back())
+	#var img = Image.new()
+	#img.load("res://00354-3473751642.png")
+	#var texture = ImageTexture.new()
+	#texture.create_from_image(img)
+	connectAudio()
+
+
+func connectAudio() -> void:
+	var res : Array = []
+	res = Functions.findByClass(self, "Button", res)
+	for child : Button in res:
+		if child.disabled:
+			if child.mouse_entered.is_connected(_on_mouseEntered):
+				child.mouse_entered.disconnect(_on_mouseEntered)
+		else:
+			if not child.mouse_entered.is_connected(_on_mouseEntered):
+				child.mouse_entered.connect(_on_mouseEntered)
+	for child : Button in res:
+		if child.disabled:
+			if child.pressed.is_connected(_on_buttonClicked):
+				child.pressed.disconnect(_on_buttonClicked)
+		else:
+			if not child.pressed.is_connected(_on_buttonClicked):
+				child.pressed.connect(_on_buttonClicked)
+
+
+func _on_mouseEntered():
+	$AudioManager.playMouseEntered()
+
+
+func _on_buttonClicked():
+	$AudioManager.playButtonClicked()
 
 
 func _on_TutorialMenuButton_id_pressed(id):
@@ -18,6 +80,9 @@ func _on_host_game_button_pressed():
 #	Connection.startLocalServer()
 	Main.StartServer()
 	get_tree().change_scene_to_file("res://ui/lobby.tscn")
+	
+	#var lobby = load("res://ui/lobby.tscn")
+	#get_tree().change_scene_to_packed(lobby)
 	
 #	get_tree().change_scene_to_file("res://ui/lobby.tscn")
 
@@ -60,6 +125,3 @@ func _on_reddit_button_2_pressed():
 	OS.shell_open("https://discord.gg/AXhbqHNjhm")
 
 
-func _on_tutorial_button_pressed():
-	Tutorial.tutorial = true
-	_on_host_game_button_pressed()

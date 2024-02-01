@@ -18,7 +18,11 @@ func _ready():
 	unitType = Data.UnitType.Lieutenant
 	maxSectiosMoved = 3
 	marginContainer.populate(unitName, lieutenantTextureDir, str(combatBonus), str(capacity), triumphirate)
-
+	
+	# to avoid trying to get navigation path before navigation is initalized
+	set_physics_process(false)
+	await get_tree().process_frame
+	set_physics_process(true)
 
 func saveGame():
 	var save_dict = {"lieutenants" : {unitNr : {

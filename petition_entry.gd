@@ -1,7 +1,7 @@
 extends HBoxContainer
 
 signal reply(boolean)
-var sectioName = ""
+var sectioName : String = ""
 
 func populate(_sectioName : String, souls : String):
 	sectioName = _sectioName

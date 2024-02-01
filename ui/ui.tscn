@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://d00aywoo0y4ld"]
+[gd_scene load_steps=52 format=3 uid="uid://d00aywoo0y4ld"]
 
 [ext_resource type="Script" path="res://ui/ui.gd" id="1_o55j0"]
 [ext_resource type="Theme" uid="uid://ct12aengaa7cl" path="res://themes/default_theme.tres" id="2_q6b3g"]
@@ -9,8 +9,10 @@
 [ext_resource type="Script" path="res://phase_container.gd" id="7_206wb"]
 [ext_resource type="Script" path="res://phase_reminder_container.gd" id="8_ehym6"]
 [ext_resource type="Script" path="res://do_evil_deeds_control.gd" id="9_3mgu2"]
+[ext_resource type="Shader" path="res://materials_shaders/shine_highlight_button.gdshader" id="10_bh8fp"]
 [ext_resource type="Script" path="res://ui/actions.gd" id="10_vmoye"]
 [ext_resource type="Script" path="res://ui/CombatControl.gd" id="11_35now"]
+[ext_resource type="Shader" path="res://materials_shaders/shine_highlight.gdshader" id="11_atr4v"]
 [ext_resource type="Script" path="res://ui/combat_participants_control.gd" id="12_8pkit"]
 [ext_resource type="Script" path="res://flee_control.gd" id="13_ocgbx"]
 [ext_resource type="Script" path="res://soul_summary_control.gd" id="14_mkbg2"]
@@ -33,6 +35,100 @@
 [ext_resource type="Script" path="res://ui/help_sequence_of_play_container.gd" id="30_54wyv"]
 [ext_resource type="Script" path="res://ui/goal_margin_container.gd" id="32_4llok"]
 [ext_resource type="PackedScene" uid="uid://bnipkihjqnak" path="res://ui/tutorial_margin_container.tscn" id="33_0fyc6"]
+[ext_resource type="Script" path="res://ui/phases_container.gd" id="35_vehc2"]
+[ext_resource type="Script" path="res://ui/CombatOverviewMarginContainer.gd" id="37_2s8h0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2yxpw"]
+bg_color = Color(0.372549, 0.372549, 0.372549, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_42ncp"]
+bg_color = Color(0.372549, 0.372549, 0.372549, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5u6ho"]
+shader = ExtResource("10_bh8fp")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_speed = 5.0
+shader_parameter/shine_size = 0.01
+shader_parameter/active = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q7xpk"]
+shader = ExtResource("10_bh8fp")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_speed = 5.0
+shader_parameter/shine_size = 0.01
+shader_parameter/active = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yfeb6"]
+shader = ExtResource("10_bh8fp")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_speed = 5.0
+shader_parameter/shine_size = 0.01
+shader_parameter/active = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i8445"]
+shader = ExtResource("10_bh8fp")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_speed = 5.0
+shader_parameter/shine_size = 0.01
+shader_parameter/active = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w6yy2"]
+shader = ExtResource("10_bh8fp")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_speed = 5.0
+shader_parameter/shine_size = 0.01
+shader_parameter/active = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sylf8"]
+shader = ExtResource("10_bh8fp")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_speed = 5.0
+shader_parameter/shine_size = 0.01
+shader_parameter/active = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vrvro"]
+shader = ExtResource("10_bh8fp")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_speed = 5.0
+shader_parameter/shine_size = 0.01
+shader_parameter/active = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m67av"]
+shader = ExtResource("10_bh8fp")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_speed = 5.0
+shader_parameter/shine_size = 0.01
+shader_parameter/active = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8dg5y"]
+shader = ExtResource("11_atr4v")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_color_default = Color(1, 1, 1, 1)
+shader_parameter/shine_color_for_deletion = Color(1, 0, 0, 1)
+shader_parameter/shine_speed = 5.0
+shader_parameter/shine_size = 0.01
+shader_parameter/active = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6w3pa"]
+shader = ExtResource("10_bh8fp")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_speed = 1.0
+shader_parameter/shine_size = 0.01
+shader_parameter/active = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lvntu"]
+shader = ExtResource("10_bh8fp")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_speed = 5.0
+shader_parameter/shine_size = 0.01
+shader_parameter/active = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bpobq"]
+shader = ExtResource("10_bh8fp")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_speed = 5.0
+shader_parameter/shine_size = 0.01
+shader_parameter/active = false
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_o55j0")
@@ -214,7 +310,8 @@ script = ExtResource("6_j34ga")
 
 [node name="ColorRect" type="ColorRect" parent="Control/RankTrackMarginContainer/RankTrack"]
 layout_mode = 2
-mouse_filter = 1
+mouse_filter = 2
+mouse_default_cursor_shape = 1
 color = Color(0.0627451, 0.0627451, 0.0627451, 0.709804)
 
 [node name="MarginContainer" type="MarginContainer" parent="Control/RankTrackMarginContainer/RankTrack"]
@@ -225,7 +322,9 @@ layout_mode = 2
 
 [node name="CurrentActionLabel" type="Label" parent="Control/RankTrackMarginContainer/RankTrack/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
+mouse_filter = 1
 theme_override_font_sizes/font_size = 20
 text = "Current Player"
 horizontal_alignment = 1
@@ -233,12 +332,14 @@ vertical_alignment = 1
 
 [node name="CurrentDemonTree" type="Tree" parent="Control/RankTrackMarginContainer/RankTrack/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(450, 100)
 layout_mode = 2
 mouse_filter = 1
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 20
+theme_override_styles/panel = SubResource("StyleBoxFlat_2yxpw")
 columns = 4
 column_titles_visible = true
 allow_reselect = true
@@ -250,6 +351,7 @@ scroll_vertical_enabled = false
 [node name="Label" type="Label" parent="Control/RankTrackMarginContainer/RankTrack/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+mouse_filter = 1
 theme_override_font_sizes/font_size = 20
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -262,6 +364,7 @@ mouse_filter = 1
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 20
+theme_override_styles/panel = SubResource("StyleBoxFlat_42ncp")
 columns = 4
 column_titles_visible = true
 allow_reselect = true
@@ -271,8 +374,99 @@ hide_root = true
 [node name="FrameMarginContainer" parent="Control/RankTrackMarginContainer" instance=ExtResource("26_vv66b")]
 layout_mode = 2
 
+[node name="SectioPreviewMarginContainer" type="MarginContainer" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -282.0
+offset_top = -47.0
+offset_bottom = 47.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/SectioPreviewMarginContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("3_mnku2")
+stretch_mode = 6
+
+[node name="ColorRect" type="ColorRect" parent="Control/SectioPreviewMarginContainer"]
+layout_mode = 2
+color = Color(0.14902, 0.14902, 0.14902, 0.815686)
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/SectioPreviewMarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/SectioPreviewMarginContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="SectioTextureRect" type="TextureRect" parent="Control/SectioPreviewMarginContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="UnitsVBoxContainer" type="VBoxContainer" parent="Control/SectioPreviewMarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="NamePreviewLabel" type="Label" parent="Control/SectioPreviewMarginContainer/MarginContainer/HBoxContainer/UnitsVBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Sectio Name"
+horizontal_alignment = 1
+
+[node name="CirclePreviewLabel" type="Label" parent="Control/SectioPreviewMarginContainer/MarginContainer/HBoxContainer/UnitsVBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/SectioPreviewMarginContainer/MarginContainer/HBoxContainer/UnitsVBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="SoulsPreviewLabel1" type="Label" parent="Control/SectioPreviewMarginContainer/MarginContainer/HBoxContainer/UnitsVBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Souls per Turn:"
+
+[node name="SoulsPreviewLabel2" type="Label" parent="Control/SectioPreviewMarginContainer/MarginContainer/HBoxContainer/UnitsVBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="YourUnitsPreviewHBoxContainer" type="HBoxContainer" parent="Control/SectioPreviewMarginContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="EnemyPreviewUnitsHBoxContainer" type="HBoxContainer" parent="Control/SectioPreviewMarginContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="Control"]
+layout_mode = 2
+offset_right = 58.0
+offset_bottom = 20.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
 [node name="PlayerStatusMarginContainer" type="MarginContainer" parent="Control"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -306,84 +500,13 @@ size_flags_horizontal = 8
 alignment = 1
 
 [node name="SectioPreviewControl" type="Control" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="SectioPreviewMarginContainer" type="MarginContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_right = 282.0
-offset_bottom = 94.0
-
-[node name="TextureRect" type="TextureRect" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer"]
-visible = false
-layout_mode = 2
-texture = ExtResource("3_mnku2")
-stretch_mode = 6
-
-[node name="ColorRect" type="ColorRect" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer"]
-layout_mode = 2
-color = Color(0.14902, 0.14902, 0.14902, 0.815686)
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer/MarginContainer"]
-layout_mode = 2
-
-[node name="SectioTextureRect" type="TextureRect" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer/MarginContainer/HBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(130, 0)
-layout_mode = 2
-expand_mode = 1
-stretch_mode = 5
-
-[node name="UnitsVBoxContainer" type="VBoxContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="NamePreviewLabel" type="Label" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer/MarginContainer/HBoxContainer/UnitsVBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Sectio Name"
-horizontal_alignment = 1
-
-[node name="CirclePreviewLabel" type="Label" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer/MarginContainer/HBoxContainer/UnitsVBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-horizontal_alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer/MarginContainer/HBoxContainer/UnitsVBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="SoulsPreviewLabel1" type="Label" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer/MarginContainer/HBoxContainer/UnitsVBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Souls per Turn:"
-
-[node name="SoulsPreviewLabel2" type="Label" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer/MarginContainer/HBoxContainer/UnitsVBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="YourUnitsPreviewHBoxContainer" type="HBoxContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer/MarginContainer/HBoxContainer"]
-unique_name_in_owner = true
-clip_contents = true
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 1
-
-[node name="EnemyPreviewUnitsHBoxContainer" type="HBoxContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SectioPreviewControl/SectioPreviewMarginContainer/MarginContainer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 1
-
 [node name="StatusControl" type="Control" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/StatusControl"]
@@ -393,6 +516,7 @@ anchor_right = 1.0
 grow_horizontal = 2
 
 [node name="PlayerControl" type="MarginContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 0
 
@@ -412,18 +536,6 @@ theme_override_constants/margin_bottom = 10
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/PlayerControl/MarginContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/PlayerControl/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/PlayerControl/MarginContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-text = "Turn: "
-
-[node name="TurnLabel" type="Label" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/PlayerControl/MarginContainer/VBoxContainer/HBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "1"
-
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/PlayerControl/MarginContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
@@ -436,12 +548,9 @@ text = "Triumphirate of : "
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="PlayersTree" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/PlayerControl/MarginContainer/VBoxContainer" instance=ExtResource("6_2gjeq")]
-unique_name_in_owner = true
-layout_mode = 2
-
 [node name="PhaseMarginContainer" type="MarginContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 script = ExtResource("7_206wb")
 
@@ -512,24 +621,27 @@ layout_mode = 2
 
 [node name="RecruitLegionsButton" type="Button" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_5u6ho")
 layout_mode = 2
 tooltip_text = "Legions can be spawned inside Sectios that are owned by your Triumphirate and not occupied by enemy units."
-text = "Recuit Legions for 3 Souls each
-"
+text = "Recuit Legions for 3 Souls each"
 
 [node name="BuyArcanaCardButton" type="Button" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_q7xpk")
 layout_mode = 2
 tooltip_text = "Chose one between three cards."
 text = "Buy Arcana Card for 5 Souls"
 
 [node name="EndPhaseButton" type="Button" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_yfeb6")
 layout_mode = 2
 text = "End Summoning Phase"
 metadata/_edit_use_anchors_ = true
 
-[node name="CheckButton" type="CheckButton" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer"]
+[node name="AvailableLieutenantsCheckButton" type="CheckButton" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Show available Lieutenants"
 alignment = 1
@@ -538,6 +650,10 @@ alignment = 1
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 script = ExtResource("10_vmoye")
 
 [node name="BackToHellConfirmationDialog" type="ConfirmationDialog" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions"]
@@ -560,6 +676,7 @@ layout_mode = 2
 
 [node name="MarchButton" type="Button" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/MarchHBoxContainer"]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_i8445")
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Move one Unit per Skull. A Legion may move two Sectios and a Lieutenant three Sectios."
@@ -574,6 +691,7 @@ layout_mode = 2
 
 [node name="WalkTheEarthButton" type="Button" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/WalkTheEarthHBoxContainer"]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_w6yy2")
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Use a 'Walk the Earth' Arcana Card to send the Demon to Earth to collect Souls and earn Favors. "
@@ -585,27 +703,32 @@ layout_mode = 2
 
 [node name="PassButton" type="Button" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_sylf8")
 layout_mode = 2
 tooltip_text = "Use a Pass Arcana Card to delay the Demon's turn. Sometimes its good to know what your enemy does before its your turn."
 text = "Pass"
 
 [node name="PassForGoodButton" type="Button" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_vrvro")
 layout_mode = 2
 tooltip_text = "Take no action this turn with this Demon."
 text = "PassForGood"
 
 [node name="DoEvilDeedsButton" type="Button" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_m67av")
 layout_mode = 2
 tooltip_text = "Earn Favors while on Earth."
 text = "DoEvilDeeds"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="ConspireButton" type="Button" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_8dg5y")
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Conspire against the Hell Deck (not implemented)."
@@ -613,23 +736,116 @@ text = "Conspire"
 
 [node name="InfluenceUnitsButton" type="Button" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_6w3pa")
 layout_mode = 2
 tooltip_text = "Try to influence the Units of other Players to either disband or change allegiance. More Hearts, higher chance to succeed. Influencing Units that are in their own Sectio will cost a Favor. (Not implemented)"
 text = "InfluenceUnits"
 
 [node name="AtonementAndSuplicationButton" type="Button" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_lvntu")
 layout_mode = 2
 tooltip_text = "Try to get rid of Disfavors."
 text = "AtonementAndSuplication"
 
 [node name="UseMagicButton" type="Button" parent="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_bpobq")
 layout_mode = 2
 tooltip_text = "Play Arcana Cards that affect Units, Demons or Sectios."
 text = "UseMagic"
 
 [node name="FrameMarginContainer" parent="Control/PlayerStatusMarginContainer" instance=ExtResource("26_vv66b")]
+layout_mode = 2
+
+[node name="CardsControl" type="Control" parent="Control"]
+layout_mode = 2
+anchors_preset = 0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 970.0
+offset_top = 1040.0
+offset_right = 970.0
+offset_bottom = 1040.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="DemonCardsMarginContainer" type="MarginContainer" parent="Control/CardsControl"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = -1662.0
+offset_top = -2077.0
+offset_right = -1191.0
+offset_bottom = -1957.0
+script = ExtResource("27_q5h8k")
+
+[node name="FrameBackgroundMarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer" instance=ExtResource("25_jfpsm")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="DemonVBoxContainer" type="VBoxContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 1
+
+[node name="DemonHBoxContainer" type="HBoxContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ColorRect" type="ColorRect" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/MarginContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 0.501961)
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="DemonHeaderLabel" type="Label" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/MarginContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "Demons of your Triumphirat"
+horizontal_alignment = 1
+
+[node name="CollapseButton" type="Button" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 1
+
+[node name="Button" type="Button" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 1
+
+[node name="FrameMarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer" instance=ExtResource("26_vv66b")]
 layout_mode = 2
 
 [node name="PhaseReminderContainer" type="MarginContainer" parent="Control"]
@@ -727,6 +943,7 @@ text = "Close"
 
 [node name="ArcanaCards" type="Control" parent="Control"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 0
 offset_left = 18.0
@@ -792,6 +1009,7 @@ offset_top = 222.0
 offset_right = 1213.0
 offset_bottom = 422.0
 script = ExtResource("13_ocgbx")
+metadata/_edit_use_anchors_ = true
 
 [node name="NinePatchRect" type="NinePatchRect" parent="Control/FleeControl"]
 layout_mode = 2
@@ -813,7 +1031,10 @@ alignment = 1
 [node name="FleeLabel" type="Label" parent="Control/FleeControl/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Enemy Legions are entering the Sectio:"
+text = "Enemy Legions are entering the Sectio:
+Flee to a adjacent Sectio 
+or 
+Stay and Fight (in the Combat Phase)"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/FleeControl/MarginContainer/VBoxContainer"]
@@ -1123,7 +1344,7 @@ layout_mode = 2
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 50
+theme_override_constants/margin_bottom = 80
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/AvailableLieutenantsMarginContainer/MarginContainer"]
 layout_mode = 2
@@ -1187,81 +1408,6 @@ text = "Your triumphirate has Favor left."
 horizontal_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/PetitionsMarginContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="CardsControl" type="Control" parent="Control"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 970.0
-offset_top = 1040.0
-offset_right = 970.0
-offset_bottom = 1040.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="DemonCardsMarginContainer" type="MarginContainer" parent="Control/CardsControl"]
-unique_name_in_owner = true
-layout_mode = 2
-offset_left = -1922.0
-offset_top = -2116.0
-offset_right = -1409.0
-offset_bottom = -2020.0
-script = ExtResource("27_q5h8k")
-
-[node name="FrameBackgroundMarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer" instance=ExtResource("25_jfpsm")]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 50
-
-[node name="DemonVBoxContainer" type="VBoxContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-alignment = 1
-
-[node name="DemonHBoxContainer" type="HBoxContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_constants/separation = 20
-alignment = 1
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="ColorRect" type="ColorRect" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/MarginContainer"]
-layout_mode = 2
-color = Color(0, 0, 0, 0.501961)
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/MarginContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="DemonHeaderLabel" type="Label" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/MarginContainer/MarginContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 15
-text = "Demons of your Triumphirat"
-horizontal_alignment = 1
-
-[node name="FrameMarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer" instance=ExtResource("26_vv66b")]
 layout_mode = 2
 
 [node name="DiscardArcanaCardControl" type="Control" parent="Control"]
@@ -1607,7 +1753,6 @@ layout_mode = 2
 theme_override_constants/separation = 30
 
 [node name="HelpCheckBox" type="CheckBox" parent="Control/ColorRect2/QuickHelpControl/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 1
 text = "Dont show again"
@@ -1827,6 +1972,7 @@ layout_mode = 2
 text = "Ok"
 
 [node name="Button2" type="Button" parent="Control/GoalMarginContainer/MarginContainer/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 text = "What is going on?"
 
@@ -1873,17 +2019,218 @@ layout_mode = 2
 visible = false
 layout_mode = 1
 
+[node name="PlayerDisconnectedMarginContainer" type="MarginContainer" parent="Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -84.0
+offset_top = -66.0
+offset_right = 84.0
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FrameBackgroundMarginContainer" parent="Control/PlayerDisconnectedMarginContainer" instance=ExtResource("25_jfpsm")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/PlayerDisconnectedMarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 80
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PlayerDisconnectedMarginContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="PlayerDisconnectedLabel" type="Label" parent="Control/PlayerDisconnectedMarginContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "A Player"
+horizontal_alignment = 1
+
+[node name="PlayerDisconnectedButton" type="Button" parent="Control/PlayerDisconnectedMarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Ok
+"
+
+[node name="FrameMarginContainer" parent="Control/PlayerDisconnectedMarginContainer" instance=ExtResource("26_vv66b")]
+layout_mode = 2
+
+[node name="TopBannerMarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control/TopBannerMarginContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/TopBannerMarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/TopBannerMarginContainer/MarginContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Turn: "
+
+[node name="TurnLabel" type="Label" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "1"
+
+[node name="Label" type="Label" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "                    "
+
+[node name="PhasesHBoxContainer" type="HBoxContainer" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 30
+script = ExtResource("35_vehc2")
+
+[node name="PhasesLabel" type="Label" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer/PhasesHBoxContainer"]
+layout_mode = 2
+text = "Phases:"
+
+[node name="SoulPhaseLabel" type="Label" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer/PhasesHBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 1
+text = "Soul"
+
+[node name="SummoningPhaseLabel" type="Label" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer/PhasesHBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 0
+text = "Summoning"
+
+[node name="ActionPhaseLabel" type="Label" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer/PhasesHBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 0
+text = "Action"
+
+[node name="CombatPhaseLabel" type="Label" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer/PhasesHBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 0
+text = "Combat
+"
+
+[node name="PetitionPhaseLabel" type="Label" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer/PhasesHBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Petition"
+
+[node name="Control" type="Control" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="CurrentDemonTopTree" type="Tree" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(450, 75)
+layout_mode = 2
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 20
+theme_override_styles/panel = SubResource("StyleBoxFlat_2yxpw")
+columns = 4
+column_titles_visible = true
+allow_reselect = true
+hide_folding = true
+hide_root = true
+scroll_horizontal_enabled = false
+scroll_vertical_enabled = false
+
+[node name="PlayerStatsMarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+offset_right = 20.0
+offset_bottom = 20.0
+
+[node name="ColorRect" type="ColorRect" parent="Control/PlayerStatsMarginContainer"]
+layout_mode = 2
+color = Color(0.34902, 0.34902, 0.34902, 1)
+
+[node name="PlayersTree" parent="Control/PlayerStatsMarginContainer" instance=ExtResource("6_2gjeq")]
+unique_name_in_owner = true
+layout_mode = 2
+scroll_horizontal_enabled = false
+scroll_vertical_enabled = false
+
+[node name="CombatOverviewMarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+script = ExtResource("37_2s8h0")
+
+[node name="ColorRect" type="ColorRect" parent="CombatOverviewMarginContainer"]
+layout_mode = 2
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="CombatOverviewMarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CombatOverviewMarginContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CombatOverviewMarginContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CombatOverviewMarginContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Nr -"
+
+[node name="Label2" type="Label" parent="CombatOverviewMarginContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Sectio Name -"
+
+[node name="Label3" type="Label" parent="CombatOverviewMarginContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Participants"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CombatOverviewMarginContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HideButton" type="Button" parent="CombatOverviewMarginContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Hide Combat Overview"
+
 [connection signal="pressed" from="Control/WaitForPlayerControl/MarginContainer/VBoxContainer/WaitForPlayerButton" to="." method="_on_wait_for_player_button_pressed"]
 [connection signal="mouse_entered" from="Control/RankTrackMarginContainer/RankTrack" to="Control/RankTrackMarginContainer/RankTrack" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Control/RankTrackMarginContainer/RankTrack" to="Control/RankTrackMarginContainer/RankTrack" method="_on_mouse_exited"]
 [connection signal="item_selected" from="Control/RankTrackMarginContainer/RankTrack/MarginContainer/VBoxContainer/CurrentDemonTree" to="Control/RankTrackMarginContainer/RankTrack" method="_on_current_demon_tree_item_selected"]
 [connection signal="item_selected" from="Control/RankTrackMarginContainer/RankTrack/MarginContainer/VBoxContainer/DemonTree" to="Control/RankTrackMarginContainer/RankTrack" method="_on_demon_tree_item_selected"]
-[connection signal="mouse_entered" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/PlayerControl/MarginContainer/VBoxContainer/PlayersTree" to="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/PlayerControl/MarginContainer/VBoxContainer/PlayersTree" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/PlayerControl/MarginContainer/VBoxContainer/PlayersTree" to="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/PlayerControl/MarginContainer/VBoxContainer/PlayersTree" method="_on_mouse_exited"]
 [connection signal="pressed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer/RecruitLegionsButton" to="." method="_on_recruit_legions_button_pressed"]
 [connection signal="pressed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer/BuyArcanaCardButton" to="." method="_on_buy_arcana_card_button_pressed"]
 [connection signal="pressed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer/EndPhaseButton" to="." method="_on_end_phase_button_pressed"]
-[connection signal="toggled" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer/CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="toggled" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer/AvailableLieutenantsCheckButton" to="." method="_on_available_lieutenants_check_button_toggled"]
 [connection signal="confirmed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/BackToHellConfirmationDialog" to="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_back_to_hell_confirmation_dialog_confirmed"]
 [connection signal="pressed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/MarchHBoxContainer/MarchButton" to="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_march_button_pressed"]
 [connection signal="pressed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/WalkTheEarthHBoxContainer/WalkTheEarthButton" to="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_walk_the_earth_button_pressed"]
@@ -1894,6 +2241,9 @@ layout_mode = 1
 [connection signal="pressed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/InfluenceUnitsButton" to="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_influence_units_button_pressed"]
 [connection signal="pressed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/AtonementAndSuplicationButton" to="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_atonement_and_suplication_button_pressed"]
 [connection signal="pressed" from="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/UseMagicButton" to="Control/PlayerStatusMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_use_magic_button_pressed"]
+[connection signal="mouse_entered" from="Control/CardsControl/DemonCardsMarginContainer" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Control/CardsControl/DemonCardsMarginContainer" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_mouse_exited"]
+[connection signal="pressed" from="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/CollapseButton" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_collapse_button_pressed"]
 [connection signal="pressed" from="Control/DoEvilDeedsControl/MarginContainer/VBoxContainer/DoEvilDeedsControlButton" to="Control/DoEvilDeedsControl" method="_on_do_evil_deeds_control_button_pressed"]
 [connection signal="pressed" from="Control/NetworkHBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="Control/NetworkHBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
@@ -1906,14 +2256,19 @@ layout_mode = 1
 [connection signal="gui_input" from="Control/StartScreenContainer/MarginContainer/VBoxContainer/StartScreenTextureRect" to="Control/StartScreenContainer" method="_on_start_screen_texture_rect_gui_input"]
 [connection signal="pressed" from="Control/StartScreenContainer/MarginContainer/VBoxContainer/StartScreenButton" to="Control/StartScreenContainer" method="_on_start_screen_button_pressed"]
 [connection signal="timeout" from="Control/NextDemonContainer/Timer" to="Control/NextDemonContainer" method="_on_timer_timeout"]
-[connection signal="mouse_entered" from="Control/CardsControl/DemonCardsMarginContainer" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_mouse_entered"]
 [connection signal="pressed" from="Control/PickMoveUnitControl/MarginContainer/MarginContainer/VBoxContainer/ExitButton" to="Control/PickMoveUnitControl" method="_on_exit_button_pressed"]
 [connection signal="pressed" from="Control/CombatControl/CombatParticipantsControl/MarginContainer/VBoxContainer/FleeButton" to="Control/CombatControl/CombatParticipantsControl" method="_on_flee_button_pressed"]
 [connection signal="pressed" from="Control/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="Control/ColorRect2/QuickHelpControl/MarginContainer/HBoxContainer/HelpButton" to="Control/ColorRect2/QuickHelpControl" method="_on_help_button_pressed"]
+[connection signal="toggled" from="Control/ColorRect2/QuickHelpControl/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/HelpCheckBox" to="Control/ColorRect2/QuickHelpControl" method="_on_help_check_box_toggled"]
 [connection signal="pressed" from="Control/ColorRect2/QuickHelpControl/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/CollapseButton" to="Control/ColorRect2/QuickHelpControl" method="_on_button_pressed"]
 [connection signal="pressed" from="Control/ColorRect2/QuickHelpControl/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/SequenceOfPlayButton" to="Control/ColorRect2/QuickHelpControl" method="_on_sequence_of_play_button_pressed"]
 [connection signal="index_pressed" from="Control/ColorRect2/QuickHelpControl/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/HelpPopupMenu" to="Control/ColorRect2/QuickHelpControl" method="_on_help_popup_menu_index_pressed"]
 [connection signal="pressed" from="Control/HelpSequenceOfPlayContainer/MarginContainer/VBoxContainer/Button" to="Control/HelpSequenceOfPlayContainer" method="_on_button_pressed"]
 [connection signal="pressed" from="Control/GoalMarginContainer/MarginContainer/MarginContainer/VBoxContainer/Button" to="Control/GoalMarginContainer" method="_on_button_pressed"]
 [connection signal="pressed" from="Control/GoalMarginContainer/MarginContainer/MarginContainer/VBoxContainer/Button2" to="Control/GoalMarginContainer" method="_on_button_2_pressed"]
+[connection signal="pressed" from="Control/PlayerDisconnectedMarginContainer/MarginContainer/VBoxContainer/PlayerDisconnectedButton" to="." method="_on_player_disconnected_button_pressed"]
+[connection signal="item_selected" from="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer/CurrentDemonTopTree" to="Control/RankTrackMarginContainer/RankTrack" method="_on_current_demon_tree_item_selected"]
+[connection signal="mouse_entered" from="Control/PlayerStatsMarginContainer/PlayersTree" to="Control/PlayerStatsMarginContainer/PlayersTree" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Control/PlayerStatsMarginContainer/PlayersTree" to="Control/PlayerStatsMarginContainer/PlayersTree" method="_on_mouse_exited"]
+[connection signal="pressed" from="CombatOverviewMarginContainer/MarginContainer/VBoxContainer/HideButton" to="CombatOverviewMarginContainer" method="_on_button_pressed"]

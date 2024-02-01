@@ -62,8 +62,21 @@ var startpoint
 var outerPoints = []
 var innerPoints = []
 
+var startTime = Time.get_ticks_msec()
+var arrows : Array[Sprite2D] = []
+var activeArrow : Sprite2D
+var intervalDefault : float = 0.1
+var interval : float = intervalDefault
+var startArrows : bool = false
+var fleeToPosition : Vector2
+var spinCounter : int = 0
+var shortestDistance : float = INF
+var goalArrow : Sprite2D
 
 func _ready():
+	Signals.potatoPc.connect(_on_potatoPc)
+	Signals.showArrows.connect(_on_showArrows)
+	Signals.hideArrows.connect(_on_hideArrows)
 	%SoulsRing.self_modulate = colors[circle]
 	%SoulsRingLabel.text = str(souls)
 	remove_child(sectioPolygon)
@@ -125,7 +138,7 @@ func _ready():
 	
 	position = startpoint
 #	print("before ", points)
-
+	
 	clockwisePoint = marker(r * multiplier + middleDistance, angle - baseAngle / 2) - startpoint + global_position
 #	$Sprite2D.global_position = marker(r * multiplier + middleDistance, angle - baseAngle / 2) - startpoint + global_position
 	counterclockwisePoint = marker(r * multiplier + middleDistance, angle + baseAngle / 2) - startpoint + global_position
@@ -133,7 +146,7 @@ func _ready():
 	for i in points.size():
 		points[i] = points[i] - startpoint
 	polygonPoints = points
-	%Line2D.points = points
+	%Line2D2.points = points
 #	print("after  ", points)
 	
 #	var marker = Polygon2D.new()
@@ -185,6 +198,133 @@ func _ready():
 #		unitMarker.position = pos - startpoint
 #		slotPositions.append(unitMarker.global_position)
 #		%UnitsMarginContainer.global_position = unitMarker.global_position + Vector2(0, 50)
+	
+	#var a_right = points[outerPoints.size() - 1]
+	#var b_right = points[outerPoints.size()]
+	#var angle_right_arrow = a_right.angle_to(b_right)
+	var a_right = Vector2(50,0)
+	var b_right = points[outerPoints.size()] - %SoulsRingLabel.position
+	var angle_right_arrow = a_right.angle_to(b_right)
+	%ArrowRightSprite2D.position = points[outerPoints.size()-1] - ((points[outerPoints.size()-1] - points[outerPoints.size()])/2)
+	%ArrowRightSprite2D.rotation = angle_right_arrow
+	
+	var a_left = Vector2(-50,0)
+	var b_left = points[points.size()-1] - %SoulsRingLabel.position
+	var angle_left_arrow = a_left.angle_to(b_left)
+	%ArrowLeftSprite2D.position = points[0] - ((points[0] - points[points.size()-1])/2)
+	%ArrowLeftSprite2D.rotation = angle_left_arrow
+	
+	var a_up = Vector2(50,0)
+	var b_up = points[outerPoints.size() + innerPoints.size()/2] - %SoulsRingLabel.position
+	var angle_up_arrow = a_up.angle_to(b_up)
+	%ArrowDownSprite2D.position = points[outerPoints.size() + innerPoints.size()/2]
+	%ArrowDownSprite2D.rotation = angle_up_arrow
+	
+	var a_down = Vector2(50,0)
+	var b_down = points[outerPoints.size()/2] - %SoulsRingLabel.position
+	var angle_down_arrow = a_down.angle_to(b_down)
+	%ArrowUpSprite2D.position = points[outerPoints.size()/2]
+	%ArrowUpSprite2D.rotation = angle_down_arrow
+	
+	#%ArrowUpSprite2D.position = points[outerPoints.size() + innerPoints.size()/2]
+	#%ArrowUpSprite2D.rotation = rotation
+	#
+	#%ArrowDownSprite2D.position = points[outerPoints.size()/2]
+	#%ArrowDownSprite2D.rotation = rotation
+	add_arrows()
+	#startArrowSpin()
+	Signals.spinFleeArrows.connect(_on_spinFleeArrows)
+	Signals.hideFleeArrow.connect(_on_hideFleeArrow)
+
+
+func _on_showArrows(sectio : Sectio, possibleNeighboursDownUpCwCcw : Array):
+	if sectio == self:
+		if possibleNeighboursDownUpCwCcw[0] == 1:
+			%ArrowDownSprite2D.show()
+		if possibleNeighboursDownUpCwCcw[1] == 1:
+			%ArrowUpSprite2D.show()
+		if possibleNeighboursDownUpCwCcw[2] == 1:
+			%ArrowLeftSprite2D.show()
+		if possibleNeighboursDownUpCwCcw[3] == 1:
+			%ArrowRightSprite2D.show()
+
+
+func _on_hideArrows():
+	%ArrowRightSprite2D.hide()
+	%ArrowLeftSprite2D.hide()
+	%ArrowUpSprite2D.hide()
+	%ArrowDownSprite2D.hide()
+
+
+func _on_spinFleeArrows(sectioToFleeFromName, sectioToFleeToName):
+	if sectioToFleeFromName != sectioName:
+		return
+	var sectioToFleeFrom : Sectio = Decks.sectioNodes[sectioToFleeFromName]
+	var sectioToFleeTo : Sectio = Decks.sectioNodes[sectioToFleeToName]
+	add_arrows()
+	startArrowSpin(sectioToFleeToName)
+
+
+func _on_hideFleeArrow():
+	if activeArrow:
+		activeArrow.hide()
+
+
+func add_arrows():
+	arrows.append(%ArrowRightSprite2D)
+	arrows.append(%ArrowUpSprite2D)
+	arrows.append(%ArrowLeftSprite2D)
+	arrows.append(%ArrowDownSprite2D)
+
+
+func startArrowSpin(sectioToFleeToName : String = ""):
+	var sectioToFleeTo : Sectio = Decks.sectioNodes[sectioToFleeToName]
+	fleeToPosition = sectioToFleeTo.global_position
+	startArrows = true
+	startTime = Time.get_ticks_msec()
+	spinCounter = 0
+	shortestDistance = INF
+	interval = intervalDefault
+
+func stopArrowSpin():
+	startArrows = false
+
+
+func _process(elta):
+	if startArrows:
+		if activeArrow == null:
+			activeArrow = arrows.pop_front()
+			activeArrow.show()
+			spinCounter += 1
+			if activeArrow.global_position.distance_to(fleeToPosition) < shortestDistance:
+				goalArrow = activeArrow
+				shortestDistance = activeArrow.global_position.distance_to(fleeToPosition)
+		else:
+			if Time.get_ticks_msec() > startTime + interval:
+				if spinCounter > 10 and activeArrow == goalArrow:
+					stopArrowSpin()
+					for peer in Connection.peers:
+						spinFleeArrowsStopped.rpc_id(peer)
+				else:
+					startTime = Time.get_ticks_msec()
+					activeArrow.hide()
+					arrows.append(activeArrow)
+					activeArrow = null
+					interval += pow(interval, 1.01)
+			# if it takes too long, skip
+			if Time.get_ticks_msec() > startTime + 5000:
+					if activeArrow:
+						activeArrow.hide()
+					goalArrow.show()
+					stopArrowSpin()
+					for peer in Connection.peers:
+						spinFleeArrowsStopped.rpc_id(peer)
+
+
+@rpc("any_peer", "call_local")
+func spinFleeArrowsStopped():
+	Signals.spinFleeArrowsStopped.emit()
+
 
 func addMarker(pos, _startpoint):
 	var unitMarker = Label.new()
@@ -198,8 +338,6 @@ func marker(radius, angle):
 	var y = radius*cos(angle)
 	return Vector2(x, y)
 
-func _process(delta):
-	pass
 
 
 func highlightTroops():
@@ -261,6 +399,9 @@ func changeClickable(boolean):
 
 func highlight(boolean):
 	if boolean:
+		%Line2D2.show()
+		#(%Line2D2.material as ShaderMaterial).set_shader_parameter("on", true)
+		
 		if tw1:
 			tw1.kill()
 #			tw2.kill()
@@ -284,6 +425,8 @@ func highlight(boolean):
 #		tw2.set_ease(Tween.EASE_OUT)
 #		tw2.tween_property(playerPolygon, "scale", Vector2(1.0, 1.0), 2.0)
 	else:
+		%Line2D2.hide()
+		#(%Line2D2.material as ShaderMaterial).set_shader_parameter("on", false)
 		if tw1:
 			tw1.kill()
 #			tw2.kill()
@@ -336,3 +479,33 @@ func _on_area_2d_mouse_entered():
 
 func _on_area_2d_mouse_exited():
 	Signals.hideSectioPreview.emit(sectioName)
+
+
+func _on_potatoPc(boolean : bool):
+	pass
+
+
+func reorderUnitsinSlots():
+	var slotIndex : int = 0
+	for slot in slots:
+		var destination : Vector2 = slotPositions[slotIndex]
+		slotIndex += 1
+		
+		var units : Array = []
+		for unitNr : int in troops:
+			var unit : Unit = Data.troops[unitNr]
+			if unit.triumphirate == slot:
+				# if Lieutenant, put on the bottom of the stack
+				if unit.unitType == Data.UnitType.Lieutenant:
+					units.insert(0, unit)
+				else:
+					units.append(unit)
+		
+		var zIndex : int = 1
+		for unit : Unit in units:
+			destination += Vector2(0, -32)
+			#unit.global_position = destination
+			unit.z_index = zIndex
+			zIndex += 1
+			
+			unit.set_destinations([destination])
