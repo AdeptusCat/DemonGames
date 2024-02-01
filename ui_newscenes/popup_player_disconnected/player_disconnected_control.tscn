@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://dsi3whlntxdj7"]
 
-[ext_resource type="Script" path="res://ui_newscenes/popup_player_disconnected/player_disconnected_container.gd" id="1_qt8wu"]
+[ext_resource type="Script" path="res://ui_newscenes/popup_player_disconnected/player_disconnected_control.gd" id="1_qt8wu"]
 [ext_resource type="PackedScene" uid="uid://dm6xoflw4305t" path="res://ui/frame_background_margin_container.tscn" id="2_4tyb1"]
 [ext_resource type="PackedScene" uid="uid://7p3kfgl06d7y" path="res://ui/frame_margin_container.tscn" id="3_c6rty"]
 
-[node name="PlayerDisconnectedContainer" type="Control"]
+[node name="PlayerDisconnectedControl" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

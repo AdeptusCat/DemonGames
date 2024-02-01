@@ -1,7 +1,7 @@
 [gd_scene load_steps=51 format=3 uid="uid://d00aywoo0y4ld"]
 
 [ext_resource type="Script" path="res://ui/ui.gd" id="1_o55j0"]
-[ext_resource type="PackedScene" uid="uid://dsi3whlntxdj7" path="res://ui_newscenes/popup_player_disconnected/player_disconnected_container.tscn" id="2_4hca8"]
+[ext_resource type="PackedScene" uid="uid://dsi3whlntxdj7" path="res://ui_newscenes/popup_player_disconnected/player_disconnected_control.tscn" id="2_4hca8"]
 [ext_resource type="Theme" uid="uid://ct12aengaa7cl" path="res://themes/default_theme.tres" id="2_q6b3g"]
 [ext_resource type="Texture2D" uid="uid://salqj2nw3op7" path="res://assets/tiles/01104-2180976952-a painting of souls leaving bodies that are laying on the ground by Hieronymus Bosch.png" id="3_mnku2"]
 [ext_resource type="Texture2D" uid="uid://ll7flywhfs14" path="res://assets/tiles/01050-2038361938-thin dark wooden frame with fine details_cropped.png" id="4_2iul4"]
