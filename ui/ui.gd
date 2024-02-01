@@ -818,10 +818,10 @@ func _on_toggleRecruitLegionsButtonEnabled(boolean : bool):
 func _on_toogleSummoningMenu(boolean : bool):
 	if boolean:
 		%SummoningMenuContainer.show()
-		%PlayerStatusMarginContainer.show()
+		%ActionsMarginContainer.show()
 	else:
 		%SummoningMenuContainer.hide()
-		%PlayerStatusMarginContainer.hide()
+		%ActionsMarginContainer.hide()
 
 
 
