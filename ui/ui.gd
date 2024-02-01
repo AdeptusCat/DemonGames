@@ -1,12 +1,12 @@
 extends CanvasLayer
 class_name UI
 
-const PickMoveUnitVBoxContainerScene = preload("res://pick_move_unit_v_box_container.tscn")
-const menuContainer = preload("res://ui/menu_container.tscn")
-const pickLegionsScene = preload("res://pick_legions.tscn")
-const arcanaScene = preload("res://arcana.tscn")
-var playerIcon = preload("res://assets/icons/pentagram_white.png")
+@export var playerIcon : CompressedTexture2D
 
+@export var PickMoveUnitVBoxContainerScene : PackedScene
+@export var menuContainer : PackedScene
+@export var pickLegionsScene : PackedScene
+@export var arcanaScene : PackedScene
 @export var playerDisconnectedContainer : PackedScene
 
 @onready var currentPlayerLabel = %CurrentPlayerLabel

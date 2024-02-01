@@ -1,12 +1,17 @@
-[gd_scene load_steps=51 format=3 uid="uid://d00aywoo0y4ld"]
+[gd_scene load_steps=56 format=3 uid="uid://d00aywoo0y4ld"]
 
 [ext_resource type="Script" path="res://ui/ui.gd" id="1_o55j0"]
+[ext_resource type="Texture2D" uid="uid://cdii7y50q1lno" path="res://assets/icons/pentagram_white.png" id="2_3ml1l"]
 [ext_resource type="PackedScene" uid="uid://dsi3whlntxdj7" path="res://ui_newscenes/popup_player_disconnected/player_disconnected_control.tscn" id="2_4hca8"]
 [ext_resource type="Theme" uid="uid://ct12aengaa7cl" path="res://themes/default_theme.tres" id="2_q6b3g"]
 [ext_resource type="Texture2D" uid="uid://salqj2nw3op7" path="res://assets/tiles/01104-2180976952-a painting of souls leaving bodies that are laying on the ground by Hieronymus Bosch.png" id="3_mnku2"]
+[ext_resource type="PackedScene" uid="uid://16ug6shh8tk7" path="res://pick_move_unit_v_box_container.tscn" id="3_vvq6g"]
 [ext_resource type="Texture2D" uid="uid://ll7flywhfs14" path="res://assets/tiles/01050-2038361938-thin dark wooden frame with fine details_cropped.png" id="4_2iul4"]
+[ext_resource type="PackedScene" uid="uid://bgbrh6mf2k4ds" path="res://ui/menu_container.tscn" id="4_7ai4t"]
+[ext_resource type="PackedScene" uid="uid://x1wyowbc2ock" path="res://pick_legions.tscn" id="5_h75dt"]
 [ext_resource type="PackedScene" uid="uid://hb4k3ypme8f6" path="res://players_tree.tscn" id="6_2gjeq"]
 [ext_resource type="Script" path="res://ui/ui_rank_track.gd" id="6_j34ga"]
+[ext_resource type="PackedScene" uid="uid://bupmbau5r1ld6" path="res://arcana.tscn" id="6_tnrka"]
 [ext_resource type="Script" path="res://phase_reminder_container.gd" id="8_ehym6"]
 [ext_resource type="Script" path="res://do_evil_deeds_control.gd" id="9_3mgu2"]
 [ext_resource type="Shader" path="res://materials_shaders/shine_highlight_button.gdshader" id="10_bh8fp"]
@@ -131,6 +136,11 @@ shader_parameter/active = false
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_o55j0")
+playerIcon = ExtResource("2_3ml1l")
+PickMoveUnitVBoxContainerScene = ExtResource("3_vvq6g")
+menuContainer = ExtResource("4_7ai4t")
+pickLegionsScene = ExtResource("5_h75dt")
+arcanaScene = ExtResource("6_tnrka")
 playerDisconnectedContainer = ExtResource("2_4hca8")
 
 [node name="Control" type="Control" parent="."]
@@ -365,6 +375,7 @@ alignment = 1
 
 [node name="ActionsMarginContainer" type="MarginContainer" parent="Control"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
