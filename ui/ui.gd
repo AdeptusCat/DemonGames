@@ -7,6 +7,8 @@ const pickLegionsScene = preload("res://pick_legions.tscn")
 const arcanaScene = preload("res://arcana.tscn")
 var playerIcon = preload("res://assets/icons/pentagram_white.png")
 
+@export var playerDisconnectedContainer : PackedScene
+
 @onready var currentPlayerLabel = %CurrentPlayerLabel
 @onready var actionsNode = %Actions
 @onready var fleeControl = %FleeControl
@@ -210,8 +212,9 @@ func _on_action(demonRank : int, action : String):
 
 func _on_playerLeft(playerId : int):
 	if Data.players.has(playerId):
-		%PlayerDisconnectedMarginContainer.show()
-		%PlayerDisconnectedLabel.text = "Player " + Data.players[playerId].playerName + " left the Game. \nNote that this Game saves after every Phase. \n You can create a new Room in the Lobby and load the Savegame."
+		var scene = playerDisconnectedContainer.instantiate()
+		scene.playerName = Data.players[playerId].playerName
+		add_child(scene)
 
 
 func _on_removeLieutenantFromAvailableLieutenantsBox(lieutenantName : String):
@@ -843,10 +846,6 @@ func _on_showRankTrackMarginContainer():
 
 func _on_updateTurnTrack(turn : int):
 	%TurnLabel.text = str(turn)
-
-
-func _on_player_disconnected_button_pressed():
-	%PlayerDisconnectedMarginContainer.hide()
 
 
 func _on_available_lieutenants_check_button_toggled(toggled_on):
