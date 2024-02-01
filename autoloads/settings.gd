@@ -3,7 +3,6 @@ extends Node
 var menuOpen : bool = false
 
 var debug : bool = false
-#var debug : bool = true
 
 var tooltips : bool = true
 var skipScreens : bool = false
@@ -29,11 +28,6 @@ var audioOff : bool = false
 
 func _ready():
 	Signals.resetGame.connect(_on_resetGame)
-#	tooltips = false
-#	skipScreens = true
-#	skipSoulsSummary = true
-#	skipWaitForPlayers = true
-#	skipPhaseReminder = true
 
 
 func changeWindowMode(_fullscreen : bool):

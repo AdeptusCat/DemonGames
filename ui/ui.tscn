@@ -142,6 +142,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("2_q6b3g")
+metadata/_edit_use_anchors_ = true
 
 [node name="WaitForPlayerControl" type="MarginContainer" parent="Control"]
 unique_name_in_owner = true

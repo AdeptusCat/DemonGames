@@ -16,8 +16,6 @@ var playerIcon = preload("res://assets/icons/pentagram_white.png")
 
 var sectioTextures : Dictionary = {}
 
-#signal demonDone(passAction)
-#signal phaseDone
 var currentDemonRoot : TreeItem
 var currentDemonEntries : Dictionary = {}
 var demonActions : Dictionary = {}
@@ -357,10 +355,6 @@ func _on_tutorialRead():
 		%PlayersTree.visible = false
 		%PlayersTree.visible = true
 	
-#	if %RecruitLegionsButton.top_level:
-#		%RecruitLegionsButton.top_level = false
-#		%RecruitLegionsButton.visible = false
-#		%RecruitLegionsButton.visible = true
 	if %BuyArcanaCardButton.top_level:
 		%BuyArcanaCardButton.top_level = false
 		%BuyArcanaCardButton.visible = false
@@ -413,8 +407,6 @@ func _on_updateRankTrack(arr : Array):
 
 
 func _on_toggleEndPhaseButton(boolean : bool):
-#	if Tutorial.tutorial:
-#		return
 	if boolean:
 		%EndPhaseButton.disabled = false
 	else:
@@ -476,7 +468,6 @@ func nextDemon(nextDemon : int):
 	actionsNode.toggleActionMenu(false)
 	demonActionDone.rpc_id(Connection.host, action)
 	AudioSignals.playerTurnDone.emit()
-#	return action
 
 
 @rpc("any_peer", "call_local")
@@ -512,7 +503,6 @@ func _on_fleeDialog(sectioName : String, fleeFromCombat : bool):
 	else:
 		%FleeLabel.text = "Enemy Legions are entering the Sectio " + sectioName
 	%FleeControl.show()
-#	%FleeDialog.popup()
 
 func showFleeControl():
 	%FleeControl.show()
@@ -579,22 +569,18 @@ func showSectioPreview(sectio):
 		var units = troopsDict[triumphirate]
 		for unit in units:
 			if triumphirate == Data.id:
-#				%YourUnitsPreviewLabel.show()
 				var scene = PickMoveUnitVBoxContainerScene.instantiate()
 				%YourUnitsPreviewHBoxContainer.add_child(scene)
 				scene.populate(unit)
 			else:
-#				%EnemyUnitsPreviewLabel.show()
 				var scene = PickMoveUnitVBoxContainerScene.instantiate()
 				%EnemyPreviewUnitsHBoxContainer.add_child(scene)
 				scene.populate(unit)
-	
+
+
 func hideSectioPreview(sectioName):
 	if sectioName == currentSectio:
 		%SectioPreviewMarginContainer.hide()
-		
-#		%YourUnitsPreviewLabel.hide()
-#		%EnemyUnitsPreviewLabel.hide()
 
 
 func _on_wait_for_player_button_pressed():
@@ -612,7 +598,6 @@ func pickUnitToMove(sectio):
 
 func toogleBuyLieutenant(boolean : bool):
 	if boolean:
-		#return
 		%AvailableLieutenantsMarginContainer.show()
 		%AvailableLieutenantsCheckButton.button_pressed = true
 	else:
@@ -715,9 +700,6 @@ func fillPickArcanaCardsContainer(cardNames : Array):
 	for cardName in cardNames:
 		var arcana = arcanaScene.instantiate()
 		arcana.loadStats(cardName)
-#			player.addArcanaCard(cardName)
-#			Data.arcanaCards[cardName] = arcana
-#			arcana.player = id
 		%PickArcanaHBoxContainer.add_child(arcana)
 		arcana.disable()
 		arcana.mode = "pick"
@@ -737,8 +719,6 @@ func _on_hidePickArcanaCardContainer(cardName):
 
 
 func _on_toggleBuyArcanaCardButtonEnabled(boolean : bool):
-#	if Tutorial.tutorial:
-#		return
 	if boolean:
 		%BuyArcanaCardButton.disabled = false
 	else:
@@ -775,7 +755,6 @@ func _on_toggleDiscardArcanaCardControl(boolean : bool):
 
 func changePlayerName(playerName):
 	pass
-#	%PlayerNameLabel.text = playerName
 
 
 func toogleWaitForPlayer(playerId, boolean : bool, phase = null):
@@ -798,8 +777,6 @@ func toogleWaitForPlayer(playerId, boolean : bool, phase = null):
 				%WaitForPlayerLabel.text = "Waiting for player " + str(Data.players[playerId].playerName) + " to use its demon."
 			%WaitForPlayerControl.modulate.a = 1.0
 			%WaitForPlayerControl.show()
-#			await get_tree().create_timer(10.0).timeout
-#			%WaitForPlayerControl.hide()
 			var tw1 = get_tree().create_tween()
 			tw1.set_trans(Tween.TRANS_QUAD)
 			tw1.set_ease(Tween.EASE_IN)
@@ -832,8 +809,6 @@ func _on_recruit_legions_button_pressed():
 
 
 func _on_toggleRecruitLegionsButtonEnabled(boolean : bool):
-#	if Tutorial.tutorial:
-#		return
 	if boolean:
 		%RecruitLegionsButton.disabled = false
 	else:
