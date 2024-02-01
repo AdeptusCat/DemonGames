@@ -1,6 +1,23 @@
 extends Control
 
-#signal pickedDemon(demonNode)
+
+func _ready():
+	Signals.showCombat.connect(_on_showCombat)
+	Signals.hideCombat.connect(_on_hideCombat)
+
+
+func _on_showCombat():
+	if %CombatParticipantsControl.playerIsFighting:
+		%FleeButton.show()
+		%FleeButton.disabled = false
+	%CombatParticipantsControl.show()
+	show()
+
+
+func _on_hideCombat():
+	%CombatParticipantsControl.hide()
+	hide()
+
 
 func toggleActionMenu(boolean):
 	if boolean:
@@ -24,8 +41,10 @@ func toggleActionMenu(boolean):
 #			demon.scale = Vector2(0.6, 0.6)
 #			demon.demonClicked.connect(_on_demonPicked)
 		%PickDemonControl.show()
+		show()
 	else:
 		%PickDemonControl.hide()
+		hide()
 
 
 func _on_demonPicked(demonNode):

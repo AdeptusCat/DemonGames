@@ -13,22 +13,9 @@ var playerIsFighting : bool = false
 func _ready():
 	Signals.unitsHit.connect(hit)
 	Signals.unitsKilled.connect(killed)
-	Signals.showCombat.connect(_on_showCombat)
-	Signals.hideCombat.connect(_on_hideCombat)
 	Signals.endCombat.connect(endCombat)
 	Signals.hightlightCombat.connect(highlight)
 	Signals.unitsAttack.connect(attack)
-
-
-func _on_showCombat():
-	if playerIsFighting:
-		%FleeButton.show()
-		%FleeButton.disabled = false
-	%CombatParticipantsControl.show()
-
-
-func _on_hideCombat():
-	%CombatParticipantsControl.hide()
 
 
 #func _process(delta):
