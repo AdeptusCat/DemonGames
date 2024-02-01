@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6objej4nofgs"
-path="res://.godot/imported/00001-2265384839-a painting dark dungeon with torturing devices.png-cf1478f44f1e06027e6b228fb6c2572e.ctex"
+uid="uid://c2enqojfoec50"
+path="res://.godot/imported/00128-3546313921-painting of fat people wading through yellow mud.png-3f20e9b7faeb7f17d3fe251ac93cc209.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sectio_assets/the_wrathful/lower_dungeon_of_the_racially_superior/00001-2265384839-a painting dark dungeon with torturing devices.png"
-dest_files=["res://.godot/imported/00001-2265384839-a painting dark dungeon with torturing devices.png-cf1478f44f1e06027e6b228fb6c2572e.ctex"]
+source_file="res://assets/sectio_assets/the_gluttonous/sea_of_lard/00128-3546313921-painting of fat people wading through yellow mud.png"
+dest_files=["res://.godot/imported/00128-3546313921-painting of fat people wading through yellow mud.png-3f20e9b7faeb7f17d3fe251ac93cc209.ctex"]
 
 [params]
 

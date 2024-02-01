@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://rhfhl3dclj88"
-path="res://.godot/imported/00025-749429789-a painting of a demonic money printing machine.png-e0141925964a51290abc791db291562f.ctex"
+uid="uid://3f8amfnqj5nu"
+path="res://.godot/imported/00015-4233092237-painting of a spy with a demon face.png-909af718f4d158961933fcf9df092050.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sectio_assets/fraud/falsifiers/00025-749429789-a painting of a demonic money printing machine.png"
-dest_files=["res://.godot/imported/00025-749429789-a painting of a demonic money printing machine.png-e0141925964a51290abc791db291562f.ctex"]
+source_file="res://assets/sectio_assets/treachery/spies/00015-4233092237-painting of a spy with a demon face.png"
+dest_files=["res://.godot/imported/00015-4233092237-painting of a spy with a demon face.png-909af718f4d158961933fcf9df092050.ctex"]
 
 [params]
 

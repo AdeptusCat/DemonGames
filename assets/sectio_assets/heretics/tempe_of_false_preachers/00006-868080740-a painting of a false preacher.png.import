@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ns4f3o5cnr0h"
-path="res://.godot/imported/00036-3677310343-a painting of thousands of digging people in a gold mine.png-50002f45b3d7013aff55b8344d25ac4a.ctex"
+uid="uid://dbl8g3stl5fxg"
+path="res://.godot/imported/00006-868080740-a painting of a false preacher.png-ac0c7f03ef09c24756d40a76e2c5cec9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sectio_assets/the_greedy/exploiters_of_land_and_sea/00036-3677310343-a painting of thousands of digging people in a gold mine.png"
-dest_files=["res://.godot/imported/00036-3677310343-a painting of thousands of digging people in a gold mine.png-50002f45b3d7013aff55b8344d25ac4a.ctex"]
+source_file="res://assets/sectio_assets/heretics/tempe_of_false_preachers/00006-868080740-a painting of a false preacher.png"
+dest_files=["res://.godot/imported/00006-868080740-a painting of a false preacher.png-ac0c7f03ef09c24756d40a76e2c5cec9.ctex"]
 
 [params]
 
