@@ -767,28 +767,6 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="NetworkHBoxContainer" type="HBoxContainer" parent="Control"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 1585.0
-offset_top = 9.0
-offset_right = 1718.0
-offset_bottom = 49.0
-
-[node name="HostButton" type="Button" parent="Control/NetworkHBoxContainer"]
-layout_mode = 2
-tooltip_text = "Tooltip"
-text = "host"
-
-[node name="JoinButton" type="Button" parent="Control/NetworkHBoxContainer"]
-layout_mode = 2
-text = "join"
-
-[node name="StartButton" type="Button" parent="Control/NetworkHBoxContainer"]
-layout_mode = 2
-disabled = true
-text = "start"
-
 [node name="FleeDialog" type="ConfirmationDialog" parent="Control"]
 unique_name_in_owner = true
 title = "Flee?"
@@ -1842,9 +1820,6 @@ text = "Hide Combat Overview"
 [connection signal="mouse_exited" from="Control/CardsControl/DemonCardsMarginContainer" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_mouse_exited"]
 [connection signal="pressed" from="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/CollapseButton" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_collapse_button_pressed"]
 [connection signal="pressed" from="Control/DoEvilDeedsControl/MarginContainer/VBoxContainer/DoEvilDeedsControlButton" to="Control/DoEvilDeedsControl" method="_on_do_evil_deeds_control_button_pressed"]
-[connection signal="pressed" from="Control/NetworkHBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
-[connection signal="pressed" from="Control/NetworkHBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
-[connection signal="pressed" from="Control/NetworkHBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="Control/FleeControl/MarginContainer/VBoxContainer/HBoxContainer/ConfirmFleeButton" to="Control/FleeControl" method="_on_confirm_flee_button_pressed"]
 [connection signal="pressed" from="Control/FleeControl/MarginContainer/VBoxContainer/HBoxContainer/CancelFleeButton" to="Control/FleeControl" method="_on_cancel_flee_button_pressed"]
 [connection signal="pressed" from="Control/SoulSummaryControl/ShowSoulsSummaryButton" to="Control/SoulSummaryControl" method="_on_show_souls_summary_button_pressed"]

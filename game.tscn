@@ -31,7 +31,6 @@
 [ext_resource type="Script" path="res://phases/end.gd" id="20_orwt7"]
 [ext_resource type="AudioStream" uid="uid://bmjeur3qyc01g" path="res://assets/audio/voice/enemy_stays_to_fight.mp3" id="21_55x66"]
 [ext_resource type="Texture2D" uid="uid://qr14kucrashs" path="res://icon.svg" id="21_x0rao"]
-[ext_resource type="Texture2D" uid="uid://ci5eh16k1xid8" path="res://demon_assets - Kopie/agares/01797-1837376349-painting of a demon commander with legions in the background.png" id="22_2dn8i"]
 [ext_resource type="AudioStream" uid="uid://ddmomqbe2qusd" path="res://assets/audio/voice/battle_won.mp3" id="22_yacxk"]
 [ext_resource type="AudioStream" uid="uid://dxb53k67rmnoy" path="res://assets/audio/voice/battle_lost.mp3" id="23_6lv7b"]
 
@@ -40,6 +39,9 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_0057s"]
 gradient = SubResource("Gradient_s7p8l")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8j4pt"]
+load_path = "res://.godot/imported/01797-1837376349-painting of a demon commander with legions in the background.png-870df7a8a64e80ba69f4254241f4178f.ctex"
 
 [node name="Game" type="Control" groups=["Persist"]]
 layout_mode = 3
@@ -217,6 +219,6 @@ offset_left = 61.0
 offset_top = 310.0
 offset_right = 573.0
 offset_bottom = 822.0
-texture = ExtResource("22_2dn8i")
+texture = SubResource("CompressedTexture2D_8j4pt")
 
 [connection signal="timeout" from="Audio/RemindPlayerTimer" to="Audio" method="_on_remind_player_timer_timeout"]
