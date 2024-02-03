@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://d00aywoo0y4ld"]
+[gd_scene load_steps=57 format=3 uid="uid://d00aywoo0y4ld"]
 
 [ext_resource type="Script" path="res://ui/ui.gd" id="1_o55j0"]
 [ext_resource type="Texture2D" uid="uid://cdii7y50q1lno" path="res://assets/icons/pentagram_white.png" id="2_3ml1l"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://ui/ui_rank_track.gd" id="6_j34ga"]
 [ext_resource type="PackedScene" uid="uid://bupmbau5r1ld6" path="res://arcana.tscn" id="6_tnrka"]
 [ext_resource type="Script" path="res://phase_reminder_container.gd" id="8_ehym6"]
+[ext_resource type="PackedScene" uid="uid://m626bf2n5hw7" path="res://ui_newscenes/discard_arcana_card_control.tscn" id="8_hda50"]
 [ext_resource type="Script" path="res://do_evil_deeds_control.gd" id="9_3mgu2"]
 [ext_resource type="Shader" path="res://materials_shaders/shine_highlight_button.gdshader" id="10_bh8fp"]
 [ext_resource type="Script" path="res://ui/actions.gd" id="10_vmoye"]
@@ -1212,60 +1213,9 @@ horizontal_alignment = 1
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/PetitionsMarginContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="DiscardArcanaCardControl" type="Control" parent="Control"]
+[node name="DiscardArcanaCardControl" parent="Control" instance=ExtResource("8_hda50")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/DiscardArcanaCardControl"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ColorRect" type="ColorRect" parent="Control/DiscardArcanaCardControl/MarginContainer"]
-layout_mode = 2
-color = Color(0.160784, 0.160784, 0.160784, 0.662745)
-
-[node name="MarginContainer2" type="MarginContainer" parent="Control/DiscardArcanaCardControl"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -212.0
-offset_top = -100.0
-offset_right = 212.0
-offset_bottom = 100.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="NinePatchRect" type="NinePatchRect" parent="Control/DiscardArcanaCardControl/MarginContainer2"]
-layout_mode = 2
-texture = ExtResource("4_2iul4")
-patch_margin_left = 100
-patch_margin_top = 100
-patch_margin_right = 100
-patch_margin_bottom = 100
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/DiscardArcanaCardControl/MarginContainer2"]
-layout_mode = 2
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_right = 50
-
-[node name="Label" type="Label" parent="Control/DiscardArcanaCardControl/MarginContainer2/MarginContainer"]
-layout_mode = 2
-text = "You have too many Arcana Cards.
-Discard Arcana Cards by clicking on them."
-horizontal_alignment = 1
 
 [node name="ArcanaCardsMarginContainer" type="MarginContainer" parent="Control"]
 unique_name_in_owner = true
@@ -1395,15 +1345,6 @@ text = "Cancel"
 [node name="CombatControl" parent="Control" instance=ExtResource("28_ptmt4")]
 visible = false
 layout_mode = 1
-
-[node name="SaveButton" type="Button" parent="Control"]
-visible = false
-layout_mode = 0
-offset_left = 1892.0
-offset_top = 1037.0
-offset_right = 1936.0
-offset_bottom = 1068.0
-text = "Save"
 
 [node name="QuickHelpControl" type="MarginContainer" parent="Control"]
 unique_name_in_owner = true
@@ -1913,7 +1854,6 @@ text = "Hide Combat Overview"
 [connection signal="pressed" from="Control/StartScreenContainer/MarginContainer/VBoxContainer/StartScreenButton" to="Control/StartScreenContainer" method="_on_start_screen_button_pressed"]
 [connection signal="timeout" from="Control/NextDemonContainer/Timer" to="Control/NextDemonContainer" method="_on_timer_timeout"]
 [connection signal="pressed" from="Control/PickMoveUnitControl/MarginContainer/MarginContainer/VBoxContainer/ExitButton" to="Control/PickMoveUnitControl" method="_on_exit_button_pressed"]
-[connection signal="pressed" from="Control/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="Control/QuickHelpControl/MarginContainer/HBoxContainer/HelpButton" to="Control/QuickHelpControl" method="_on_help_button_pressed"]
 [connection signal="toggled" from="Control/QuickHelpControl/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/HelpCheckBox" to="Control/QuickHelpControl" method="_on_help_check_box_toggled"]
 [connection signal="pressed" from="Control/QuickHelpControl/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/CollapseButton" to="Control/QuickHelpControl" method="_on_button_pressed"]

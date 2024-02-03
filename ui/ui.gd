@@ -274,8 +274,6 @@ func _on_tutorial(topic, text : String):
 			var pos : Transform2D = %NextDemonContainer.get_global_transform_with_canvas()
 			%NextDemonContainer.top_level = true
 			%NextDemonContainer.global_position = pos.origin
-		Tutorial.Topic.Phase:
-			%PhaseMarginContainer.z_index = 1
 		Tutorial.Topic.CurrentPlayer:
 			%RankTrackMarginContainer.z_index = 1
 		Tutorial.Topic.PlayerStatus:
@@ -347,7 +345,6 @@ func _on_tutorial(topic, text : String):
 
 
 func _on_tutorialRead():
-	%PhaseMarginContainer.z_index = 0
 	%RankTrackMarginContainer.z_index = 0
 	%PlayersTree.z_index = 0
 	%BuyArcanaCardButton.disabled = false
@@ -797,13 +794,6 @@ func _on_buy_arcana_card_button_pressed():
 	Signals.sectioClicked.emit(null)
 	Signals.buyArcanaCard.emit()
 	Signals.tutorialRead.emit()
-
-
-
-func _on_save_button_pressed():
-	Save.saveGame()
-
-
 
 
 func _on_recruit_legions_button_pressed():

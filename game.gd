@@ -61,7 +61,7 @@ func _ready():
 #	skipEnd = true
 
 	#skipUnitPlacing = true
-	debugTroops = true
+	#debugTroops = true
 #	debugSouls = 100
 #	debugFavors = 1
 #	debugDisfavors = 1
