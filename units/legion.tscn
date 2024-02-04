@@ -6,8 +6,8 @@
 [ext_resource type="Script" path="res://legion_margin_container.gd" id="4_ka76n"]
 [ext_resource type="Shader" path="res://materials_shaders/unit_background.gdshader" id="5_b5ydx"]
 [ext_resource type="Shader" path="res://materials_shaders/legion.gdshader" id="6_40t4t"]
-[ext_resource type="Texture2D" uid="uid://cpat55k5ohgcw" path="res://noise/desolve_noise.tres" id="7_4dpsb"]
 [ext_resource type="Texture2D" uid="uid://ckkqcsdpp6e56" path="res://assets/triumphirates/00839-2766685014-symbol of an tribal rune with red background.png" id="7_l5w2j"]
+[ext_resource type="Texture2D" uid="uid://cpat55k5ohgcw" path="res://assets/noise/desolve_noise.tres" id="8_5s2tg"]
 [ext_resource type="Texture2D" uid="uid://dtsscr8bliiv0" path="res://assets/triumphirates/00892-3176970373-symbol of an tribal rune with green background.png" id="8_haw1a"]
 [ext_resource type="Texture2D" uid="uid://bwr56spe72ugb" path="res://assets/triumphirates/00892-3176970373-symbol of an tribal rune with green background_n.png" id="9_ic0n7"]
 [ext_resource type="Texture2D" uid="uid://qr14kucrashs" path="res://icon.svg" id="11_6c67q"]
@@ -38,14 +38,14 @@ resource_local_to_scene = true
 shader = ExtResource("6_40t4t")
 shader_parameter/dissolveState = 0.0
 shader_parameter/flashState = 1.0
-shader_parameter/dissolveNoise = ExtResource("7_4dpsb")
+shader_parameter/dissolveNoise = ExtResource("8_5s2tg")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xkc75"]
 resource_local_to_scene = true
 shader = ExtResource("6_40t4t")
 shader_parameter/dissolveState = 0.0
 shader_parameter/flashState = 1.0
-shader_parameter/dissolveNoise = ExtResource("7_4dpsb")
+shader_parameter/dissolveNoise = ExtResource("8_5s2tg")
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_t3iin"]
 diffuse_texture = ExtResource("8_haw1a")
@@ -62,7 +62,7 @@ resource_local_to_scene = true
 shader = ExtResource("6_40t4t")
 shader_parameter/dissolveState = 0.0
 shader_parameter/flashState = 1.0
-shader_parameter/dissolveNoise = ExtResource("7_4dpsb")
+shader_parameter/dissolveNoise = ExtResource("8_5s2tg")
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_8vbvs"]
 diffuse_texture = ExtResource("11_6c67q")

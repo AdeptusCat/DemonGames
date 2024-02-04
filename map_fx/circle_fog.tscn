@@ -1,9 +1,10 @@
 [gd_scene load_steps=13 format=3 uid="uid://7a7uc3aun4f3"]
 
-[ext_resource type="Texture2D" uid="uid://ckm0kcrcmp05p" path="res://noise/circle/noise1.tres" id="1_wsic1"]
-[ext_resource type="Texture2D" uid="uid://dutrbsu4a4pgh" path="res://noise/circle/noise2.tres" id="2_mcn2c"]
-[ext_resource type="Texture2D" uid="uid://1w1cs7vgjhhq" path="res://noise/circle/noise3.tres" id="3_6j1c8"]
+[ext_resource type="Texture2D" uid="uid://ckm0kcrcmp05p" path="res://assets/noise/circle/noise1.tres" id="1_wsic1"]
+[ext_resource type="Texture2D" uid="uid://dutrbsu4a4pgh" path="res://assets/noise/circle/noise2.tres" id="2_mcn2c"]
+[ext_resource type="Texture2D" uid="uid://1w1cs7vgjhhq" path="res://assets/noise/circle/noise3.tres" id="3_6j1c8"]
 [ext_resource type="Texture2D" uid="uid://bgijk4prumaxr" path="res://assets/circle.png" id="4_n1rwe"]
+
 
 [sub_resource type="Shader" id="Shader_btack"]
 code = "shader_type canvas_item;

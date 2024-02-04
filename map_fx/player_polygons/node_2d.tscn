@@ -1,9 +1,10 @@
 [gd_scene load_steps=17 format=3 uid="uid://bpfhae42bq35b"]
 
-[ext_resource type="Texture2D" uid="uid://bpnox6mrqiujb" path="res://noise/player_polygon_6/distortion_noise.tres" id="1_qhnxu"]
-[ext_resource type="Texture2D" uid="uid://cqef7s4li1ffv" path="res://noise/player_polygon_6/noise1.tres" id="2_0qhit"]
-[ext_resource type="Texture2D" uid="uid://tiq7aonrmvp8" path="res://noise/player_polygon_6/noise2.tres" id="3_dfwn6"]
-[ext_resource type="Texture2D" uid="uid://dwjvhvwwtboxo" path="res://noise/player_polygon_6/noise3.tres" id="4_wnr43"]
+[ext_resource type="Texture2D" uid="uid://bpnox6mrqiujb" path="res://assets/noise/player_polygon_6/distortion_noise.tres" id="1_qhnxu"]
+[ext_resource type="Texture2D" uid="uid://cqef7s4li1ffv" path="res://assets/noise/player_polygon_6/noise1.tres" id="2_0qhit"]
+[ext_resource type="Texture2D" uid="uid://tiq7aonrmvp8" path="res://assets/noise/player_polygon_6/noise2.tres" id="3_dfwn6"]
+[ext_resource type="Texture2D" uid="uid://dwjvhvwwtboxo" path="res://assets/noise/player_polygon_6/noise3.tres" id="4_wnr43"]
+
 
 [sub_resource type="Shader" id="Shader_ts47n"]
 code = "shader_type canvas_item;
