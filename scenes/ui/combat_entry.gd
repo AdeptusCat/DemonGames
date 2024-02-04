@@ -1,6 +1,6 @@
 extends HBoxContainer
 
-const PickMoveUnitVBoxContainerScene = preload("res://pick_move_unit_v_box_container.tscn")
+const PickMoveUnitVBoxContainerScene = preload("res://scenes/ui/pick_move_unit_v_box_container.tscn")
 var sectioName : String = ""
 
 func populate(_sectioName : String, combatRankNr : int):
