@@ -14,7 +14,6 @@ class_name UI
 @onready var fleeControl = %FleeControl
 @onready var waitForPlayerControl = %WaitForPlayerControl
 @onready var waitForPlayerLabel = %WaitForPlayerLabel
-@onready var combatParticipantsControl = %CombatParticipantsControl
 
 var sectioTextures : Dictionary = {}
 

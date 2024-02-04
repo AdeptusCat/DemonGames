@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://scenes/ui/CombatControl.gd" id="1_hiev6"]
 [ext_resource type="Script" path="res://scenes/ui/combat_participants_control.gd" id="2_p72qm"]
 
-
 [node name="CombatControl" type="Control"]
 layout_mode = 3
 anchors_preset = 15

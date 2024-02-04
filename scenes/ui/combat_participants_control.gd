@@ -1,6 +1,6 @@
 extends MarginContainer
 
-const PickMoveUnitVBoxContainerScene = preload("res://pick_move_unit_v_box_container.tscn")
+const PickMoveUnitVBoxContainerScene = preload("res://scenes/ui/pick_move_unit_v_box_container.tscn")
 
 var unitsHit = []
 var hits = 0

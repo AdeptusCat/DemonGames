@@ -1,6 +1,6 @@
 extends MarginContainer
 
-const combatEntryScene = preload("res://combat_entry.tscn")
+const combatEntryScene = preload("res://scenes/ui/combat_entry.tscn")
 var entries = {}
 var showEntries : bool = false
 
