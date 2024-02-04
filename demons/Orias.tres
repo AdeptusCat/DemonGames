@@ -1,6 +1,5 @@
 [gd_resource type="Resource" script_class="DemonResource" load_steps=3 format=3 uid="uid://c8s8lldqc77vy"]
 
-[ext_resource type="Texture2D" uid="uid://d1udophvgmobr" path="res://demon_assets/orias/01830-2451425430-a painting of a demon astrologer pondering a orb, dark fantasy warhammer.png" id="1_ksvlc"]
 [ext_resource type="Script" path="res://demon_resource.gd" id="2_1nu31"]
 
 [resource]
@@ -14,5 +13,5 @@ sex = 0
 player = 0
 incapacitated = false
 onEarth = false
-image = ExtResource("1_ksvlc")
+image = null
 description = "Great Marquis. Daemon of Divination. Protector of Astrologers."

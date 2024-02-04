@@ -740,8 +740,6 @@ func _on_join_button_pressed():
 func _on_start_button_pressed():
 	Signals.start.emit()
 
-func start():
-	%NetworkHBoxContainer.hide()
 
 func updateRankTrack():
 	%RankTrack.rankTrack = %RankTrack.rankTrack

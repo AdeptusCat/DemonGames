@@ -80,7 +80,6 @@ func _ready():
 	
 	if Connection.usedMenuToStartGame:
 		RpcCalls.peerReady.rpc_id(Connection.host)
-		ui.start()
 	
 	Signals.potatoPc.emit(Settings.potatoPc)
 
@@ -561,7 +560,6 @@ func _on_host():
 	
 	await get_tree().create_timer(0.5).timeout
 	RpcCalls.peerReady.rpc_id(Connection.host)
-	ui.start()
 
 
 func peer_connected(id):
@@ -580,7 +578,6 @@ func _on_join():
 	
 	await get_tree().create_timer(0.5).timeout
 	RpcCalls.peerReady.rpc_id(Connection.host)
-	ui.start()
 
 
 func _on_playerjoinedRoom(roomId : int, room_name : String, player_id : int, playersIdNameDict : Dictionary):

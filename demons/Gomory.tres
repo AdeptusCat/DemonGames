@@ -1,6 +1,5 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://btitr641wpxuo"]
 
-[ext_resource type="Texture2D" uid="uid://cvb7e5x6umpyi" path="res://demon_assets/gomory/01865-4050859767-painting of a beautiful lustful female demon in armor.png" id="1_usv0v"]
 [ext_resource type="Script" path="res://demon_resource.gd" id="2_4ake2"]
 
 [resource]
@@ -14,5 +13,5 @@ sex = 1
 player = 0
 incapacitated = false
 onEarth = false
-image = ExtResource("1_usv0v")
+image = null
 description = "Duchess. Temptress of Temple Maids."

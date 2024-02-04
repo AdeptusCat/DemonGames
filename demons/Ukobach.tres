@@ -1,6 +1,5 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://cfa3q4w5wvkmv"]
 
-[ext_resource type="Texture2D" uid="uid://diqghe2pgsids" path="res://demon_assets/ukobach/01820-1543665187-a painting of an ugly female demon wading through mud, holding a pitch fork.png" id="1_ub4u2"]
 [ext_resource type="Script" path="res://demon_resource.gd" id="1_xcmll"]
 
 [resource]
@@ -14,5 +13,5 @@ sex = 1
 player = 0
 incapacitated = false
 onEarth = false
-image = ExtResource("1_ub4u2")
+image = null
 description = "Lesser Demon. Lord of the Marches. Inventor of fireworks and fried foods."

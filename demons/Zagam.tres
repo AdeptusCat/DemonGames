@@ -1,6 +1,5 @@
 [gd_resource type="Resource" script_class="DemonResource" load_steps=3 format=3 uid="uid://dcn050f0cmvm1"]
 
-[ext_resource type="Texture2D" uid="uid://cj8500m887oy0" path="res://demon_assets/zagam/01848-307226557-painting of a demon king in a big hall with candles.png" id="1_vr6ew"]
 [ext_resource type="Script" path="res://demon_resource.gd" id="2_itc2w"]
 
 [resource]
@@ -14,5 +13,5 @@ sex = 0
 player = 0
 incapacitated = false
 onEarth = false
-image = ExtResource("1_vr6ew")
+image = null
 description = "Grand King and President of Hell. Daemon of Counterfeit. Commander of Thirty Legions."
