@@ -1,0 +1,60 @@
+[gd_resource type="ShaderMaterial" load_steps=12 format=3 uid="uid://d4kv8b50l6uvm"]
+
+[ext_resource type="Shader" path="res://assets/materials_shaders/map_sectios_test2.gdshader" id="1_31uj2"]
+
+[sub_resource type="Gradient" id="Gradient_i00jo"]
+offsets = PackedFloat32Array(0, 0.187279, 0.558304)
+colors = PackedColorArray(0.376471, 0.262745, 0.188235, 0.533333, 0.556863, 0.407843, 0.337255, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0i8t8"]
+gradient = SubResource("Gradient_i00jo")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_b28tc"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_nwhcj"]
+width = 2000
+height = 1500
+seamless = true
+noise = SubResource("FastNoiseLite_b28tc")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_mxkqd"]
+fractal_octaves = 4
+fractal_lacunarity = 3.0
+fractal_gain = 0.2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4vdit"]
+width = 250
+height = 250
+seamless = true
+noise = SubResource("FastNoiseLite_mxkqd")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_msy0t"]
+seed = -1
+fractal_gain = 0.2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pk22q"]
+width = 1000
+height = 750
+seamless = true
+noise = SubResource("FastNoiseLite_msy0t")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_5583r"]
+fractal_gain = 0.2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_q2s5k"]
+width = 250
+height = 125
+seamless = true
+noise = SubResource("FastNoiseLite_5583r")
+
+[resource]
+shader = ExtResource("1_31uj2")
+shader_parameter/speed = 0.02
+shader_parameter/scroll1 = Vector2(1.1, 1.1)
+shader_parameter/scroll2 = Vector2(0.1, 0.1)
+shader_parameter/distortion_strength = 1.0
+shader_parameter/noise1 = SubResource("NoiseTexture2D_4vdit")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_pk22q")
+shader_parameter/noise3 = SubResource("NoiseTexture2D_q2s5k")
+shader_parameter/colorTexture = SubResource("GradientTexture1D_0i8t8")
+shader_parameter/distortion_noise = SubResource("NoiseTexture2D_nwhcj")

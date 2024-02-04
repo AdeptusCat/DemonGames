@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ciqo1ukf84yco"]
+
+[ext_resource type="Shader" path="res://assets/materials_shaders/sectio_line_dashed.gdshader" id="1_581ei"]
+
+
+[resource]
+shader = ExtResource("1_581ei")
+shader_parameter/scrolling_speed = 1.0
+shader_parameter/on = true

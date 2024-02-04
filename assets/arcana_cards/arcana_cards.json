@@ -1,0 +1,664 @@
+{
+	"sheets": [
+		{
+			"name": "ArcanaCards",
+			"columns": [
+				{
+					"typeStr": "1",
+					"name": "name"
+				},
+				{
+					"typeStr": "3",
+					"name": "inPlay"
+				},
+				{
+					"typeStr": "5:Walk The Earth,Recruit Lieutenants,Nonary Pass,Pass,Double Pass,Triple Pass,Quadruple Pass,Quinary Pass,Senary Pass,Septenary Pass,Octonary Pass,Play Right Away,Walk The Earth Safely",
+					"name": "minorSpell"
+				},
+				{
+					"typeStr": "3",
+					"name": "cost"
+				}
+			],
+			"lines": [
+				{
+					"inPlay": 1,
+					"minorSpell": 9,
+					"cost": 2,
+					"name": "'My Sweet"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 11,
+					"cost": 0,
+					"name": "A Bad Day"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 7,
+					"cost": 2,
+					"name": "A Damn Good Day"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 1,
+					"cost": 2,
+					"name": "A Deliberate Mistake"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 11,
+					"cost": 0,
+					"name": "A Fit of Goodness"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 0,
+					"cost": 4,
+					"name": "A Minor Change"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 0,
+					"cost": 2,
+					"name": "A Small Favour"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 0,
+					"cost": 0,
+					"name": "A very old friend"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 0,
+					"cost": 2,
+					"name": "Big Bomb"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 1,
+					"cost": 1,
+					"name": "Blood Money"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 5,
+					"cost": 3,
+					"name": "Call for Lilith"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 0,
+					"cost": 4,
+					"name": "Carnossa"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 5,
+					"cost": 1,
+					"name": "Cats in the Dark"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 4,
+					"cost": 3,
+					"name": "Come on Join us"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 11,
+					"cost": 0,
+					"name": "Court Duty"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 8,
+					"cost": 6,
+					"name": "Crystal Ball"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 4,
+					"cost": 3,
+					"name": "Cthonians"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 12,
+					"cost": 0,
+					"name": "Cute Old Lady"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 5,
+					"cost": 5,
+					"name": "Deflection"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 3,
+					"cost": 1,
+					"name": "Don't eat that!"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 6,
+					"cost": 2,
+					"name": "Doppelgänger"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 11,
+					"cost": 0,
+					"name": "Exile"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 6,
+					"cost": 2,
+					"name": "Fast Cash"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 7,
+					"cost": 3,
+					"name": "Flagellation"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 1,
+					"cost": 8,
+					"name": "Foci"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 5,
+					"cost": 0,
+					"name": "Getaway"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 5,
+					"cost": 3,
+					"name": "Git 'Em"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 0,
+					"cost": 2,
+					"name": "He can't be All Good"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 0,
+					"cost": 2,
+					"name": "He can't be all good"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 8,
+					"cost": 6,
+					"name": "Hell on Heels"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 8,
+					"cost": 5,
+					"name": "Hell's Horses"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 7,
+					"cost": 3,
+					"name": "Hellevator"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 0,
+					"cost": 0,
+					"name": "Hellhounds!!!"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 1,
+					"cost": 5,
+					"name": "Hickochs's Mechanical Sleeve"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 1,
+					"cost": 2,
+					"name": "Hit the soft spots"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 6,
+					"cost": 0,
+					"name": "Horrible Insult"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 0,
+					"cost": 4,
+					"name": "Hunk"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 11,
+					"cost": 0,
+					"name": "If this gets out..."
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 5,
+					"cost": 0,
+					"name": "Into the Void"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 11,
+					"cost": 0,
+					"name": "Is it supposed to sound like that?"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 2,
+					"cost": 8,
+					"name": "It was here yesterday"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 1,
+					"cost": 0,
+					"name": "Jones' Device"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 11,
+					"cost": 0,
+					"name": "Kiss Me!"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 6,
+					"cost": 3,
+					"name": "Let's settle this..."
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 0,
+					"cost": 3,
+					"name": "Look Into the Future"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 2,
+					"cost": 5,
+					"name": "Look here..."
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 11,
+					"cost": 0,
+					"name": "Lost Lore"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 1,
+					"cost": 4,
+					"name": "Love for Lilith"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 0,
+					"cost": 5,
+					"name": "Love for Uriel"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 0,
+					"cost": 3,
+					"name": "Luddites"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 11,
+					"cost": 0,
+					"name": "Mad Love"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 9,
+					"cost": 3,
+					"name": "Madwoman"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 11,
+					"cost": 0,
+					"name": "Mania"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 0,
+					"cost": 2,
+					"name": "Meltdown"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 10,
+					"cost": 5,
+					"name": "Mirror, Mirror..."
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 0,
+					"cost": 0,
+					"name": "Mother Dog"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 1,
+					"cost": 7,
+					"name": "Objection!"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 10,
+					"cost": 4,
+					"name": "Pneumatic Mail"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 11,
+					"cost": 0,
+					"name": "Prove to me that you are real..."
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 0,
+					"cost": 6,
+					"name": "Puppets"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 0,
+					"cost": 2,
+					"name": "Rage"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 0,
+					"cost": 0,
+					"name": "Rankonette"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 7,
+					"cost": 2,
+					"name": "Rearguard"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 4,
+					"cost": 2,
+					"name": "Recruit"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 4,
+					"cost": 3,
+					"name": "Reincarnation"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 0,
+					"cost": 2,
+					"name": "Reinforcements"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 1,
+					"cost": 2,
+					"name": "Released"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 5,
+					"cost": 2,
+					"name": "Riot"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 7,
+					"cost": 0,
+					"name": "Rotten Sweetness"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 0,
+					"cost": 2,
+					"name": "Salome's Oil"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 5,
+					"cost": 3,
+					"name": "Secret Tunnel"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 0,
+					"cost": 6,
+					"name": "Sisyphus' Rock"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 6,
+					"cost": 2,
+					"name": "Sleep Late"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 4,
+					"cost": 2,
+					"name": "So, sue me..."
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 0,
+					"cost": 4,
+					"name": "Spiky Virgin"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 0,
+					"cost": 0,
+					"name": "Stop Time"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 1,
+					"cost": 4,
+					"name": "The Devial Made Me Do It!"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 5,
+					"cost": 0,
+					"name": "The Frenzied Feeder"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 0,
+					"cost": 1,
+					"name": "The Gomorran"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 0,
+					"cost": 4,
+					"name": "The Iago Syndrome"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 6,
+					"cost": 4,
+					"name": "The Order of the Silver Dawn"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 6,
+					"cost": 0,
+					"name": "The Shaker"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 9,
+					"cost": 7,
+					"name": "The Sodomess"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 0,
+					"cost": 1,
+					"name": "The Sword of the Guardian"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 2,
+					"cost": 4,
+					"name": "The Toad Trick"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 7,
+					"cost": 1,
+					"name": "The Water Test"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 0,
+					"cost": 1,
+					"name": "The Wheel of Fortune"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 7,
+					"cost": 3,
+					"name": "Tome of the Templars"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 4,
+					"cost": 2,
+					"name": "Try Again"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 0,
+					"cost": 4,
+					"name": "Uriel Must Obey"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 0,
+					"cost": 1,
+					"name": "Vendetta"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 0,
+					"cost": 6,
+					"name": "Vom Kriege"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 0,
+					"cost": 0,
+					"name": "Wand of Ibb"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 8,
+					"cost": 2,
+					"name": "Watch Out!!!"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 0,
+					"cost": 5,
+					"name": "We Are The Dead"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 6,
+					"cost": 1,
+					"name": "Weredogs"
+				},
+				{
+					"inPlay": 2,
+					"minorSpell": 6,
+					"cost": 4,
+					"name": "Wicked Pope"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 10,
+					"cost": 2,
+					"name": "Wicker Man"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 0,
+					"cost": 3,
+					"name": "Wine of Drunkenness"
+				},
+				{
+					"inPlay": 1,
+					"minorSpell": 0,
+					"cost": 2,
+					"name": "Zealots"
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "Lieutenants",
+			"columns": [
+				{
+					"typeStr": "1",
+					"name": "Name"
+				},
+				{
+					"typeStr": "3",
+					"name": "Combat Bonus",
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "Capacity",
+					"display": null
+				},
+				{
+					"typeStr": "13",
+					"name": "Texture"
+				}
+			],
+			"lines": [
+				{
+					"Name": "Shalmaneser",
+					"Combat Bonus": 2,
+					"Capacity": 3,
+					"Texture": "../assets/lieutenants/00949-3022073359-drawing of an military badge, fantasy, demonic, dark.png"
+				}
+			],
+			"separators": [],
+			"props": {}
+		}
+	],
+	"customTypes": [],
+	"compress": false
+}

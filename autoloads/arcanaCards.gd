@@ -4,7 +4,7 @@ extends Node
 func _ready():
 	Signals.minorSpell.connect(_on_MinorSpell)
 	Signals.arcanaClicked.connect(_on_arcanaClicked)
-
+	
 
 func _on_MinorSpell(arcanaCard : ArcanaCard):
 	Signals.sectioClicked.emit(null)

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://b3jbm854saevh"]
+
+[ext_resource type="Script" path="res://assets/demons/demon_resource.gd" id="1_xcmll"]
+
+[resource]
+script = ExtResource("1_xcmll")
+name = "Xaphan"
+rank = 59
+skulls = 1
+stars = 2
+hearts = 2
+sex = 1
+player = 0
+incapacitated = false
+onEarth = false
+image = null
+description = "Baroness. Keeper of the Furnaces of Hell. Daemon of Arsonists."

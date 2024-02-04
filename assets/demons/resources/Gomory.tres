@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://btitr641wpxuo"]
+
+[ext_resource type="Script" path="res://assets/demons/demon_resource.gd" id="2_4ake2"]
+
+[resource]
+script = ExtResource("2_4ake2")
+name = "Gomory"
+rank = 38
+skulls = 1
+stars = 2
+hearts = 4
+sex = 1
+player = 0
+incapacitated = false
+onEarth = false
+image = null
+description = "Duchess. Temptress of Temple Maids."
