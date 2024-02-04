@@ -1,10 +1,11 @@
 [gd_scene load_steps=18 format=3 uid="uid://b27g577ew11xt"]
 
-[ext_resource type="Texture2D" uid="uid://btmy0sr72oyjb" path="res://noise/color_texture.tres" id="1_oy1ix"]
-[ext_resource type="Texture2D" uid="uid://di3k32j5sshc" path="res://noise/distortion_noise.tres" id="2_ekk5k"]
-[ext_resource type="Texture2D" uid="uid://cbgf8v3il72v1" path="res://noise/noise1.tres" id="3_eult5"]
-[ext_resource type="Texture2D" uid="uid://bmvkbslaj4pu8" path="res://noise/noise2.tres" id="4_p7ydp"]
-[ext_resource type="Texture2D" uid="uid://ctblwkubprwg7" path="res://noise/noise3.tres" id="5_5cs8t"]
+[ext_resource type="Texture2D" uid="uid://btmy0sr72oyjb" path="res://assets/noise/color_texture.tres" id="1_oy1ix"]
+[ext_resource type="Texture2D" uid="uid://di3k32j5sshc" path="res://assets/noise/distortion_noise.tres" id="2_ekk5k"]
+[ext_resource type="Texture2D" uid="uid://cbgf8v3il72v1" path="res://assets/noise/noise1.tres" id="3_eult5"]
+[ext_resource type="Texture2D" uid="uid://bmvkbslaj4pu8" path="res://assets/noise/noise2.tres" id="4_p7ydp"]
+[ext_resource type="Texture2D" uid="uid://ctblwkubprwg7" path="res://assets/noise/noise3.tres" id="5_5cs8t"]
+
 
 [sub_resource type="Shader" id="Shader_awhim"]
 code = "shader_type canvas_item;

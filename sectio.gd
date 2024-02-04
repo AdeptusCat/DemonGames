@@ -1,6 +1,5 @@
 extends Node2D
 class_name Sectio
-#@icon("res://editor/skull3.svg")
 
 const PickMoveUnitVBoxContainerScene = preload("res://pick_move_unit_v_box_container.tscn")
 const soulsGatherScene = preload("res://ui/souls_gather_container.tscn")

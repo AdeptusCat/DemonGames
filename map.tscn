@@ -2,24 +2,24 @@
 
 [ext_resource type="Script" path="res://map.gd" id="1_do3gg"]
 [ext_resource type="PackedScene" uid="uid://0jxmw3vgonen" path="res://sectio.tscn" id="1_kah8n"]
+[ext_resource type="Texture2D" uid="uid://3f8amfnqj5nu" path="res://assets/sectio_assets/treachery/spies/00015-4233092237-painting of a spy with a demon face.png" id="3_nfdac"]
+[ext_resource type="Texture2D" uid="uid://rhfhl3dclj88" path="res://assets/sectio_assets/fraud/falsifiers/00025-749429789-a painting of a demonic money printing machine.png" id="6_qfq6i"]
+[ext_resource type="Texture2D" uid="uid://dbl8g3stl5fxg" path="res://assets/sectio_assets/heretics/tempe_of_false_preachers/00006-868080740-a painting of a false preacher.png" id="7_nyynj"]
 [ext_resource type="Shader" path="res://materials_shaders/polygon_shader_test.gdshader" id="8_7v0y2"]
+[ext_resource type="Texture2D" uid="uid://c6objej4nofgs" path="res://assets/sectio_assets/the_wrathful/lower_dungeon_of_the_racially_superior/00001-2265384839-a painting dark dungeon with torturing devices.png" id="8_lor6e"]
 [ext_resource type="Shader" path="res://materials_shaders/shader_test_line.gdshader" id="9_g81da"]
-[ext_resource type="Texture2D" uid="uid://3f8amfnqj5nu" path="res://sectio_assets/treachery/spies/00015-4233092237-painting of a spy with a demon face.png" id="9_hg4ha"]
 [ext_resource type="Texture2D" uid="uid://qr14kucrashs" path="res://icon.svg" id="9_kkvw8"]
+[ext_resource type="Texture2D" uid="uid://ns4f3o5cnr0h" path="res://assets/sectio_assets/the_greedy/exploiters_of_land_and_sea/00036-3677310343-a painting of thousands of digging people in a gold mine.png" id="9_xmwkd"]
 [ext_resource type="AudioStream" uid="uid://dvmj8xxwyblps" path="res://assets/audio/march.wav" id="10_jljl1"]
+[ext_resource type="Texture2D" uid="uid://c2enqojfoec50" path="res://assets/sectio_assets/the_gluttonous/sea_of_lard/00128-3546313921-painting of fat people wading through yellow mud.png" id="10_kpjjm"]
+[ext_resource type="Texture2D" uid="uid://bkijuv8aldudi" path="res://assets/sectio_assets/the_lustful/orgastica/00035-3388440854-a painting of an orgy.png" id="11_uxcec"]
 [ext_resource type="AudioStream" uid="uid://cuj4kv531027o" path="res://assets/audio/spawn_legion.wav" id="11_vsbj5"]
-[ext_resource type="Texture2D" uid="uid://rhfhl3dclj88" path="res://sectio_assets/fraud/falsifiers/00025-749429789-a painting of a demonic money printing machine.png" id="12_dnf8b"]
+[ext_resource type="Texture2D" uid="uid://tqbqw1x2gdyx" path="res://assets/sectio_assets/limbo/the_wise_men/00037-4219892559-a painting greek philosophers.png" id="12_1hg3k"]
 [ext_resource type="AudioStream" uid="uid://dhc65f5l2f5ne" path="res://assets/audio/spawn_lieutenant.wav" id="12_xb37a"]
-[ext_resource type="Texture2D" uid="uid://dbl8g3stl5fxg" path="res://sectio_assets/heretics/tempe_of_false_preachers/00006-868080740-a painting of a false preacher.png" id="13_7mtbk"]
 [ext_resource type="Shader" path="res://materials_shaders/distortion_screen.gdshader" id="14_f36ku"]
-[ext_resource type="Texture2D" uid="uid://c6objej4nofgs" path="res://sectio_assets/the_wrathful/lower_dungeon_of_the_racially_superior/00001-2265384839-a painting dark dungeon with torturing devices.png" id="14_snmmy"]
 [ext_resource type="Texture2D" uid="uid://b4awi58rg5qaf" path="res://assets/light/radial.png" id="14_tb35d"]
-[ext_resource type="Texture2D" uid="uid://ns4f3o5cnr0h" path="res://sectio_assets/the_greedy/exploiters_of_land_and_sea/00036-3677310343-a painting of thousands of digging people in a gold mine.png" id="15_naoxh"]
 [ext_resource type="Texture2D" uid="uid://mvlpmtpgc1u7" path="res://assets/pentagram.png" id="16_fbvtl"]
-[ext_resource type="Texture2D" uid="uid://c2enqojfoec50" path="res://sectio_assets/the_gluttonous/sea_of_lard/00128-3546313921-painting of fat people wading through yellow mud.png" id="16_v1cs8"]
 [ext_resource type="Shader" path="res://materials_shaders/map_center.gdshader" id="17_2x25j"]
-[ext_resource type="Texture2D" uid="uid://bkijuv8aldudi" path="res://sectio_assets/the_lustful/orgastica/00035-3388440854-a painting of an orgy.png" id="17_q70bu"]
-[ext_resource type="Texture2D" uid="uid://tqbqw1x2gdyx" path="res://sectio_assets/limbo/the_wise_men/00037-4219892559-a painting greek philosophers.png" id="18_yu2ta"]
 [ext_resource type="Texture2D" uid="uid://b3eir7ovfpxdx" path="res://assets/ring.png" id="21_1h4rc"]
 [ext_resource type="Texture2D" uid="uid://pxatxoe7w3s" path="res://assets/ring_small.png" id="27_tb867"]
 
@@ -1650,7 +1650,7 @@ unique_name_in_owner = true
 [node name="Treachery" type="Node2D" parent="Sectios"]
 
 [node name="Spies" parent="Sectios/Treachery" instance=ExtResource("1_kah8n")]
-sectioTexture = ExtResource("9_hg4ha")
+sectioTexture = ExtResource("3_nfdac")
 
 [node name="Area2D" parent="Sectios/Treachery/Spies" index="1"]
 position = Vector2(-1, 0)
@@ -1739,7 +1739,7 @@ sectioName = "Falsifiers"
 circle = 1
 quarter = 1
 souls = 5
-sectioTexture = ExtResource("12_dnf8b")
+sectioTexture = ExtResource("6_qfq6i")
 
 [node name="CollisionPolygon2D" parent="Sectios/Fraud/Falsifiers/Area2D" index="0"]
 polygon = PackedVector2Array(19, -33, 4, -47, -11, -22, -11, 9, -1, 38, 12, 57, 26, 47, 13, 31, 8, 9, 9, -15)
@@ -1875,7 +1875,7 @@ material = SubResource("ShaderMaterial_gddsl")
 sectioName = "Temple Of False Preachers"
 circle = 3
 souls = 4
-sectioTexture = ExtResource("13_7mtbk")
+sectioTexture = ExtResource("7_nyynj")
 
 [node name="CollisionPolygon2D" parent="Sectios/Heretics/Temple Of False Preachers/Area2D" index="0"]
 polygon = PackedVector2Array(-54, -42, -22, -15, 31, -2, 78, -11, 85, 6, 28, 16, -30, 1, -70, -30)
@@ -1952,7 +1952,7 @@ material = SubResource("ShaderMaterial_kfevv")
 sectioName = "Lower Dungeon Of The Racially Superior"
 circle = 4
 souls = 4
-sectioTexture = ExtResource("14_snmmy")
+sectioTexture = ExtResource("8_lor6e")
 
 [node name="CollisionPolygon2D" parent="Sectios/The Wrathful/Lower Dungeon Of The Racially Superior/Area2D" index="0"]
 polygon = PackedVector2Array(-80, -52, -40, -23, 17, -5, 76, -14, 84, 2, 15, 13, -50, -5, -95, -38)
@@ -2056,7 +2056,7 @@ sectioName = "Exploiters Of Land And Sea"
 circle = 5
 quarter = 2
 souls = 3
-sectioTexture = ExtResource("15_naoxh")
+sectioTexture = ExtResource("9_xmwkd")
 
 [node name="CollisionPolygon2D" parent="Sectios/The Greedy/Exploiters Of Land And Sea/Area2D" index="0"]
 polygon = PackedVector2Array(-80, 61, -67, 66, -28, 27, 4, 10, 50, 2, 95, 4, 98, -13, 46, -15, -1, -11, -35, 8)
@@ -2148,7 +2148,7 @@ sectioName = "Sea Of Lard"
 circle = 6
 quarter = 3
 souls = 4
-sectioTexture = ExtResource("16_v1cs8")
+sectioTexture = ExtResource("10_kpjjm")
 
 [node name="CollisionPolygon2D" parent="Sectios/The Gluttonous/Sea Of Lard/Area2D" index="0"]
 polygon = PackedVector2Array(47, 125, 69, 121, 40, 33, -9, -21, -92, -61, -96, -42, -19, -4, 22, 45)
@@ -2239,7 +2239,7 @@ sectioName = "Orgastica"
 circle = 7
 quarter = 4
 souls = 3
-sectioTexture = ExtResource("17_q70bu")
+sectioTexture = ExtResource("11_uxcec")
 
 [node name="CollisionPolygon2D" parent="Sectios/The Lustful/Orgastica/Area2D" index="0"]
 polygon = PackedVector2Array(-102, 79, -97, 100, -43, 67, 6, 15, 35, -51, 45, -129, 27, -126, 18, -54, -8, -3, -51, 46)
@@ -2300,7 +2300,7 @@ sectioName = "The Wise Men"
 circle = 8
 quarter = 3
 souls = 0
-sectioTexture = ExtResource("18_yu2ta")
+sectioTexture = ExtResource("12_1hg3k")
 
 [node name="CollisionPolygon2D" parent="Sectios/Limbo/The Wise Men/Area2D" index="0"]
 position = Vector2(-1, 0)
