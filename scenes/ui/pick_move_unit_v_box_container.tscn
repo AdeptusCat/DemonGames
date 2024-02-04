@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://16ug6shh8tk7"]
+
+[ext_resource type="Script" path="res://scenes/ui/pick_move_unit_v_box_container.gd" id="1_d7w8i"]
+
+[node name="PickMoveUnitVBoxContainer" type="VBoxContainer"]
+offset_right = 47.0
+offset_bottom = 57.0
+script = ExtResource("1_d7w8i")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

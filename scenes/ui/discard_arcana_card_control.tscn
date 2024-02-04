@@ -1,0 +1,57 @@
+[gd_scene load_steps=2 format=3 uid="uid://m626bf2n5hw7"]
+
+[ext_resource type="Texture2D" uid="uid://ll7flywhfs14" path="res://assets/tiles/01050-2038361938-thin dark wooden frame with fine details_cropped.png" id="1_elinn"]
+
+[node name="DiscardArcanaCardControl" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer"]
+layout_mode = 2
+color = Color(0.160784, 0.160784, 0.160784, 0.662745)
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -212.0
+offset_top = -100.0
+offset_right = 212.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer2"]
+layout_mode = 2
+texture = ExtResource("1_elinn")
+patch_margin_left = 100
+patch_margin_top = 100
+patch_margin_right = 100
+patch_margin_bottom = 100
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="Label" type="Label" parent="MarginContainer2/MarginContainer"]
+layout_mode = 2
+text = "You have too many Arcana Cards.
+Discard Arcana Cards by clicking on them."
+horizontal_alignment = 1

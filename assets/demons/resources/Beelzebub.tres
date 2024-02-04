@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="DemonResource" load_steps=3 format=3 uid="uid://dh4ey0qpcb4pb"]
+
+[ext_resource type="Script" path="res://assets/demons/demon_resource.gd" id="1_xcmll"]
+
+
+[resource]
+script = ExtResource("1_xcmll")
+name = "Beelzebub"
+rank = 8
+skulls = 4
+stars = 5
+hearts = 2
+sex = 0
+player = 0
+incapacitated = false
+onEarth = false
+image = null
+description = "Lord of Flies. Chief of false gods. Sovereign Ruler of the Infernal Empire. Grand Master of the Order of the Fly. Commander of Fifty-Nine Legions."

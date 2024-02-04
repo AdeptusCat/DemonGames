@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="DemonResource" load_steps=2 format=3 uid="uid://dkmeyw1bdg1c6"]
+
+[ext_resource type="Script" path="res://assets/demons/demon_resource.gd" id="2_iqt84"]
+
+[resource]
+script = ExtResource("2_iqt84")
+name = "Agares"
+rank = 32
+skulls = 4
+stars = 1
+hearts = 2
+sex = 3
+player = 0
+incapacitated = false
+onEarth = false
+description = "Grand Duke of the Eastern Regions of Hell. Commander of Thirty-One Legions."

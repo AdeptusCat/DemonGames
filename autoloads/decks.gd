@@ -1,7 +1,6 @@
 extends Node
 
 
-
 var sectioCards : Array = []
 var sectioNodes : Dictionary = {}
 enum Circles {Treachery, Fraud, TheViolent, Heretics, TheWrathful, TheGreedy, TheGluttonous, TheLustful, Limbo, Anthell}
@@ -13,11 +12,11 @@ var demonCards = []
 var lieutenants = []
 var lieutenantsReference = {}
 var availableLieutenants = []
-# Called when the node enters the scene tree for the first time.
 
 var cardsNotToLoad : Array = []
 
 enum MinorSpell {WalkTheEarth, RecruitLieutenants, NonaryPass, Pass, DoublePass, TriplePass, QuadruplePass, QuinaryPass, SenaryPass, SeptenaryPass, OctonaryPass, PlayRightAway, WalkTheEarthSafely}
+
 
 var PassSpells = {
 	MinorSpell.Pass : 1, 
@@ -34,15 +33,11 @@ var PassSpells = {
 
 func _ready():
 	Signals.resetGame.connect(_on_resetGame)
-#	for nr in range(2,9):
-#		demonCards.append(nr)
-#	for nr in range(1,14):
-#		arcanaCards.append(nr)
 	loadCards()
 
 
 func loadCards():
-	demonCards = readFilenames("demons")
+	demonCards = readFilenames("assets/demons/resources")
 	demonCards.shuffle()
 	
 	arcanaCardsReference = loadArcanaCardReferences()
@@ -67,8 +62,9 @@ func _on_resetGame():
 	lieutenantsReference.clear()
 	loadCards()
 
+
 func loadLieutenantNames():
-	var file = FileAccess.open("res://lieutenants.json", FileAccess.READ)
+	var file = FileAccess.open("res://assets/lieutenants/resources/lieutenants.json", FileAccess.READ)
 	var json = JSON.new()
 	var error = json.parse(file.get_as_text())
 	var data = json.data
@@ -81,8 +77,9 @@ func loadLieutenantNames():
 	cardNames.shuffle()
 	return cardNames
 
+
 func loadLieutenantReferences():
-	var file = FileAccess.open("res://lieutenants.json", FileAccess.READ)
+	var file = FileAccess.open("res://assets/lieutenants/resources/lieutenants.json", FileAccess.READ)
 	var json = JSON.new()
 	var error = json.parse(file.get_as_text())
 	var data = json.data
@@ -100,9 +97,8 @@ func loadLieutenantReferences():
 	return cardsDict
 
 
-
 func loadArcanaCardNames():
-	var file = FileAccess.open("res://arcana_cards/arcana_cards.json", FileAccess.READ)
+	var file = FileAccess.open("res://assets/arcana_cards/arcana_cards.json", FileAccess.READ)
 	var json = JSON.new()
 	var error = json.parse(file.get_as_text())
 	var data = json.data
@@ -121,8 +117,9 @@ func loadArcanaCardNames():
 							cardNames.append(entry["name"])
 	return cardNames
 
+
 func loadArcanaCardReferences():
-	var file = FileAccess.open("res://arcana_cards/arcana_cards.json", FileAccess.READ)
+	var file = FileAccess.open("res://assets/arcana_cards/arcana_cards.json", FileAccess.READ)
 	var json = JSON.new()
 	var error = json.parse(file.get_as_text())
 	var data = json.data
@@ -140,6 +137,7 @@ func loadArcanaCardReferences():
 				newEntry.erase("name")
 				cardsDict[cardName] = newEntry
 	return cardsDict
+
 
 func readFilenames(dirName):
 	var fileNames = []
@@ -160,9 +158,6 @@ func readFilenames(dirName):
 		print("An error occurred when trying to access the path.")
 	return fileNames
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
 @rpc("any_peer", "call_local")
 func addCard(cardName, deckName : String):

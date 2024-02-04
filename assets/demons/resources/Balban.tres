@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cjgmniuum1wmh"]
+
+[ext_resource type="Script" path="res://assets/demons/demon_resource.gd" id="1_xcmll"]
+
+[resource]
+script = ExtResource("1_xcmll")
+name = "Balban"
+rank = 35
+skulls = 2
+stars = 4
+hearts = 1
+sex = 1
+player = 0
+incapacitated = false
+onEarth = false
+image = null
+description = "Demon of Delusion. Mistress of the Beast."
