@@ -1,7 +1,6 @@
 extends MarginContainer
 
-const PickMoveUnitVBoxContainerScene = preload("res://scenes/ui/pick_move_unit_v_box_container.tscn")
-
+@export var PickMoveUnitVBoxContainerScene : PackedScene
 var unitsHit = []
 var hits = 0
 var unitNames = []
@@ -16,10 +15,6 @@ func _ready():
 	Signals.endCombat.connect(endCombat)
 	Signals.hightlightCombat.connect(highlight)
 	Signals.unitsAttack.connect(attack)
-
-
-#func _process(delta):
-#	position
 
 
 func highlight(_unitsDict : Dictionary, sectioName : String):
@@ -60,14 +55,12 @@ func attack():
 func hit(_unitsDict : Dictionary):
 	for triumphirate in _unitsDict:
 		for troopName in _unitsDict[triumphirate]:
-#			print("triumphirate ", triumphirate, " got hit. unit name: ", troopName)
 			unitsDict[triumphirate][troopName].hit()
 
 
 func killed(_unitsDict : Dictionary):
 	for triumphirate in _unitsDict:
 		for troopName in _unitsDict[triumphirate]:
-#			unitsDict[triumphirate][troopName].kill()
 			unitsDict[triumphirate].erase(troopName)
 	for child in %FriendlyUnitsHBoxContainer.get_children():
 		child.unHit()
@@ -78,7 +71,6 @@ func killed(_unitsDict : Dictionary):
 @rpc("any_peer", "call_local")
 func wantsToFlee():
 	var fleeRequestId = multiplayer.get_remote_sender_id()
-#	fleeingTriumphirates.append(fleeRequestId)
 	Signals.triumphiratWantsToFlee.emit(fleeRequestId)
 
 

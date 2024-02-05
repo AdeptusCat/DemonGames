@@ -3,7 +3,7 @@ extends Control
 var possibelLegions = []
 var pickedLegions = []
 var unitsAlreadyMovingWithLieutenant : Array = []
-var labelScene = preload("res://scenes/ui/pick_units_margin_container.tscn")
+@export var labelScene : PackedScene
 var capacity = 0
 
 signal done(legions)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dg8qrqf3xyi45"]
+[gd_scene load_steps=4 format=3 uid="uid://dg8qrqf3xyi45"]
 
 [ext_resource type="Script" path="res://scenes/ui/CombatControl.gd" id="1_hiev6"]
 [ext_resource type="Script" path="res://scenes/ui/combat_participants_control.gd" id="2_p72qm"]
+[ext_resource type="PackedScene" uid="uid://16ug6shh8tk7" path="res://scenes/ui/pick_move_unit_v_box_container.tscn" id="3_07ql7"]
 
 [node name="CombatControl" type="Control"]
 layout_mode = 3
@@ -46,6 +47,7 @@ offset_right = 270.0
 grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("2_p72qm")
+PickMoveUnitVBoxContainerScene = ExtResource("3_07ql7")
 
 [node name="ColorRect" type="ColorRect" parent="CombatParticipantsControl"]
 layout_mode = 2

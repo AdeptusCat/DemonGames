@@ -1,10 +1,14 @@
-[gd_scene load_steps=10 format=3 uid="uid://d3tmj8avseoqn"]
+[gd_scene load_steps=14 format=3 uid="uid://d3tmj8avseoqn"]
 
 [ext_resource type="Script" path="res://scenes/game/demon/demon.gd" id="1_gcahv"]
+[ext_resource type="Texture2D" uid="uid://cn603iwy4wlyu" path="res://assets/demons/genders/male.png" id="2_f8blv"]
 [ext_resource type="Texture2D" uid="uid://flpex7ihexjj" path="res://assets/tiles/01064-672545990-dark floor background with blood stains.png" id="2_v5gk0"]
 [ext_resource type="Texture2D" uid="uid://dfgdkoorijh8" path="res://assets/demon.png" id="3_ey2in"]
+[ext_resource type="Texture2D" uid="uid://oxd83wrolvei" path="res://assets/demons/genders/female.png" id="3_pnthn"]
 [ext_resource type="Texture2D" uid="uid://25er4ht16vnw" path="res://assets/00698-3170758600-drawing of a skull, digital art, game asset.png" id="4_5jgmy"]
+[ext_resource type="Texture2D" uid="uid://hrw1ofac5j78" path="res://assets/demons/genders/male_female.png" id="4_fmq23"]
 [ext_resource type="Texture2D" uid="uid://cgkg76vn5cx1s" path="res://assets/00710-4029699230-drawing of a pentagram, digital art, game asset.png" id="5_yj6xy"]
+[ext_resource type="PackedScene" uid="uid://xmbbar58v3fd" path="res://scenes/ui/souls_gather_container.tscn" id="6_4djce"]
 [ext_resource type="Texture2D" uid="uid://br3bhpalcxcw5" path="res://assets/00690-2262657839-drawing of a heart, digital art, game asset.png" id="6_apg0x"]
 [ext_resource type="Texture2D" uid="uid://chyx8gsyah2ww" path="res://assets/ring_color.png" id="7_m4tkl"]
 [ext_resource type="Texture2D" uid="uid://gcctfb1h6uij" path="res://assets/demons/genders/undefined.png" id="8_2xhw6"]
@@ -23,6 +27,11 @@ offset_bottom = 256.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gcahv")
+maleTexture = ExtResource("2_f8blv")
+femaleTexture = ExtResource("3_pnthn")
+hermaphroditeTexture = ExtResource("4_fmq23")
+undefinedTexture = ExtResource("8_2xhw6")
+soulsGatherScene = ExtResource("6_4djce")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 unique_name_in_owner = true

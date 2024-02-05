@@ -1,6 +1,6 @@
 extends Control
 
-const PickMoveUnitVBoxContainerScene = preload("res://scenes/ui/pick_move_unit_v_box_container.tscn")
+@export var PickMoveUnitVBoxContainerScene : PackedScene
 
 func highlight(sectio):
 	for troopName in sectio.troops:

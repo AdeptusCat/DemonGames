@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://d00aywoo0y4ld"]
+[gd_scene load_steps=61 format=3 uid="uid://d00aywoo0y4ld"]
 
 [ext_resource type="Script" path="res://scenes/ui/ui.gd" id="1_o55j0"]
 [ext_resource type="Texture2D" uid="uid://cdii7y50q1lno" path="res://assets/icons/pentagram_white.png" id="2_3ml1l"]
@@ -19,9 +19,11 @@
 [ext_resource type="Script" path="res://scenes/ui/soul_summary_control.gd" id="14_mkbg2"]
 [ext_resource type="Shader" path="res://assets/materials_shaders/shine_highlight_button.gdshader" id="14_rqnnt"]
 [ext_resource type="Texture2D" uid="uid://bnetx58nm7uyn" path="res://assets/tiles/01073-3590247828-souls leaving bodies.png" id="15_y1is2"]
+[ext_resource type="Texture2D" uid="uid://25er4ht16vnw" path="res://assets/00698-3170758600-drawing of a skull, digital art, game asset.png" id="16_3g30k"]
 [ext_resource type="Script" path="res://scenes/ui/taming_hellhound_container.gd" id="16_6u5u8"]
 [ext_resource type="Shader" path="res://assets/materials_shaders/shine_highlight.gdshader" id="16_sh0rp"]
 [ext_resource type="Script" path="res://scenes/ui/start_screen_container.gd" id="17_gu4oo"]
+[ext_resource type="Texture2D" uid="uid://br3bhpalcxcw5" path="res://assets/00690-2262657839-drawing of a heart, digital art, game asset.png" id="17_tqd0q"]
 [ext_resource type="Texture2D" uid="uid://ctqsqfcuqtrro" path="res://assets/start_screen/01582-1784428550-painting of demon legions assembling in front of a demon commander.png" id="18_hs7xv"]
 [ext_resource type="Script" path="res://scenes/ui/next_demon_container.gd" id="19_av3we"]
 [ext_resource type="Script" path="res://scenes/ui/do_evil_deeds_control.gd" id="19_gykn1"]
@@ -38,10 +40,12 @@
 [ext_resource type="PackedScene" uid="uid://dg8qrqf3xyi45" path="res://scenes/ui/combat_control.tscn" id="28_ptmt4"]
 [ext_resource type="Script" path="res://scenes/ui/help_sequence_of_play_container.gd" id="30_54wyv"]
 [ext_resource type="Script" path="res://scenes/ui/goal_margin_container.gd" id="32_4llok"]
+[ext_resource type="PackedScene" uid="uid://b8hn7e2w8pyg" path="res://scenes/ui/petition_entry.tscn" id="32_7wv0v"]
 [ext_resource type="PackedScene" uid="uid://bnipkihjqnak" path="res://scenes/ui/tutorial_margin_container.tscn" id="33_0fyc6"]
 [ext_resource type="Script" path="res://scenes/ui/phases_container.gd" id="35_vehc2"]
 [ext_resource type="Theme" uid="uid://cgwxqm3rkumgq" path="res://assets/themes/test.tres" id="36_x2jp8"]
 [ext_resource type="Script" path="res://scenes/ui/CombatOverviewMarginContainer.gd" id="37_2s8h0"]
+[ext_resource type="PackedScene" uid="uid://dphwtkh030vsb" path="res://scenes/ui/combat_entry.tscn" id="44_xx0bh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2yxpw"]
 bg_color = Color(0.372549, 0.372549, 0.372549, 1)
@@ -226,6 +230,7 @@ theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 50
 script = ExtResource("6_j34ga")
+playerIcon = ExtResource("2_3ml1l")
 
 [node name="ColorRect" type="ColorRect" parent="Control/RankTrackMarginContainer/RankTrack"]
 layout_mode = 2
@@ -464,6 +469,8 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 script = ExtResource("10_vmoye")
+skullTexture = ExtResource("16_3g30k")
+heartTexture = ExtResource("17_tqd0q")
 
 [node name="BackToHellConfirmationDialog" type="ConfirmationDialog" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions"]
 unique_name_in_owner = true
@@ -1152,6 +1159,7 @@ offset_right = 398.0
 offset_bottom = 722.0
 mouse_filter = 0
 script = ExtResource("25_s5si6")
+petitionEntryScene = ExtResource("32_7wv0v")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="Control/PetitionsMarginContainer"]
 layout_mode = 2
@@ -1265,6 +1273,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("24_hkctf")
+PickMoveUnitVBoxContainerScene = ExtResource("3_vvq6g")
 
 [node name="MarginContainer2" type="MarginContainer" parent="Control/PickMoveUnitControl"]
 layout_mode = 1
@@ -1758,6 +1767,7 @@ offset_right = 256.0
 offset_bottom = 35.0
 grow_vertical = 2
 script = ExtResource("37_2s8h0")
+combatEntryScene = ExtResource("44_xx0bh")
 
 [node name="ColorRect" type="ColorRect" parent="Control/CombatOverviewMarginContainer"]
 layout_mode = 2

@@ -1,12 +1,8 @@
 extends MarginContainer
 
-@onready var demonLabel = preload("res://scenes/ui/demon_rank_track_label.tscn")
-var playerIcon = preload("res://assets/icons/pentagram_white.png")
+@export var playerIcon : Texture
 
 var tw1 : Tween
-#var currentDemonLabel : Label
-#var demonLabelsByRank = {}
-#var demonRanksByName = {}
 
 var root
 var currentDemonRoot
@@ -23,49 +19,6 @@ var rankTrack: Array:
 	set(array):
 		print(Data.id, " updating rank track")
 		rankTrack = array
-#		demonRanksByName = {}
-#		demonLabelsByRank = {}
-#		for n in %RankTrackVBoxContainer.get_children():
-#			n.queue_free()
-#		for rank in rankTrack:
-#			if rank is String:
-#				print("is string")
-#			if rank is int:
-#				print("is int")
-#			if rank is float:
-#				print("is float")
-#			var label = demonLabel.instantiate()
-#			label.text = Data.demons[rank].demonName
-#			var player = Data.players[Data.demons[rank].player]
-			
-#			label.modulate = player.color
-#			%RankTrackVBoxContainer.add_child(label)
-#			demonLabelsByRank[rank] = label
-#			label.pivot_offset.x = label.size.x / 2
-#			label.pivot_offset.y = label.size.y / 6
-#			demonRanksByName[Data.demons[rank].demonName] = rank
-#			label.mouseEntered.connect(_on_demonLabel_mouseEntered)
-#			label.mouseExited.connect(_on_demonLabel_mouseExited)
-			
-#		for n in %DemonStatusVBoxContainer.get_children():
-#			n.queue_free()
-#		for rank in rankTrack:
-#			var label = Label.new()
-#			label.name = str(rank)
-#			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-#			var text = ""
-#			if Data.demons[rank].onEarth:
-#				text = "On Earth"
-#			elif Data.demons[rank].incapacitated:
-#				text = "Incapacitated"
-#			else:
-#				text = "In Hell"
-#			label.text = text
-#			%DemonStatusVBoxContainer.add_child(label)
-		
-		
-#		%DemonTree.custom_minimum_size = Vector2(350, rankTrack.size() * 52)
-		
 		var firstEntry : bool = entries.is_empty()
 		for entry in entries:
 			entries[entry].free()
@@ -79,8 +32,6 @@ var rankTrack: Array:
 				collapse()
 		
 func _ready():
-#	Signals.changePlayerDisplayValue.connect(_on_changeValue)
-#	Signals.createPlayerDisplayLine.connect(_on_addLine)
 	Signals.demonClicked.connect(_on_demonClicked)
 	Signals.action.connect(_on_action)
 	
@@ -183,9 +134,6 @@ func highlightCurrentDemon(rank):
 			_on_addCurrentDemonLine(rank)
 		else:
 			entries[entry].set_icon_modulate(0, iconColorInvisible)
-			
-#	var line = entries[rank]
-#	line.set_custom_bg_color(0, Data.players[demonLabelsByRank[rank].player].color, true)
 
 
 func _on_addCurrentDemonLine(demonRank):
@@ -267,12 +215,6 @@ func _on_addLine(demonRank):
 	line.set_text_alignment(3, HORIZONTAL_ALIGNMENT_CENTER)
 	line.set_selectable(3, false)
 	entries[demonRank] = line
-#	custom_minimum_size = Vector2(custom_minimum_size.x, custom_minimum_size.y + 35)
-#	line.move_after(line)
-
-
-#func _on_mouse_entered(x):
-#	print("entered ",x)
 
 
 func _on_changeValue(demonRank, column, value):
@@ -310,7 +252,6 @@ func _on_demonClicked(demon : Demon):
 
 
 func expand():
-	#	%DemonTree.custom_minimum_size = Vector2(350, clamp(rankTrack.size() * 48, 0, 12 * 48))
 	var y : int = clamp(rankTrack.size() * 48 + 48, 0, 12 * 48 + 48)
 	var tw1 = get_tree().create_tween()
 	tw1.set_trans(Tween.TRANS_QUAD)
@@ -323,7 +264,6 @@ func _on_mouse_entered():
 	expand()
 
 func collapse():
-#	%DemonTree.custom_minimum_size = Vector2(350, rankTrack.size() * 0)
 	var tw1 = get_tree().create_tween()
 	tw1.set_trans(Tween.TRANS_QUAD)
 	tw1.set_ease(Tween.EASE_IN)

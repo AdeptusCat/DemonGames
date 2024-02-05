@@ -1,13 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://dis28hyf0md3t"]
+[gd_scene load_steps=6 format=3 uid="uid://dis28hyf0md3t"]
 
 [ext_resource type="Script" path="res://scenes/game/units/lieutenant_unit.gd" id="1_pxg3o"]
 [ext_resource type="Texture2D" uid="uid://cbmert5pfgg4n" path="res://assets/bar.png" id="2_jnb30"]
+[ext_resource type="PackedScene" uid="uid://xmbbar58v3fd" path="res://scenes/ui/souls_gather_container.tscn" id="2_m2dyo"]
 [ext_resource type="PackedScene" uid="uid://dia4cibhpxfew" path="res://scenes/ui/lieutenant_margin_container.tscn" id="2_unjmy"]
 [ext_resource type="Texture2D" uid="uid://d206wyqx847u4" path="res://assets/bar1.png" id="3_dfn0c"]
 
 [node name="Lieutenant" type="Node2D" groups=["Persist"]]
 position = Vector2(568, 387)
 script = ExtResource("1_pxg3o")
+soulsGatherScene = ExtResource("2_m2dyo")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 

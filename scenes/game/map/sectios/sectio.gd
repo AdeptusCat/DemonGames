@@ -1,8 +1,8 @@
 extends Node2D
 class_name Sectio
 
-const PickMoveUnitVBoxContainerScene = preload("res://scenes/ui/pick_move_unit_v_box_container.tscn")
-const soulsGatherScene = preload("res://scenes/ui/souls_gather_container.tscn")
+@export var PickMoveUnitVBoxContainerScene : PackedScene
+@export var soulsGatherScene : PackedScene
 
 @export var Treachery : Color
 @export var Fraud : Color

@@ -3,9 +3,8 @@ extends MarginContainer
 #signal demonDone(passAction)
 signal backToHell(boolean)
 
-@onready var skullTexture = preload("res://assets/00698-3170758600-drawing of a skull, digital art, game asset.png")
-@onready var heartTexture = preload("res://assets/00690-2262657839-drawing of a heart, digital art, game asset.png")
-
+@export var skullTexture : Texture
+@export var heartTexture : Texture
 
 var spellObject : Spells = Spells.new()
 var player : Player
