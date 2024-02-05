@@ -27,8 +27,7 @@ var aiID : int = -1
 var loadedPlayerIdNamesDict : Dictionary = {}
 var savegameData : Dictionary = {"filename" : "", "date" : "", "players" : [], "turn" : "", "phase" : ""}
 
-var playerIcon = preload("res://assets/icons/pentagram.png")
-
+@export var playerIcon : Texture
 var game_res_path : String = "res://scenes/game/game.tscn"
 @onready var thread = Thread.new() 
 

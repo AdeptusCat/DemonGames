@@ -4,11 +4,13 @@ class_name Demon
 @export var stats : Resource
 signal demonClicked(node)
 
-const maleTexture = preload("res://assets/demons/genders/male.png")
-const femaleTexture = preload("res://assets/demons/genders/female.png")
-const hermaphroditeTexture = preload("res://assets/demons/genders/male_female.png")
-const undefinedTexture = preload("res://assets/demons/genders/undefined.png")
-const soulsGatherScene = preload("res://scenes/ui/souls_gather_container.tscn")
+
+@export var maleTexture : Texture
+@export var femaleTexture : Texture
+@export var hermaphroditeTexture : Texture
+@export var undefinedTexture : Texture
+@export var soulsGatherScene : PackedScene
+
 
 var demonName : String = "":
 	set(_name):

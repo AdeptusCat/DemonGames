@@ -1,6 +1,6 @@
 extends Unit
 
-
+@export var soulsGatherScene : PackedScene
 
 var solitary : bool = false
 var combatBonus : int = 9
@@ -10,7 +10,6 @@ var legionsFleeingWithLieutenant : Array = []
 var lieutenantTextureDir
 var tw3
 
-const soulsGatherScene = preload("res://scenes/ui/souls_gather_container.tscn")
 
 func _ready():
 	marginContainer = %LieutenantMarginContainer

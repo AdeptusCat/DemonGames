@@ -3,6 +3,8 @@ extends MarginContainer
 var expanded : bool = false
 var helpSubjectsAlreadyDisplayed : Array = []
 
+@onready var startPosition : Vector2 = position
+
 func _ready():
 	Signals.help.connect(_on_help)
 
@@ -65,14 +67,14 @@ func expand():
 	var tw1 = create_tween()
 	tw1.set_trans(Tween.TRANS_BACK)
 	tw1.set_ease(Tween.EASE_OUT)
-	tw1.tween_property(self, "position", Vector2(0 - %HelpLabel.size.x - 50, 0), 0.6)
+	tw1.tween_property(self, "position", Vector2(startPosition.x - %HelpLabel.size.x - 50, startPosition.y), 0.6)
 
 
 func collapse():
 	var tw1 = create_tween()
 	tw1.set_trans(Tween.TRANS_BACK)
 	tw1.set_ease(Tween.EASE_IN)
-	tw1.tween_property(self, "position", Vector2.ZERO, 0.6)
+	tw1.tween_property(self, "position", startPosition, 0.6)
 
 
 func _on_help_button_pressed():

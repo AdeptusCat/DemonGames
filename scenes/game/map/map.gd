@@ -1,9 +1,10 @@
 extends Node2D
 class_name Map
 
-const legionScene = preload("res://scenes/game/units/legion.tscn")
-const lieutenantScene = preload("res://scenes/game/units/lieutenant_unit.tscn")
-const borderLineScene = preload("res://scenes/game/map/sectio_border_line_2d.tscn")
+@export var legionScene : PackedScene
+@export var lieutenantScene : PackedScene
+@export var borderLineScene : PackedScene
+@export var mouseLightScene : PackedScene
 
 var possibleNeighbours = []
 var _selectedUnit = null
@@ -13,18 +14,15 @@ var playerpolygons =  {}
 var playerPolygonsLeft = []
 
 signal unitPlacingDone
-#signal demonDone(passAction)
 signal fleeConfirmation(boolean)
 
 signal unitFinishedFleeing
 var fleeRequestId
-#var sectioAttackedFrom
 
 var tw1
 
 var map_fx_path : String = "res://scenes/game/map/map_fx/map_fx.tscn"
 
-var mouseLightScene = preload("res://scenes/ui/mouse_light.tscn")
 var mouseLights : Dictionary = {}
 
 func _ready():
