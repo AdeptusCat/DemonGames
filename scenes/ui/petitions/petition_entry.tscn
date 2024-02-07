@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://b8hn7e2w8pyg"]
 
-[ext_resource type="Script" path="res://scenes/ui/petition_entry.gd" id="1_i13tp"]
+[ext_resource type="Script" path="res://scenes/ui/petitions/petition_entry.gd" id="1_i13tp"]
+
 
 [node name="PetitionEntry" type="HBoxContainer"]
 anchors_preset = 15

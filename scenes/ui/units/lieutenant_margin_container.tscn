@@ -1,9 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://dia4cibhpxfew"]
 
-[ext_resource type="Script" path="res://scenes/ui/lieutenant_margin_container.gd" id="1_p8d35"]
+[ext_resource type="Script" path="res://scenes/ui/units/lieutenant_margin_container.gd" id="1_p8d35"]
 [ext_resource type="Shader" path="res://assets/materials_shaders/unit_background.gdshader" id="2_a8k3n"]
 [ext_resource type="Material" uid="uid://dsk1i4dyerynl" path="res://assets/materials_shaders/unit_shader_material.tres" id="3_dtlw2"]
 [ext_resource type="Texture2D" uid="uid://dhjd7ib8mh4jj" path="res://assets/lieutenants/textures/00912-3022073322-drawing of an military badge, fantasy, demonic, dark.png" id="4_g0q1o"]
+
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_eowth"]
 

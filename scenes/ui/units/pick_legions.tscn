@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://x1wyowbc2ock"]
+[gd_scene load_steps=3 format=3 uid="uid://x1wyowbc2ock"]
 
-[ext_resource type="Script" path="res://scenes/ui/pick_legions.gd" id="1_oay6l"]
+[ext_resource type="Script" path="res://scenes/ui/units/pick_legions.gd" id="1_oay6l"]
+[ext_resource type="PackedScene" uid="uid://cehmttmcweh14" path="res://scenes/ui/pick_units_margin_container.tscn" id="2_2h6qm"]
 
 [node name="PickLegions" type="Control"]
 layout_mode = 3
@@ -10,6 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_oay6l")
+labelScene = ExtResource("2_2h6qm")
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]
 layout_mode = 1

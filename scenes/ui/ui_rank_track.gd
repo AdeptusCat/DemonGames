@@ -1,6 +1,7 @@
 extends MarginContainer
 
-@onready var demonLabel = preload("res://scenes/ui/demon_rank_track_label.tscn")
+#@onready var demonLabel = preload("res://scenes/ui/demon_rank_track_label.tscn")
+@export var demonLabel : PackedScene
 var playerIcon = preload("res://assets/icons/pentagram_white.png")
 
 var tw1 : Tween

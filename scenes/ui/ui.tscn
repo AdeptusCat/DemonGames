@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://d00aywoo0y4ld"]
+[gd_scene load_steps=58 format=3 uid="uid://d00aywoo0y4ld"]
 
 [ext_resource type="Script" path="res://scenes/ui/ui.gd" id="1_o55j0"]
 [ext_resource type="Texture2D" uid="uid://cdii7y50q1lno" path="res://assets/icons/pentagram_white.png" id="2_3ml1l"]
@@ -6,15 +6,15 @@
 [ext_resource type="Texture2D" uid="uid://salqj2nw3op7" path="res://assets/tiles/01104-2180976952-a painting of souls leaving bodies that are laying on the ground by Hieronymus Bosch.png" id="3_mnku2"]
 [ext_resource type="PackedScene" uid="uid://16ug6shh8tk7" path="res://scenes/ui/pick_move_unit_v_box_container.tscn" id="3_vvq6g"]
 [ext_resource type="Texture2D" uid="uid://ll7flywhfs14" path="res://assets/tiles/01050-2038361938-thin dark wooden frame with fine details_cropped.png" id="4_2iul4"]
-[ext_resource type="PackedScene" uid="uid://bgbrh6mf2k4ds" path="res://scenes/ui/menu_container.tscn" id="4_7ai4t"]
-[ext_resource type="PackedScene" uid="uid://x1wyowbc2ock" path="res://scenes/ui/pick_legions.tscn" id="5_h75dt"]
-[ext_resource type="PackedScene" uid="uid://hb4k3ypme8f6" path="res://scenes/ui/players_tree.tscn" id="6_2gjeq"]
+[ext_resource type="PackedScene" uid="uid://bgbrh6mf2k4ds" path="res://scenes/ui/ingame_menu/menu_container.tscn" id="4_7ai4t"]
+[ext_resource type="PackedScene" uid="uid://x1wyowbc2ock" path="res://scenes/ui/units/pick_legions.tscn" id="5_h75dt"]
+[ext_resource type="PackedScene" uid="uid://hb4k3ypme8f6" path="res://scenes/ui/top_banner/players_tree.tscn" id="6_2gjeq"]
 [ext_resource type="Script" path="res://scenes/ui/ui_rank_track.gd" id="6_j34ga"]
 [ext_resource type="PackedScene" uid="uid://bupmbau5r1ld6" path="res://scenes/game/arcana_cards/arcana.tscn" id="6_tnrka"]
 [ext_resource type="Script" path="res://scenes/ui/phase_reminder_container.gd" id="8_ehym6"]
-[ext_resource type="PackedScene" uid="uid://m626bf2n5hw7" path="res://scenes/ui/discard_arcana_card_control.tscn" id="8_hda50"]
+[ext_resource type="PackedScene" uid="uid://m626bf2n5hw7" path="res://scenes/ui/arcana_cards/discard_arcana_card_control.tscn" id="8_hda50"]
 [ext_resource type="Theme" uid="uid://ct12aengaa7cl" path="res://assets/themes/default_theme.tres" id="8_wds8y"]
-[ext_resource type="Script" path="res://scenes/ui/actions.gd" id="10_vmoye"]
+[ext_resource type="Script" path="res://scenes/ui/actions/actions.gd" id="10_vmoye"]
 [ext_resource type="Script" path="res://scenes/ui/flee_control.gd" id="13_ocgbx"]
 [ext_resource type="Script" path="res://scenes/ui/soul_summary_control.gd" id="14_mkbg2"]
 [ext_resource type="Shader" path="res://assets/materials_shaders/shine_highlight_button.gdshader" id="14_rqnnt"]
@@ -24,24 +24,25 @@
 [ext_resource type="Script" path="res://scenes/ui/start_screen_container.gd" id="17_gu4oo"]
 [ext_resource type="Texture2D" uid="uid://ctqsqfcuqtrro" path="res://assets/start_screen/01582-1784428550-painting of demon legions assembling in front of a demon commander.png" id="18_hs7xv"]
 [ext_resource type="Script" path="res://scenes/ui/next_demon_container.gd" id="19_av3we"]
-[ext_resource type="Script" path="res://scenes/ui/do_evil_deeds_control.gd" id="19_gykn1"]
+[ext_resource type="Script" path="res://scenes/ui/actions/do_evil_deeds_control.gd" id="19_gykn1"]
 [ext_resource type="Script" path="res://scenes/ui/win_container.gd" id="20_naaen"]
 [ext_resource type="Texture2D" uid="uid://q4iob4kmtt3q" path="res://assets/scenes/01474-239217050-a throne in a dark room with a demon crowd.png" id="21_6lkne"]
 [ext_resource type="Texture2D" uid="uid://b7584mpkv4uq" path="res://assets/scenes/01525-2627610038-demons plotting around a table.png" id="22_k6wkh"]
 [ext_resource type="Texture2D" uid="uid://j56fy8naf6pl" path="res://assets/scenes/01453-2080372656-a throne in a dark room with a demon standing next to it.png" id="23_60pda"]
-[ext_resource type="Script" path="res://scenes/ui/PickMoveUnitControl.gd" id="24_hkctf"]
-[ext_resource type="PackedScene" uid="uid://dm6xoflw4305t" path="res://scenes/ui/frame_background_margin_container.tscn" id="25_jfpsm"]
-[ext_resource type="Script" path="res://scenes/ui/petitions_container.gd" id="25_s5si6"]
-[ext_resource type="PackedScene" uid="uid://7p3kfgl06d7y" path="res://scenes/ui/frame_margin_container.tscn" id="26_vv66b"]
-[ext_resource type="Script" path="res://scenes/ui/demon_cards_margin_container.gd" id="27_q5h8k"]
+[ext_resource type="Script" path="res://scenes/ui/pick_move_unit_control.gd" id="24_hkctf"]
+[ext_resource type="PackedScene" uid="uid://dm6xoflw4305t" path="res://scenes/ui/frame/frame_background_margin_container.tscn" id="25_jfpsm"]
+[ext_resource type="Script" path="res://scenes/ui/petitions/petitions_container.gd" id="25_s5si6"]
+[ext_resource type="PackedScene" uid="uid://7p3kfgl06d7y" path="res://scenes/ui/frame/frame_margin_container.tscn" id="26_vv66b"]
+[ext_resource type="Script" path="res://scenes/ui/demons/demon_cards_margin_container.gd" id="27_q5h8k"]
 [ext_resource type="Script" path="res://scenes/ui/quick_help_control.gd" id="28_6ngkx"]
-[ext_resource type="PackedScene" uid="uid://dg8qrqf3xyi45" path="res://scenes/ui/combat_control.tscn" id="28_ptmt4"]
+[ext_resource type="PackedScene" uid="uid://dg8qrqf3xyi45" path="res://scenes/ui/combat/fight/combat_control.tscn" id="28_ptmt4"]
 [ext_resource type="Script" path="res://scenes/ui/help_sequence_of_play_container.gd" id="30_54wyv"]
 [ext_resource type="Script" path="res://scenes/ui/goal_margin_container.gd" id="32_4llok"]
 [ext_resource type="PackedScene" uid="uid://bnipkihjqnak" path="res://scenes/ui/tutorial_margin_container.tscn" id="33_0fyc6"]
-[ext_resource type="Script" path="res://scenes/ui/phases_container.gd" id="35_vehc2"]
+[ext_resource type="Script" path="res://scenes/ui/top_banner/phases_container.gd" id="35_vehc2"]
 [ext_resource type="Theme" uid="uid://cgwxqm3rkumgq" path="res://assets/themes/test.tres" id="36_x2jp8"]
-[ext_resource type="Script" path="res://scenes/ui/CombatOverviewMarginContainer.gd" id="37_2s8h0"]
+[ext_resource type="Script" path="res://scenes/ui/combat/overview/combat_overview_margin_container.gd" id="37_2s8h0"]
+[ext_resource type="PackedScene" uid="uid://dphwtkh030vsb" path="res://scenes/ui/combat/overview/combat_entry.tscn" id="43_er4l2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2yxpw"]
 bg_color = Color(0.372549, 0.372549, 0.372549, 1)
@@ -1265,6 +1266,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("24_hkctf")
+PickMoveUnitVBoxContainerScene = ExtResource("3_vvq6g")
 
 [node name="MarginContainer2" type="MarginContainer" parent="Control/PickMoveUnitControl"]
 layout_mode = 1
@@ -1642,6 +1644,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 40.0
 grow_horizontal = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="ColorRect" parent="Control/TopBannerMarginContainer"]
 layout_mode = 2
@@ -1758,6 +1761,7 @@ offset_right = 256.0
 offset_bottom = 35.0
 grow_vertical = 2
 script = ExtResource("37_2s8h0")
+combatEntryScene = ExtResource("43_er4l2")
 
 [node name="ColorRect" type="ColorRect" parent="Control/CombatOverviewMarginContainer"]
 layout_mode = 2

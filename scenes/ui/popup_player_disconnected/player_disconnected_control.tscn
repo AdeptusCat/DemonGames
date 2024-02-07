@@ -1,8 +1,9 @@
 [gd_scene load_steps=4 format=3 uid="uid://dsi3whlntxdj7"]
 
 [ext_resource type="Script" path="res://scenes/ui/popup_player_disconnected/player_disconnected_control.gd" id="1_lbqn7"]
-[ext_resource type="PackedScene" uid="uid://dm6xoflw4305t" path="res://scenes/ui/frame_background_margin_container.tscn" id="2_ggs4u"]
-[ext_resource type="PackedScene" uid="uid://7p3kfgl06d7y" path="res://scenes/ui/frame_margin_container.tscn" id="3_b2ucb"]
+[ext_resource type="PackedScene" uid="uid://dm6xoflw4305t" path="res://scenes/ui/frame/frame_background_margin_container.tscn" id="2_ggs4u"]
+[ext_resource type="PackedScene" uid="uid://7p3kfgl06d7y" path="res://scenes/ui/frame/frame_margin_container.tscn" id="3_b2ucb"]
+
 
 [node name="PlayerDisconnectedControl" type="Control"]
 layout_mode = 3

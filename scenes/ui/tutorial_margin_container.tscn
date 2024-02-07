@@ -1,8 +1,9 @@
 [gd_scene load_steps=4 format=3 uid="uid://bnipkihjqnak"]
 
-[ext_resource type="PackedScene" uid="uid://dm6xoflw4305t" path="res://scenes/ui/frame_background_margin_container.tscn" id="1_mtyil"]
+[ext_resource type="PackedScene" uid="uid://dm6xoflw4305t" path="res://scenes/ui/frame/frame_background_margin_container.tscn" id="1_mtyil"]
 [ext_resource type="Script" path="res://scenes/ui/tutorial_margin_container.gd" id="1_nrfdc"]
-[ext_resource type="PackedScene" uid="uid://7p3kfgl06d7y" path="res://scenes/ui/frame_margin_container.tscn" id="2_w03lp"]
+[ext_resource type="PackedScene" uid="uid://7p3kfgl06d7y" path="res://scenes/ui/frame/frame_margin_container.tscn" id="2_w03lp"]
+
 
 
 [node name="TutorialContainer" type="Control"]

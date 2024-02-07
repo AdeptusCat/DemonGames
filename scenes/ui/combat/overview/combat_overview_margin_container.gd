@@ -1,6 +1,7 @@
 extends MarginContainer
 
-const combatEntryScene = preload("res://scenes/ui/combat_entry.tscn")
+@export var combatEntryScene : PackedScene
+
 var entries = {}
 var showEntries : bool = false
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b7h16ahcotkj"]
 
-[ext_resource type="Script" path="res://scenes/ui/moves_left_container.gd" id="1_s0bj1"]
+[ext_resource type="Script" path="res://scenes/ui/units/moves_left_container.gd" id="1_s0bj1"]
 [ext_resource type="Theme" uid="uid://ct12aengaa7cl" path="res://assets/themes/default_theme.tres" id="2_4o5y8"]
 
 [node name="MovesLeftContainer" type="MarginContainer"]

@@ -1,6 +1,6 @@
 extends MarginContainer
 
-const PickMoveUnitVBoxContainerScene = preload("res://scenes/ui/pick_move_unit_v_box_container.tscn")
+@export var PickMoveUnitVBoxContainerScene : PackedScene
 
 var unitsHit = []
 var hits = 0
@@ -16,10 +16,6 @@ func _ready():
 	Signals.endCombat.connect(endCombat)
 	Signals.hightlightCombat.connect(highlight)
 	Signals.unitsAttack.connect(attack)
-
-
-#func _process(delta):
-#	position
 
 
 func highlight(_unitsDict : Dictionary, sectioName : String):
