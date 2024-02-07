@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://cehmttmcweh14"]
 
-[ext_resource type="Script" path="res://scenes/ui/pick_units_margin_container.gd" id="1_sy76r"]
+[ext_resource type="Script" path="res://scenes/ui/units/pick_units_margin_container.gd" id="1_sy76r"]
+
 
 [node name="PickUnitsMarginContainer" type="MarginContainer"]
 anchors_preset = 15

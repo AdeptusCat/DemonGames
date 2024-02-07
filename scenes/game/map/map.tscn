@@ -1,7 +1,8 @@
-[gd_scene load_steps=140 format=3 uid="uid://b577200ddlglu"]
+[gd_scene load_steps=141 format=3 uid="uid://b577200ddlglu"]
 
 [ext_resource type="Script" path="res://scenes/game/map/map.gd" id="1_do3gg"]
 [ext_resource type="PackedScene" uid="uid://0jxmw3vgonen" path="res://scenes/game/map/sectios/sectio.tscn" id="1_kah8n"]
+[ext_resource type="PackedScene" uid="uid://bqdoyij1sehhj" path="res://scenes/ui/mouse/mouse_light.tscn" id="2_xohym"]
 [ext_resource type="Texture2D" uid="uid://3f8amfnqj5nu" path="res://assets/sectio_assets/treachery/spies/00015-4233092237-painting of a spy with a demon face.png" id="3_nfdac"]
 [ext_resource type="Texture2D" uid="uid://rhfhl3dclj88" path="res://assets/sectio_assets/fraud/falsifiers/00025-749429789-a painting of a demonic money printing machine.png" id="6_qfq6i"]
 [ext_resource type="Texture2D" uid="uid://dbl8g3stl5fxg" path="res://assets/sectio_assets/heretics/tempe_of_false_preachers/00006-868080740-a painting of a false preacher.png" id="7_nyynj"]
@@ -1631,6 +1632,7 @@ glow_blend_mode = 0
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_do3gg")
+mouseLightScene = ExtResource("2_xohym")
 
 [node name="NavigationNode2D" type="Node2D" parent="."]
 unique_name_in_owner = true

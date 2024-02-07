@@ -10,7 +10,7 @@ var legionsFleeingWithLieutenant : Array = []
 var lieutenantTextureDir
 var tw3
 
-const soulsGatherScene = preload("res://scenes/ui/souls_gather_container.tscn")
+@export var soulsGatherScene : PackedScene
 
 func _ready():
 	marginContainer = %LieutenantMarginContainer

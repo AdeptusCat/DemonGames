@@ -606,7 +606,7 @@ func toogleBuyLieutenant(boolean : bool):
 
 func addLieutenantToAvailableLieutenantsBox(lieutenantName):
 	var lieutenant = Decks.lieutenantsReference[lieutenantName]
-	var lieutenantMarginContainerScene = load("res://scenes/ui/lieutenant_margin_container.tscn")
+	var lieutenantMarginContainerScene = load("res://scenes/ui/units/lieutenant_margin_container.tscn")
 	var lieutenantMarginContainer = lieutenantMarginContainerScene.instantiate()
 	lieutenantMarginContainer.populate(lieutenantName, lieutenant.texture, str(lieutenant["combat bonus"]), str(lieutenant.capacity))
 	%AvailableLieutenantsHBoxContainer.add_child(lieutenantMarginContainer)

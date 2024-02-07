@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/ui/combat/fight/combat_control.gd" id="1_hiev6"]
 [ext_resource type="Script" path="res://scenes/ui/combat/fight/combat_participants_control.gd" id="2_p72qm"]
-[ext_resource type="PackedScene" uid="uid://16ug6shh8tk7" path="res://scenes/ui/pick_move_unit_v_box_container.tscn" id="3_dnygu"]
+[ext_resource type="PackedScene" uid="uid://16ug6shh8tk7" path="res://scenes/ui/units/pick_move_unit_v_box_container.tscn" id="3_dnygu"]
 
 [node name="CombatControl" type="Control"]
 layout_mode = 3

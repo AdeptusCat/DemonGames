@@ -44,17 +44,17 @@ func _on_TutorialMenuButton_id_pressed(id):
 
 func _on_host_game_button_pressed():
 	Main.StartServer()
-	get_tree().change_scene_to_file("res://scenes/ui/lobby.tscn")
+	get_tree().change_scene_to_file("res://scenes/ui/lobby/lobby.tscn")
 
 
 func _on_connect_button_pressed():
 	Connection.local = false
-	get_tree().change_scene_to_file("res://scenes/ui/lobby.tscn")
+	get_tree().change_scene_to_file("res://scenes/ui/lobby/lobby.tscn")
 
 
 func _on_connect_to_local_button_pressed():
 	Connection.local = true
-	get_tree().change_scene_to_file("res://scenes/ui/lobby.tscn")
+	get_tree().change_scene_to_file("res://scenes/ui/lobby/lobby.tscn")
 
 
 func _on_itch_button_pressed():

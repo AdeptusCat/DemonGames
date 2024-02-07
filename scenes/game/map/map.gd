@@ -24,7 +24,7 @@ var tw1
 
 var map_fx_path : String = "res://scenes/game/map/map_fx/map_fx.tscn"
 
-var mouseLightScene = preload("res://scenes/ui/mouse_light.tscn")
+@export var mouseLightScene : PackedScene
 var mouseLights : Dictionary = {}
 
 func _ready():

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bgbrh6mf2k4ds"]
+[gd_scene load_steps=3 format=3 uid="uid://bgbrh6mf2k4ds"]
 
 [ext_resource type="Script" path="res://scenes/ui/ingame_menu/menu_container.gd" id="1_vu1t6"]
+[ext_resource type="PackedScene" uid="uid://x5a4ej5ednxk" path="res://scenes/ui/ingame_menu/settings_container.tscn" id="2_3ef71"]
 
 [node name="MenuContainer" type="Control"]
 layout_mode = 3
@@ -10,6 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vu1t6")
+settingsContainer = ExtResource("2_3ef71")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1

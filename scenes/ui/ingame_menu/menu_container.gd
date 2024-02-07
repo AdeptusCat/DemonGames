@@ -1,8 +1,7 @@
 extends Control
 
 
-const settingsContainer = preload("res://scenes/ui/settings_container.tscn")
-
+@export var settingsContainer : PackedScene
 
 func _ready():
 	Settings.menuOpen = true

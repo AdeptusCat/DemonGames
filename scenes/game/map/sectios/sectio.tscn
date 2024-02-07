@@ -1,8 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://0jxmw3vgonen"]
+[gd_scene load_steps=15 format=3 uid="uid://0jxmw3vgonen"]
 
 [ext_resource type="Script" path="res://scenes/game/map/sectios/sectio.gd" id="1_0w1n6"]
+[ext_resource type="PackedScene" uid="uid://16ug6shh8tk7" path="res://scenes/ui/units/pick_move_unit_v_box_container.tscn" id="2_ib5ce"]
 [ext_resource type="Texture2D" uid="uid://qr14kucrashs" path="res://icon.svg" id="2_p1h18"]
 [ext_resource type="Texture2D" uid="uid://c4jjot82jo530" path="res://assets/background.png" id="3_r4jjb"]
+[ext_resource type="PackedScene" uid="uid://xmbbar58v3fd" path="res://scenes/ui/soul_phase/souls_gather_container.tscn" id="3_tdqmd"]
 [ext_resource type="Texture2D" uid="uid://dl5ksom3h2v7c" path="res://assets/line_dashed.png" id="5_fn37b"]
 [ext_resource type="Theme" uid="uid://ct12aengaa7cl" path="res://assets/themes/default_theme.tres" id="6_l8fxy"]
 [ext_resource type="Texture2D" uid="uid://chyx8gsyah2ww" path="res://assets/ring_color.png" id="6_l5600"]
@@ -74,6 +76,8 @@ load_path = "res://.godot/imported/line_dashed.png-17e21fa0a62bea531e4150bcc7262
 [node name="Sectio" type="Node2D"]
 position = Vector2(1039, 654)
 script = ExtResource("1_0w1n6")
+PickMoveUnitVBoxContainerScene = ExtResource("2_ib5ce")
+soulsGatherScene = ExtResource("3_tdqmd")
 Treachery = Color(0.196078, 0.270588, 0.215686, 1)
 Fraud = Color(0.431373, 0.168627, 0, 1)
 TheViolent = Color(0.415686, 0.0235294, 0, 1)

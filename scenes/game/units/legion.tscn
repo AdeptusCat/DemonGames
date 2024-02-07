@@ -1,6 +1,7 @@
-[gd_scene load_steps=24 format=3 uid="uid://dj6htpcjrkre8"]
+[gd_scene load_steps=25 format=3 uid="uid://dj6htpcjrkre8"]
 
 [ext_resource type="Script" path="res://scenes/game/units/legion.gd" id="1_1kb52"]
+[ext_resource type="PackedScene" uid="uid://xmbbar58v3fd" path="res://scenes/ui/soul_phase/souls_gather_container.tscn" id="2_awpxf"]
 [ext_resource type="Texture2D" uid="uid://qr14kucrashs" path="res://icon.svg" id="2_tolar"]
 [ext_resource type="Texture2D" uid="uid://cbmert5pfgg4n" path="res://assets/bar.png" id="3_08w20"]
 [ext_resource type="Texture2D" uid="uid://d206wyqx847u4" path="res://assets/bar1.png" id="4_528kq"]
@@ -72,6 +73,7 @@ texture_filter = 4
 light_mask = 4
 z_index = 1
 script = ExtResource("1_1kb52")
+soulsGatherScene = ExtResource("2_awpxf")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false

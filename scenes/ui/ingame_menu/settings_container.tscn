@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://x5a4ej5ednxk"]
 
-[ext_resource type="Script" path="res://scenes/ui/settings_container.gd" id="1_6px0b"]
+[ext_resource type="Script" path="res://scenes/ui/ingame_menu/settings_container.gd" id="1_6px0b"]
+
 
 [node name="SettingsContainer" type="MarginContainer"]
 anchors_preset = 8

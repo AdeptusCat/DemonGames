@@ -2,7 +2,7 @@ extends Node2D
 
 class_name Unit
 
-const movesLeftContainerScene = preload("res://scenes/ui/moves_left_container.tscn")
+const movesLeftContainerScene = preload("res://scenes/ui/units/moves_left_container.tscn")
 var movesLeftContainer
 
 var marginContainer

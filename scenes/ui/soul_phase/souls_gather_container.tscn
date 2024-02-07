@@ -2,7 +2,8 @@
 
 [ext_resource type="Theme" uid="uid://ct12aengaa7cl" path="res://assets/themes/default_theme.tres" id="1_3eap4"]
 [ext_resource type="Texture2D" uid="uid://ywlgckqbcpj2" path="res://assets/ui/sprite_souls_gathering_bg.png" id="1_f5f5u"]
-[ext_resource type="Script" path="res://scenes/ui/souls_gather_container.gd" id="1_x3yka"]
+[ext_resource type="Script" path="res://scenes/ui/soul_phase/souls_gather_container.gd" id="1_x3yka"]
+
 
 [node name="SoulsGatherContainer" type="Control"]
 layout_mode = 3

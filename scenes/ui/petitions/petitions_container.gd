@@ -1,6 +1,6 @@
 extends MarginContainer
 
-const petitionEntryScene = preload("res://scenes/ui/petition_entry.tscn")
+@export var petitionEntryScene : PackedScene
 var entries = {}
 
 

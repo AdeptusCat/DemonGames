@@ -8,7 +8,9 @@ const maleTexture = preload("res://assets/demons/genders/male.png")
 const femaleTexture = preload("res://assets/demons/genders/female.png")
 const hermaphroditeTexture = preload("res://assets/demons/genders/male_female.png")
 const undefinedTexture = preload("res://assets/demons/genders/undefined.png")
-const soulsGatherScene = preload("res://scenes/ui/souls_gather_container.tscn")
+const soulsGatherScene = preload("res://scenes/ui/soul_phase/souls_gather_container.tscn")
+
+
 
 var demonName : String = "":
 	set(_name):
