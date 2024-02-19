@@ -3,9 +3,10 @@
 [ext_resource type="Theme" uid="uid://dw2pduwrnp3pj" path="res://assets/themes/main_menu_theme.tres" id="1_chw6u"]
 [ext_resource type="Script" path="res://scenes/ui/main_menu.gd" id="2_8l4ai"]
 [ext_resource type="Texture2D" uid="uid://33vjdhmtldwa" path="res://assets/boot_splash/generals around table 2.png" id="3_kwemu"]
-[ext_resource type="AudioStream" uid="uid://6eaxw06y0qlu" path="res://assets/audio/menu/button_hover.mp3" id="4_daf42"]
-[ext_resource type="AudioStream" uid="uid://bc1hxar6jw23h" path="res://assets/audio/menu/button_click.mp3" id="5_pimn6"]
+[ext_resource type="AudioStream" uid="uid://6eaxw06y0qlu" path="res://assets/audio/sfx/menu/button_hover.mp3" id="4_daf42"]
+[ext_resource type="AudioStream" uid="uid://bc1hxar6jw23h" path="res://assets/audio/sfx/menu/button_click.mp3" id="5_pimn6"]
 [ext_resource type="PackedScene" uid="uid://ckmppydi7lfq8" path="res://scenes/audio/audio_manager.tscn" id="6_613bv"]
+
 
 [node name="MainMenuControl" type="Control"]
 layout_mode = 3

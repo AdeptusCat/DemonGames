@@ -82,11 +82,56 @@ layout_mode = 2
 [node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 text = "Audio Sttings"
+horizontal_alignment = 1
 
-[node name="HSlider" type="HSlider" parent="MarginContainer/HBoxContainer/VBoxContainer2"]
-unique_name_in_owner = true
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
-min_value = 0.05
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+columns = 2
+
+[node name="SfxLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer/VBoxContainer3/GridContainer"]
+layout_mode = 2
+text = "Sfx"
+vertical_alignment = 1
+
+[node name="SfxHSlider" type="HSlider" parent="MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer/VBoxContainer3/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="MusicLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer/VBoxContainer3/GridContainer"]
+layout_mode = 2
+text = "Music"
+vertical_alignment = 1
+
+[node name="MusicHSlider" type="HSlider" parent="MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer/VBoxContainer3/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="VoiceLabel" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer/VBoxContainer3/GridContainer"]
+layout_mode = 2
+text = "Voice"
+vertical_alignment = 1
+
+[node name="VoiceHSlider" type="HSlider" parent="MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer/VBoxContainer3/GridContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_vertical = 4
 max_value = 1.0
 step = 0.05
 value = 1.0
@@ -104,5 +149,7 @@ text = "Audio Off"
 [connection signal="toggled" from="MarginContainer/HBoxContainer/VBoxContainer/SkipWaitForPlayersCheckBox" to="." method="_on_skip_wait_for_players_check_box_toggled"]
 [connection signal="toggled" from="MarginContainer/HBoxContainer/VBoxContainer/SkipPhaseReminderCheckBox" to="." method="_on_skip_phase_reminder_check_box_toggled"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]
-[connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer2/HSlider" to="." method="_on_h_slider_value_changed"]
+[connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer/VBoxContainer3/GridContainer/SfxHSlider" to="." method="_on_sfx_h_slider_value_changed"]
+[connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer/VBoxContainer3/GridContainer/MusicHSlider" to="." method="_on_music_h_slider_value_changed"]
+[connection signal="value_changed" from="MarginContainer/HBoxContainer/VBoxContainer2/HBoxContainer/VBoxContainer3/GridContainer/VoiceHSlider" to="." method="_on_voice_h_slider_value_changed"]
 [connection signal="toggled" from="MarginContainer/HBoxContainer/VBoxContainer2/AudioOffCheckBox" to="." method="_on_check_box_toggled"]

@@ -23,7 +23,10 @@ var skipEnd : bool = false
 var skipUnitPlacing : bool = false
 var debugTroops : bool = false
 
-@onready var volume : float = 1.0
+@onready var music_volume : float = 1.0
+@onready var sfx_volume : float = 1.0
+@onready var voice_volume : float = 1.0
+
 var audioOff : bool = false
 
 func _ready():
@@ -55,7 +58,9 @@ func saveSettings():
 	Data.settings.skipWaitForPlayers = Settings.skipWaitForPlayers
 	Data.settings.skipPhaseReminder = Settings.skipPhaseReminder
 	Data.settings.potatoPc = Settings.potatoPc
-	Data.settings.volume = Settings.volume
+	Data.settings.music_volume = Settings.music_volume
+	Data.settings.sfx_volume = Settings.sfx_volume
+	Data.settings.voice_volume = Settings.voice_volume
 	Data.settings.audioOff = Settings.audioOff
 	Data.settings.fullScreen = Settings.fullScreen
 	Data.settings.showQuickHelp = Settings.showQuickHelp
@@ -81,3 +86,9 @@ func loadSettings():
 		changeWindowMode(fullScreen)
 	if Data.settings.has("showQuickHelp"):
 		showQuickHelp = Data.settings.showQuickHelp
+	if Data.settings.has("sfx_volume"):
+		sfx_volume = Data.settings.sfx_volume
+	if Data.settings.has("music_volume"):
+		music_volume = Data.settings.music_volume
+	if Data.settings.has("voice_volume"):
+		voice_volume = Data.settings.voice_volume
