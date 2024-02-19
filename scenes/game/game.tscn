@@ -1,14 +1,15 @@
-[gd_scene load_steps=37 format=3 uid="uid://cccosrsc7gc5w"]
+[gd_scene load_steps=38 format=3 uid="uid://cccosrsc7gc5w"]
 
 [ext_resource type="Script" path="res://scenes/game/game.gd" id="1_e2grr"]
-[ext_resource type="AudioStream" uid="uid://dsjykmjg2eiw6" path="res://assets/audio/pass.wav" id="3_2ki4d"]
+[ext_resource type="AudioStream" uid="uid://dsjykmjg2eiw6" path="res://assets/audio/sfx/game/pass.wav" id="3_2ki4d"]
 [ext_resource type="PackedScene" uid="uid://bqkxk7t577kq2" path="res://scenes/game/rank_track/rank_track.tscn" id="4_5g0mk"]
-[ext_resource type="AudioStream" uid="uid://cdlts74gpstjy" path="res://assets/audio/pass_for_good.wav" id="4_70hh2"]
-[ext_resource type="AudioStream" uid="uid://dclx3n1ct4hhg" path="res://assets/audio/cast_arcana_card.wav" id="5_jo5lo"]
-[ext_resource type="AudioStream" uid="uid://dkmmfdxbt40rr" path="res://assets/audio/battle_begin.wav" id="5_msab6"]
+[ext_resource type="AudioStream" uid="uid://cdlts74gpstjy" path="res://assets/audio/sfx/game/pass_for_good.wav" id="4_70hh2"]
+[ext_resource type="AudioStream" uid="uid://dclx3n1ct4hhg" path="res://assets/audio/sfx/game/cast_arcana_card.wav" id="5_jo5lo"]
+[ext_resource type="AudioStream" uid="uid://dkmmfdxbt40rr" path="res://assets/audio/sfx/game/battle_begin.wav" id="5_msab6"]
 [ext_resource type="PackedScene" uid="uid://b577200ddlglu" path="res://scenes/game/map/map.tscn" id="6_w5r8f"]
 [ext_resource type="Script" path="res://scenes/audio/audio.gd" id="7_370e0"]
-[ext_resource type="AudioStream" uid="uid://b3rldghvrhqln" path="res://assets/audio/walk_the_earth.wav" id="7_jm1ey"]
+[ext_resource type="AudioStream" uid="uid://i0u25rnw4ym2" path="res://assets/audio/music/HellGameOst2_3_16_dither_normalized_.wav" id="7_gem5n"]
+[ext_resource type="AudioStream" uid="uid://b3rldghvrhqln" path="res://assets/audio/sfx/game/walk_the_earth.wav" id="7_jm1ey"]
 [ext_resource type="PackedScene" uid="uid://d00aywoo0y4ld" path="res://scenes/ui/ui.tscn" id="10_kjlhk"]
 [ext_resource type="Script" path="res://scenes/game/map/camera.gd" id="11_oe2ei"]
 [ext_resource type="PackedScene" uid="uid://bs53uu056xcwu" path="res://scenes/game/sequence_of_play/sequence_of_play.tscn" id="12_hn5jr"]
@@ -88,96 +89,125 @@ color = Color(0.694118, 0.231373, 0.223529, 1)
 [node name="Audio" type="Node" parent="."]
 script = ExtResource("7_370e0")
 
-[node name="PassAudio" type="AudioStreamPlayer" parent="Audio"]
+[node name="RemindPlayerTimer" type="Timer" parent="Audio"]
+unique_name_in_owner = true
+wait_time = 10.0
+
+[node name="Music" type="Node" parent="Audio"]
+
+[node name="MusicAudio" type="AudioStreamPlayer" parent="Audio/Music"]
+unique_name_in_owner = true
+stream = ExtResource("7_gem5n")
+autoplay = true
+bus = &"Music"
+
+[node name="Voice" type="Node" parent="Audio"]
+
+[node name="CombatWonAudio" type="AudioStreamPlayer" parent="Audio/Voice"]
+unique_name_in_owner = true
+stream = ExtResource("22_yacxk")
+volume_db = -3.0
+bus = &"Voice"
+
+[node name="CombatLostAudio" type="AudioStreamPlayer" parent="Audio/Voice"]
+unique_name_in_owner = true
+stream = ExtResource("23_6lv7b")
+volume_db = -5.0
+bus = &"Voice"
+
+[node name="EnemyFleeingAudio" type="AudioStreamPlayer" parent="Audio/Voice"]
+unique_name_in_owner = true
+stream = ExtResource("20_mtuf8")
+volume_db = -3.0
+bus = &"Voice"
+
+[node name="EnemyStayingAudio" type="AudioStreamPlayer" parent="Audio/Voice"]
+unique_name_in_owner = true
+stream = ExtResource("21_55x66")
+volume_db = -3.0
+bus = &"Voice"
+
+[node name="EnemyEnteringSectioAudio" type="AudioStreamPlayer" parent="Audio/Voice"]
+unique_name_in_owner = true
+stream = ExtResource("19_5khd4")
+volume_db = -3.0
+bus = &"Voice"
+
+[node name="playerTurnAudio" type="AudioStreamPlayer" parent="Audio/Voice"]
+unique_name_in_owner = true
+stream = ExtResource("12_i5u37")
+volume_db = -8.0
+bus = &"Voice"
+
+[node name="HellPhaseAudio" type="AudioStreamPlayer" parent="Audio/Voice"]
+unique_name_in_owner = true
+stream = ExtResource("13_n4j0r")
+volume_db = -3.0
+bus = &"Voice"
+
+[node name="SoulPhaseAudio" type="AudioStreamPlayer" parent="Audio/Voice"]
+unique_name_in_owner = true
+stream = ExtResource("14_lpxvq")
+volume_db = -3.0
+bus = &"Voice"
+
+[node name="SummoningPhaseAudio" type="AudioStreamPlayer" parent="Audio/Voice"]
+unique_name_in_owner = true
+stream = ExtResource("15_f0248")
+volume_db = -3.0
+bus = &"Voice"
+
+[node name="ActionPhaseAudio" type="AudioStreamPlayer" parent="Audio/Voice"]
+unique_name_in_owner = true
+stream = ExtResource("16_cebjf")
+volume_db = -3.0
+bus = &"Voice"
+
+[node name="CombatPhaseAudio" type="AudioStreamPlayer" parent="Audio/Voice"]
+unique_name_in_owner = true
+stream = ExtResource("17_kmq8h")
+volume_db = -3.0
+bus = &"Voice"
+
+[node name="PetitionPhaseAudio" type="AudioStreamPlayer" parent="Audio/Voice"]
+unique_name_in_owner = true
+stream = ExtResource("18_sm1dr")
+volume_db = -3.0
+bus = &"Voice"
+
+[node name="SFX" type="Node" parent="Audio"]
+
+[node name="PassAudio" type="AudioStreamPlayer" parent="Audio/SFX"]
 unique_name_in_owner = true
 stream = ExtResource("3_2ki4d")
 max_polyphony = 4
+bus = &"SFX"
 
-[node name="PassForGoodAudio" type="AudioStreamPlayer" parent="Audio"]
+[node name="PassForGoodAudio" type="AudioStreamPlayer" parent="Audio/SFX"]
 unique_name_in_owner = true
 stream = ExtResource("4_70hh2")
 volume_db = 6.0
 max_polyphony = 4
+bus = &"SFX"
 
-[node name="WalkTheEarthAudio" type="AudioStreamPlayer" parent="Audio"]
+[node name="WalkTheEarthAudio" type="AudioStreamPlayer" parent="Audio/SFX"]
 unique_name_in_owner = true
 stream = ExtResource("7_jm1ey")
 volume_db = 6.0
 max_polyphony = 4
+bus = &"SFX"
 
-[node name="BattleStartAudio" type="AudioStreamPlayer" parent="Audio"]
+[node name="BattleStartAudio" type="AudioStreamPlayer" parent="Audio/SFX"]
 unique_name_in_owner = true
 stream = ExtResource("5_msab6")
 max_polyphony = 4
+bus = &"SFX"
 
-[node name="CastArcanaAudio" type="AudioStreamPlayer" parent="Audio"]
+[node name="CastArcanaAudio" type="AudioStreamPlayer" parent="Audio/SFX"]
 unique_name_in_owner = true
 stream = ExtResource("5_jo5lo")
 max_polyphony = 4
-
-[node name="playerTurnAudio" type="AudioStreamPlayer" parent="Audio"]
-unique_name_in_owner = true
-stream = ExtResource("12_i5u37")
-volume_db = -8.0
-
-[node name="HellPhaseAudio" type="AudioStreamPlayer" parent="Audio"]
-unique_name_in_owner = true
-stream = ExtResource("13_n4j0r")
-volume_db = -3.0
-
-[node name="SoulPhaseAudio" type="AudioStreamPlayer" parent="Audio"]
-unique_name_in_owner = true
-stream = ExtResource("14_lpxvq")
-volume_db = -3.0
-
-[node name="SummoningPhaseAudio" type="AudioStreamPlayer" parent="Audio"]
-unique_name_in_owner = true
-stream = ExtResource("15_f0248")
-volume_db = -3.0
-
-[node name="ActionPhaseAudio" type="AudioStreamPlayer" parent="Audio"]
-unique_name_in_owner = true
-stream = ExtResource("16_cebjf")
-volume_db = -3.0
-
-[node name="CombatPhaseAudio" type="AudioStreamPlayer" parent="Audio"]
-unique_name_in_owner = true
-stream = ExtResource("17_kmq8h")
-volume_db = -3.0
-
-[node name="PetitionPhaseAudio" type="AudioStreamPlayer" parent="Audio"]
-unique_name_in_owner = true
-stream = ExtResource("18_sm1dr")
-volume_db = -3.0
-
-[node name="EnemyEnteringSectioAudio" type="AudioStreamPlayer" parent="Audio"]
-unique_name_in_owner = true
-stream = ExtResource("19_5khd4")
-volume_db = -3.0
-
-[node name="EnemyFleeingAudio" type="AudioStreamPlayer" parent="Audio"]
-unique_name_in_owner = true
-stream = ExtResource("20_mtuf8")
-volume_db = -3.0
-
-[node name="EnemyStayingAudio" type="AudioStreamPlayer" parent="Audio"]
-unique_name_in_owner = true
-stream = ExtResource("21_55x66")
-volume_db = -3.0
-
-[node name="CombatWonAudio" type="AudioStreamPlayer" parent="Audio"]
-unique_name_in_owner = true
-stream = ExtResource("22_yacxk")
-volume_db = -3.0
-
-[node name="CombatLostAudio" type="AudioStreamPlayer" parent="Audio"]
-unique_name_in_owner = true
-stream = ExtResource("23_6lv7b")
-volume_db = -5.0
-
-[node name="RemindPlayerTimer" type="Timer" parent="Audio"]
-unique_name_in_owner = true
-wait_time = 10.0
+bus = &"SFX"
 
 [node name="SequenceOfPlay" parent="." instance=ExtResource("12_hn5jr")]
 
@@ -222,3 +252,4 @@ offset_bottom = 822.0
 texture = SubResource("CompressedTexture2D_8j4pt")
 
 [connection signal="timeout" from="Audio/RemindPlayerTimer" to="Audio" method="_on_remind_player_timer_timeout"]
+[connection signal="finished" from="Audio/Music/MusicAudio" to="Audio" method="_on_music_audio_finished"]

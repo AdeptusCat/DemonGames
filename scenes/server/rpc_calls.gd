@@ -208,7 +208,8 @@ func checkEndPhaseCondition():
 			Data.arcanaCardNodes[cardName].disable()
 		Signals.toggleRecruitLegionsButtonEnabled.emit(false)
 	else:
-		Signals.hideArcanaCardsContainer.emit()
+		if not Data.phase == Data.phases.Summoning:
+			Signals.hideArcanaCardsContainer.emit()
 		Data.player.checkPlayerSummoningCapabilities()
 		Signals.toggleDiscardArcanaCardControl.emit(false)
 		Signals.toggleEndPhaseButton.emit(true)

@@ -5,6 +5,10 @@ var audioQueue : Array[AudioStreamPlayer] = []
 var currentAudio : AudioStreamPlayer = AudioStreamPlayer.new()
 var playerTurn : bool = false
 
+@onready var SFX_BUS_ID := AudioServer.get_bus_index("SFX")
+@onready var MUSIC_BUS_ID := AudioServer.get_bus_index("Music")
+@onready var VOICE_BUS_ID := AudioServer.get_bus_index("Voice")
+
 
 func _ready():
 	AudioSignals.walkTheEarth.connect(_on_walkTheEarth)
@@ -19,6 +23,15 @@ func _ready():
 	AudioSignals.enemyEnteringSectio.connect(_on_enemyEnteringSectio)
 	AudioSignals.enemyEnteringSectioResult.connect(_on_enemyEnteringSectioResult)
 	AudioSignals.combatWon.connect(_on_combatWon)
+	
+	AudioServer.set_bus_volume_db(MUSIC_BUS_ID, linear_to_db(Settings.music_volume))
+	AudioServer.set_bus_mute(MUSIC_BUS_ID, Settings.music_volume < 0.05)
+
+	AudioServer.set_bus_volume_db(VOICE_BUS_ID, linear_to_db(Settings.voice_volume))
+	AudioServer.set_bus_mute(VOICE_BUS_ID, Settings.voice_volume < 0.05)
+
+	AudioServer.set_bus_volume_db(SFX_BUS_ID, linear_to_db(Settings.sfx_volume))
+	AudioServer.set_bus_mute(SFX_BUS_ID, Settings.sfx_volume < 0.05)
 
 
 func _process(delta):
@@ -102,3 +115,7 @@ func _on_remind_player_timer_timeout():
 	if playerTurn:
 		audioQueue.append(%playerTurnAudio)
 		%RemindPlayerTimer.start()
+
+
+func _on_music_audio_finished():
+	%MusicAudio.play()

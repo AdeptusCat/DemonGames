@@ -14,12 +14,12 @@
 [ext_resource type="Shader" path="res://assets/materials_shaders/shader_test_line.gdshader" id="9_g81da"]
 [ext_resource type="Texture2D" uid="uid://qr14kucrashs" path="res://icon.svg" id="9_kkvw8"]
 [ext_resource type="Texture2D" uid="uid://ns4f3o5cnr0h" path="res://assets/sectio_assets/the_greedy/exploiters_of_land_and_sea/00036-3677310343-a painting of thousands of digging people in a gold mine.png" id="9_xmwkd"]
-[ext_resource type="AudioStream" uid="uid://dvmj8xxwyblps" path="res://assets/audio/march.wav" id="10_jljl1"]
+[ext_resource type="AudioStream" uid="uid://dvmj8xxwyblps" path="res://assets/audio/sfx/game/march.wav" id="10_jljl1"]
 [ext_resource type="Texture2D" uid="uid://c2enqojfoec50" path="res://assets/sectio_assets/the_gluttonous/sea_of_lard/00128-3546313921-painting of fat people wading through yellow mud.png" id="10_kpjjm"]
 [ext_resource type="Texture2D" uid="uid://bkijuv8aldudi" path="res://assets/sectio_assets/the_lustful/orgastica/00035-3388440854-a painting of an orgy.png" id="11_uxcec"]
-[ext_resource type="AudioStream" uid="uid://cuj4kv531027o" path="res://assets/audio/spawn_legion.wav" id="11_vsbj5"]
+[ext_resource type="AudioStream" uid="uid://cuj4kv531027o" path="res://assets/audio/sfx/game/spawn_legion.wav" id="11_vsbj5"]
 [ext_resource type="Texture2D" uid="uid://tqbqw1x2gdyx" path="res://assets/sectio_assets/limbo/the_wise_men/00037-4219892559-a painting greek philosophers.png" id="12_1hg3k"]
-[ext_resource type="AudioStream" uid="uid://dhc65f5l2f5ne" path="res://assets/audio/spawn_lieutenant.wav" id="12_xb37a"]
+[ext_resource type="AudioStream" uid="uid://dhc65f5l2f5ne" path="res://assets/audio/sfx/game/spawn_lieutenant.wav" id="12_xb37a"]
 [ext_resource type="Shader" path="res://assets/materials_shaders/distortion_screen.gdshader" id="14_f36ku"]
 [ext_resource type="Texture2D" uid="uid://b4awi58rg5qaf" path="res://assets/light/radial.png" id="14_tb35d"]
 [ext_resource type="Texture2D" uid="uid://mvlpmtpgc1u7" path="res://assets/pentagram.png" id="16_fbvtl"]
@@ -2357,16 +2357,19 @@ texture = ExtResource("9_kkvw8")
 unique_name_in_owner = true
 stream = ExtResource("10_jljl1")
 max_polyphony = 4
+bus = &"SFX"
 
 [node name="SpawnLegionAudio" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("11_vsbj5")
 max_polyphony = 4
+bus = &"SFX"
 
 [node name="SpawnLieutenantAudio" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("12_xb37a")
 max_polyphony = 4
+bus = &"SFX"
 
 [node name="BorderLinesNode2D" type="Node2D" parent="."]
 unique_name_in_owner = true
