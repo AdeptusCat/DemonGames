@@ -211,7 +211,8 @@ func _on_pass_button_pressed():
 		var arcanaCard : ArcanaCard = Data.arcanaCardNodes[cardName]
 		if not player.hasEnoughSouls(arcanaCard.cost):
 			continue
-		spellObject.objects[arcanaCard.minorSpell].highlightPassCard(arcanaCard)
+		if spellObject.objects.has(arcanaCard.minorSpell):
+			spellObject.objects[arcanaCard.minorSpell].highlightPassCard(arcanaCard)
 	Signals.tutorialRead.emit()
 
 

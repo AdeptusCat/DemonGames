@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://d00aywoo0y4ld"]
+[gd_scene load_steps=62 format=3 uid="uid://d00aywoo0y4ld"]
 
 [ext_resource type="Script" path="res://scenes/ui/ui.gd" id="1_o55j0"]
 [ext_resource type="Texture2D" uid="uid://cdii7y50q1lno" path="res://assets/icons/pentagram_white.png" id="2_3ml1l"]
@@ -45,6 +45,7 @@
 [ext_resource type="Script" path="res://scenes/ui/phases_container.gd" id="35_vehc2"]
 [ext_resource type="Theme" uid="uid://cgwxqm3rkumgq" path="res://assets/themes/test.tres" id="36_x2jp8"]
 [ext_resource type="Script" path="res://scenes/ui/CombatOverviewMarginContainer.gd" id="37_2s8h0"]
+[ext_resource type="Texture2D" uid="uid://dmronoao4jw2i" path="res://assets/ui/pick_legions/00038-145137613.png" id="37_uy3ib"]
 [ext_resource type="PackedScene" uid="uid://dphwtkh030vsb" path="res://scenes/ui/combat_entry.tscn" id="44_xx0bh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2yxpw"]
@@ -1265,7 +1266,6 @@ layout_mode = 2
 
 [node name="PickMoveUnitControl" type="Control" parent="Control"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1302,18 +1302,30 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="Control/PickMoveUnitControl/MarginContainer"]
+visible = false
 layout_mode = 2
 color = Color(0.0941176, 0.0941176, 0.0941176, 0.878431)
 
+[node name="FrameBackgroundMarginContainer" parent="Control/PickMoveUnitControl/MarginContainer" instance=ExtResource("25_jfpsm")]
+layout_mode = 2
+
 [node name="MarginContainer" type="MarginContainer" parent="Control/PickMoveUnitControl/MarginContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/PickMoveUnitControl/MarginContainer/MarginContainer"]
 layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/PickMoveUnitControl/MarginContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("37_uy3ib")
+expand_mode = 1
+stretch_mode = 4
 
 [node name="Label" type="Label" parent="Control/PickMoveUnitControl/MarginContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -1328,6 +1340,9 @@ alignment = 1
 [node name="ExitButton" type="Button" parent="Control/PickMoveUnitControl/MarginContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Cancel"
+
+[node name="FrameMarginContainer" parent="Control/PickMoveUnitControl/MarginContainer" instance=ExtResource("26_vv66b")]
+layout_mode = 2
 
 [node name="CombatControl" parent="Control" instance=ExtResource("28_ptmt4")]
 visible = false
