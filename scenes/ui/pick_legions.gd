@@ -53,3 +53,8 @@ func _on_labelClicked(node):
 func _on_done_button_pressed():
 	done.emit(pickedLegions)
 	queue_free()
+
+
+func _on_done_texture_button_pressed():
+	done.emit(pickedLegions)
+	queue_free()
