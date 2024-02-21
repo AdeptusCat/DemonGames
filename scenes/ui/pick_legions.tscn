@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://x1wyowbc2ock"]
+[gd_scene load_steps=70 format=3 uid="uid://x1wyowbc2ock"]
 
 [ext_resource type="Script" path="res://scenes/ui/pick_legions.gd" id="1_oay6l"]
 [ext_resource type="PackedScene" uid="uid://cehmttmcweh14" path="res://scenes/ui/pick_units_margin_container.tscn" id="2_n75d3"]
@@ -6,7 +6,264 @@
 [ext_resource type="Texture2D" uid="uid://d4dy8u1hngk45" path="res://assets/ui/pick_legions/00045-1212555798.png" id="3_6nkq4"]
 [ext_resource type="PackedScene" uid="uid://dm6xoflw4305t" path="res://scenes/ui/frame_background_margin_container.tscn" id="3_b0d5v"]
 [ext_resource type="PackedScene" uid="uid://7p3kfgl06d7y" path="res://scenes/ui/frame_margin_container.tscn" id="4_g08ou"]
-[ext_resource type="Texture2D" uid="uid://dmronoao4jw2i" path="res://assets/ui/pick_legions/00038-145137613.png" id="4_v6ibt"]
+[ext_resource type="Texture2D" uid="uid://ba18bvawleyd1" path="res://assets/ui/pick_legions/standing/00198-1212555798.png" id="6_njqiv"]
+[ext_resource type="Texture2D" uid="uid://cg5g4mam2f6ju" path="res://assets/ui/pick_legions/standing/00199-1212555799.png" id="7_rmgob"]
+[ext_resource type="Texture2D" uid="uid://cdi5t771klhgx" path="res://assets/ui/pick_legions/standing/00200-1212555800.png" id="8_oqhvc"]
+[ext_resource type="Texture2D" uid="uid://b1y8k0mv658xt" path="res://assets/ui/pick_legions/standing/00201-1212555801.png" id="9_ubfbn"]
+[ext_resource type="Texture2D" uid="uid://bld22nl3136ih" path="res://assets/ui/pick_legions/standing/00202-1212555802.png" id="10_ovynb"]
+[ext_resource type="Texture2D" uid="uid://dnw6xtvl5mijm" path="res://assets/ui/pick_legions/standing/00203-1212555803.png" id="11_gwpey"]
+[ext_resource type="Texture2D" uid="uid://syt3at48auoq" path="res://assets/ui/pick_legions/standing/00204-1212555804.png" id="12_dljqd"]
+[ext_resource type="Texture2D" uid="uid://bslo0ti0m8eon" path="res://assets/ui/pick_legions/standing/00205-1212555805.png" id="13_eaq6m"]
+[ext_resource type="Texture2D" uid="uid://d2nd2j1nqqpfb" path="res://assets/ui/pick_legions/standing/00206-1212555806.png" id="14_lde2s"]
+[ext_resource type="Texture2D" uid="uid://r645dmsmcbcf" path="res://assets/ui/pick_legions/standing/00207-1212555807.png" id="15_0d6j1"]
+[ext_resource type="Texture2D" uid="uid://cmgfqt13ahpy1" path="res://assets/ui/pick_legions/standing/00208-1212555808.png" id="16_es5re"]
+[ext_resource type="Texture2D" uid="uid://rgkknvavht6n" path="res://assets/ui/pick_legions/standing/00209-1212555809.png" id="17_hcx8w"]
+[ext_resource type="Texture2D" uid="uid://dvasooxf8wbrm" path="res://assets/ui/pick_legions/standing/00210-1212555810.png" id="18_lwvi2"]
+[ext_resource type="Texture2D" uid="uid://craiiq1wfnlw0" path="res://assets/ui/pick_legions/standing/00211-1212555811.png" id="19_fd4st"]
+[ext_resource type="Texture2D" uid="uid://cnubl4g4v64h0" path="res://assets/ui/pick_legions/standing/00212-1212555812.png" id="20_2gsux"]
+[ext_resource type="Texture2D" uid="uid://e513vpnemfgn" path="res://assets/ui/pick_legions/standing/00213-1212555813.png" id="21_xxrlb"]
+[ext_resource type="Texture2D" uid="uid://dbjda2dleyu7k" path="res://assets/ui/pick_legions/standing/00214-1212555814.png" id="22_6vucf"]
+[ext_resource type="Texture2D" uid="uid://bpauwgh5tbkoe" path="res://assets/ui/pick_legions/standing/00215-1212555815.png" id="23_lesto"]
+[ext_resource type="Texture2D" uid="uid://2fauolncfgg3" path="res://assets/ui/pick_legions/standing/00216-1212555816.png" id="24_nauh4"]
+[ext_resource type="Texture2D" uid="uid://thgbxqujtpip" path="res://assets/ui/pick_legions/standing/00217-1212555817.png" id="25_e5bo1"]
+[ext_resource type="Texture2D" uid="uid://dow0iykueusws" path="res://assets/ui/pick_legions/standing/00218-1212555818.png" id="26_ceyho"]
+[ext_resource type="Texture2D" uid="uid://5h8u4h7t0b0r" path="res://assets/ui/pick_legions/standing/00219-1212555819.png" id="27_0ortt"]
+[ext_resource type="Texture2D" uid="uid://6arlb7n8ydwy" path="res://assets/ui/pick_legions/standing/00220-1212555820.png" id="28_fxbw3"]
+[ext_resource type="Texture2D" uid="uid://dgchq0iylhx0v" path="res://assets/ui/pick_legions/standing/00221-1212555821.png" id="29_a7502"]
+[ext_resource type="Texture2D" uid="uid://behopr1tfykjr" path="res://assets/ui/pick_legions/standing/00222-1212555822.png" id="30_edvn8"]
+[ext_resource type="Texture2D" uid="uid://bnojt6vjoamam" path="res://assets/ui/pick_legions/standing/00223-1212555823.png" id="31_qlg7x"]
+[ext_resource type="Texture2D" uid="uid://b7yni8d5gk1ne" path="res://assets/ui/pick_legions/standing/00224-1212555824.png" id="32_mxxla"]
+[ext_resource type="Texture2D" uid="uid://yyae24iukn7i" path="res://assets/ui/pick_legions/standing/00225-1212555825.png" id="33_lerfy"]
+[ext_resource type="Texture2D" uid="uid://pcvq88x8lcho" path="res://assets/ui/pick_legions/standing/00226-1212555826.png" id="34_h3vuu"]
+[ext_resource type="Texture2D" uid="uid://dy5fiu3rnj4eg" path="res://assets/ui/pick_legions/standing/00227-1212555827.png" id="35_gy0sf"]
+[ext_resource type="Texture2D" uid="uid://djy26abbljnxl" path="res://assets/ui/pick_legions/lieutenant/00359-2030699331.png" id="36_ksx4d"]
+[ext_resource type="Texture2D" uid="uid://bd6axgfm77lm2" path="res://assets/ui/pick_legions/lieutenant/00360-2030699332.png" id="37_nhvd6"]
+[ext_resource type="Texture2D" uid="uid://c5jflsj4u2dah" path="res://assets/ui/pick_legions/lieutenant/00361-2030699333.png" id="38_jlq3e"]
+[ext_resource type="Texture2D" uid="uid://cvjvfjxcnjt3x" path="res://assets/ui/pick_legions/lieutenant/00362-2030699334.png" id="39_thtrg"]
+[ext_resource type="Texture2D" uid="uid://dpvw8sfhc4sf5" path="res://assets/ui/pick_legions/lieutenant/00363-2030699335.png" id="40_clod1"]
+[ext_resource type="Texture2D" uid="uid://c7lkp0e0enf1v" path="res://assets/ui/pick_legions/lieutenant/00364-2030699336.png" id="41_ndaqf"]
+[ext_resource type="Texture2D" uid="uid://w1uaqm4iftrd" path="res://assets/ui/pick_legions/lieutenant/00365-2030699337.png" id="42_qium7"]
+[ext_resource type="Texture2D" uid="uid://dwmvt5ryqmbok" path="res://assets/ui/pick_legions/lieutenant/00366-2030699338.png" id="43_8r78t"]
+[ext_resource type="Texture2D" uid="uid://bp14v4lrrqs2" path="res://assets/ui/pick_legions/lieutenant/00367-2030699339.png" id="44_avgww"]
+[ext_resource type="Texture2D" uid="uid://1vmvdj286nh4" path="res://assets/ui/pick_legions/lieutenant/00368-2030699340.png" id="45_sufta"]
+[ext_resource type="Texture2D" uid="uid://bcb25fx3nomhv" path="res://assets/ui/pick_legions/lieutenant/00369-2030699341.png" id="46_ggt78"]
+[ext_resource type="Texture2D" uid="uid://cp7ihuo7btvs8" path="res://assets/ui/pick_legions/lieutenant/00370-2030699342.png" id="47_ri7l3"]
+[ext_resource type="Texture2D" uid="uid://bfctu5wpfm7dq" path="res://assets/ui/pick_legions/lieutenant/00371-2030699343.png" id="48_lba5f"]
+[ext_resource type="Texture2D" uid="uid://d3khsqcwqmbmb" path="res://assets/ui/pick_legions/lieutenant/00372-2030699344.png" id="49_o0nfd"]
+[ext_resource type="Texture2D" uid="uid://cdprodca4lgep" path="res://assets/ui/pick_legions/lieutenant/00373-2030699345.png" id="50_yvod3"]
+[ext_resource type="Texture2D" uid="uid://dekd02ojun2rp" path="res://assets/ui/pick_legions/lieutenant/00374-2030699346.png" id="51_v8d4l"]
+[ext_resource type="Texture2D" uid="uid://cnnsp268thksf" path="res://assets/ui/pick_legions/lieutenant/00375-2030699347.png" id="52_gn1fv"]
+[ext_resource type="Texture2D" uid="uid://ckubwqenalu04" path="res://assets/ui/pick_legions/lieutenant/00376-2030699348.png" id="53_i66ys"]
+[ext_resource type="Texture2D" uid="uid://bs75fdqlbkgrq" path="res://assets/ui/pick_legions/lieutenant/00377-2030699349.png" id="54_kr81x"]
+[ext_resource type="Texture2D" uid="uid://ftjc11rfadrq" path="res://assets/ui/pick_legions/lieutenant/00378-2030699350.png" id="55_kms3h"]
+[ext_resource type="Texture2D" uid="uid://ccprf3dqwnc2j" path="res://assets/ui/pick_legions/lieutenant/00379-2030699351.png" id="56_7t622"]
+[ext_resource type="Texture2D" uid="uid://dehexco2jewl2" path="res://assets/ui/pick_legions/lieutenant/00380-2030699352.png" id="57_unir7"]
+[ext_resource type="Texture2D" uid="uid://68mkfh2nyyld" path="res://assets/ui/pick_legions/lieutenant/00381-2030699353.png" id="58_w6fas"]
+[ext_resource type="Texture2D" uid="uid://6nnqkkre1jxa" path="res://assets/ui/pick_legions/lieutenant/00382-2030699354.png" id="59_j5wnv"]
+[ext_resource type="Texture2D" uid="uid://cli7b6nq5pgos" path="res://assets/ui/pick_legions/lieutenant/00383-2030699355.png" id="60_7f8gn"]
+[ext_resource type="Texture2D" uid="uid://dire0tdte7r4w" path="res://assets/ui/pick_legions/lieutenant/00384-2030699356.png" id="61_yyn1j"]
+[ext_resource type="Texture2D" uid="uid://bud04kewch8vk" path="res://assets/ui/pick_legions/lieutenant/00385-2030699357.png" id="62_1bteo"]
+[ext_resource type="Texture2D" uid="uid://cnsnkhb2ar50c" path="res://assets/ui/pick_legions/lieutenant/00386-2030699358.png" id="63_a0jjv"]
+[ext_resource type="Texture2D" uid="uid://be55dy1l2h3ev" path="res://assets/ui/pick_legions/lieutenant/00387-2030699359.png" id="64_g1cos"]
+[ext_resource type="Texture2D" uid="uid://c7h38lxwd32me" path="res://assets/ui/pick_legions/lieutenant/00388-2030699360.png" id="65_8di7e"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u4v8n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_njqiv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_rmgob")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_oqhvc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ubfbn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ovynb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_gwpey")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_dljqd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_eaq6m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_lde2s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_0d6j1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_es5re")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_hcx8w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_lwvi2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_fd4st")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_2gsux")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_xxrlb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_6vucf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_lesto")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_nauh4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_e5bo1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_ceyho")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_0ortt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_fxbw3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_a7502")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_edvn8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_qlg7x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_mxxla")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_lerfy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_h3vuu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_gy0sf")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 3.0
+}]
+
+[sub_resource type="ImageTexture" id="ImageTexture_kvpb6"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8mnhk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("36_ksx4d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_nhvd6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_jlq3e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_thtrg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_clod1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_ndaqf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_qium7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_8r78t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_avgww")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_sufta")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_ggt78")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_ri7l3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_lba5f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_o0nfd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_yvod3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_v8d4l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_gn1fv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_i66ys")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_kr81x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_kms3h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_7t622")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_unir7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_w6fas")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_j5wnv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_7f8gn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_yyn1j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_1bteo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_a0jjv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_g1cos")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65_8di7e")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
 
 [node name="PickLegions" type="Control"]
 layout_mode = 3
@@ -91,12 +348,20 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect2" type="TextureRect" parent="MarginContainer/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer"]
-custom_minimum_size = Vector2(126, 126)
+custom_minimum_size = Vector2(192, 192)
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("3_6nkq4")
 expand_mode = 1
 stretch_mode = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/TextureRect2"]
+scale = Vector2(0.375, 0.375)
+sprite_frames = SubResource("SpriteFrames_u4v8n")
+animation = &"new_animation"
+autoplay = "new_animation"
+speed_scale = 4.0
+centered = false
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
@@ -110,12 +375,20 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2"]
-custom_minimum_size = Vector2(126, 126)
+custom_minimum_size = Vector2(192, 192)
 layout_mode = 2
 size_flags_horizontal = 4
-texture = ExtResource("4_v6ibt")
+texture = SubResource("ImageTexture_kvpb6")
 expand_mode = 1
 stretch_mode = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer2/TextureRect"]
+scale = Vector2(0.375, 0.375)
+sprite_frames = SubResource("SpriteFrames_8mnhk")
+animation = &"new_animation"
+autoplay = "new_animation"
+speed_scale = 2.0
+centered = false
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
