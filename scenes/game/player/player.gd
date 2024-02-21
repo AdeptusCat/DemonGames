@@ -164,8 +164,8 @@ func discardModeArcanaCard():
 func checkPlayerSummoningCapabilities(previousCost = 0):
 	print("check start ", souls, hasEnoughSouls(3), " prev ", previousCost)
 	
-	Signals.toggleRecruitLegionsButtonEnabled.emit(Data.player.hasEnoughSouls(3))
-	Signals.toggleBuyArcanaCardButtonEnabled.emit(Data.player.hasEnoughSouls(5))
+	Signals.toggleRecruitLegionsButton.emit(Data.player.hasEnoughSouls(3))
+	Signals.toggleBuyArcanaCardButton.emit(Data.player.hasEnoughSouls(5))
 	
 #	toogleBuyArcanaCard(Data.player.hasEnoughSouls(5 + previousCost))
 	

@@ -1,6 +1,5 @@
 extends MarginContainer
 
-#signal demonDone(passAction)
 signal backToHell(boolean)
 
 @export var skullTexture : Texture

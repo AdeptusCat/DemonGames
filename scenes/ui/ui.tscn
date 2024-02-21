@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://d00aywoo0y4ld"]
+[gd_scene load_steps=46 format=3 uid="uid://d00aywoo0y4ld"]
 
 [ext_resource type="Script" path="res://scenes/ui/ui.gd" id="1_o55j0"]
 [ext_resource type="Texture2D" uid="uid://cdii7y50q1lno" path="res://assets/icons/pentagram_white.png" id="2_3ml1l"]
@@ -15,16 +15,13 @@
 [ext_resource type="PackedScene" uid="uid://m626bf2n5hw7" path="res://scenes/ui/discard_arcana_card_control.tscn" id="8_hda50"]
 [ext_resource type="Theme" uid="uid://ct12aengaa7cl" path="res://assets/themes/default_theme.tres" id="8_wds8y"]
 [ext_resource type="PackedScene" uid="uid://chovle1275ajh" path="res://scenes/ui/pick_unit/pick_unit_control.tscn" id="8_wjy05"]
-[ext_resource type="Script" path="res://scenes/ui/actions.gd" id="10_vmoye"]
+[ext_resource type="PackedScene" uid="uid://c43nav0wkynac" path="res://scenes/ui/actions/actions_menu.tscn" id="9_1ba5w"]
+[ext_resource type="PackedScene" uid="uid://dv4h8w62ygoeo" path="res://scenes/ui/actions/summoning_menu.tscn" id="10_h1vau"]
 [ext_resource type="Script" path="res://scenes/ui/flee_control.gd" id="13_ocgbx"]
 [ext_resource type="Script" path="res://scenes/ui/soul_summary_control.gd" id="14_mkbg2"]
-[ext_resource type="Shader" path="res://assets/materials_shaders/shine_highlight_button.gdshader" id="14_rqnnt"]
 [ext_resource type="Texture2D" uid="uid://bnetx58nm7uyn" path="res://assets/tiles/01073-3590247828-souls leaving bodies.png" id="15_y1is2"]
-[ext_resource type="Texture2D" uid="uid://25er4ht16vnw" path="res://assets/00698-3170758600-drawing of a skull, digital art, game asset.png" id="16_3g30k"]
 [ext_resource type="Script" path="res://scenes/ui/taming_hellhound_container.gd" id="16_6u5u8"]
-[ext_resource type="Shader" path="res://assets/materials_shaders/shine_highlight.gdshader" id="16_sh0rp"]
 [ext_resource type="Script" path="res://scenes/ui/start_screen_container.gd" id="17_gu4oo"]
-[ext_resource type="Texture2D" uid="uid://br3bhpalcxcw5" path="res://assets/00690-2262657839-drawing of a heart, digital art, game asset.png" id="17_tqd0q"]
 [ext_resource type="Texture2D" uid="uid://ctqsqfcuqtrro" path="res://assets/start_screen/01582-1784428550-painting of demon legions assembling in front of a demon commander.png" id="18_hs7xv"]
 [ext_resource type="Script" path="res://scenes/ui/next_demon_container.gd" id="19_av3we"]
 [ext_resource type="Script" path="res://scenes/ui/do_evil_deeds_control.gd" id="19_gykn1"]
@@ -53,92 +50,6 @@ bg_color = Color(0.372549, 0.372549, 0.372549, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_42ncp"]
 bg_color = Color(0.372549, 0.372549, 0.372549, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5u6ho"]
-shader = ExtResource("14_rqnnt")
-shader_parameter/shine_color = Color(1, 1, 1, 1)
-shader_parameter/shine_speed = 5.0
-shader_parameter/shine_size = 0.01
-shader_parameter/active = false
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_q7xpk"]
-shader = ExtResource("14_rqnnt")
-shader_parameter/shine_color = Color(1, 1, 1, 1)
-shader_parameter/shine_speed = 5.0
-shader_parameter/shine_size = 0.01
-shader_parameter/active = false
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yfeb6"]
-shader = ExtResource("14_rqnnt")
-shader_parameter/shine_color = Color(1, 1, 1, 1)
-shader_parameter/shine_speed = 5.0
-shader_parameter/shine_size = 0.01
-shader_parameter/active = false
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_i8445"]
-shader = ExtResource("14_rqnnt")
-shader_parameter/shine_color = Color(1, 1, 1, 1)
-shader_parameter/shine_speed = 5.0
-shader_parameter/shine_size = 0.01
-shader_parameter/active = false
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_w6yy2"]
-shader = ExtResource("14_rqnnt")
-shader_parameter/shine_color = Color(1, 1, 1, 1)
-shader_parameter/shine_speed = 5.0
-shader_parameter/shine_size = 0.01
-shader_parameter/active = false
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sylf8"]
-shader = ExtResource("14_rqnnt")
-shader_parameter/shine_color = Color(1, 1, 1, 1)
-shader_parameter/shine_speed = 5.0
-shader_parameter/shine_size = 0.01
-shader_parameter/active = false
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vrvro"]
-shader = ExtResource("14_rqnnt")
-shader_parameter/shine_color = Color(1, 1, 1, 1)
-shader_parameter/shine_speed = 5.0
-shader_parameter/shine_size = 0.01
-shader_parameter/active = false
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_m67av"]
-shader = ExtResource("14_rqnnt")
-shader_parameter/shine_color = Color(1, 1, 1, 1)
-shader_parameter/shine_speed = 5.0
-shader_parameter/shine_size = 0.01
-shader_parameter/active = false
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8dg5y"]
-shader = ExtResource("16_sh0rp")
-shader_parameter/shine_color = Color(1, 1, 1, 1)
-shader_parameter/shine_color_default = Color(1, 1, 1, 1)
-shader_parameter/shine_color_for_deletion = Color(1, 0, 0, 1)
-shader_parameter/shine_speed = 5.0
-shader_parameter/shine_size = 0.01
-shader_parameter/active = false
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6w3pa"]
-shader = ExtResource("14_rqnnt")
-shader_parameter/shine_color = Color(1, 1, 1, 1)
-shader_parameter/shine_speed = 1.0
-shader_parameter/shine_size = 0.01
-shader_parameter/active = false
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lvntu"]
-shader = ExtResource("14_rqnnt")
-shader_parameter/shine_color = Color(1, 1, 1, 1)
-shader_parameter/shine_speed = 5.0
-shader_parameter/shine_size = 0.01
-shader_parameter/active = false
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bpobq"]
-shader = ExtResource("14_rqnnt")
-shader_parameter/shine_color = Color(1, 1, 1, 1)
-shader_parameter/shine_speed = 5.0
-shader_parameter/shine_size = 0.01
-shader_parameter/active = false
-
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_o55j0")
 playerIcon = ExtResource("2_3ml1l")
@@ -148,6 +59,8 @@ pickLegionsScene = ExtResource("5_h75dt")
 arcanaScene = ExtResource("6_tnrka")
 playerDisconnectedContainer = ExtResource("2_4hca8")
 pickUnitControl = ExtResource("8_wjy05")
+actionsMenu = ExtResource("9_1ba5w")
+summoningMenu = ExtResource("10_h1vau")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -379,202 +292,6 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
-
-[node name="ActionsMarginContainer" type="MarginContainer" parent="Control"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -133.0
-offset_right = 274.0
-offset_bottom = 133.0
-grow_vertical = 2
-size_flags_horizontal = 8
-metadata/_edit_use_anchors_ = true
-
-[node name="FrameBackgroundMarginContainer" parent="Control/ActionsMarginContainer" instance=ExtResource("25_jfpsm")]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/ActionsMarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 50
-
-[node name="ColorRect" type="ColorRect" parent="Control/ActionsMarginContainer/MarginContainer"]
-layout_mode = 2
-color = Color(0.0627451, 0.0627451, 0.0627451, 0.709804)
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/ActionsMarginContainer/MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
-alignment = 1
-
-[node name="SummoningMenuContainer" type="MarginContainer" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer"]
-layout_mode = 2
-color = Color(0, 0, 0, 0.501961)
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer"]
-layout_mode = 2
-
-[node name="RecruitLegionsButton" type="Button" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-material = SubResource("ShaderMaterial_5u6ho")
-layout_mode = 2
-tooltip_text = "Legions can be spawned inside Sectios that are owned by your Triumphirate and not occupied by enemy units."
-text = "Recruit Legions for 3 Souls each"
-
-[node name="BuyArcanaCardButton" type="Button" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-material = SubResource("ShaderMaterial_q7xpk")
-layout_mode = 2
-tooltip_text = "Chose one between three cards."
-text = "Buy Arcana Card for 5 Souls"
-
-[node name="EndPhaseButton" type="Button" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-material = SubResource("ShaderMaterial_yfeb6")
-layout_mode = 2
-text = "End Summoning Phase"
-metadata/_edit_use_anchors_ = true
-
-[node name="AvailableLieutenantsCheckButton" type="CheckButton" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Show available Lieutenants"
-alignment = 1
-
-[node name="Actions" type="MarginContainer" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-script = ExtResource("10_vmoye")
-skullTexture = ExtResource("16_3g30k")
-heartTexture = ExtResource("17_tqd0q")
-
-[node name="BackToHellConfirmationDialog" type="ConfirmationDialog" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions"]
-unique_name_in_owner = true
-position = Vector2i(500, 500)
-size = Vector2i(506, 100)
-dialog_text = "This action will bring the demon back to hell. Do you want that?"
-dialog_close_on_escape = false
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions"]
-layout_mode = 2
-
-[node name="CurrentDemonLabel" type="Label" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="MarchHBoxContainer" type="HBoxContainer" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="MarchButton" type="Button" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/MarchHBoxContainer"]
-unique_name_in_owner = true
-material = SubResource("ShaderMaterial_i8445")
-layout_mode = 2
-size_flags_horizontal = 3
-tooltip_text = "Move one Unit per Skull. A Legion may move two Sectios and a Lieutenant three Sectios."
-text = "March"
-
-[node name="SkullsHBoxContainer" type="HBoxContainer" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/MarchHBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="WalkTheEarthHBoxContainer" type="HBoxContainer" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
-layout_mode = 2
-
-[node name="WalkTheEarthButton" type="Button" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/WalkTheEarthHBoxContainer"]
-unique_name_in_owner = true
-material = SubResource("ShaderMaterial_w6yy2")
-layout_mode = 2
-size_flags_horizontal = 3
-tooltip_text = "Use a 'Walk the Earth' Arcana Card to send the Demon to Earth to collect Souls and earn Favors. "
-text = "WalkTheEarth"
-
-[node name="HeartsHBoxContainer" type="HBoxContainer" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/WalkTheEarthHBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="PassButton" type="Button" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
-unique_name_in_owner = true
-material = SubResource("ShaderMaterial_sylf8")
-layout_mode = 2
-tooltip_text = "Use a Pass Arcana Card to delay the Demon's turn. Sometimes its good to know what your enemy does before its your turn."
-text = "Pass"
-
-[node name="PassForGoodButton" type="Button" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
-unique_name_in_owner = true
-material = SubResource("ShaderMaterial_vrvro")
-layout_mode = 2
-tooltip_text = "Take no action this turn with this Demon."
-text = "PassForGood"
-
-[node name="DoEvilDeedsButton" type="Button" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
-unique_name_in_owner = true
-material = SubResource("ShaderMaterial_m67av")
-layout_mode = 2
-tooltip_text = "Earn Favors while on Earth."
-text = "DoEvilDeeds"
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
-visible = false
-layout_mode = 2
-
-[node name="ConspireButton" type="Button" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/HBoxContainer2"]
-unique_name_in_owner = true
-material = SubResource("ShaderMaterial_8dg5y")
-layout_mode = 2
-size_flags_horizontal = 3
-tooltip_text = "Conspire against the Hell Deck (not implemented)."
-text = "Conspire"
-
-[node name="InfluenceUnitsButton" type="Button" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
-unique_name_in_owner = true
-visible = false
-material = SubResource("ShaderMaterial_6w3pa")
-layout_mode = 2
-tooltip_text = "Try to influence the Units of other Players to either disband or change allegiance. More Hearts, higher chance to succeed. Influencing Units that are in their own Sectio will cost a Favor. (Not implemented)"
-text = "InfluenceUnits"
-
-[node name="AtonementAndSuplicationButton" type="Button" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
-unique_name_in_owner = true
-visible = false
-material = SubResource("ShaderMaterial_lvntu")
-layout_mode = 2
-tooltip_text = "Try to get rid of Disfavors."
-text = "AtonementAndSuplication"
-
-[node name="UseMagicButton" type="Button" parent="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer"]
-unique_name_in_owner = true
-visible = false
-material = SubResource("ShaderMaterial_bpobq")
-layout_mode = 2
-tooltip_text = "Play Arcana Cards that affect Units, Demons or Sectios."
-text = "UseMagic"
-
-[node name="FrameMarginContainer" parent="Control/ActionsMarginContainer" instance=ExtResource("26_vv66b")]
-layout_mode = 2
 
 [node name="CardsControl" type="Control" parent="Control"]
 layout_mode = 2
@@ -1746,20 +1463,6 @@ text = "Hide Combat Overview"
 [connection signal="mouse_exited" from="Control/RankTrackMarginContainer/RankTrack" to="Control/RankTrackMarginContainer/RankTrack" method="_on_mouse_exited"]
 [connection signal="item_selected" from="Control/RankTrackMarginContainer/RankTrack/MarginContainer/VBoxContainer/CurrentDemonTree" to="Control/RankTrackMarginContainer/RankTrack" method="_on_current_demon_tree_item_selected"]
 [connection signal="item_selected" from="Control/RankTrackMarginContainer/RankTrack/MarginContainer/VBoxContainer/DemonTree" to="Control/RankTrackMarginContainer/RankTrack" method="_on_demon_tree_item_selected"]
-[connection signal="pressed" from="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer/RecruitLegionsButton" to="." method="_on_recruit_legions_button_pressed"]
-[connection signal="pressed" from="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer/BuyArcanaCardButton" to="." method="_on_buy_arcana_card_button_pressed"]
-[connection signal="pressed" from="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer/EndPhaseButton" to="." method="_on_end_phase_button_pressed"]
-[connection signal="toggled" from="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/SummoningMenuContainer/MarginContainer/VBoxContainer/AvailableLieutenantsCheckButton" to="." method="_on_available_lieutenants_check_button_toggled"]
-[connection signal="confirmed" from="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/BackToHellConfirmationDialog" to="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_back_to_hell_confirmation_dialog_confirmed"]
-[connection signal="pressed" from="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/MarchHBoxContainer/MarchButton" to="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_march_button_pressed"]
-[connection signal="pressed" from="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/WalkTheEarthHBoxContainer/WalkTheEarthButton" to="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_walk_the_earth_button_pressed"]
-[connection signal="pressed" from="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/PassButton" to="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_pass_button_pressed"]
-[connection signal="pressed" from="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/PassForGoodButton" to="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_pass_for_good_button_pressed"]
-[connection signal="pressed" from="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/DoEvilDeedsButton" to="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_do_evil_deeds_button_pressed"]
-[connection signal="pressed" from="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/HBoxContainer2/ConspireButton" to="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_conspire_button_pressed"]
-[connection signal="pressed" from="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/InfluenceUnitsButton" to="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_influence_units_button_pressed"]
-[connection signal="pressed" from="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/AtonementAndSuplicationButton" to="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_atonement_and_suplication_button_pressed"]
-[connection signal="pressed" from="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions/VBoxContainer/UseMagicButton" to="Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions" method="_on_use_magic_button_pressed"]
 [connection signal="mouse_entered" from="Control/CardsControl/DemonCardsMarginContainer" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Control/CardsControl/DemonCardsMarginContainer" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_mouse_exited"]
 [connection signal="pressed" from="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/CollapseButton" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_collapse_button_pressed"]

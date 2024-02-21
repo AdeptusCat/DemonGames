@@ -33,7 +33,7 @@ func _on_recruit_legions():
 
 
 func _on_recruiting():
-	Signals.toggleRecruitLegionsButtonEnabled.emit(false)
+	Signals.toggleRecruitLegionsButton.emit(false)
 
 
 func _on_recruitingDone():
@@ -46,7 +46,7 @@ func _on_recruitingDone():
 func _on_recruit_lieutenant(lieutenantName : String):
 	Signals.recruiting.emit()
 	Signals.toggleEndPhaseButton.emit(false)
-	Signals.toggleBuyArcanaCardButtonEnabled.emit(false)
+	Signals.toggleBuyArcanaCardButton.emit(false)
 	
 	Sectios.sectiosClickable(Data.player.sectiosWithoutEnemies)
 	

@@ -1,0 +1,123 @@
+[gd_scene load_steps=8 format=3 uid="uid://dv4h8w62ygoeo"]
+
+[ext_resource type="Script" path="res://scenes/ui/actions/summoning_menu.gd" id="1_pvfms"]
+[ext_resource type="PackedScene" uid="uid://dm6xoflw4305t" path="res://scenes/ui/frame_background_margin_container.tscn" id="2_gbdeg"]
+[ext_resource type="Shader" path="res://assets/materials_shaders/shine_highlight_button.gdshader" id="3_iuxt5"]
+[ext_resource type="PackedScene" uid="uid://7p3kfgl06d7y" path="res://scenes/ui/frame_margin_container.tscn" id="8_m0ixw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5u6ho"]
+shader = ExtResource("3_iuxt5")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_speed = 5.0
+shader_parameter/shine_size = 0.01
+shader_parameter/active = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q7xpk"]
+shader = ExtResource("3_iuxt5")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_speed = 5.0
+shader_parameter/shine_size = 0.01
+shader_parameter/active = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yfeb6"]
+shader = ExtResource("3_iuxt5")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_speed = 5.0
+shader_parameter/shine_size = 0.01
+shader_parameter/active = false
+
+[node name="SummoningMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -133.0
+offset_right = 274.0
+offset_bottom = 133.0
+grow_vertical = 2
+size_flags_horizontal = 8
+script = ExtResource("1_pvfms")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -133.0
+offset_right = 379.0
+offset_bottom = 133.0
+grow_vertical = 2
+
+[node name="FrameBackgroundMarginContainer" parent="MarginContainer" instance=ExtResource("2_gbdeg")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer/MarginContainer"]
+layout_mode = 2
+color = Color(0.0627451, 0.0627451, 0.0627451, 0.709804)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+alignment = 1
+
+[node name="SummoningMenu" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu"]
+layout_mode = 2
+color = Color(0, 0, 0, 0.501961)
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer"]
+layout_mode = 2
+
+[node name="RecruitLegionsButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_5u6ho")
+layout_mode = 2
+tooltip_text = "Legions can be spawned inside Sectios that are owned by your Triumphirate and not occupied by enemy units."
+text = "Recruit Legions for 3 Souls each"
+
+[node name="BuyArcanaCardButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_q7xpk")
+layout_mode = 2
+tooltip_text = "Chose one between three cards."
+text = "Buy Arcana Card for 5 Souls"
+
+[node name="EndPhaseButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_yfeb6")
+layout_mode = 2
+text = "End Summoning Phase"
+metadata/_edit_use_anchors_ = true
+
+[node name="AvailableLieutenantsCheckButton" type="CheckButton" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Show available Lieutenants"
+alignment = 1
+
+[node name="FrameMarginContainer" parent="MarginContainer" instance=ExtResource("8_m0ixw")]
+layout_mode = 2
+
+[connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/RecruitLegionsButton" to="." method="_on_recruit_legions_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/BuyArcanaCardButton" to="." method="_on_buy_arcana_card_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/EndPhaseButton" to="." method="_on_end_phase_button_pressed"]
+[connection signal="toggled" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/AvailableLieutenantsCheckButton" to="." method="_on_available_lieutenants_check_button_toggled"]
