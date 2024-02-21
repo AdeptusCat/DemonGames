@@ -15,6 +15,8 @@ class_name UI
 @onready var waitForPlayerControl = %WaitForPlayerControl
 @onready var waitForPlayerLabel = %WaitForPlayerLabel
 
+@export var pickUnitControl : PackedScene
+
 var sectioTextures : Dictionary = {}
 
 var currentDemonRoot : TreeItem
@@ -588,11 +590,15 @@ func _on_wait_for_player_button_pressed():
 
 
 func _on_pickUnit(sectio):
-	%PickMoveUnitControl.highlight(sectio)
+	var pickUnitControlScene = pickUnitControl.instantiate()
+	pickUnitControlScene.highlight(sectio)
+	add_child(pickUnitControlScene)
 
 
 func pickUnitToMove(sectio):
-	%PickMoveUnitControl.highlight(sectio)
+	var pickUnitControlScene = pickUnitControl.instantiate()
+	pickUnitControlScene.highlight(sectio)
+	add_child(pickUnitControlScene)
 
 
 func toogleBuyLieutenant(boolean : bool):
