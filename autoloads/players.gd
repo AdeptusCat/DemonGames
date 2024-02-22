@@ -12,10 +12,6 @@ func _ready():
 
 func _on_buyArcanaCard():
 	Data.player.checkPlayerSummoningCapabilities(5)
-#	if Data.player.hasEnoughSouls(10):
-#		%BuyArcanaCardMarginContainer.show()
-#	else:
-#		%BuyArcanaCardMarginContainer.hide()
 	if Data.player.hasEnoughSouls(5):
 		var souls = Data.players[Data.id].souls - 5
 		Signals.changeSouls.emit(Data.id, souls)
