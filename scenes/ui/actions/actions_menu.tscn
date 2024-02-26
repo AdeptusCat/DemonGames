@@ -1,478 +1,340 @@
-[gd_scene load_steps=16 format=3 uid="uid://c43nav0wkynac"]
+[gd_scene load_steps=162 format=3 uid="uid://c43nav0wkynac"]
 
+[ext_resource type="Script" path="res://scenes/ui/actions/actions_menu.gd" id="1_i65gp"]
 [ext_resource type="PackedScene" uid="uid://dm6xoflw4305t" path="res://scenes/ui/frame_background_margin_container.tscn" id="2_e582r"]
+[ext_resource type="Texture2D" uid="uid://25er4ht16vnw" path="res://assets/00698-3170758600-drawing of a skull, digital art, game asset.png" id="2_kjl8k"]
+[ext_resource type="Texture2D" uid="uid://br3bhpalcxcw5" path="res://assets/00690-2262657839-drawing of a heart, digital art, game asset.png" id="3_0g22h"]
 [ext_resource type="Shader" path="res://assets/materials_shaders/shine_highlight_button.gdshader" id="4_6j55y"]
 [ext_resource type="Shader" path="res://assets/materials_shaders/shine_highlight.gdshader" id="5_4g1ww"]
+[ext_resource type="Texture2D" uid="uid://b2xbxnonn5ugy" path="res://assets/ui/pick_legions/running/00297-3103259275.png" id="5_4te70"]
+[ext_resource type="Texture2D" uid="uid://b43gaef8npbxq" path="res://assets/ui/pick_legions/running/00298-3103259276.png" id="6_i7voc"]
+[ext_resource type="Texture2D" uid="uid://b3hfueksjo7wq" path="res://assets/ui/pick_legions/running/00299-3103259277.png" id="7_k7kba"]
 [ext_resource type="PackedScene" uid="uid://7p3kfgl06d7y" path="res://scenes/ui/frame_margin_container.tscn" id="8_3odqv"]
-
-[sub_resource type="GDScript" id="GDScript_qf5hf"]
-script/source = "extends Control
-
-
-func _ready():
-	Signals.disableActionMenuButtons.connect(_on_disableActionButtons)
-
-
-func _on_disableActionButtons():
-	%MarchButton.disabled = true
-	%MarchButton.get_material().set_shader_parameter(\"active\", false)
-	
-	%WalkTheEarthButton.disabled = true
-	%WalkTheEarthButton.get_material().set_shader_parameter(\"active\", false)
-	
-	%PassButton.disabled = true
-	%PassButton.get_material().set_shader_parameter(\"active\", false)
-	
-	%PassForGoodButton.disabled = true
-	%PassForGoodButton.get_material().set_shader_parameter(\"active\", false)
-	
-	%DoEvilDeedsButton.disabled = true
-	%DoEvilDeedsButton.get_material().set_shader_parameter(\"active\", false)
-	
-	%ConspireButton.disabled = true
-	%ConspireButton.get_material().set_shader_parameter(\"active\", false)
-	
-	%InfluenceUnitsButton.disabled = true
-	%InfluenceUnitsButton.get_material().set_shader_parameter(\"active\", false)
-	
-	%AtonementAndSuplicationButton.disabled = true
-	%AtonementAndSuplicationButton.get_material().set_shader_parameter(\"active\", false)
-	
-	%UseMagicButton.disabled = true
-	%UseMagicButton.get_material().set_shader_parameter(\"active\", false)
-"
-
-[sub_resource type="GDScript" id="GDScript_42cpp"]
-script/source = "extends MarginContainer
-
-signal backToHell(boolean)
-
-@export var skullTexture : Texture
-@export var heartTexture : Texture
-
-var spellObject : Spells = Spells.new()
-var player : Player
-var currentDemonNode : Demon
-var currentDemonRank: int:
-	set(demonRank):
-		currentDemonRank = demonRank
-		currentDemonNode = Data.demons[currentDemonRank]
-		player = Data.players[currentDemonNode.player]
-		var demonName : String = currentDemonNode.demonName
-		%CurrentDemonLabel.text = \"Demon \" + demonName
-		if currentDemonNode.incapacitated:
-			var result = Dice.roll(1)
-			if result[0] >= 5:
-				Signals.demonStatusChange.emit(currentDemonNode.rank, \"recovered\")
-				toggleActionMenu(true)
-			else:
-				await get_tree().create_timer(0.1).timeout
-				Signals.demonDone.emit(null)
-		else:
-			toggleActionMenu(true)
-
-
-func _ready():
-	%PassButton.disabled = true
-	%WalkTheEarthButton.disabled = true
-	%DoEvilDeedsButton.disabled = true
-	%ConspireButton.disabled = true
-	Signals.skullUsed.connect(skullUsed)
-	Signals.cancelMarch.connect(_on_cancelMarch)
-	Signals.doEvilDeedsResult.connect(_on_doEvilDeedsResult)
-	Signals.actionThroughArcana.connect(_on_actionThroughArcana)
-
-
-func _on_actionThroughArcana(minorSpell : Decks.MinorSpell):
-	var MinorSpell = Decks.MinorSpell
-	spellObject.objects[minorSpell].playCard(minorSpell, currentDemonRank)
-
-
-func _on_cancelMarch():
-	toggleActionMenu(true)
-
-
-func toggleActionMenu(boolean : bool):
-	if boolean:
-		%ActionsMarginContainer.show()
-		activateActionButtons()
-		
-		removeSkullsFromMenu()
-		addSkullsToMenu()
-		
-		removeHeartsFromMenu()
-		addHeartsToMenu()
-		
-		show()
-	else:
-		%ActionsMarginContainer.hide()
-		deactivateActionButtons()
-		deactivateArcanaCards()
-		hide()
-
-
-func deactivateArcanaCards():
-	for cardName in player.arcanaCards:
-		var arcanaCard = Data.arcanaCardNodes[cardName]
-		arcanaCard.disable()
-
-
-func activateActionButtons():
-	for cardName in player.arcanaCards:
-		if not Data.arcanaCards.has(cardName):
-			continue
-		var arcanaCard : Dictionary = Data.arcanaCards[cardName]
-		if not player.hasEnoughSouls(arcanaCard.cost):
-			continue
-		if not spellObject.objects.has(arcanaCard.minorSpell):
-			continue
-		spellObject.objects[arcanaCard.minorSpell].activatePassButton(%PassButton)
-		spellObject.objects[arcanaCard.minorSpell].activateWalkTheEarthButton(%WalkTheEarthButton)
-	
-	%MarchButton.text = \"March\"
-	%MarchButton.disabled = false
-	
-	%PassForGoodButton.disabled = false
-		
-	# not implemented yet
-#		%AtonementAndSuplicationButton.disabled = true
-	%InfluenceUnitsButton.disabled = true
-	%UseMagicButton.disabled = true
-	
-	if currentDemonNode.onEarth:
-		%DoEvilDeedsButton.disabled = false
-#			%ConspireButton.disabled = false
-		%WalkTheEarthButton.disabled = true
-	else:
-		%DoEvilDeedsButton.disabled = true
-#			%ConspireButton.disabled = true
-
-
-func deactivateActionButtons():
-	%PassButton.disabled = true
-	%WalkTheEarthButton.disabled = true
-
-
-func removeSkullsFromMenu():
-	for child in %SkullsHBoxContainer.get_children():
-		child.queue_free()
-
-
-func addSkullsToMenu():
-	for skull in currentDemonNode.skulls:
-		var textureRect = TextureRect.new()
-		textureRect.expand_mode = textureRect.EXPAND_IGNORE_SIZE
-		textureRect.custom_minimum_size = Vector2(32, 32)
-		textureRect.texture = skullTexture
-		%SkullsHBoxContainer.add_child(textureRect)
-
-
-func removeHeartsFromMenu():
-	for child in %HeartsHBoxContainer.get_children():
-		child.queue_free()
-
-
-func addHeartsToMenu():
-	for heart in currentDemonNode.hearts:
-		var textureRect = TextureRect.new()
-		textureRect.expand_mode = textureRect.EXPAND_IGNORE_SIZE
-		textureRect.custom_minimum_size = Vector2(32, 32)
-		textureRect.texture = heartTexture
-		%HeartsHBoxContainer.add_child(textureRect)
-
-
-func skullUsed():
-	var children = %SkullsHBoxContainer.get_children()
-	children[-1].queue_free()
-
-
-func _input(event):
-	if visible:
-		if Data.phase == Data.phases.Action:
-			if Input.is_action_pressed(\"w\"):
-				if not %WalkTheEarthButton.disabled:
-					%WalkTheEarthButton.pressed.emit()
-			if Input.is_action_pressed(\"m\"):
-				if not Data.state == Data.States.MARCHING:
-					%MarchButton.pressed.emit()
-			if Input.is_action_pressed(\"p\"):
-				if not %PassButton.disabled:
-					%PassButton.pressed.emit()
-			if Input.is_action_pressed(\"g\"):
-				if not %PassForGoodButton.disabled:
-					%PassForGoodButton.pressed.emit()
-			if Input.is_action_pressed(\"ui_accept\"):
-				if Data.state == Data.States.MARCHING:
-					%MarchButton.pressed.emit()
-
-
-func _on_march_button_pressed():
-	if not Data.state == Data.States.MARCHING:
-		for peer in Connection.peers:
-			RpcCalls.demonAction.rpc_id(peer, currentDemonRank, \"Marching\")
-		if %MarchButton.text == \"End March\":
-			%MarchButton.text = \"March\"
-			Signals.sectiosUnclickable.emit()
-		#	Signals.demonDone.emit(null)
-			Signals.sectioClicked.emit(null)
-			Signals.sectioClicked.emit(null)
-			return
-		deactivateArcanaCards()
-		if not await backToHellCheck():
-			return
-		Signals.help.emit(Data.HelpSubjects.March)
-		Signals.demonStatusChange.emit(currentDemonNode.rank, \"hell\")
-		disableActions()
-		Signals.march.emit()
-		%MarchButton.text = \"End March\"
-		%MarchButton.disabled = false
-		print(\"march disabled z\")
-		if Tutorial.tutorial:
-			if Tutorial.currentTopic == Tutorial.Topic.MarchAction:
-				Signals.tutorialRead.emit()
-	#	print(player, \" player troops \",player.troops)
-	#	Signals.sectiosClickable.emit()
-	#	for troop in player.troops.values():
-	#		troop.changeClickable(true)
-	#	emit_signal(\"demonDone\", null)
-	else:
-		for peer in Connection.peers:
-			RpcCalls.demonAction.rpc_id(peer, currentDemonRank, \"\")
-		%MarchButton.text = \"March\"
-		Signals.sectiosUnclickable.emit()
-	#	Signals.demonDone.emit(null)
-		Signals.sectioClicked.emit(null)
-		Signals.sectioClicked.emit(null)
-		if Tutorial.tutorial:
-			if Tutorial.currentTopic == Tutorial.Topic.MarchAction:
-				Signals.tutorialRead.emit()
-				
-				
-
-func _on_pass_button_pressed():
-	deactivateArcanaCards()
-	for cardName in player.arcanaCards:
-		var arcanaCard : ArcanaCard = Data.arcanaCardNodes[cardName]
-		if not player.hasEnoughSouls(arcanaCard.cost):
-			continue
-		if spellObject.objects.has(arcanaCard.minorSpell):
-			spellObject.objects[arcanaCard.minorSpell].highlightPassCard(arcanaCard)
-	Signals.tutorialRead.emit()
-
-
-func _on_pass_for_good_button_pressed():
-	for peer in Connection.peers:
-		RpcCalls.demonAction.rpc_id(peer, currentDemonRank, \"Pass For Good\")
-	Signals.demonDone.emit(0)
-	AudioSignals.passForGood.emit()
-
-
-
-func passTurns(demonsPassed):
-	for peer in Connection.peers:
-		RpcCalls.demonAction.rpc_id(peer, currentDemonRank, \"Pass\")
-	Signals.demonDone.emit(demonsPassed)
-	AudioSignals.passAction.emit()
-
-
-func walkTheEarth():
-	for peer in Connection.peers:
-		RpcCalls.demonAction.rpc_id(peer, currentDemonRank, \"Walk The Earth\")
-	Signals.demonDone.emit(null)
-	AudioSignals.walkTheEarth.emit()
-	Signals.incomeChanged.emit(Data.id)
-
-
-func _recruitLieutenant():
-	Signals.recruitLieutenant.emit()
-#	emit_signal(\"demonDone\", null)
-
-
-func _on_walk_the_earth_button_pressed():
-	deactivateArcanaCards()
-	for cardName in player.arcanaCards:
-		var arcanaCard = Data.arcanaCardNodes[cardName]
-		if not player.hasEnoughSouls(arcanaCard.cost):
-			continue
-		if spellObject.objects.has(arcanaCard.minorSpell):
-			spellObject.objects[arcanaCard.minorSpell].highlightWalkTheEarthCard(arcanaCard)
-	Signals.tutorialRead.emit()
-
-
-func _on_do_evil_deeds_button_pressed():
-	deactivateArcanaCards()
-	var result = Dice.roll(currentDemonNode.hearts)
-	var favorsGathered = 0
-	for roll in result:
-		if roll >= 6:
-			favorsGathered += 1
-			for peer in Connection.peers:
-				earnFavor.rpc_id(peer, currentDemonNode.player)
-			print(currentDemonNode, \" evil deeds earned a favor on earth\")
-		else:
-			print(currentDemonNode, \" evil deeds didnt earn a favor on earth\")
-	
-	for peer in Connection.peers:
-		RpcCalls.demonAction.rpc_id(peer, currentDemonRank, \"Do Evil Deeds: \" + str(favorsGathered))
-	for peer in Connection.peers:
-		doEvilDeedsResult.rpc_id(peer, currentDemonNode.player, currentDemonNode.demonName, favorsGathered)
-	
-	if Tutorial.tutorial:
-		if Tutorial.currentTopic == Tutorial.Topic.DoEvilDeeds:
-			Signals.tutorialRead.emit()
-			Signals.tutorial.emit(Tutorial.Topic.DoEvilDeedsResult, \"You can always see the History of Actions and their Result on the Rank Track.\")
-			await Signals.tutorialRead
-	Signals.demonDone.emit(null)
-
-
-func _on_doEvilDeedsResult(playerId : int, demonName : String, favorsGathered : int):
-	for peer in Connection.peers:
-		doEvilDeedsResult.rpc_id(peer, playerId, demonName, favorsGathered)
-
-
-@rpc(\"any_peer\", \"call_local\")
-func doEvilDeedsResult(player_id : int, demonName : String, favors : int):
-	if Settings.skipWaitForPlayers:
-		return
-	if favors == 0:
-		%DoEvilDeedsLabel.text = demonName + \" gatherd no Favors on Earth.\"
-	elif favors == 1:
-		%DoEvilDeedsLabel.text = demonName + \" gatherd \" + str(favors) + \" Favor on Earth.\"	
-	elif favors > 1:
-		%DoEvilDeedsLabel.text = demonName + \" gatherd \" + str(favors) + \" Favors on Earth.\"
-	Signals.showDoEvilDeedsControl.emit(player_id)
-
-
-@rpc(\"any_peer\", \"call_local\")
-func earnFavor(playerId):
-	var favors = Data.players[playerId].favors + 1
-	favors = clamp(favors, 0, 20)
-	Data.players[playerId].favors = favors
-	if playerId == Data.id:
-		Data.player.favors = favors
-
-
-@rpc(\"any_peer\", \"call_local\")
-func loseDisfavor(playerId):
-	var disfavors = Data.players[playerId].disfavors - 1
-	disfavors = clamp(disfavors, 0, 20)
-	Data.players[playerId].disfavors = disfavors
-	if playerId == Data.id:
-		Data.player.disfavors = disfavors
-
-func _on_conspire_button_pressed():
-	for peer in Connection.peers:
-		RpcCalls.demonAction.rpc_id(peer, currentDemonRank, \"Conspire\")
-	deactivateArcanaCards()
-	pass # Replace with function body.
-
-
-func _on_influence_units_button_pressed():
-	for peer in Connection.peers:
-		RpcCalls.demonAction.rpc_id(peer, currentDemonRank, \"Influence Units\")
-	deactivateArcanaCards()
-	if not await backToHellCheck():
-		return
-	Signals.demonStatusChange.emit(currentDemonNode.rank, \"hell\")
-	pass # Replace with function body.
-
-
-func _on_atonement_and_suplication_button_pressed():
-	for peer in Connection.peers:
-		RpcCalls.demonAction.rpc_id(peer, currentDemonRank, \"Atonement And Suplication\")
-	deactivateArcanaCards()
-	if not await backToHellCheck():
-		return
-	Signals.demonStatusChange.emit(currentDemonNode.rank, \"hell\")
-	var DiceResults = Dice.roll(2)
-	var addedResult = DiceResults[0] + DiceResults[1]
-	var index
-	if addedResult >= 11:
-		index = 4
-	elif addedResult >= 9:
-		index = 3
-	elif addedResult >= 7:
-		index = 2
-	elif addedResult >= 5:
-		index = 1
-	elif addedResult >= 2:
-		index = 0
-	var heartsIndex
-	if currentDemonNode.hearts >= 5:
-		heartsIndex = 5
-	elif currentDemonNode.hearts >= 3:
-		heartsIndex = 3
-	elif currentDemonNode.hearts >= 2:
-		heartsIndex = 2
-	elif currentDemonNode.hearts >= 1:
-		heartsIndex = 1
-	var table = {\"hearts\" : {
-		1 : [null, 0, 0, 1, 1],
-		2 : [null, 0, 0, 1, 2],
-		3 : [null, 0, 1, 1, 2],
-		5 : [null, null, 0, 2 ,3]
-		}}
-	var result = table[\"hearts\"][heartsIndex][index]
-	if result:
-		for i in result:
-			for peer in Connection.peers:
-				loseDisfavor.rpc_id(peer, currentDemonNode.player)
-	else:
-		Signals.demonStatusChange.emit(currentDemonNode.rank, \"incapacitated\")
-	Signals.demonDone.emit(null)
-
-
-func _on_use_magic_button_pressed():
-	for peer in Connection.peers:
-		RpcCalls.demonAction.rpc_id(peer, currentDemonRank, \"Using Magic\")
-	deactivateArcanaCards()
-	if not await backToHellCheck():
-		return
-	Signals.demonStatusChange.emit(currentDemonNode.rank, \"hell\")
-	pass # Replace with function body.
-
-
-func backToHellCheck():
-	if currentDemonNode.onEarth:
-		%BackToHellConfirmationDialog.popup()
-		var result = await backToHell
-		if not result:
-			return false
-		else:
-			return true
-	else:
-		return true
-
-
-func _on_end_button_pressed():
-	Signals.sectiosUnclickable.emit()
-#	Signals.demonDone.emit(null)
-	Signals.sectioClicked.emit(null)
-	Signals.sectioClicked.emit(null)
-
-
-func disableActions():
-	%MarchButton.disabled = true
-	print(\"march disabled1\")
-	%WalkTheEarthButton.disabled = true
-	%PassButton.disabled = true
-	%PassForGoodButton.disabled = true
-	%DoEvilDeedsButton.disabled = true
-	%ConspireButton.disabled = true
-	%InfluenceUnitsButton.disabled = true
-	%AtonementAndSuplicationButton.disabled = true
-	%UseMagicButton.disabled = true
-
-
-func _on_back_to_hell_confirmation_dialog_cancelled():
-	backToHell.emit(false)
-
-
-func _on_back_to_hell_confirmation_dialog_confirmed():
-	backToHell.emit(true)
-
-
-"
+[ext_resource type="Texture2D" uid="uid://5dcx22i5svol" path="res://assets/ui/pick_legions/running/00300-3103259278.png" id="8_ktx3c"]
+[ext_resource type="Texture2D" uid="uid://c02qsjr8bv4y5" path="res://assets/ui/pick_legions/running/00301-3103259279.png" id="9_iyugw"]
+[ext_resource type="Texture2D" uid="uid://h7eayf0tdk1x" path="res://assets/ui/pick_legions/running/00302-3103259280.png" id="10_ik2t7"]
+[ext_resource type="Texture2D" uid="uid://b48f7q5rcnfxr" path="res://assets/ui/pick_legions/running/00303-3103259281.png" id="11_ylkkf"]
+[ext_resource type="Texture2D" uid="uid://bmvxqr5k8v6di" path="res://assets/ui/pick_legions/running/00304-3103259282.png" id="12_50jyr"]
+[ext_resource type="Texture2D" uid="uid://bit3vgx08oq8l" path="res://assets/ui/pick_legions/running/00305-3103259283.png" id="13_ikexm"]
+[ext_resource type="Texture2D" uid="uid://chr1e8bpqig5q" path="res://assets/ui/pick_legions/running/00306-3103259284.png" id="14_mek8u"]
+[ext_resource type="Texture2D" uid="uid://b7mdi44lhqw5t" path="res://assets/ui/pick_legions/running/00307-3103259285.png" id="15_1o05u"]
+[ext_resource type="Texture2D" uid="uid://6a80nsk4w2ep" path="res://assets/ui/pick_legions/running/00308-3103259286.png" id="16_kha1v"]
+[ext_resource type="Texture2D" uid="uid://btqset4w05ni2" path="res://assets/ui/pick_legions/running/00309-3103259287.png" id="17_5f3ow"]
+[ext_resource type="Texture2D" uid="uid://2wgv0kylj6eb" path="res://assets/ui/pick_legions/running/00310-3103259288.png" id="18_a0s1f"]
+[ext_resource type="Texture2D" uid="uid://rs1obvfmdmce" path="res://assets/ui/pick_legions/running/00311-3103259289.png" id="19_mva1w"]
+[ext_resource type="Texture2D" uid="uid://mykh1m481lut" path="res://assets/ui/pick_legions/running/00312-3103259290.png" id="20_8defa"]
+[ext_resource type="Texture2D" uid="uid://blt8u6pddmtle" path="res://assets/ui/pick_legions/running/00313-3103259291.png" id="21_33gk6"]
+[ext_resource type="Texture2D" uid="uid://b3vkyi4t4i4ef" path="res://assets/ui/pick_legions/running/00314-3103259292.png" id="22_6jcy6"]
+[ext_resource type="Texture2D" uid="uid://c8r12ajtmfj4h" path="res://assets/ui/pick_legions/running/00315-3103259293.png" id="23_3lxim"]
+[ext_resource type="Texture2D" uid="uid://dmdbfojr667b3" path="res://assets/ui/pick_legions/running/00316-3103259294.png" id="24_mnnx2"]
+[ext_resource type="Texture2D" uid="uid://cg1088jd3wxnx" path="res://assets/ui/pick_legions/running/00317-3103259295.png" id="25_teubi"]
+[ext_resource type="Texture2D" uid="uid://uim7u7p8hdtu" path="res://assets/ui/pick_legions/running/00318-3103259296.png" id="26_4d3t0"]
+[ext_resource type="Texture2D" uid="uid://cyca2m810ybbt" path="res://assets/ui/pick_legions/running/00319-3103259297.png" id="27_4kjcs"]
+[ext_resource type="Texture2D" uid="uid://omqosnnyk5pf" path="res://assets/ui/pick_legions/running/00320-3103259298.png" id="28_61d0a"]
+[ext_resource type="Texture2D" uid="uid://c80jmyimn6dam" path="res://assets/ui/pick_legions/running/00321-3103259299.png" id="29_duphl"]
+[ext_resource type="Texture2D" uid="uid://dehqhltqh1toy" path="res://assets/ui/pick_legions/running/00322-3103259300.png" id="30_uerwg"]
+[ext_resource type="Texture2D" uid="uid://b8ij8hpr5cul" path="res://assets/ui/pick_legions/running/00323-3103259301.png" id="31_4pl2y"]
+[ext_resource type="Texture2D" uid="uid://biek57s7s32ia" path="res://assets/ui/pick_legions/running/00324-3103259302.png" id="32_u2iay"]
+[ext_resource type="Texture2D" uid="uid://b04dno1yb8ymv" path="res://assets/ui/pick_legions/running/00325-3103259303.png" id="33_xgf0q"]
+[ext_resource type="Texture2D" uid="uid://cq3djsslb30h3" path="res://assets/ui/pick_legions/running/00326-3103259304.png" id="34_hoa84"]
+[ext_resource type="Texture2D" uid="uid://bv2eg1aubwrxm" path="res://assets/ui/pick_legions/running/00327-3103259305.png" id="35_qlejf"]
+[ext_resource type="Texture2D" uid="uid://djh2hsd6wrqqn" path="res://assets/ui/pick_legions/running/00328-3103259306.png" id="36_hf5i6"]
+[ext_resource type="Texture2D" uid="uid://d3px8hek0d60c" path="res://assets/ui/pick_legions/running/00329-3103259307.png" id="37_wb1yx"]
+[ext_resource type="Texture2D" uid="uid://bj346o3e5pm3u" path="res://assets/ui/pick_legions/running/00330-3103259308.png" id="38_wgrpt"]
+[ext_resource type="Texture2D" uid="uid://dp13a8s48tc8x" path="res://assets/ui/pick_legions/running/00331-3103259309.png" id="39_nva5i"]
+[ext_resource type="Texture2D" uid="uid://mvkd481b8ekj" path="res://assets/ui/pick_legions/running/00332-3103259310.png" id="40_x7gin"]
+[ext_resource type="Texture2D" uid="uid://1scbgslwe2ur" path="res://assets/ui/pick_legions/running/00333-3103259311.png" id="41_8xt0f"]
+[ext_resource type="Texture2D" uid="uid://cf5j7e63d0yvd" path="res://assets/ui/pick_legions/running/00334-3103259312.png" id="42_71xk7"]
+[ext_resource type="Texture2D" uid="uid://bjraet2fr8ch8" path="res://assets/ui/pick_legions/running/00335-3103259313.png" id="43_676aa"]
+[ext_resource type="Texture2D" uid="uid://c7mrp6j8ufbxy" path="res://assets/ui/pick_legions/running/00336-3103259314.png" id="44_14fem"]
+[ext_resource type="Texture2D" uid="uid://sj0qvsfn4pv" path="res://assets/ui/pick_legions/running/00337-3103259315.png" id="45_t8hls"]
+[ext_resource type="Texture2D" uid="uid://fecoxl7dxwan" path="res://assets/ui/pick_legions/running/00338-3103259316.png" id="46_vw7pt"]
+[ext_resource type="Texture2D" uid="uid://bohqy4apiojg6" path="res://assets/ui/pick_legions/running/00339-3103259317.png" id="47_sa51x"]
+[ext_resource type="Texture2D" uid="uid://df210kqpb5oly" path="res://assets/ui/pick_legions/running/00340-3103259318.png" id="48_liq34"]
+[ext_resource type="Texture2D" uid="uid://dvt3w1rvtembt" path="res://assets/ui/pick_legions/running/00341-3103259319.png" id="49_iyc6r"]
+[ext_resource type="Texture2D" uid="uid://cri613krlc44s" path="res://assets/ui/pick_legions/running/00342-3103259320.png" id="50_uw57o"]
+[ext_resource type="Texture2D" uid="uid://cbyq538evalf0" path="res://assets/ui/pick_legions/running/00343-3103259321.png" id="51_no6lt"]
+[ext_resource type="Texture2D" uid="uid://b0c5r0eiwtqr0" path="res://assets/ui/pick_legions/running/00344-3103259322.png" id="52_3kg5f"]
+[ext_resource type="Texture2D" uid="uid://dffq1mo625wqn" path="res://assets/ui/pick_legions/running/00345-3103259323.png" id="53_s6duj"]
+[ext_resource type="Texture2D" uid="uid://day7fbqo7d80k" path="res://assets/ui/pick_legions/running/00346-3103259324.png" id="54_u46y1"]
+[ext_resource type="Texture2D" uid="uid://coxd0a8h0eejg" path="res://assets/ui/pick_legions/running/00347-3103259325.png" id="55_2voj3"]
+[ext_resource type="Texture2D" uid="uid://ep5uiqru3qdl" path="res://assets/ui/pick_legions/running/00348-3103259326.png" id="56_335m5"]
+[ext_resource type="Texture2D" uid="uid://l3unwyqu6qrg" path="res://assets/ui/pick_legions/running/00349-3103259327.png" id="57_ahdpm"]
+[ext_resource type="Texture2D" uid="uid://lf2j2o8dp0a7" path="res://assets/ui/pick_legions/running/00350-3103259328.png" id="58_0npa7"]
+[ext_resource type="Texture2D" uid="uid://ddxcmxeabrr6r" path="res://assets/ui/pick_legions/running/00351-3103259329.png" id="59_t0v73"]
+[ext_resource type="Texture2D" uid="uid://ck6tln6fkrkxj" path="res://assets/ui/pick_legions/running/00352-3103259330.png" id="60_eil2i"]
+[ext_resource type="Texture2D" uid="uid://c22jg6y5vqsgg" path="res://assets/ui/pick_legions/running/00353-3103259331.png" id="61_ikdxs"]
+[ext_resource type="Texture2D" uid="uid://cr4koy1cs7ada" path="res://assets/ui/pick_legions/running/00354-3103259332.png" id="62_36d5m"]
+[ext_resource type="Texture2D" uid="uid://bb4ldktja1ia6" path="res://assets/ui/pick_legions/running/00355-3103259333.png" id="63_tsgro"]
+[ext_resource type="Texture2D" uid="uid://u7lpt5uu1o00" path="res://assets/ui/pick_legions/running/00356-3103259334.png" id="64_gthrk"]
+[ext_resource type="Texture2D" uid="uid://bvnv5jyma8cyy" path="res://assets/ui/action_menu/walk_the_earth/00035-3385372336.png" id="66_tydhk"]
+[ext_resource type="Texture2D" uid="uid://dfqrt7o1e1iqd" path="res://assets/ui/action_menu/walk_the_earth/00036-3385372337.png" id="67_yqciw"]
+[ext_resource type="Texture2D" uid="uid://bt837bik1ueju" path="res://assets/ui/action_menu/walk_the_earth/00037-3385372338.png" id="68_kbcmr"]
+[ext_resource type="Texture2D" uid="uid://bhk1re1gu3ucx" path="res://assets/ui/action_menu/walk_the_earth/00038-3385372339.png" id="69_mkucu"]
+[ext_resource type="Texture2D" uid="uid://drgcpbf0r73oh" path="res://assets/ui/action_menu/walk_the_earth/00039-3385372340.png" id="70_ie8ug"]
+[ext_resource type="Texture2D" uid="uid://cfhpktomvit2" path="res://assets/ui/action_menu/walk_the_earth/00040-3385372341.png" id="71_jqer3"]
+[ext_resource type="Texture2D" uid="uid://c3e88v5xjtb1f" path="res://assets/ui/action_menu/walk_the_earth/00041-3385372342.png" id="72_lphf7"]
+[ext_resource type="Texture2D" uid="uid://cuva8k6hfhhce" path="res://assets/ui/action_menu/walk_the_earth/00042-3385372343.png" id="73_5v63o"]
+[ext_resource type="Texture2D" uid="uid://cfjdroi2dhrb8" path="res://assets/ui/action_menu/walk_the_earth/00043-3385372344.png" id="74_k1180"]
+[ext_resource type="Texture2D" uid="uid://c3kdeqgfojgcj" path="res://assets/ui/action_menu/walk_the_earth/00044-3385372345.png" id="75_yfu0b"]
+[ext_resource type="Texture2D" uid="uid://wnphdpcv0ofb" path="res://assets/ui/action_menu/walk_the_earth/00045-3385372346.png" id="76_dhif7"]
+[ext_resource type="Texture2D" uid="uid://cmf56epg8jmdw" path="res://assets/ui/action_menu/walk_the_earth/00046-3385372347.png" id="77_ehyvj"]
+[ext_resource type="Texture2D" uid="uid://dxvlfcc5i28fa" path="res://assets/ui/action_menu/walk_the_earth/00047-3385372348.png" id="78_wkoqg"]
+[ext_resource type="Texture2D" uid="uid://brneccycmg17j" path="res://assets/ui/action_menu/walk_the_earth/00048-3385372349.png" id="79_fqru3"]
+[ext_resource type="Texture2D" uid="uid://x1jd00kv06gh" path="res://assets/ui/action_menu/walk_the_earth/00049-3385372350.png" id="80_p1cwa"]
+[ext_resource type="Texture2D" uid="uid://srm5j03y3bq5" path="res://assets/ui/action_menu/walk_the_earth/00050-3385372351.png" id="81_fl542"]
+[ext_resource type="Texture2D" uid="uid://cgpbl1m4p5waa" path="res://assets/ui/action_menu/walk_the_earth/00051-3385372352.png" id="82_eptvy"]
+[ext_resource type="Texture2D" uid="uid://bhq8jhim10st8" path="res://assets/ui/action_menu/walk_the_earth/00052-3385372353.png" id="83_q4wab"]
+[ext_resource type="Texture2D" uid="uid://d2sq33ovoyhr3" path="res://assets/ui/action_menu/walk_the_earth/00053-3385372354.png" id="84_4oef1"]
+[ext_resource type="Texture2D" uid="uid://cfsu0bcnrn6c2" path="res://assets/ui/action_menu/walk_the_earth/00054-3385372355.png" id="85_073eo"]
+[ext_resource type="Texture2D" uid="uid://cntyg3w0u2dax" path="res://assets/ui/action_menu/do_evil_deeds/00086-3381223334.png" id="86_g1gdf"]
+[ext_resource type="Texture2D" uid="uid://c1xfjdn4lypsf" path="res://assets/ui/action_menu/do_evil_deeds/00087-3381223335.png" id="87_mmolt"]
+[ext_resource type="Texture2D" uid="uid://cp3gujg18kmik" path="res://assets/ui/action_menu/do_evil_deeds/00088-3381223336.png" id="88_h5tpu"]
+[ext_resource type="Texture2D" uid="uid://s5oywfuu1h86" path="res://assets/ui/action_menu/do_evil_deeds/00089-3381223337.png" id="89_ysqmk"]
+[ext_resource type="Texture2D" uid="uid://d0t76gq4qtcmc" path="res://assets/ui/action_menu/do_evil_deeds/00090-3381223338.png" id="90_n3tde"]
+[ext_resource type="Texture2D" uid="uid://db7smerptk6vf" path="res://assets/ui/action_menu/do_evil_deeds/00091-3381223339.png" id="91_05xae"]
+[ext_resource type="Texture2D" uid="uid://cwkq766hf18jc" path="res://assets/ui/action_menu/do_evil_deeds/00092-3381223340.png" id="92_0hy7b"]
+[ext_resource type="Texture2D" uid="uid://cid2r8etp25nh" path="res://assets/ui/action_menu/do_evil_deeds/00093-3381223341.png" id="93_75105"]
+[ext_resource type="Texture2D" uid="uid://8kicoqql45ay" path="res://assets/ui/action_menu/do_evil_deeds/00094-3381223342.png" id="94_assjk"]
+[ext_resource type="Texture2D" uid="uid://duttapdcnpy8l" path="res://assets/ui/action_menu/do_evil_deeds/00095-3381223343.png" id="95_5fv1n"]
+[ext_resource type="Texture2D" uid="uid://1t5odvgu7epe" path="res://assets/ui/action_menu/do_evil_deeds/00096-3381223344.png" id="96_1nk3a"]
+[ext_resource type="Texture2D" uid="uid://caqwfcyw28bug" path="res://assets/ui/action_menu/do_evil_deeds/00097-3381223345.png" id="97_b4f4p"]
+[ext_resource type="Texture2D" uid="uid://cvasvll4gly2r" path="res://assets/ui/action_menu/do_evil_deeds/00098-3381223346.png" id="98_0178e"]
+[ext_resource type="Texture2D" uid="uid://ddbjwgx5rxi4h" path="res://assets/ui/action_menu/do_evil_deeds/00099-3381223347.png" id="99_3a6xx"]
+[ext_resource type="Texture2D" uid="uid://dg7qogrbkoy43" path="res://assets/ui/action_menu/do_evil_deeds/00100-3381223348.png" id="100_6k6yo"]
+[ext_resource type="Texture2D" uid="uid://d1jo2drdotcm1" path="res://assets/ui/action_menu/do_evil_deeds/00101-3381223349.png" id="101_52q08"]
+[ext_resource type="Texture2D" uid="uid://ck3dflft2ov1m" path="res://assets/ui/action_menu/do_evil_deeds/00102-3381223350.png" id="102_aljnm"]
+[ext_resource type="Texture2D" uid="uid://0nku82kdaya" path="res://assets/ui/action_menu/do_evil_deeds/00103-3381223351.png" id="103_rgiiy"]
+[ext_resource type="Texture2D" uid="uid://ux0usrw2cyfx" path="res://assets/ui/action_menu/do_evil_deeds/00104-3381223352.png" id="104_1f30l"]
+[ext_resource type="Texture2D" uid="uid://b2juodb4a5tvh" path="res://assets/ui/action_menu/do_evil_deeds/00105-3381223353.png" id="105_nw8vr"]
+[ext_resource type="Texture2D" uid="uid://baxri7dymp1a6" path="res://assets/ui/action_menu/pass/00163-1911483496.png" id="106_3dqil"]
+[ext_resource type="Texture2D" uid="uid://dgss8106c5ovk" path="res://assets/ui/action_menu/pass/00164-1911483497.png" id="107_fxb15"]
+[ext_resource type="Texture2D" uid="uid://cspbnpvo0fmol" path="res://assets/ui/action_menu/pass/00165-1911483498.png" id="108_r8k88"]
+[ext_resource type="Texture2D" uid="uid://edjaq6d5u37p" path="res://assets/ui/action_menu/pass/00166-1911483499.png" id="109_t8wlg"]
+[ext_resource type="Texture2D" uid="uid://dgjajrly4uan8" path="res://assets/ui/action_menu/pass/00167-1911483500.png" id="110_pxm0i"]
+[ext_resource type="Texture2D" uid="uid://cnr0r2x0ciqru" path="res://assets/ui/action_menu/pass/00168-1911483501.png" id="111_8yxi8"]
+[ext_resource type="Texture2D" uid="uid://dum04g2vl4qhd" path="res://assets/ui/action_menu/pass/00169-1911483502.png" id="112_ha51w"]
+[ext_resource type="Texture2D" uid="uid://b33he6g3imfmi" path="res://assets/ui/action_menu/pass/00170-1911483503.png" id="113_d6lbb"]
+[ext_resource type="Texture2D" uid="uid://bdkanrlcc1l16" path="res://assets/ui/action_menu/pass/00171-1911483504.png" id="114_dt2up"]
+[ext_resource type="Texture2D" uid="uid://cujrca37o15tf" path="res://assets/ui/action_menu/pass/00172-1911483505.png" id="115_sxajt"]
+[ext_resource type="Texture2D" uid="uid://bcxq7bh7ydtw3" path="res://assets/ui/action_menu/pass/00173-1911483506.png" id="116_e3d0k"]
+[ext_resource type="Texture2D" uid="uid://d1f3fie78x3hc" path="res://assets/ui/action_menu/pass/00174-1911483507.png" id="117_twr8s"]
+[ext_resource type="Texture2D" uid="uid://dkafciy17dc8p" path="res://assets/ui/action_menu/pass/00175-1911483508.png" id="118_aq4ng"]
+[ext_resource type="Texture2D" uid="uid://cxna8l6c5lj10" path="res://assets/ui/action_menu/pass/00176-1911483509.png" id="119_vp6j8"]
+[ext_resource type="Texture2D" uid="uid://o0x68d4t22cg" path="res://assets/ui/action_menu/pass/00177-1911483510.png" id="120_5ra8o"]
+[ext_resource type="Texture2D" uid="uid://dp3srmiwyx6jh" path="res://assets/ui/action_menu/pass/00178-1911483511.png" id="121_dndld"]
+[ext_resource type="Texture2D" uid="uid://dvb0ivs82gccp" path="res://assets/ui/action_menu/pass/00179-1911483512.png" id="122_wdsiq"]
+[ext_resource type="Texture2D" uid="uid://c3vkekvvrqviy" path="res://assets/ui/action_menu/pass/00180-1911483513.png" id="123_qxf7q"]
+[ext_resource type="Texture2D" uid="uid://udg7a81bo4l6" path="res://assets/ui/action_menu/pass/00181-1911483514.png" id="124_rgdxm"]
+[ext_resource type="Texture2D" uid="uid://cje4ah1y7tlw0" path="res://assets/ui/action_menu/pass/00182-1911483515.png" id="125_4nwu0"]
+[ext_resource type="Texture2D" uid="uid://bbk033merkcmm" path="res://assets/ui/action_menu/pass_for_good/00206-999780429.png" id="126_sly5v"]
+[ext_resource type="Texture2D" uid="uid://dflsx2602md48" path="res://assets/ui/action_menu/pass_for_good/00207-999780430.png" id="127_6hg4x"]
+[ext_resource type="Texture2D" uid="uid://sf1dfvtdsifm" path="res://assets/ui/action_menu/pass_for_good/00208-999780431.png" id="128_jilny"]
+[ext_resource type="Texture2D" uid="uid://bagym067fkxrl" path="res://assets/ui/action_menu/pass_for_good/00209-999780432.png" id="129_rkgda"]
+[ext_resource type="Texture2D" uid="uid://dqkdqfebqctow" path="res://assets/ui/action_menu/pass_for_good/00210-999780433.png" id="130_yqk35"]
+[ext_resource type="Texture2D" uid="uid://dmp3y10e8jh75" path="res://assets/ui/action_menu/pass_for_good/00211-999780434.png" id="131_a0lm6"]
+[ext_resource type="Texture2D" uid="uid://3btn3athdqc2" path="res://assets/ui/action_menu/pass_for_good/00212-999780435.png" id="132_w5rm2"]
+[ext_resource type="Texture2D" uid="uid://bv7p8a40bcdi" path="res://assets/ui/action_menu/pass_for_good/00213-999780436.png" id="133_fh2t6"]
+[ext_resource type="Texture2D" uid="uid://blyhpi8y4fg21" path="res://assets/ui/action_menu/pass_for_good/00214-999780437.png" id="134_m4i4b"]
+[ext_resource type="Texture2D" uid="uid://dji182lgu31q6" path="res://assets/ui/action_menu/pass_for_good/00215-999780438.png" id="135_la71o"]
+[ext_resource type="Texture2D" uid="uid://cl3ulvlgjc1j1" path="res://assets/ui/action_menu/pass_for_good/00216-999780439.png" id="136_a7g3g"]
+[ext_resource type="Texture2D" uid="uid://7im2s0nvc3vv" path="res://assets/ui/action_menu/pass_for_good/00217-999780440.png" id="137_3b1rg"]
+[ext_resource type="Texture2D" uid="uid://bj2nl3jjso567" path="res://assets/ui/action_menu/pass_for_good/00218-999780441.png" id="138_n8iwh"]
+[ext_resource type="Texture2D" uid="uid://dvgdwqap7bjjw" path="res://assets/ui/action_menu/pass_for_good/00219-999780442.png" id="139_iqvk0"]
+[ext_resource type="Texture2D" uid="uid://bwx3jak11qnoi" path="res://assets/ui/action_menu/pass_for_good/00220-999780443.png" id="140_q8wi7"]
+[ext_resource type="Texture2D" uid="uid://y7ytokr38lhs" path="res://assets/ui/action_menu/pass_for_good/00221-999780444.png" id="141_pqg3r"]
+[ext_resource type="Texture2D" uid="uid://bkgoeo3corg7e" path="res://assets/ui/action_menu/pass_for_good/00222-999780445.png" id="142_pepmm"]
+[ext_resource type="Texture2D" uid="uid://csybdhorkqo1w" path="res://assets/ui/action_menu/pass_for_good/00223-999780446.png" id="143_xp8qd"]
+[ext_resource type="Texture2D" uid="uid://cqnrln0l5brsr" path="res://assets/ui/action_menu/pass_for_good/00224-999780447.png" id="144_ce6vn"]
+[ext_resource type="Texture2D" uid="uid://djl5btmqbxtlk" path="res://assets/ui/action_menu/pass_for_good/00225-999780448.png" id="145_8j3k2"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1di30"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_4te70")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_i7voc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_k7kba")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_ktx3c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_iyugw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ik2t7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_ylkkf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_50jyr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_ikexm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_mek8u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_1o05u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_kha1v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_5f3ow")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_a0s1f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_mva1w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_8defa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_33gk6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_6jcy6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_3lxim")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_mnnx2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_teubi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_4d3t0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_4kjcs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_61d0a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_duphl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_uerwg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_4pl2y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_u2iay")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_xgf0q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_hoa84")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_qlejf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_hf5i6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_wb1yx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_wgrpt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_nva5i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_x7gin")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_8xt0f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_71xk7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_676aa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_14fem")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_t8hls")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_vw7pt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_sa51x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_liq34")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_iyc6r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_uw57o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_no6lt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_3kg5f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_s6duj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_u46y1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_2voj3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_335m5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_ahdpm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_0npa7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_t0v73")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_eil2i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_ikdxs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_36d5m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_tsgro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_gthrk")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i8445"]
 shader = ExtResource("4_6j55y")
@@ -481,12 +343,223 @@ shader_parameter/shine_speed = 5.0
 shader_parameter/shine_size = 0.01
 shader_parameter/active = false
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_q6ryn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("66_tydhk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("67_yqciw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_kbcmr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("69_mkucu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("70_ie8ug")
+}, {
+"duration": 1.0,
+"texture": ExtResource("71_jqer3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72_lphf7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("73_5v63o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("74_k1180")
+}, {
+"duration": 1.0,
+"texture": ExtResource("75_yfu0b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("76_dhif7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("77_ehyvj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("78_wkoqg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("79_fqru3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("80_p1cwa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("81_fl542")
+}, {
+"duration": 1.0,
+"texture": ExtResource("82_eptvy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("83_q4wab")
+}, {
+"duration": 1.0,
+"texture": ExtResource("84_4oef1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("85_073eo")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w6yy2"]
 shader = ExtResource("4_6j55y")
 shader_parameter/shine_color = Color(1, 1, 1, 1)
 shader_parameter/shine_speed = 5.0
 shader_parameter/shine_size = 0.01
 shader_parameter/active = false
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j1ssp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("86_g1gdf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("87_mmolt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("88_h5tpu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("89_ysqmk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("90_n3tde")
+}, {
+"duration": 1.0,
+"texture": ExtResource("91_05xae")
+}, {
+"duration": 1.0,
+"texture": ExtResource("92_0hy7b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("93_75105")
+}, {
+"duration": 1.0,
+"texture": ExtResource("94_assjk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("95_5fv1n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("96_1nk3a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("97_b4f4p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("98_0178e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("99_3a6xx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("100_6k6yo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("101_52q08")
+}, {
+"duration": 1.0,
+"texture": ExtResource("102_aljnm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("103_rgiiy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("104_1f30l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("105_nw8vr")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m67av"]
+shader = ExtResource("4_6j55y")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_speed = 5.0
+shader_parameter/shine_size = 0.01
+shader_parameter/active = false
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jo2jm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("106_3dqil")
+}, {
+"duration": 1.0,
+"texture": ExtResource("107_fxb15")
+}, {
+"duration": 1.0,
+"texture": ExtResource("108_r8k88")
+}, {
+"duration": 1.0,
+"texture": ExtResource("109_t8wlg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("110_pxm0i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("111_8yxi8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("112_ha51w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("113_d6lbb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("114_dt2up")
+}, {
+"duration": 1.0,
+"texture": ExtResource("115_sxajt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("116_e3d0k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("117_twr8s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("118_aq4ng")
+}, {
+"duration": 1.0,
+"texture": ExtResource("119_vp6j8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("120_5ra8o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("121_dndld")
+}, {
+"duration": 1.0,
+"texture": ExtResource("122_wdsiq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("123_qxf7q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("124_rgdxm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("125_4nwu0")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sylf8"]
 shader = ExtResource("4_6j55y")
@@ -495,14 +568,75 @@ shader_parameter/shine_speed = 5.0
 shader_parameter/shine_size = 0.01
 shader_parameter/active = false
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vrvro"]
-shader = ExtResource("4_6j55y")
-shader_parameter/shine_color = Color(1, 1, 1, 1)
-shader_parameter/shine_speed = 5.0
-shader_parameter/shine_size = 0.01
-shader_parameter/active = false
+[sub_resource type="SpriteFrames" id="SpriteFrames_ds78a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("126_sly5v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("127_6hg4x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("128_jilny")
+}, {
+"duration": 1.0,
+"texture": ExtResource("129_rkgda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("130_yqk35")
+}, {
+"duration": 1.0,
+"texture": ExtResource("131_a0lm6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("132_w5rm2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("133_fh2t6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("134_m4i4b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("135_la71o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("136_a7g3g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("137_3b1rg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("138_n8iwh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("139_iqvk0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("140_q8wi7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("141_pqg3r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("142_pepmm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("143_xp8qd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("144_ce6vn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("145_8j3k2")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_m67av"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vrvro"]
 shader = ExtResource("4_6j55y")
 shader_parameter/shine_color = Color(1, 1, 1, 1)
 shader_parameter/shine_speed = 5.0
@@ -549,7 +683,9 @@ offset_right = 274.0
 offset_bottom = 133.0
 grow_vertical = 2
 size_flags_horizontal = 8
-script = SubResource("GDScript_qf5hf")
+script = ExtResource("1_i65gp")
+skullTexture = ExtResource("2_kjl8k")
+heartTexture = ExtResource("3_0g22h")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -583,7 +719,6 @@ theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
-script = SubResource("GDScript_42cpp")
 
 [node name="BackToHellConfirmationDialog" type="ConfirmationDialog" parent="MarginContainer/MarginContainer/ActionsMarginContainer"]
 unique_name_in_owner = true
@@ -603,6 +738,19 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="Control" type="Control" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/MarchHBoxContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/MarchHBoxContainer/Control"]
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_1di30")
+animation = &"new_animation"
+autoplay = "new_animation"
+speed_scale = 2.0
+centered = false
+
 [node name="MarchButton" type="Button" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/MarchHBoxContainer"]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_i8445")
@@ -618,6 +766,20 @@ layout_mode = 2
 [node name="WalkTheEarthHBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="Control" type="Control" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/WalkTheEarthHBoxContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/WalkTheEarthHBoxContainer/Control"]
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_q6ryn")
+animation = &"new_animation"
+autoplay = "new_animation"
+frame_progress = 0.924782
+speed_scale = 2.0
+centered = false
+
 [node name="WalkTheEarthButton" type="Button" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/WalkTheEarthHBoxContainer"]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_w6yy2")
@@ -630,26 +792,77 @@ text = "WalkTheEarth"
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="PassButton" type="Button" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-material = SubResource("ShaderMaterial_sylf8")
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer"]
 layout_mode = 2
-tooltip_text = "Use a Pass Arcana Card to delay the Demon's turn. Sometimes its good to know what your enemy does before its your turn."
-text = "Pass"
 
-[node name="PassForGoodButton" type="Button" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-material = SubResource("ShaderMaterial_vrvro")
+[node name="Control" type="Control" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
-tooltip_text = "Take no action this turn with this Demon."
-text = "PassForGood"
+size_flags_horizontal = 4
 
-[node name="DoEvilDeedsButton" type="Button" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer/Control"]
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_j1ssp")
+animation = &"new_animation"
+autoplay = "new_animation"
+speed_scale = 2.0
+centered = false
+
+[node name="DoEvilDeedsButton" type="Button" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_m67av")
 layout_mode = 2
+size_flags_horizontal = 3
 tooltip_text = "Earn Favors while on Earth."
 text = "DoEvilDeeds"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer3/Control"]
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_jo2jm")
+animation = &"new_animation"
+autoplay = "new_animation"
+speed_scale = 2.0
+centered = false
+
+[node name="PassButton" type="Button" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer3"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_sylf8")
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Use a Pass Arcana Card to delay the Demon's turn. Sometimes its good to know what your enemy does before its your turn."
+text = "Pass"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer4/Control"]
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_ds78a")
+animation = &"new_animation"
+autoplay = "new_animation"
+speed_scale = 2.0
+centered = false
+
+[node name="PassForGoodButton" type="Button" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer4"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_vrvro")
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Take no action this turn with this Demon."
+text = "PassForGood"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer"]
 visible = false
@@ -690,13 +903,13 @@ text = "UseMagic"
 [node name="FrameMarginContainer" parent="MarginContainer" instance=ExtResource("8_3odqv")]
 layout_mode = 2
 
-[connection signal="confirmed" from="MarginContainer/MarginContainer/ActionsMarginContainer/BackToHellConfirmationDialog" to="MarginContainer/MarginContainer/ActionsMarginContainer" method="_on_back_to_hell_confirmation_dialog_confirmed"]
-[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/MarchHBoxContainer/MarchButton" to="MarginContainer/MarginContainer/ActionsMarginContainer" method="_on_march_button_pressed"]
-[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/WalkTheEarthHBoxContainer/WalkTheEarthButton" to="MarginContainer/MarginContainer/ActionsMarginContainer" method="_on_walk_the_earth_button_pressed"]
-[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/PassButton" to="MarginContainer/MarginContainer/ActionsMarginContainer" method="_on_pass_button_pressed"]
-[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/PassForGoodButton" to="MarginContainer/MarginContainer/ActionsMarginContainer" method="_on_pass_for_good_button_pressed"]
-[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/DoEvilDeedsButton" to="MarginContainer/MarginContainer/ActionsMarginContainer" method="_on_do_evil_deeds_button_pressed"]
-[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer2/ConspireButton" to="MarginContainer/MarginContainer/ActionsMarginContainer" method="_on_conspire_button_pressed"]
-[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/InfluenceUnitsButton" to="MarginContainer/MarginContainer/ActionsMarginContainer" method="_on_influence_units_button_pressed"]
-[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/AtonementAndSuplicationButton" to="MarginContainer/MarginContainer/ActionsMarginContainer" method="_on_atonement_and_suplication_button_pressed"]
-[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/UseMagicButton" to="MarginContainer/MarginContainer/ActionsMarginContainer" method="_on_use_magic_button_pressed"]
+[connection signal="confirmed" from="MarginContainer/MarginContainer/ActionsMarginContainer/BackToHellConfirmationDialog" to="." method="_on_back_to_hell_confirmation_dialog_confirmed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/MarchHBoxContainer/MarchButton" to="." method="_on_march_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/WalkTheEarthHBoxContainer/WalkTheEarthButton" to="." method="_on_walk_the_earth_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer/DoEvilDeedsButton" to="." method="_on_do_evil_deeds_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer3/PassButton" to="." method="_on_pass_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer4/PassForGoodButton" to="." method="_on_pass_for_good_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer2/ConspireButton" to="." method="_on_conspire_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/InfluenceUnitsButton" to="." method="_on_influence_units_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/AtonementAndSuplicationButton" to="." method="_on_atonement_and_suplication_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/UseMagicButton" to="." method="_on_use_magic_button_pressed"]

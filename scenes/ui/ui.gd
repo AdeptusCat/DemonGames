@@ -10,7 +10,6 @@ class_name UI
 @export var playerDisconnectedContainer : PackedScene
 
 @onready var currentPlayerLabel = %CurrentPlayerLabel
-@onready var actionsNode = %Actions
 @onready var fleeControl = %FleeControl
 @onready var waitForPlayerControl = %WaitForPlayerControl
 @onready var waitForPlayerLabel = %WaitForPlayerLabel
@@ -18,8 +17,10 @@ class_name UI
 @export var pickUnitControl : PackedScene
 @export var actionsMenu : PackedScene
 @export var summoningMenu : PackedScene
+@export var actionMenu : PackedScene
 
-var actionsMenuScene : Control
+
+var actionMenuScene : Control
 var summoningMenuScene : Control
 
 var sectioTextures : Dictionary = {}
@@ -206,7 +207,8 @@ func _on_action(demonRank : int, action : String):
 		if currentDemonEntries.size() > 0:
 			for rank in demonActions:
 				demonActions[rank] = ""
-			currentDemonEntries[0].set_text(3, "")
+			for entry in currentDemonEntries:
+				currentDemonEntries[entry].set_text(3, "")
 			for entry in %RankTrack.entries:
 				if %RankTrack.entries[entry]:
 					%RankTrack.entries[entry].set_text(3, "")
@@ -404,7 +406,9 @@ func nextDemon(nextDemon : int):
 	demonNode.skullsUsed = 0
 	currentPlayerLabel.text = str(demonNode.stats.player)
 	print("action for demon")
-	actionsNode.currentDemonRank = demonNode.stats.rank
+	var actionMenuScene = actionMenu.instantiate()
+	add_child(actionMenuScene)
+	actionMenuScene.currentDemonRank = demonNode.stats.rank
 	Data.currentDemon = demonNode
 	print(demonNode.stats.rank)
 	var action = await Signals.demonDone
@@ -414,7 +418,8 @@ func nextDemon(nextDemon : int):
 	
 	for troopName in Data.player.troops:
 		Data.troops[troopName].sectiosMoved = 0
-	actionsNode.toggleActionMenu(false)
+	#actionMenuScene.toggleActionMenu(false)
+	actionMenuScene.queue_free()
 	demonActionDone.rpc_id(Connection.host, action)
 	AudioSignals.playerTurnDone.emit()
 

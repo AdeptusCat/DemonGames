@@ -33,6 +33,7 @@ var sectiosWithoutEnemiesLeft : Array
 
 
 func _ready():
+	Signals.deactivateArcanaCards.connect(_on_deactivateArcanaCards)
 	playerId = str(name).to_int()
 
 func saveGame():
@@ -159,6 +160,13 @@ func discardModeArcanaCard():
 		Data.arcanaCardNodes[cardName].disable()
 	for arcanaCard in arcanaCards:
 		Data.arcanaCardNodes[arcanaCard].mode = "discard"
+
+
+func _on_deactivateArcanaCards():
+	for cardName in arcanaCards:
+		if Data.arcanaCardNodes.has(cardName):
+			var arcanaCard = Data.arcanaCardNodes[cardName]
+			arcanaCard.disable()
 
 
 func checkPlayerSummoningCapabilities(previousCost = 0):

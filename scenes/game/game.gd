@@ -3,7 +3,6 @@ extends Control
 @onready var playersNode = $Players
 @onready var rankTrackNode = $RankTrack
 @onready var ui = $UI
-@onready var actionsNode = $UI/Control/ActionsMarginContainer/MarginContainer/VBoxContainer/Actions
 @onready var map : Map = $Map
 @onready var sequence : SequenceOfPlay = $SequenceOfPlay
 @onready var debug = $Debug

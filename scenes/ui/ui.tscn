@@ -61,6 +61,7 @@ playerDisconnectedContainer = ExtResource("2_4hca8")
 pickUnitControl = ExtResource("8_wjy05")
 actionsMenu = ExtResource("9_1ba5w")
 summoningMenu = ExtResource("10_h1vau")
+actionMenu = ExtResource("9_1ba5w")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -991,6 +992,7 @@ offset_top = 200.0
 offset_right = 2367.0
 offset_bottom = 286.0
 script = ExtResource("28_6ngkx")
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="ColorRect" parent="Control/QuickHelpControl"]
 layout_mode = 2
@@ -1039,11 +1041,13 @@ mouse_filter = 1
 text = "Ok"
 
 [node name="SequenceOfPlayButton" type="Button" parent="Control/QuickHelpControl/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 mouse_filter = 1
 text = "Sequence Of Play"
 
 [node name="HowToWinButton" type="Button" parent="Control/QuickHelpControl/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="HelpPopupMenu" type="PopupMenu" parent="Control/QuickHelpControl/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]

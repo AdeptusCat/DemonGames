@@ -70,6 +70,8 @@ signal toggleAvailableLieutenantsCheckButtonPressed(boolean)
 
 signal playerDoneWithPhase
 
+signal deactivateArcanaCards
+
 #signal cancelFlee
 signal unitClicked(unitNode)
 signal tamingHellhound
