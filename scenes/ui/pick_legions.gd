@@ -29,10 +29,6 @@ func _ready():
 			%PossibleLegionVBoxContainer.add_child(label)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
 func _on_labelClicked(node):
 	print("parent ", node.get_parent().name)
 	if node.get_parent().name == "PossibleLegionVBoxContainer":
@@ -51,5 +47,10 @@ func _on_labelClicked(node):
 
 
 func _on_done_button_pressed():
+	done.emit(pickedLegions)
+	queue_free()
+
+
+func _on_done_texture_button_pressed():
 	done.emit(pickedLegions)
 	queue_free()

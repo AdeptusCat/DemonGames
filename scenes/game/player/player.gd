@@ -33,6 +33,7 @@ var sectiosWithoutEnemiesLeft : Array
 
 
 func _ready():
+	Signals.deactivateArcanaCards.connect(_on_deactivateArcanaCards)
 	playerId = str(name).to_int()
 
 func saveGame():
@@ -161,11 +162,18 @@ func discardModeArcanaCard():
 		Data.arcanaCardNodes[arcanaCard].mode = "discard"
 
 
+func _on_deactivateArcanaCards():
+	for cardName in arcanaCards:
+		if Data.arcanaCardNodes.has(cardName):
+			var arcanaCard = Data.arcanaCardNodes[cardName]
+			arcanaCard.disable()
+
+
 func checkPlayerSummoningCapabilities(previousCost = 0):
 	print("check start ", souls, hasEnoughSouls(3), " prev ", previousCost)
 	
-	Signals.toggleRecruitLegionsButtonEnabled.emit(Data.player.hasEnoughSouls(3))
-	Signals.toggleBuyArcanaCardButtonEnabled.emit(Data.player.hasEnoughSouls(5))
+	Signals.toggleRecruitLegionsButton.emit(Data.player.hasEnoughSouls(3))
+	Signals.toggleBuyArcanaCardButton.emit(Data.player.hasEnoughSouls(5))
 	
 #	toogleBuyArcanaCard(Data.player.hasEnoughSouls(5 + previousCost))
 	

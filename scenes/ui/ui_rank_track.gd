@@ -61,7 +61,8 @@ func _on_action(demonRank : int, action : String):
 		if currentDemonEntries.size() > 0:
 			for rank in demonActions:
 				demonActions[rank] = ""
-			currentDemonEntries[0].set_text(3, "")
+			for entry in currentDemonEntries:
+				currentDemonEntries[entry].set_text(3, "")
 			for entry in entries:
 				if entries[entry]:
 					entries[entry].set_text(3, "")

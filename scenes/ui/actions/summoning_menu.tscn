@@ -1,0 +1,434 @@
+[gd_scene load_steps=72 format=3 uid="uid://dv4h8w62ygoeo"]
+
+[ext_resource type="Script" path="res://scenes/ui/actions/summoning_menu.gd" id="1_pvfms"]
+[ext_resource type="PackedScene" uid="uid://dm6xoflw4305t" path="res://scenes/ui/frame_background_margin_container.tscn" id="2_gbdeg"]
+[ext_resource type="Texture2D" uid="uid://biql8mxh5w1bm" path="res://assets/ui/summoning_menu/recruit_lieutenant/00830-1562418942.png" id="3_8iavs"]
+[ext_resource type="Shader" path="res://assets/materials_shaders/shine_highlight_button.gdshader" id="3_iuxt5"]
+[ext_resource type="Texture2D" uid="uid://cmajdynabf0j1" path="res://assets/ui/summoning_menu/recruit_legions/00223-2731579371.png" id="3_w62yl"]
+[ext_resource type="Texture2D" uid="uid://psbxxmkroffw" path="res://assets/ui/summoning_menu/recruit_legions/00224-2731579372.png" id="4_mc4fd"]
+[ext_resource type="Texture2D" uid="uid://bwpnfltqa7y3q" path="res://assets/ui/summoning_menu/recruit_lieutenant/00831-1562418943.png" id="4_uuu5g"]
+[ext_resource type="Texture2D" uid="uid://f7frj67jisws" path="res://assets/ui/summoning_menu/recruit_legions/00225-2731579373.png" id="5_eyfx8"]
+[ext_resource type="Texture2D" uid="uid://cft4mbfoppp78" path="res://assets/ui/summoning_menu/recruit_lieutenant/00832-1562418944.png" id="5_hltu7"]
+[ext_resource type="Texture2D" uid="uid://b5h4naeri24v8" path="res://assets/ui/summoning_menu/recruit_legions/00226-2731579374.png" id="6_7w3jn"]
+[ext_resource type="Texture2D" uid="uid://t502xqxe101g" path="res://assets/ui/summoning_menu/recruit_lieutenant/00833-1562418945.png" id="6_56f4m"]
+[ext_resource type="Texture2D" uid="uid://bho5o1abi1mah" path="res://assets/ui/summoning_menu/recruit_legions/00227-2731579375.png" id="7_4f1bl"]
+[ext_resource type="Texture2D" uid="uid://cdbcdbrbhvcwo" path="res://assets/ui/summoning_menu/recruit_lieutenant/00834-1562418946.png" id="7_dgrbe"]
+[ext_resource type="Texture2D" uid="uid://cdaqwns5pfjxa" path="res://assets/ui/summoning_menu/recruit_lieutenant/00835-1562418947.png" id="8_111h6"]
+[ext_resource type="Texture2D" uid="uid://dy5qskeuow2m4" path="res://assets/ui/summoning_menu/recruit_legions/00228-2731579376.png" id="8_e08ui"]
+[ext_resource type="PackedScene" uid="uid://7p3kfgl06d7y" path="res://scenes/ui/frame_margin_container.tscn" id="8_m0ixw"]
+[ext_resource type="Texture2D" uid="uid://u6hujmi44cob" path="res://assets/ui/summoning_menu/recruit_lieutenant/00836-1562418948.png" id="9_gjidt"]
+[ext_resource type="Texture2D" uid="uid://cpk7pgq0bsm5b" path="res://assets/ui/summoning_menu/recruit_legions/00229-2731579377.png" id="9_sa56c"]
+[ext_resource type="Texture2D" uid="uid://dnp1dcqcw34ut" path="res://assets/ui/summoning_menu/recruit_lieutenant/00837-1562418949.png" id="10_pf1cb"]
+[ext_resource type="Texture2D" uid="uid://dfsk2derpvd6h" path="res://assets/ui/summoning_menu/recruit_legions/00230-2731579378.png" id="10_v8ws8"]
+[ext_resource type="Texture2D" uid="uid://dsuwmhc21g37w" path="res://assets/ui/summoning_menu/recruit_legions/00231-2731579379.png" id="11_bxg17"]
+[ext_resource type="Texture2D" uid="uid://hlm4klpsfm3f" path="res://assets/ui/summoning_menu/recruit_lieutenant/00838-1562418950.png" id="11_iiwyd"]
+[ext_resource type="Texture2D" uid="uid://bgy1myp0kmmvl" path="res://assets/ui/summoning_menu/recruit_legions/00232-2731579380.png" id="12_lg7af"]
+[ext_resource type="Texture2D" uid="uid://csly63361r6sr" path="res://assets/ui/summoning_menu/recruit_lieutenant/00839-1562418951.png" id="12_m8rx8"]
+[ext_resource type="Texture2D" uid="uid://cs1oh477oudqs" path="res://assets/ui/summoning_menu/recruit_lieutenant/00840-1562418952.png" id="13_5vhl8"]
+[ext_resource type="Texture2D" uid="uid://deoi2x8bpasd6" path="res://assets/ui/summoning_menu/recruit_legions/00233-2731579381.png" id="13_uw5su"]
+[ext_resource type="Texture2D" uid="uid://bwufnch2k55vb" path="res://assets/ui/summoning_menu/recruit_lieutenant/00841-1562418953.png" id="14_1r13o"]
+[ext_resource type="Texture2D" uid="uid://ksq2ckmvif78" path="res://assets/ui/summoning_menu/recruit_legions/00234-2731579382.png" id="14_6y5a8"]
+[ext_resource type="Texture2D" uid="uid://c1n66vsbfoh4n" path="res://assets/ui/summoning_menu/recruit_legions/00235-2731579383.png" id="15_oy00w"]
+[ext_resource type="Texture2D" uid="uid://buf7gm11c5ugf" path="res://assets/ui/summoning_menu/recruit_lieutenant/00842-1562418954.png" id="15_rpp2q"]
+[ext_resource type="Texture2D" uid="uid://b2k4ahkv7nle4" path="res://assets/ui/summoning_menu/recruit_legions/00236-2731579384.png" id="16_ijlik"]
+[ext_resource type="Texture2D" uid="uid://d1hgg1cj5ios6" path="res://assets/ui/summoning_menu/recruit_lieutenant/00843-1562418955.png" id="16_mfybb"]
+[ext_resource type="Texture2D" uid="uid://bgsf11thdjvxa" path="res://assets/ui/summoning_menu/recruit_lieutenant/00844-1562418956.png" id="17_7icjf"]
+[ext_resource type="Texture2D" uid="uid://belu5mbsdt7sq" path="res://assets/ui/summoning_menu/recruit_legions/00237-2731579385.png" id="17_igv74"]
+[ext_resource type="Texture2D" uid="uid://c28kswysbp0g7" path="res://assets/ui/summoning_menu/recruit_lieutenant/00845-1562418957.png" id="18_ao6y1"]
+[ext_resource type="Texture2D" uid="uid://damb7w6j6t0oe" path="res://assets/ui/summoning_menu/recruit_legions/00238-2731579386.png" id="18_nr2n3"]
+[ext_resource type="Texture2D" uid="uid://dubdr3gefosq" path="res://assets/ui/summoning_menu/recruit_legions/00239-2731579387.png" id="19_4schy"]
+[ext_resource type="Texture2D" uid="uid://ncivgxk1hcy2" path="res://assets/ui/summoning_menu/recruit_lieutenant/00846-1562418958.png" id="19_r0id3"]
+[ext_resource type="Texture2D" uid="uid://bw8ys6yg3lio5" path="res://assets/ui/summoning_menu/recruit_lieutenant/00847-1562418959.png" id="20_x5aan"]
+[ext_resource type="Texture2D" uid="uid://b5locn7kb34qm" path="res://assets/ui/summoning_menu/recruit_legions/00240-2731579388.png" id="20_xlomn"]
+[ext_resource type="Texture2D" uid="uid://d4nqlcq7yf8h0" path="res://assets/ui/summoning_menu/recruit_legions/00241-2731579389.png" id="21_ch7li"]
+[ext_resource type="Texture2D" uid="uid://db1abl25kxvbv" path="res://assets/ui/summoning_menu/recruit_lieutenant/00848-1562418960.png" id="21_whdaw"]
+[ext_resource type="Texture2D" uid="uid://cehponpfg4qve" path="res://assets/ui/summoning_menu/recruit_lieutenant/00849-1562418961.png" id="22_hwlmb"]
+[ext_resource type="Texture2D" uid="uid://dkchtkhs88oue" path="res://assets/ui/summoning_menu/recruit_legions/00242-2731579390.png" id="22_jrqcu"]
+[ext_resource type="Texture2D" uid="uid://ydxou56deg88" path="res://assets/ui/summoning_menu/recruit_legions/00243-2731579391.png" id="23_664j1"]
+[ext_resource type="Texture2D" uid="uid://djew3vo6hrruu" path="res://assets/ui/summoning_menu/recruit_lieutenant/00850-1562418962.png" id="23_wrtvf"]
+[ext_resource type="Texture2D" uid="uid://b2oae4ib6d1mn" path="res://assets/ui/summoning_menu/recruit_lieutenant/00851-1562418963.png" id="24_hoqqx"]
+[ext_resource type="Texture2D" uid="uid://b3b6sbjvabpyc" path="res://assets/ui/summoning_menu/recruit_legions/00244-2731579392.png" id="24_yj8eh"]
+[ext_resource type="Texture2D" uid="uid://bbj3vemnjguyi" path="res://assets/ui/summoning_menu/recruit_legions/00245-2731579393.png" id="25_dfs2x"]
+[ext_resource type="Texture2D" uid="uid://bhb702txnhyfm" path="res://assets/ui/summoning_menu/recruit_lieutenant/00852-1562418964.png" id="25_fee2a"]
+[ext_resource type="Texture2D" uid="uid://be1agyuc1khb" path="res://assets/ui/summoning_menu/recruit_lieutenant/00853-1562418965.png" id="26_6qt77"]
+[ext_resource type="Texture2D" uid="uid://d1i0kkkwvfylw" path="res://assets/ui/summoning_menu/recruit_legions/00246-2731579394.png" id="26_x5r77"]
+[ext_resource type="Texture2D" uid="uid://xno5igtl0xo4" path="res://assets/ui/summoning_menu/recruit_lieutenant/00854-1562418966.png" id="27_d55gj"]
+[ext_resource type="Texture2D" uid="uid://bisuxgf8be4sq" path="res://assets/ui/summoning_menu/recruit_legions/00247-2731579395.png" id="27_p7e1i"]
+[ext_resource type="Texture2D" uid="uid://du5nap6p84jgp" path="res://assets/ui/summoning_menu/recruit_legions/00248-2731579396.png" id="28_cptve"]
+[ext_resource type="Texture2D" uid="uid://cvrs7xdf77g52" path="res://assets/ui/summoning_menu/recruit_lieutenant/00855-1562418967.png" id="28_examt"]
+[ext_resource type="Texture2D" uid="uid://catfm0tjwlxsr" path="res://assets/ui/summoning_menu/recruit_lieutenant/00856-1562418968.png" id="29_54qcw"]
+[ext_resource type="Texture2D" uid="uid://dblpng3hwb8ii" path="res://assets/ui/summoning_menu/recruit_legions/00249-2731579397.png" id="29_b8lho"]
+[ext_resource type="Texture2D" uid="uid://dxdpgljslf6oj" path="res://assets/ui/summoning_menu/recruit_legions/00250-2731579398.png" id="30_uaabr"]
+[ext_resource type="Texture2D" uid="uid://b21nn85onpcf" path="res://assets/ui/summoning_menu/recruit_lieutenant/00857-1562418969.png" id="30_wribf"]
+[ext_resource type="Texture2D" uid="uid://dj1gdlmu1i7bw" path="res://assets/ui/summoning_menu/recruit_legions/00251-2731579399.png" id="31_hj1el"]
+[ext_resource type="Texture2D" uid="uid://cl471tsa62pvq" path="res://assets/ui/summoning_menu/recruit_lieutenant/00858-1562418970.png" id="31_i4txn"]
+[ext_resource type="Texture2D" uid="uid://06q8f5on7p30" path="res://assets/ui/summoning_menu/recruit_legions/00252-2731579400.png" id="32_2yydb"]
+[ext_resource type="Texture2D" uid="uid://cetqxqvw0j7mi" path="res://assets/ui/summoning_menu/recruit_lieutenant/00859-1562418971.png" id="32_t2gm8"]
+[ext_resource type="Texture2D" uid="uid://c7e5jnnj3mbmj" path="res://assets/ui/summoning_menu/buy_arcana_card/00473-1220702329.png" id="34_4axof"]
+[ext_resource type="Texture2D" uid="uid://duotlx1h0n7ke" path="res://assets/ui/summoning_menu/end_phase/00536-601245618.png" id="35_bo2le"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tjg6e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_w62yl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_mc4fd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_eyfx8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_7w3jn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_4f1bl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_e08ui")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_sa56c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_v8ws8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_bxg17")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_lg7af")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_uw5su")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_6y5a8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_oy00w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_ijlik")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_igv74")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_nr2n3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_4schy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_xlomn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_ch7li")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_jrqcu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_664j1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_yj8eh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_dfs2x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_x5r77")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_p7e1i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_cptve")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_b8lho")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_uaabr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_hj1el")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_2yydb")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5u6ho"]
+shader = ExtResource("3_iuxt5")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_speed = 5.0
+shader_parameter/shine_size = 0.01
+shader_parameter/active = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q7xpk"]
+shader = ExtResource("3_iuxt5")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_speed = 5.0
+shader_parameter/shine_size = 0.01
+shader_parameter/active = false
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_chwjw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_8iavs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_uuu5g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_hltu7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_56f4m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_dgrbe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_111h6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_gjidt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_pf1cb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_iiwyd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_m8rx8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_5vhl8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_1r13o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_rpp2q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_mfybb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_7icjf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_ao6y1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_r0id3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_x5aan")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_whdaw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_hwlmb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_wrtvf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_hoqqx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_fee2a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_6qt77")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_d55gj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_examt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_54qcw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_wribf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_i4txn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_t2gm8")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yfeb6"]
+shader = ExtResource("3_iuxt5")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_speed = 5.0
+shader_parameter/shine_size = 0.01
+shader_parameter/active = false
+
+[node name="SummoningMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -133.0
+offset_right = 274.0
+offset_bottom = 133.0
+grow_vertical = 2
+size_flags_horizontal = 8
+script = ExtResource("1_pvfms")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -133.0
+offset_right = 379.0
+offset_bottom = 133.0
+grow_vertical = 2
+
+[node name="FrameBackgroundMarginContainer" parent="MarginContainer" instance=ExtResource("2_gbdeg")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer/MarginContainer"]
+layout_mode = 2
+color = Color(0.0627451, 0.0627451, 0.0627451, 0.709804)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+alignment = 1
+
+[node name="SummoningMenu" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu"]
+layout_mode = 2
+color = Color(0, 0, 0, 0.501961)
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer/Control"]
+scale = Vector2(0.166, 0.166)
+sprite_frames = SubResource("SpriteFrames_tjg6e")
+animation = &"new_animation"
+autoplay = "new_animation"
+centered = false
+
+[node name="RecruitLegionsButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_5u6ho")
+layout_mode = 2
+tooltip_text = "Legions can be spawned inside Sectios that are owned by your Triumphirate and not occupied by enemy units."
+text = "Recruit Legions for 3 Souls each"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture_normal = ExtResource("34_4axof")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="BuyArcanaCardButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_q7xpk")
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Chose one between three cards."
+text = "Buy Arcana Card for 5 Souls"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Control2" type="Control" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer3/Control2"]
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_chwjw")
+animation = &"new_animation"
+autoplay = "new_animation"
+centered = false
+
+[node name="AvailableLieutenantsCheckButton" type="CheckButton" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Show available Lieutenants"
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(320, 105)
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("35_bo2le")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="EndPhaseButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_yfeb6")
+layout_mode = 2
+text = "End Summoning Phase"
+metadata/_edit_use_anchors_ = true
+
+[node name="FrameMarginContainer" parent="MarginContainer" instance=ExtResource("8_m0ixw")]
+layout_mode = 2
+
+[connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer/RecruitLegionsButton" to="." method="_on_recruit_legions_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer2/BuyArcanaCardButton" to="." method="_on_buy_arcana_card_button_pressed"]
+[connection signal="toggled" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer3/AvailableLieutenantsCheckButton" to="." method="_on_available_lieutenants_check_button_toggled"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/MarginContainer/EndPhaseButton" to="." method="_on_end_phase_button_pressed"]

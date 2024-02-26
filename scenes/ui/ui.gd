@@ -10,10 +10,18 @@ class_name UI
 @export var playerDisconnectedContainer : PackedScene
 
 @onready var currentPlayerLabel = %CurrentPlayerLabel
-@onready var actionsNode = %Actions
 @onready var fleeControl = %FleeControl
 @onready var waitForPlayerControl = %WaitForPlayerControl
 @onready var waitForPlayerLabel = %WaitForPlayerLabel
+
+@export var pickUnitControl : PackedScene
+@export var actionsMenu : PackedScene
+@export var summoningMenu : PackedScene
+@export var actionMenu : PackedScene
+
+
+var actionMenuScene : Control
+var summoningMenuScene : Control
 
 var sectioTextures : Dictionary = {}
 
@@ -38,7 +46,6 @@ func _ready():
 	Signals.showMessage.connect(showMessage)
 	Signals.hideMessage.connect(hideMessage)
 	Signals.pickLegions.connect(pickLegions)
-	Signals.toggleEndPhaseButton.connect(_on_toggleEndPhaseButton)
 	Signals.toogleSummoningMenu.connect(_on_toogleSummoningMenu)
 	Signals.toogleBuyLieutenant.connect(toogleBuyLieutenant)
 	Signals.spinLieutenantBox.connect(_on_spinLieutenantBox)
@@ -47,8 +54,7 @@ func _ready():
 	Signals.fleeDialog.connect(_on_fleeDialog)
 	Signals.forceFleeDialog.connect(_on_forceFleeDialog)
 	Signals.pickUnit.connect(_on_pickUnit)
-	Signals.toggleRecruitLegionsButtonEnabled.connect(_on_toggleRecruitLegionsButtonEnabled)
-	Signals.toggleBuyArcanaCardButtonEnabled.connect(_on_toggleBuyArcanaCardButtonEnabled)
+	
 	Signals.menu.connect(_on_menu)
 	Signals.toogleWaitForPlayer.connect(toogleWaitForPlayer)
 	Signals.addArcanaCardToUi.connect(addArcanaCard)
@@ -73,6 +79,10 @@ func _ready():
 	Server.playerLeft.connect(_on_playerLeft)
 	
 	Signals.action.connect(_on_action)
+	
+	Signals.playerDoneWithPhase.connect(_on_playerDoneWithPhase)
+	Signals.toggleAvailableLieutenants.connect(_on_toggleAvailableLieutenants)
+	
 	currentDemonRoot = %CurrentDemonTopTree.create_item()
 	%CurrentDemonTopTree.set_column_title(0, "")
 	%CurrentDemonTopTree.set_column_title(1, "Demon")
@@ -197,7 +207,8 @@ func _on_action(demonRank : int, action : String):
 		if currentDemonEntries.size() > 0:
 			for rank in demonActions:
 				demonActions[rank] = ""
-			currentDemonEntries[0].set_text(3, "")
+			for entry in currentDemonEntries:
+				currentDemonEntries[entry].set_text(3, "")
 			for entry in %RankTrack.entries:
 				if %RankTrack.entries[entry]:
 					%RankTrack.entries[entry].set_text(3, "")
@@ -221,54 +232,13 @@ func _on_removeLieutenantFromAvailableLieutenantsBox(lieutenantName : String):
 	removeLieutenantFromAvailableLieutenantsBox(lieutenantName)
 
 
-func disableActionButtons():
-	# Summoning Actions
-	%RecruitLegionsButton.disabled = true
-	%RecruitLegionsButton.get_material().set_shader_parameter("active", false)
-	
-	%BuyArcanaCardButton.disabled = true
-	%BuyArcanaCardButton.get_material().set_shader_parameter("active", false)
-	
-	%EndPhaseButton.disabled = true
-	%EndPhaseButton.get_material().set_shader_parameter("active", false)
-	
-	# Demon Actions
-	%MarchButton.disabled = true
-	%MarchButton.get_material().set_shader_parameter("active", false)
-	
-	%WalkTheEarthButton.disabled = true
-	%WalkTheEarthButton.get_material().set_shader_parameter("active", false)
-	
-	%PassButton.disabled = true
-	%PassButton.get_material().set_shader_parameter("active", false)
-	
-	%PassForGoodButton.disabled = true
-	%PassForGoodButton.get_material().set_shader_parameter("active", false)
-	
-	%DoEvilDeedsButton.disabled = true
-	%DoEvilDeedsButton.get_material().set_shader_parameter("active", false)
-	
-	%ConspireButton.disabled = true
-	%ConspireButton.get_material().set_shader_parameter("active", false)
-	
-	%InfluenceUnitsButton.disabled = true
-	%InfluenceUnitsButton.get_material().set_shader_parameter("active", false)
-	
-	%AtonementAndSuplicationButton.disabled = true
-	%AtonementAndSuplicationButton.get_material().set_shader_parameter("active", false)
-	
-	%UseMagicButton.disabled = true
-	%UseMagicButton.get_material().set_shader_parameter("active", false)
-
-
 func _on_tutorial(topic, text : String):
-	disableActionButtons()
+	Signals.disableActionMenuButtons.emit()
 	match topic:
 		Tutorial.Topic.PlayersTree:
 			var pos : Transform2D = %PlayersTree.get_global_transform_with_canvas()
 			%PlayersTree.top_level = true
 			%PlayersTree.global_position = pos.origin
-		
 		Tutorial.Topic.NextDemon:
 			var pos : Transform2D = %NextDemonContainer.get_global_transform_with_canvas()
 			%NextDemonContainer.top_level = true
@@ -277,19 +247,10 @@ func _on_tutorial(topic, text : String):
 			%RankTrackMarginContainer.z_index = 1
 		Tutorial.Topic.PlayerStatus:
 			%PlayersTree.z_index = 1
-		Tutorial.Topic.RecruitLegion:
-			%RecruitLegionsButton.disabled = false
-			%RecruitLegionsButton.get_material().set_shader_parameter("active", true)
-		Tutorial.Topic.PlaceLegion:
-			%BuyArcanaCardButton.disabled = true
-			%EndPhaseButton.disabled = true
 		Tutorial.Topic.RecruitLieutenantAttempt:
 			var pos : Transform2D = %ArcanaCardsMarginContainer.get_global_transform_with_canvas()
 			%ArcanaCardsMarginContainer.top_level = true
 			%ArcanaCardsMarginContainer.global_position = pos.origin
-		Tutorial.Topic.BuyArcanaCard:
-			%BuyArcanaCardButton.disabled = false
-			%BuyArcanaCardButton.get_material().set_shader_parameter("active", true)
 		Tutorial.Topic.PickArcanaCard:
 			var pos : Transform2D = %PickArcanaCardContainer.get_global_transform_with_canvas()
 			%PickArcanaCardContainer.top_level = true
@@ -298,9 +259,6 @@ func _on_tutorial(topic, text : String):
 			var pos : Transform2D = %ArcanaCardsMarginContainer.get_global_transform_with_canvas()
 			%ArcanaCardsMarginContainer.top_level = true
 			%ArcanaCardsMarginContainer.global_position = pos.origin
-		Tutorial.Topic.EndSummoningPhase:
-			%EndPhaseButton.disabled = false
-			%EndPhaseButton.get_material().set_shader_parameter("active", true)
 		Tutorial.Topic.RankTrack:
 			var pos : Transform2D = %RankTrackMarginContainer.get_global_transform_with_canvas()
 			%RankTrackMarginContainer.top_level = true
@@ -344,28 +302,19 @@ func _on_tutorial(topic, text : String):
 
 
 func _on_tutorialRead():
+	return
 	%RankTrackMarginContainer.z_index = 0
 	%PlayersTree.z_index = 0
-	%BuyArcanaCardButton.disabled = false
-	%EndPhaseButton.disabled = false
 	
 	if %PlayersTree.top_level:
 		%PlayersTree.top_level = false
 		%PlayersTree.visible = false
 		%PlayersTree.visible = true
 	
-	if %BuyArcanaCardButton.top_level:
-		%BuyArcanaCardButton.top_level = false
-		%BuyArcanaCardButton.visible = false
-		%BuyArcanaCardButton.visible = true
 	if %ArcanaCardsMarginContainer.top_level:
 		%ArcanaCardsMarginContainer.top_level = false
 		%ArcanaCardsMarginContainer.visible = false
 		%ArcanaCardsMarginContainer.visible = true
-	if %EndPhaseButton.top_level:
-		%EndPhaseButton.top_level = false
-		%EndPhaseButton.visible = false
-		%EndPhaseButton.visible = true
 	if %RankTrackMarginContainer.top_level:
 		%RankTrackMarginContainer.top_level = false
 		%RankTrackMarginContainer.visible = false
@@ -429,7 +378,10 @@ func showMessage(message : String):
 
 func hideMessage():
 	%WaitForPlayerControl.hide()
-	
+
+
+func _on_playerDoneWithPhase():
+	done.rpc_id(Connection.host)
 
 
 @rpc("any_peer", "call_local")
@@ -454,7 +406,9 @@ func nextDemon(nextDemon : int):
 	demonNode.skullsUsed = 0
 	currentPlayerLabel.text = str(demonNode.stats.player)
 	print("action for demon")
-	actionsNode.currentDemonRank = demonNode.stats.rank
+	var actionMenuScene = actionMenu.instantiate()
+	add_child(actionMenuScene)
+	actionMenuScene.currentDemonRank = demonNode.stats.rank
 	Data.currentDemon = demonNode
 	print(demonNode.stats.rank)
 	var action = await Signals.demonDone
@@ -464,7 +418,8 @@ func nextDemon(nextDemon : int):
 	
 	for troopName in Data.player.troops:
 		Data.troops[troopName].sectiosMoved = 0
-	actionsNode.toggleActionMenu(false)
+	#actionMenuScene.toggleActionMenu(false)
+	actionMenuScene.queue_free()
 	demonActionDone.rpc_id(Connection.host, action)
 	AudioSignals.playerTurnDone.emit()
 
@@ -588,20 +543,24 @@ func _on_wait_for_player_button_pressed():
 
 
 func _on_pickUnit(sectio):
-	%PickMoveUnitControl.highlight(sectio)
+	var pickUnitControlScene = pickUnitControl.instantiate()
+	pickUnitControlScene.highlight(sectio)
+	add_child(pickUnitControlScene)
 
 
 func pickUnitToMove(sectio):
-	%PickMoveUnitControl.highlight(sectio)
+	var pickUnitControlScene = pickUnitControl.instantiate()
+	pickUnitControlScene.highlight(sectio)
+	add_child(pickUnitControlScene)
 
 
 func toogleBuyLieutenant(boolean : bool):
 	if boolean:
 		%AvailableLieutenantsMarginContainer.show()
-		%AvailableLieutenantsCheckButton.button_pressed = true
+		Signals.toggleAvailableLieutenantsCheckButtonPressed.emit(true)
 	else:
 		%AvailableLieutenantsMarginContainer.hide()
-		%AvailableLieutenantsCheckButton.button_pressed = false
+		Signals.toggleAvailableLieutenantsCheckButtonPressed.emit(false)
 
 
 func addLieutenantToAvailableLieutenantsBox(lieutenantName):
@@ -717,13 +676,6 @@ func _on_hidePickArcanaCardContainer(cardName):
 	%PickArcanaCardContainer.hide()
 
 
-func _on_toggleBuyArcanaCardButtonEnabled(boolean : bool):
-	if boolean:
-		%BuyArcanaCardButton.disabled = false
-	else:
-		%BuyArcanaCardButton.disabled = true
-
-
 func removeDemon(demonRank):
 	%DemonCardsMarginContainer.removeDemon(demonRank)
 
@@ -787,34 +739,19 @@ func hideWaitForPlayerControl():
 	%WaitForPlayerControl.hide()
 	%WaitForPlayerControl.modulate.a = 1.0
 
-func _on_buy_arcana_card_button_pressed():
-	Signals.sectioClicked.emit(null)
-	Signals.buyArcanaCard.emit()
-	Signals.tutorialRead.emit()
-
-
-func _on_recruit_legions_button_pressed():
-	Signals.tutorialRead.emit()
-	Signals.recruitLegions.emit()
-
 
 func _on_toggleRecruitLegionsButtonEnabled(boolean : bool):
-	if boolean:
-		%RecruitLegionsButton.disabled = false
-	else:
-		%RecruitLegionsButton.disabled = true
+	Signals.toggleRecruitLegionsButton.emit(boolean)
 
 
 func _on_toogleSummoningMenu(boolean : bool):
 	if boolean:
-		%SummoningMenuContainer.show()
-		%ActionsMarginContainer.show()
+		if not is_instance_valid(summoningMenuScene):
+			summoningMenuScene = summoningMenu.instantiate()
+			add_child(summoningMenuScene)
 	else:
-		%SummoningMenuContainer.hide()
-		%ActionsMarginContainer.hide()
-
-
-
+		if is_instance_valid(summoningMenuScene):
+			summoningMenuScene.queue_free()
 
 
 func _on_showArcanaCardsContainer():
@@ -835,11 +772,11 @@ func _on_updateTurnTrack(turn : int):
 	%TurnLabel.text = str(turn)
 
 
-func _on_available_lieutenants_check_button_toggled(toggled_on):
+func _on_toggleAvailableLieutenants(toggled_on):
 	if toggled_on:
 		%AvailableLieutenantsMarginContainer.show()
-		%AvailableLieutenantsCheckButton.button_pressed = true
+		Signals.toggleAvailableLieutenantsCheckButtonPressed.emit(true)
 	else:
 		%AvailableLieutenantsMarginContainer.hide()
-		%AvailableLieutenantsCheckButton.button_pressed = false
+		Signals.toggleAvailableLieutenantsCheckButtonPressed.emit(false)
 

@@ -91,7 +91,7 @@ script = ExtResource("7_370e0")
 
 [node name="RemindPlayerTimer" type="Timer" parent="Audio"]
 unique_name_in_owner = true
-wait_time = 10.0
+wait_time = 30.0
 
 [node name="Music" type="Node" parent="Audio"]
 

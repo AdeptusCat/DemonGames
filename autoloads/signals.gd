@@ -60,6 +60,18 @@ signal tutorial(topic, text : String)
 signal tutorialRead
 signal showSequenceOfPlayHelp
 
+# actions
+signal disableActionMenuButtons
+signal toggleRecruitLegionsButton(boolean)
+signal toggleAvailableLieutenants(boolean)
+signal toggleBuyArcanaCardButton(boolean : bool)
+signal toggleEndPhaseButton(boolean)
+signal toggleAvailableLieutenantsCheckButtonPressed(boolean)
+
+signal playerDoneWithPhase
+
+signal deactivateArcanaCards
+
 #signal cancelFlee
 signal unitClicked(unitNode)
 signal tamingHellhound
@@ -77,8 +89,7 @@ signal phaseReminderDone
 signal triumphiratWantsToFlee(triumphirat)
 signal showDoEvilDeedsControl(playerId)
 
-signal toggleRecruitLegionsButtonEnabled(boolean : bool)
-signal toggleBuyArcanaCardButtonEnabled(boolean : bool)
+
 
 signal toogleSummoningMenu(boolean : bool)
 
@@ -161,7 +172,6 @@ signal showCombat
 signal hideCombat
 signal endCombat
 signal hightlightCombat
-signal toggleEndPhaseButton(boolean)
 signal collapseDemonCards
 signal expandDemonCards(boolean)
 
