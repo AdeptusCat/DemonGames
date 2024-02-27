@@ -6,4 +6,5 @@ func _ready():
 
 
 func _on_changeFavors(playerId : int, favors : int):
-	%FavorLabel.text = str(favors)
+	if playerId == Data.id:
+		%FavorLabel.text = str(favors)

@@ -6,4 +6,5 @@ func _ready():
 
 
 func _on_changeSouls(playerId : int, souls : int):
-	%SoulsLabel.text = str(souls)
+	if playerId == Data.id:
+		%SoulsLabel.text = str(souls)
