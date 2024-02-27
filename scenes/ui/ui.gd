@@ -667,6 +667,7 @@ func _on_toogleSummoningMenu(boolean : bool):
 
 
 func _on_showArcanaCardsContainer():
+	return
 	%ArcanaCardsMarginContainer.show()
 
 

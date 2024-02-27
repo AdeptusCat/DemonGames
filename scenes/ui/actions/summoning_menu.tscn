@@ -303,7 +303,7 @@ anchor_top = 0.5
 anchor_bottom = 0.5
 offset_top = -321.0
 offset_right = 248.0
-offset_bottom = 321.0
+offset_bottom = 189.0
 grow_vertical = 2
 
 [node name="FrameBackgroundMarginContainer" parent="MarginContainer" instance=ExtResource("2_gbdeg")]

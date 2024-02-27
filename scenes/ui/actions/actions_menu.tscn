@@ -817,6 +817,7 @@ tooltip_text = "Earn Favors while on Earth."
 text = "DoEvilDeeds"
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Control" type="Control" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer3"]

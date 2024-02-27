@@ -828,6 +828,7 @@ layout_mode = 2
 
 [node name="AvailableLieutenantsMenu" parent="Control" instance=ExtResource("31_f0q11")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
