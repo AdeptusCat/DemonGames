@@ -301,9 +301,9 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -133.0
-offset_right = 379.0
-offset_bottom = 133.0
+offset_top = -321.0
+offset_right = 248.0
+offset_bottom = 321.0
 grow_vertical = 2
 
 [node name="FrameBackgroundMarginContainer" parent="MarginContainer" instance=ExtResource("2_gbdeg")]
@@ -346,80 +346,90 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer"]
+[node name="RecruitLegionsHBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
+tooltip_text = "Recruite Legions for 3 Souls each"
 
-[node name="Control" type="Control" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Control" type="Control" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/RecruitLegionsHBoxContainer"]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 size_flags_horizontal = 4
+mouse_filter = 2
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer/Control"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/RecruitLegionsHBoxContainer/Control"]
 scale = Vector2(0.166, 0.166)
 sprite_frames = SubResource("SpriteFrames_tjg6e")
 animation = &"new_animation"
 autoplay = "new_animation"
 centered = false
 
-[node name="RecruitLegionsButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="RecruitLegionsButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/RecruitLegionsHBoxContainer"]
 unique_name_in_owner = true
+visible = false
 material = SubResource("ShaderMaterial_5u6ho")
 layout_mode = 2
 tooltip_text = "Legions can be spawned inside Sectios that are owned by your Triumphirate and not occupied by enemy units."
 text = "Recruit Legions for 3 Souls each"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer"]
+[node name="BuyArcanaCardHBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
+tooltip_text = "Buy Arcana Card for 5 Souls"
 
-[node name="TextureButton" type="TextureButton" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="TextureButton" type="TextureButton" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/BuyArcanaCardHBoxContainer"]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
+mouse_filter = 2
 texture_normal = ExtResource("34_4axof")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="BuyArcanaCardButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="BuyArcanaCardButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/BuyArcanaCardHBoxContainer"]
 unique_name_in_owner = true
+visible = false
 material = SubResource("ShaderMaterial_q7xpk")
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Chose one between three cards."
 text = "Buy Arcana Card for 5 Souls"
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer"]
+[node name="ShowLieutenantsHBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
+tooltip_text = "Show available Lieutenants"
 
-[node name="Control2" type="Control" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer3"]
+[node name="Control" type="Control" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/ShowLieutenantsHBoxContainer"]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 size_flags_horizontal = 4
+mouse_filter = 2
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer3/Control2"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/ShowLieutenantsHBoxContainer/Control"]
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_chwjw")
 animation = &"new_animation"
 autoplay = "new_animation"
 centered = false
 
-[node name="AvailableLieutenantsCheckButton" type="CheckButton" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer3"]
+[node name="AvailableLieutenantsCheckButton" type="CheckButton" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/ShowLieutenantsHBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Show available Lieutenants"
 alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer"]
+[node name="EndPhaseMarginContainer" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
+tooltip_text = "End Phase"
 
-[node name="TextureButton" type="TextureButton" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/MarginContainer"]
-custom_minimum_size = Vector2(320, 105)
+[node name="TextureButton" type="TextureButton" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/EndPhaseMarginContainer"]
+custom_minimum_size = Vector2(126, 126)
 layout_mode = 2
 size_flags_horizontal = 4
+mouse_filter = 2
 texture_normal = ExtResource("35_bo2le")
 ignore_texture_size = true
-stretch_mode = 5
+stretch_mode = 0
 
-[node name="EndPhaseButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/MarginContainer"]
+[node name="EndPhaseButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/EndPhaseMarginContainer"]
 unique_name_in_owner = true
+visible = false
 material = SubResource("ShaderMaterial_yfeb6")
 layout_mode = 2
 text = "End Summoning Phase"
@@ -428,7 +438,11 @@ metadata/_edit_use_anchors_ = true
 [node name="FrameMarginContainer" parent="MarginContainer" instance=ExtResource("8_m0ixw")]
 layout_mode = 2
 
-[connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer/RecruitLegionsButton" to="." method="_on_recruit_legions_button_pressed"]
-[connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer2/BuyArcanaCardButton" to="." method="_on_buy_arcana_card_button_pressed"]
-[connection signal="toggled" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/HBoxContainer3/AvailableLieutenantsCheckButton" to="." method="_on_available_lieutenants_check_button_toggled"]
-[connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/MarginContainer/EndPhaseButton" to="." method="_on_end_phase_button_pressed"]
+[connection signal="gui_input" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/RecruitLegionsHBoxContainer" to="." method="_on_recruit_legions_h_box_container_gui_input"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/RecruitLegionsHBoxContainer/RecruitLegionsButton" to="." method="_on_recruit_legions_button_pressed"]
+[connection signal="gui_input" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/BuyArcanaCardHBoxContainer" to="." method="_on_buy_arcana_card_h_box_container_gui_input"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/BuyArcanaCardHBoxContainer/BuyArcanaCardButton" to="." method="_on_buy_arcana_card_button_pressed"]
+[connection signal="gui_input" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/ShowLieutenantsHBoxContainer" to="." method="_on_show_lieutenants_h_box_container_gui_input"]
+[connection signal="toggled" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/ShowLieutenantsHBoxContainer/AvailableLieutenantsCheckButton" to="." method="_on_available_lieutenants_check_button_toggled"]
+[connection signal="gui_input" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/EndPhaseMarginContainer" to="." method="_on_end_phase_margin_container_gui_input"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/EndPhaseMarginContainer/EndPhaseButton" to="." method="_on_end_phase_button_pressed"]
