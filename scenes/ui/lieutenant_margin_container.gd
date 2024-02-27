@@ -19,11 +19,29 @@ extends MarginContainer
 var followMouse : bool = false
 var lieutenantName : String = ""
 @onready var startposition : Vector2 = position
+var availableToBuy : bool = false
+var cost : int = 0
 
 
 func _ready():
-	Signals.removeLieutenantFromAvailableLieutenantsBox.connect(_on_removeLieutenantFromAvailableLieutenantsBox)
 	lieutenantName = get_node("VBoxContainer/MarginContainer2/HBoxContainer/MarginContainer/NameLabel").text
+	Signals.removeChosenLieutenantFromMouse.connect(_on_removeChosenLieutenantFromMouse)
+
+
+func _on_removeChosenLieutenantFromMouse(_lieutenantName):
+	print("remove leiteuentn ", _lieutenantName, " ", lieutenantName )
+	if _lieutenantName == lieutenantName:
+		queue_free()
+
+
+func activate():
+	availableToBuy = true
+	%DeactivateColorRect.hide()
+
+
+func deactivate():
+	availableToBuy = false
+	%DeactivateColorRect.show()
 
 
 func _input(event):
@@ -33,11 +51,6 @@ func _input(event):
 		var y = remap(event.global_position.y, 0, DisplayServer.window_get_size().y, 0, 1080)
 		if followMouse:
 			global_position = Vector2(x, y) + Vector2(10, 10)
-
-
-func _on_removeLieutenantFromAvailableLieutenantsBox(_lieutenantName : String):
-	if _lieutenantName == lieutenantName:
-		queue_free()
 
 
 func setScale():
@@ -66,6 +79,8 @@ func populate(unitName, lieutenantTextureDir, combatBonus, capacity, triumphirat
 	if triumphirate:
 		var texture = Data.icons[Data.players[triumphirate].colorName]
 		%TextureRect.texture = texture
+	cost = combatBonus.to_int() + capacity.to_int()
+	lieutenantName = unitName
 
 
 func toggleTriumphirateIcon(boolean : bool, triumphirate : int):
@@ -113,8 +128,19 @@ func kill():
 	tw1.parallel().tween_property(%ColorRect.get_material(), "shader_parameter/dissolveState", 1.0, 2.0)
 	tw1.tween_callback(queue_free)
 
+
 func highlight():
 	followMouse = true
 	var texture = Data.icons[Data.player.colorName]
 	%TextureRect.texture = texture
-	
+
+
+func _on_gui_input(event):
+	if Input.is_action_just_pressed("click"):
+		if availableToBuy:
+			availableToBuy = false
+			Signals.removeChosenLieutenantFromAvailableLieutenantsBox.emit(lieutenantName)
+			Signals.toggleAvailableLieutenants.emit(false)
+			var souls = Data.player.souls - cost
+			Signals.changeSouls.emit(Data.id, souls)
+			Signals.recruitLieutenant.emit(lieutenantName)

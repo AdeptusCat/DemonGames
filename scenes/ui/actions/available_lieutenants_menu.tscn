@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3 uid="uid://c6nryno8juo6t"]
+
+[ext_resource type="Script" path="res://scenes/ui/actions/available_lieutenants_menu.gd" id="1_0l0qw"]
+[ext_resource type="PackedScene" uid="uid://dm6xoflw4305t" path="res://scenes/ui/frame_background_margin_container.tscn" id="1_np6db"]
+[ext_resource type="PackedScene" uid="uid://7p3kfgl06d7y" path="res://scenes/ui/frame_margin_container.tscn" id="2_03w1j"]
+
+[node name="AvailableLieutenantsMarginContainer" type="MarginContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -153.0
+offset_top = 177.0
+offset_right = 114.0
+offset_bottom = 304.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0l0qw")
+
+[node name="FrameBackgroundMarginContainer" parent="." instance=ExtResource("1_np6db")]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 80
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Available Lieutenants:"
+horizontal_alignment = 1
+
+[node name="AvailableLieutenantsCostHBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 1
+
+[node name="AvailableLieutenantsHBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
+[node name="FrameMarginContainer" parent="." instance=ExtResource("2_03w1j")]
+layout_mode = 2
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]

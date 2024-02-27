@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://d00aywoo0y4ld"]
+[gd_scene load_steps=47 format=3 uid="uid://d00aywoo0y4ld"]
 
 [ext_resource type="Script" path="res://scenes/ui/ui.gd" id="1_o55j0"]
 [ext_resource type="Texture2D" uid="uid://cdii7y50q1lno" path="res://assets/icons/pentagram_white.png" id="2_3ml1l"]
@@ -36,6 +36,7 @@
 [ext_resource type="Script" path="res://scenes/ui/quick_help_control.gd" id="28_6ngkx"]
 [ext_resource type="PackedScene" uid="uid://dg8qrqf3xyi45" path="res://scenes/ui/combat_control.tscn" id="28_ptmt4"]
 [ext_resource type="Script" path="res://scenes/ui/help_sequence_of_play_container.gd" id="30_54wyv"]
+[ext_resource type="PackedScene" uid="uid://c6nryno8juo6t" path="res://scenes/ui/actions/available_lieutenants_menu.tscn" id="31_f0q11"]
 [ext_resource type="Script" path="res://scenes/ui/goal_margin_container.gd" id="32_4llok"]
 [ext_resource type="PackedScene" uid="uid://b8hn7e2w8pyg" path="res://scenes/ui/petition_entry.tscn" id="32_7wv0v"]
 [ext_resource type="PackedScene" uid="uid://bnipkihjqnak" path="res://scenes/ui/tutorial_margin_container.tscn" id="33_0fyc6"]
@@ -825,46 +826,21 @@ theme_override_constants/margin_bottom = 50
 [node name="FrameMarginContainer" parent="Control/DemonDetailsControl" instance=ExtResource("26_vv66b")]
 layout_mode = 2
 
-[node name="AvailableLieutenantsMarginContainer" type="MarginContainer" parent="Control"]
+[node name="AvailableLieutenantsMenu" parent="Control" instance=ExtResource("31_f0q11")]
 unique_name_in_owner = true
 visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -153.0
-offset_top = 177.0
-offset_right = 114.0
-offset_bottom = 304.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="FrameBackgroundMarginContainer" parent="Control/AvailableLieutenantsMarginContainer" instance=ExtResource("25_jfpsm")]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/AvailableLieutenantsMarginContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 80
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/AvailableLieutenantsMarginContainer/MarginContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Control/AvailableLieutenantsMarginContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Available Lieutenants:"
-horizontal_alignment = 1
-
-[node name="AvailableLieutenantsHBoxContainer" type="HBoxContainer" parent="Control/AvailableLieutenantsMarginContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="FrameMarginContainer" parent="Control/AvailableLieutenantsMarginContainer" instance=ExtResource("26_vv66b")]
-layout_mode = 2
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 441.0
+offset_top = 184.0
+offset_right = 708.0
+offset_bottom = 374.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="PetitionsMarginContainer" type="MarginContainer" parent="Control"]
 unique_name_in_owner = true

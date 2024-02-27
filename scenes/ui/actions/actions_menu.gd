@@ -93,16 +93,19 @@ func deactivateArcanaCards():
 
 
 func activateActionButtons():
-	for cardName in player.arcanaCards:
-		if not Data.arcanaCards.has(cardName):
-			continue
-		var arcanaCard : Dictionary = Data.arcanaCards[cardName]
-		if not player.hasEnoughSouls(arcanaCard.cost):
-			continue
-		if not spellObject.objects.has(arcanaCard.minorSpell):
-			continue
-		spellObject.objects[arcanaCard.minorSpell].activatePassButton(%PassButton)
-		spellObject.objects[arcanaCard.minorSpell].activateWalkTheEarthButton(%WalkTheEarthButton)
+	#for cardName in player.arcanaCards:
+		#if not Data.arcanaCards.has(cardName):
+			#continue
+		#var arcanaCard : Dictionary = Data.arcanaCards[cardName]
+		#if not player.hasEnoughSouls(arcanaCard.cost):
+			#continue
+		#if not spellObject.objects.has(arcanaCard.minorSpell):
+			#continue
+		#spellObject.objects[arcanaCard.minorSpell].activatePassButton(%PassButton)
+		#spellObject.objects[arcanaCard.minorSpell].activateWalkTheEarthButton(%WalkTheEarthButton)
+	
+	if Data.player.hasEnoughSouls(currentDemonNode.hearts * 2):
+		%WalkTheEarthButton.disabled = false
 	
 	%MarchButton.text = "March"
 	%MarchButton.disabled = false
@@ -257,14 +260,21 @@ func _recruitLieutenant():
 
 
 func _on_walk_the_earth_button_pressed():
-	deactivateArcanaCards()
-	for cardName in player.arcanaCards:
-		var arcanaCard = Data.arcanaCardNodes[cardName]
-		if not player.hasEnoughSouls(arcanaCard.cost):
-			continue
-		if spellObject.objects.has(arcanaCard.minorSpell):
-			spellObject.objects[arcanaCard.minorSpell].highlightWalkTheEarthCard(arcanaCard)
-	Signals.tutorialRead.emit()
+	var souls = Data.player.souls - currentDemonNode.hearts * 2
+	Signals.changeSouls.emit(Data.id, souls)
+	walkTheEarth()
+	if Tutorial.currentTopic == Tutorial.Topic.WalkTheEarth:
+			Signals.tutorialRead.emit()
+	for peer in Connection.peers:
+		RpcCalls.demonStatusChange.rpc_id(peer, currentDemonRank, "earth")
+	#deactivateArcanaCards()
+	#for cardName in player.arcanaCards:
+		#var arcanaCard = Data.arcanaCardNodes[cardName]
+		#if not player.hasEnoughSouls(arcanaCard.cost):
+			#continue
+		#if spellObject.objects.has(arcanaCard.minorSpell):
+			#spellObject.objects[arcanaCard.minorSpell].highlightWalkTheEarthCard(arcanaCard)
+	#Signals.tutorialRead.emit()
 
 
 func _on_do_evil_deeds_button_pressed():
