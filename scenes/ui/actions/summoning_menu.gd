@@ -87,3 +87,29 @@ func _on_end_phase_button_pressed():
 	Signals.summoningDone.emit()
 	Signals.playerDoneWithPhase.emit()
 	AudioSignals.playerTurnDone.emit()
+
+
+func _on_recruit_legions_h_box_container_gui_input(event):
+	if Input.is_action_just_pressed("click"):
+		Signals.tutorialRead.emit()
+		Signals.recruitLegions.emit()
+
+
+func _on_buy_arcana_card_h_box_container_gui_input(event):
+	if Input.is_action_just_pressed("click"):
+		Signals.sectioClicked.emit(null)
+		Signals.buyArcanaCard.emit()
+		Signals.tutorialRead.emit()
+
+
+func _on_show_lieutenants_h_box_container_gui_input(event):
+	return
+	if Input.is_action_just_pressed("click"):
+		Signals.toggleAvailableLieutenants.emit(true)
+
+
+func _on_end_phase_margin_container_gui_input(event):
+	if Input.is_action_just_pressed("click"):
+		Signals.summoningDone.emit()
+		Signals.playerDoneWithPhase.emit()
+		AudioSignals.playerTurnDone.emit()

@@ -63,7 +63,7 @@ signal showSequenceOfPlayHelp
 # actions
 signal disableActionMenuButtons
 signal toggleRecruitLegionsButton(boolean)
-signal toggleAvailableLieutenants(boolean)
+signal toggleAvailableLieutenants(boolean : bool)
 signal toggleBuyArcanaCardButton(boolean : bool)
 signal toggleEndPhaseButton(boolean)
 signal toggleAvailableLieutenantsCheckButtonPressed(boolean)
