@@ -1,7 +1,6 @@
-[gd_scene load_steps=72 format=3 uid="uid://dv4h8w62ygoeo"]
+[gd_scene load_steps=70 format=3 uid="uid://dv4h8w62ygoeo"]
 
 [ext_resource type="Script" path="res://scenes/ui/actions/summoning_menu.gd" id="1_pvfms"]
-[ext_resource type="PackedScene" uid="uid://dm6xoflw4305t" path="res://scenes/ui/frame_background_margin_container.tscn" id="2_gbdeg"]
 [ext_resource type="Texture2D" uid="uid://biql8mxh5w1bm" path="res://assets/ui/summoning_menu/recruit_lieutenant/00830-1562418942.png" id="3_8iavs"]
 [ext_resource type="Shader" path="res://assets/materials_shaders/shine_highlight_button.gdshader" id="3_iuxt5"]
 [ext_resource type="Texture2D" uid="uid://cmajdynabf0j1" path="res://assets/ui/summoning_menu/recruit_legions/00223-2731579371.png" id="3_w62yl"]
@@ -15,7 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://cdbcdbrbhvcwo" path="res://assets/ui/summoning_menu/recruit_lieutenant/00834-1562418946.png" id="7_dgrbe"]
 [ext_resource type="Texture2D" uid="uid://cdaqwns5pfjxa" path="res://assets/ui/summoning_menu/recruit_lieutenant/00835-1562418947.png" id="8_111h6"]
 [ext_resource type="Texture2D" uid="uid://dy5qskeuow2m4" path="res://assets/ui/summoning_menu/recruit_legions/00228-2731579376.png" id="8_e08ui"]
-[ext_resource type="PackedScene" uid="uid://7p3kfgl06d7y" path="res://scenes/ui/frame_margin_container.tscn" id="8_m0ixw"]
 [ext_resource type="Texture2D" uid="uid://u6hujmi44cob" path="res://assets/ui/summoning_menu/recruit_lieutenant/00836-1562418948.png" id="9_gjidt"]
 [ext_resource type="Texture2D" uid="uid://cpk7pgq0bsm5b" path="res://assets/ui/summoning_menu/recruit_legions/00229-2731579377.png" id="9_sa56c"]
 [ext_resource type="Texture2D" uid="uid://dnp1dcqcw34ut" path="res://assets/ui/summoning_menu/recruit_lieutenant/00837-1562418949.png" id="10_pf1cb"]
@@ -284,39 +282,19 @@ shader_parameter/shine_speed = 5.0
 shader_parameter/shine_size = 0.01
 shader_parameter/active = false
 
-[node name="SummoningMenu" type="Control"]
-layout_mode = 3
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -133.0
-offset_right = 274.0
-offset_bottom = 133.0
-grow_vertical = 2
+[node name="SummoningMenu" type="MarginContainer"]
+offset_right = 148.0
+offset_bottom = 410.0
 size_flags_horizontal = 8
 script = ExtResource("1_pvfms")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -321.0
-offset_right = 248.0
-offset_bottom = 189.0
-grow_vertical = 2
-
-[node name="FrameBackgroundMarginContainer" parent="MarginContainer" instance=ExtResource("2_gbdeg")]
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 50
 
 [node name="ColorRect" type="ColorRect" parent="MarginContainer/MarginContainer"]
 layout_mode = 2
@@ -435,9 +413,6 @@ material = SubResource("ShaderMaterial_yfeb6")
 layout_mode = 2
 text = "End Phase"
 metadata/_edit_use_anchors_ = true
-
-[node name="FrameMarginContainer" parent="MarginContainer" instance=ExtResource("8_m0ixw")]
-layout_mode = 2
 
 [connection signal="gui_input" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/RecruitLegionsHBoxContainer" to="." method="_on_recruit_legions_h_box_container_gui_input"]
 [connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/RecruitLegionsHBoxContainer/RecruitLegionsButton" to="." method="_on_recruit_legions_button_pressed"]

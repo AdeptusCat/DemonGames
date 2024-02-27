@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://d00aywoo0y4ld"]
+[gd_scene load_steps=91 format=3 uid="uid://d00aywoo0y4ld"]
 
 [ext_resource type="Script" path="res://scenes/ui/ui.gd" id="1_o55j0"]
 [ext_resource type="Texture2D" uid="uid://cdii7y50q1lno" path="res://assets/icons/pentagram_white.png" id="2_3ml1l"]
@@ -43,13 +43,191 @@
 [ext_resource type="Script" path="res://scenes/ui/phases_container.gd" id="35_vehc2"]
 [ext_resource type="Theme" uid="uid://cgwxqm3rkumgq" path="res://assets/themes/test.tres" id="36_x2jp8"]
 [ext_resource type="Script" path="res://scenes/ui/CombatOverviewMarginContainer.gd" id="37_2s8h0"]
+[ext_resource type="Script" path="res://scenes/ui/player_stats/Souls_margin_container.gd" id="43_itsbk"]
+[ext_resource type="Texture2D" uid="uid://bnjuqj0b53pb5" path="res://assets/soul/00297-3811223522.png" id="43_rmfqj"]
+[ext_resource type="Texture2D" uid="uid://bdgs6gtspyq1c" path="res://assets/soul/00298-3811223523.png" id="44_8wl86"]
 [ext_resource type="PackedScene" uid="uid://dphwtkh030vsb" path="res://scenes/ui/combat_entry.tscn" id="44_xx0bh"]
+[ext_resource type="Texture2D" uid="uid://csll8dwtk5bia" path="res://assets/soul/00299-3811223524.png" id="45_gl6xc"]
+[ext_resource type="Texture2D" uid="uid://cyq2swsy2crr7" path="res://assets/soul/00300-3811223525.png" id="46_dra0y"]
+[ext_resource type="Texture2D" uid="uid://n4vhma0sqq2v" path="res://assets/soul/00301-3811223526.png" id="47_7ukks"]
+[ext_resource type="Texture2D" uid="uid://bgbcn7gkrx5vt" path="res://assets/soul/00302-3811223527.png" id="48_54yit"]
+[ext_resource type="Texture2D" uid="uid://dmifr2ui0it1n" path="res://assets/soul/00303-3811223528.png" id="49_u33f6"]
+[ext_resource type="Texture2D" uid="uid://dmi8ughgl11wf" path="res://assets/soul/00304-3811223529.png" id="50_vkadp"]
+[ext_resource type="Texture2D" uid="uid://h0u6ji28i7em" path="res://assets/soul/00305-3811223530.png" id="51_6n6ns"]
+[ext_resource type="Texture2D" uid="uid://dbuhvjhelghj8" path="res://assets/soul/00306-3811223531.png" id="52_jtd1v"]
+[ext_resource type="Texture2D" uid="uid://emg2is2l1ju3" path="res://assets/soul/00307-3811223532.png" id="53_gi2ej"]
+[ext_resource type="Texture2D" uid="uid://b5vwckw2je4u4" path="res://assets/soul/00308-3811223533.png" id="54_6u0ku"]
+[ext_resource type="Texture2D" uid="uid://chf8vf6xvcxtj" path="res://assets/soul/00309-3811223534.png" id="55_yup1q"]
+[ext_resource type="Texture2D" uid="uid://dw8ucg7050mpf" path="res://assets/soul/00310-3811223535.png" id="56_vnd7p"]
+[ext_resource type="Texture2D" uid="uid://dn8lbx47pk3wc" path="res://assets/favor/00482-928515031.png" id="57_itren"]
+[ext_resource type="Texture2D" uid="uid://5icw5tn7blfm" path="res://assets/soul/00311-3811223536.png" id="57_ixllj"]
+[ext_resource type="Texture2D" uid="uid://csmcruf0kdhgp" path="res://assets/favor/00483-928515032.png" id="58_70nyd"]
+[ext_resource type="Texture2D" uid="uid://dlfkmkvwdq8dd" path="res://assets/soul/00312-3811223537.png" id="58_c4st5"]
+[ext_resource type="Texture2D" uid="uid://yre8wjvsyqup" path="res://assets/favor/00484-928515033.png" id="59_0mgx5"]
+[ext_resource type="Texture2D" uid="uid://b5i2y5ikkk3dh" path="res://assets/soul/00313-3811223538.png" id="59_4t2pn"]
+[ext_resource type="Texture2D" uid="uid://bmfksou7a0q67" path="res://assets/soul/00314-3811223539.png" id="60_iscev"]
+[ext_resource type="Texture2D" uid="uid://d1cp1ojeyhcvn" path="res://assets/favor/00485-928515034.png" id="60_tjkiv"]
+[ext_resource type="Texture2D" uid="uid://b5yogoqke3bhs" path="res://assets/soul/00315-3811223540.png" id="61_had83"]
+[ext_resource type="Texture2D" uid="uid://dva6a85tft52f" path="res://assets/favor/00486-928515035.png" id="61_y10hn"]
+[ext_resource type="Texture2D" uid="uid://rdtvhlc83dux" path="res://assets/favor/00487-928515036.png" id="62_1e3aa"]
+[ext_resource type="Texture2D" uid="uid://bxklb0wv7fg6w" path="res://assets/soul/00316-3811223541.png" id="62_ywlko"]
+[ext_resource type="Texture2D" uid="uid://bol54g0qhj15" path="res://assets/favor/00488-928515037.png" id="63_myvxt"]
+[ext_resource type="Texture2D" uid="uid://c832p117hfu2s" path="res://assets/favor/00489-928515038.png" id="64_i7q2p"]
+[ext_resource type="Script" path="res://scenes/ui/player_stats/favor_margin_container.gd" id="64_jmqku"]
+[ext_resource type="Texture2D" uid="uid://yrd6rf6fpgvb" path="res://assets/favor/00490-928515039.png" id="65_sw2bi"]
+[ext_resource type="Texture2D" uid="uid://dgvan6vyyybqc" path="res://assets/favor/00491-928515040.png" id="66_dprrj"]
+[ext_resource type="Texture2D" uid="uid://clajj030madic" path="res://assets/favor/00492-928515041.png" id="67_6ki06"]
+[ext_resource type="Texture2D" uid="uid://jxxme77aonb" path="res://assets/favor/00493-928515042.png" id="68_5d4g1"]
+[ext_resource type="Texture2D" uid="uid://b5srs5vcv6ksr" path="res://assets/favor/00494-928515043.png" id="69_t8rb0"]
+[ext_resource type="Texture2D" uid="uid://dvmuy8cwmi68o" path="res://assets/favor/00495-928515044.png" id="70_vrifs"]
+[ext_resource type="Texture2D" uid="uid://dy4gcme1pjb3d" path="res://assets/favor/00496-928515045.png" id="71_dw5ov"]
+[ext_resource type="Texture2D" uid="uid://ba3rwatu8gn1" path="res://assets/favor/00497-928515046.png" id="72_cjt3x"]
+[ext_resource type="Texture2D" uid="uid://cyqxqr6mmphdn" path="res://assets/favor/00498-928515047.png" id="73_0un0p"]
+[ext_resource type="Texture2D" uid="uid://bv2u5wh3i0ja0" path="res://assets/favor/00499-928515048.png" id="74_niiaq"]
+[ext_resource type="Texture2D" uid="uid://c6uibf0gd6ct5" path="res://assets/favor/00500-928515049.png" id="75_wx0ev"]
+[ext_resource type="Texture2D" uid="uid://dquhkgpe8g0ms" path="res://assets/favor/00501-928515050.png" id="76_0kelp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2yxpw"]
 bg_color = Color(0.372549, 0.372549, 0.372549, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_42ncp"]
 bg_color = Color(0.372549, 0.372549, 0.372549, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_irbuw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("43_rmfqj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_8wl86")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_gl6xc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_dra0y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_7ukks")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_54yit")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_u33f6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_vkadp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_6n6ns")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_jtd1v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_gi2ej")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_6u0ku")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_yup1q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_vnd7p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_ixllj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_c4st5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_4t2pn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_iscev")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_had83")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_ywlko")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v52qh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("57_itren")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_70nyd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_0mgx5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_tjkiv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_y10hn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_1e3aa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_myvxt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_i7q2p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65_sw2bi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("66_dprrj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("67_6ki06")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_5d4g1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("69_t8rb0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("70_vrifs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("71_dw5ov")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72_cjt3x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("73_0un0p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("74_niiaq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("75_wx0ev")
+}, {
+"duration": 1.0,
+"texture": ExtResource("76_0kelp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_o55j0")
@@ -1372,6 +1550,7 @@ scroll_horizontal_enabled = false
 scroll_vertical_enabled = false
 
 [node name="PlayerStatsMarginContainer" type="MarginContainer" parent="Control"]
+visible = false
 layout_mode = 1
 offset_right = 20.0
 offset_bottom = 20.0
@@ -1385,6 +1564,108 @@ unique_name_in_owner = true
 layout_mode = 2
 scroll_horizontal_enabled = false
 scroll_vertical_enabled = false
+
+[node name="SideMenuMarginContainer" type="MarginContainer" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+offset_right = 148.0
+offset_bottom = 280.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/SideMenuMarginContainer"]
+layout_mode = 2
+
+[node name="SideMenuVBoxContainer" type="VBoxContainer" parent="Control/SideMenuMarginContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="ColorRect" type="ColorRect" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PlayerStatsVBoxContainer" type="VBoxContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="SoulsMarginContainer" type="MarginContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer/MarginContainer/PlayerStatsVBoxContainer"]
+layout_mode = 2
+script = ExtResource("43_itsbk")
+
+[node name="TextureRect" type="TextureRect" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer/MarginContainer/PlayerStatsVBoxContainer/SoulsMarginContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = ExtResource("43_rmfqj")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer/MarginContainer/PlayerStatsVBoxContainer/SoulsMarginContainer/TextureRect"]
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_irbuw")
+animation = &"new_animation"
+autoplay = "new_animation"
+centered = false
+
+[node name="SoulsLabel" type="Label" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer/MarginContainer/PlayerStatsVBoxContainer/SoulsMarginContainer/TextureRect"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_right = 128.0
+offset_bottom = 128.0
+size_flags_vertical = 1
+tooltip_text = "The amount of Souls you can spend."
+mouse_filter = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 70
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FavorMarginContainer" type="MarginContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer/MarginContainer/PlayerStatsVBoxContainer"]
+layout_mode = 2
+script = ExtResource("64_jmqku")
+
+[node name="TextureRect" type="TextureRect" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer/MarginContainer/PlayerStatsVBoxContainer/FavorMarginContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = ExtResource("43_rmfqj")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer/MarginContainer/PlayerStatsVBoxContainer/FavorMarginContainer/TextureRect"]
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_v52qh")
+autoplay = "default"
+centered = false
+
+[node name="FavorLabel" type="Label" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer/MarginContainer/PlayerStatsVBoxContainer/FavorMarginContainer/TextureRect"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_right = 128.0
+offset_bottom = 128.0
+size_flags_vertical = 1
+tooltip_text = "The amount of Favors you can spend."
+mouse_filter = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 70
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer/MarginContainer/PlayerStatsVBoxContainer"]
+layout_mode = 2
 
 [node name="CombatOverviewMarginContainer" type="MarginContainer" parent="Control"]
 visible = false

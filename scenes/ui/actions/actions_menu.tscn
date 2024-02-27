@@ -1,7 +1,6 @@
-[gd_scene load_steps=162 format=3 uid="uid://c43nav0wkynac"]
+[gd_scene load_steps=160 format=3 uid="uid://c43nav0wkynac"]
 
 [ext_resource type="Script" path="res://scenes/ui/actions/actions_menu.gd" id="1_i65gp"]
-[ext_resource type="PackedScene" uid="uid://dm6xoflw4305t" path="res://scenes/ui/frame_background_margin_container.tscn" id="2_e582r"]
 [ext_resource type="Texture2D" uid="uid://25er4ht16vnw" path="res://assets/00698-3170758600-drawing of a skull, digital art, game asset.png" id="2_kjl8k"]
 [ext_resource type="Texture2D" uid="uid://br3bhpalcxcw5" path="res://assets/00690-2262657839-drawing of a heart, digital art, game asset.png" id="3_0g22h"]
 [ext_resource type="Shader" path="res://assets/materials_shaders/shine_highlight_button.gdshader" id="4_6j55y"]
@@ -9,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://b2xbxnonn5ugy" path="res://assets/ui/pick_legions/running/00297-3103259275.png" id="5_4te70"]
 [ext_resource type="Texture2D" uid="uid://b43gaef8npbxq" path="res://assets/ui/pick_legions/running/00298-3103259276.png" id="6_i7voc"]
 [ext_resource type="Texture2D" uid="uid://b3hfueksjo7wq" path="res://assets/ui/pick_legions/running/00299-3103259277.png" id="7_k7kba"]
-[ext_resource type="PackedScene" uid="uid://7p3kfgl06d7y" path="res://scenes/ui/frame_margin_container.tscn" id="8_3odqv"]
 [ext_resource type="Texture2D" uid="uid://5dcx22i5svol" path="res://assets/ui/pick_legions/running/00300-3103259278.png" id="8_ktx3c"]
 [ext_resource type="Texture2D" uid="uid://c02qsjr8bv4y5" path="res://assets/ui/pick_legions/running/00301-3103259279.png" id="9_iyugw"]
 [ext_resource type="Texture2D" uid="uid://h7eayf0tdk1x" path="res://assets/ui/pick_legions/running/00302-3103259280.png" id="10_ik2t7"]
@@ -673,41 +671,21 @@ shader_parameter/shine_speed = 5.0
 shader_parameter/shine_size = 0.01
 shader_parameter/active = false
 
-[node name="ActionsMenu" type="Control"]
-layout_mode = 3
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -133.0
-offset_right = 274.0
-offset_bottom = 133.0
-grow_vertical = 2
+[node name="ActionsMenu" type="MarginContainer"]
+offset_right = 293.0
+offset_bottom = 591.0
 size_flags_horizontal = 8
 script = ExtResource("1_i65gp")
 skullTexture = ExtResource("2_kjl8k")
 heartTexture = ExtResource("3_0g22h")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -169.0
-offset_right = 274.0
-offset_bottom = 169.0
-grow_vertical = 2
-
-[node name="FrameBackgroundMarginContainer" parent="MarginContainer" instance=ExtResource("2_e582r")]
 layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 50
 
 [node name="ColorRect" type="ColorRect" parent="MarginContainer/MarginContainer"]
 layout_mode = 2
@@ -900,9 +878,6 @@ material = SubResource("ShaderMaterial_bpobq")
 layout_mode = 2
 tooltip_text = "Play Arcana Cards that affect Units, Demons or Sectios."
 text = "UseMagic"
-
-[node name="FrameMarginContainer" parent="MarginContainer" instance=ExtResource("8_3odqv")]
-layout_mode = 2
 
 [connection signal="confirmed" from="MarginContainer/MarginContainer/ActionsMarginContainer/BackToHellConfirmationDialog" to="." method="_on_back_to_hell_confirmation_dialog_confirmed"]
 [connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/MarchHBoxContainer/MarchButton" to="." method="_on_march_button_pressed"]

@@ -402,7 +402,7 @@ func nextDemon(nextDemon : int):
 	currentPlayerLabel.text = str(demonNode.stats.player)
 	print("action for demon")
 	var actionMenuScene = actionMenu.instantiate()
-	add_child(actionMenuScene)
+	%SideMenuVBoxContainer.add_child(actionMenuScene)
 	actionMenuScene.currentDemonRank = demonNode.stats.rank
 	Data.currentDemon = demonNode
 	print(demonNode.stats.rank)
@@ -660,7 +660,7 @@ func _on_toogleSummoningMenu(boolean : bool):
 	if boolean:
 		if not is_instance_valid(summoningMenuScene):
 			summoningMenuScene = summoningMenu.instantiate()
-			add_child(summoningMenuScene)
+			%SideMenuVBoxContainer.add_child(summoningMenuScene)
 	else:
 		if is_instance_valid(summoningMenuScene):
 			summoningMenuScene.queue_free()
