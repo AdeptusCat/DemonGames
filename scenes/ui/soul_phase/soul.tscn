@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bg28sygbl80vx"]
+
+[ext_resource type="Script" path="res://scenes/ui/soul_phase/soul.gd" id="1_ctkru"]
+[ext_resource type="Texture2D" uid="uid://bnjuqj0b53pb5" path="res://assets/soul/00297-3811223522.png" id="2_swdj8"]
+
+[node name="Soul" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_ctkru")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_swdj8")
+expand_mode = 1
+stretch_mode = 4

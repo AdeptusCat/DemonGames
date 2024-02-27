@@ -1,10 +1,28 @@
 extends MarginContainer
 
 
+@onready var default_font_size : int = %FavorLabel.label_settings.font_size
+
+
 func _ready():
-	Signals.changeFavors.connect(_on_changeFavors)
+	Signals.changeFavorsInUI.connect(_on_changeFavorsInUI)
+	Signals.favorReachedPlayerStats.connect(_on_favorReachedPlayerStats)
+	Signals.favorLeftPlayerStats.connect(_on_favorLeftPlayerStats)
 
 
-func _on_changeFavors(playerId : int, favors : int):
-	if playerId == Data.id:
-		%FavorLabel.text = str(favors)
+func _on_changeFavorsInUI(favors : int):
+	%FavorLabel.text = str(favors)
+
+
+func _on_favorReachedPlayerStats():
+	%FavorLabel.text = str(%FavorLabel.text.to_int() + 1)
+	var tween = create_tween()
+	tween.tween_property(%FavorLabel.label_settings, "font_size", default_font_size + 50, 0.2)
+	tween.tween_property(%FavorLabel.label_settings, "font_size", default_font_size, 0.2)
+
+
+func _on_favorLeftPlayerStats():
+	%FavorLabel.text = str(%FavorLabel.text.to_int() - 1)
+	var tween = create_tween()
+	tween.tween_property(%FavorLabel.label_settings, "font_size", default_font_size + 50, 0.2)
+	tween.tween_property(%FavorLabel.label_settings, "font_size", default_font_size, 0.2)

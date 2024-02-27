@@ -269,27 +269,36 @@ func sendSoulSummary(soulSummary : Dictionary):
 		await Signals.phaseReminderDone
 	Signals.showSoulsSummary.emit(soulSummary)
 	
-	Signals.expandDemonCards.emit()
-	for demonName in soulSummary[Data.id]["earth"]:
-		var souls = soulSummary[Data.id]["earth"][demonName]["souls"]
-		var favors = soulSummary[Data.id]["earth"][demonName]["favors"]
-		var rank = soulSummary[Data.id]["earth"][demonName]["rank"]
-		var demon : Demon = Data.demons[rank]
+	if not soulSummary[Data.id]["earth"].is_empty():
+		Signals.expandDemonCards.emit()
+		await get_tree().create_timer(0.5).timeout
+		var timeToWaitForSoulsToFly : int = 0.5
+		for demonName in soulSummary[Data.id]["earth"]:
+			var souls = soulSummary[Data.id]["earth"][demonName]["souls"]
+			var favors = soulSummary[Data.id]["earth"][demonName]["favors"]
+			var rank = soulSummary[Data.id]["earth"][demonName]["rank"]
+			var demon : Demon = Data.demons[rank]
+			
+			if Tutorial.tutorial:
+				Signals.tutorial.emit(Tutorial.Topic.Soul, "'" + demon.demonName + "' is one of your Demons on Earth and gathers Souls and a Favor each Turn. \nThe amount of Souls gathered depends on the amount of Hearts of the Demon.")
+				await Signals.tutorialRead
+			Signals.emitSoulsFromCollectionPosition.emit(demon.get_global_transform_with_canvas().origin, souls)
+			await get_tree().create_timer(0.1).timeout
+			Signals.emitFavorsFromCollectionPosition.emit(demon.get_global_transform_with_canvas().origin, favors)
+			timeToWaitForSoulsToFly += 0.3 * souls
+		await get_tree().create_timer(timeToWaitForSoulsToFly + 0.5).timeout
 		
-		if Tutorial.tutorial:
-			Signals.tutorial.emit(Tutorial.Topic.Soul, "'" + demon.demonName + "' is one of your Demons on Earth and gathers Souls and a Favor each Turn. \nThe amount of Souls gathered depends on the amount of Hearts of the Demon.")
-			await Signals.tutorialRead
 		
-		demon.showSoulsGathered(souls, favors)
-		await Signals.animationDone
-	Signals.collapseDemonCards.emit()
+		Signals.collapseDemonCards.emit()
 	
+	Signals.resetCamera.emit()
+	await get_tree().create_timer(1.0).timeout
 	var sectioNr : int = 0
 	for sectioName in soulSummary[Data.id]["hell"]:
 		var souls = soulSummary[Data.id]["hell"][sectioName]["souls"]
 		var sectio : Sectio = Decks.sectioNodes[sectioName]
-		Signals.moveCamera.emit(sectio.global_position)
-		await Signals.doneMoving
+		#Signals.moveCamera.emit(sectio.global_position)
+		#await Signals.doneMoving
 		
 		if Tutorial.tutorial:
 			match sectioNr:
@@ -302,24 +311,30 @@ func sendSoulSummary(soulSummary : Dictionary):
 			sectioNr += 1
 			await Signals.tutorialRead
 		
-		sectio.showSoulsGathered(souls)
-		await Signals.animationDone
+		Signals.emitSoulsFromCollectionPosition.emit(sectio.get_global_transform_with_canvas().origin, souls)
+		#sectio.showSoulsGathered(souls)
+		#await Signals.animationDone
+	
+	Signals.resetCamera.emit()
+	await get_tree().create_timer(1.0).timeout
 	
 	for unitName in soulSummary[Data.id]["payment"]:
 		var souls = soulSummary[Data.id]["payment"][unitName]["paid"]
 		var unit : Unit = Data.troops[unitName]
-		Signals.moveCamera.emit(unit.global_position)
-		await Signals.doneMoving
+		#Signals.moveCamera.emit(unit.global_position)
+		#await Signals.doneMoving
 		
 		if Tutorial.tutorial:
 			Signals.tutorial.emit(Tutorial.Topic.Soul, "Every Unit you own costs you one Soul per Turn.")
 			await Signals.tutorialRead
 		
-		unit.showSoulsPaid(souls)
-		await Signals.animationDone
+		Signals.emitSoulsFromTreasury.emit(unit.get_global_transform_with_canvas().origin, souls)
+		#unit.showSoulsPaid(souls)
+		#await Signals.animationDone
+	
+	await get_tree().create_timer(1.0).timeout
 	
 	Signals.resetCamera.emit()
-	print("w1 ",Connection.host)
 	doneGatheringSouls.rpc_id(Connection.host)
 
 
@@ -410,6 +425,8 @@ func confirmPetition(boolean):
 		var playerId = multiplayer.get_remote_sender_id()
 		var favors = Data.players[playerId].favors - 1
 		Signals.changeFavors.emit(playerId, favors)
+		if playerId == Data.id:
+			Signals.changeFavorsInUI.emit(favors)
 
 
 @rpc("any_peer", "call_local")

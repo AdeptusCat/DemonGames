@@ -674,7 +674,7 @@ shader_parameter/active = false
 [node name="ActionsMenu" type="MarginContainer"]
 offset_right = 293.0
 offset_bottom = 591.0
-size_flags_horizontal = 8
+size_flags_horizontal = 0
 script = ExtResource("1_i65gp")
 skullTexture = ExtResource("2_kjl8k")
 heartTexture = ExtResource("3_0g22h")

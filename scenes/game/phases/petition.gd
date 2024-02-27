@@ -4,6 +4,7 @@ extends Node
 func tutorialStart():
 	if Tutorial.tutorial:
 		Signals.changeFavors.emit(Data.id, 1)
+		Signals.changeFavorsInUI.emit(1)
 		for playerId in Data.players:
 			if playerId == Data.id:
 				Signals.spawnUnit.emit("Thieves", playerId, Data.UnitType.Legion)

@@ -285,7 +285,7 @@ shader_parameter/active = false
 [node name="SummoningMenu" type="MarginContainer"]
 offset_right = 148.0
 offset_bottom = 410.0
-size_flags_horizontal = 8
+size_flags_horizontal = 0
 script = ExtResource("1_pvfms")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

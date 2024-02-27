@@ -22,6 +22,14 @@ signal startGame
 signal connected
 
 # UI
+signal emitSoulsFromCollectionPosition(position : Vector2, soulsGathered : int)
+signal emitSoulsFromTreasury(position : Vector2, soulsGathered : int)
+signal soulReachedPlayerStats
+signal soulLeftPlayerStats
+signal emitFavorsFromCollectionPosition(position : Vector2, favorsGathered : int)
+signal favorReachedPlayerStats
+signal favorLeftPlayerStats
+
 signal showChosenLieutenantFromAvailableLieutenantsBox(marginContainer : MarginContainer)
 signal removeChosenLieutenantFromAvailableLieutenantsBox(lieutenantName : String)
 signal removeChosenLieutenantFromMouse(lieutenantName : String)
@@ -191,9 +199,11 @@ signal nextDemon(demonRank)
 signal combatOver
 signal combatPhaseStarted
 
+signal changeSoulsInUI(souls : int)
 signal changeSouls(playerId : int, souls : int)
 signal changeIncome(playerId : int, income : String)
 signal incomeChanged(playerId : int)
+signal changeFavorsInUI(favors : int)
 signal changeFavors(playerId : int, favors : int)
 signal changeDisfavors(playerId : int, disfavors : int)
 # MAP

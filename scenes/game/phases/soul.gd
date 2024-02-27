@@ -20,7 +20,7 @@ func phase(ui : UI):
 				soulSummary = gatherSoulsOnEarth(demon, soulSummary)
 	
 	for playerId in Data.players:
-		soulSummary = gatherSoulsInHell(playerId, soulSummary)
+		soulSummary = await gatherSoulsInHell(playerId, soulSummary)
 
 	for playerId in Data.players:
 		soulSummary = payUnits(playerId, soulSummary)
@@ -90,15 +90,20 @@ func collectFavorOnEarth(demon : Demon, soulSummary : Dictionary) -> Dictionary:
 		print(demon.demonName, " failed the disfavor roll")
 	return soulSummary
 
+
 func gatherSoulsOnEarth(demon : Demon, soulSummary : Dictionary) -> Dictionary:
-	var player = Data.players[demon.player]
+	var player : Player = Data.players[demon.player]
 	var result = Dice.roll(1)
 	var soulsGathered = 0
 	soulsGathered += result[0]
 	soulsGathered += demon.hearts
 	soulsGathered = clamp(soulsGathered, 0, 100)
 	var souls = player.souls + soulsGathered
+	#if player.playerId == Data.id:
+		#Signals.emitSoulsFromCollectionPosition.emit(sectioName, soulsGathered)
 	Signals.changeSouls.emit(player.playerId, souls)
+	#if player.playerId == Data.id:
+		#Signals.changeSoulsInUI.emit(souls)
 	soulSummary[player.playerId]["earth"][demon.demonName]["souls"] = soulsGathered
 	print(demon.demonName, " gathered ", soulsGathered, " Souls on Earth")
 	return soulSummary
@@ -107,13 +112,44 @@ func gatherSoulsOnEarth(demon : Demon, soulSummary : Dictionary) -> Dictionary:
 func gatherSoulsInHell(playerId : int, soulSummary : Dictionary) -> Dictionary:
 	var player = Data.players[playerId]
 	var soulsGatheredTotal = 0
+	
 	for sectioName in player.sectios:
 		if enemyInSectio(sectioName, playerId):
 			soulSummary[player.playerId]["hell"][sectioName] = {"isolated" : false, "souls": 0, "enemyInSectio": true}
 		else:
 			gatherSoulsForSectio(sectioName, playerId, soulSummary)
+			#gatherSoulsForSectio1(sectioName, playerId, soulSummary)
 			if sectioName == "The Wise Men":
 				getArcanaCardsForTheWiseMen(player.playerId)
+	return soulSummary
+
+
+func gatherSoulsForSectio1(sectioName : String, playerId : int, soulSummary : Dictionary):
+	var player = Data.players[playerId]
+	var sectio = Decks.sectioNodes[sectioName]
+	var isIsolated = sectio.isolated()
+	var soulsGathered = sectio.souls
+	# check for hellhounds in sectio as well!! hellhounds  hellhounds  hellhounds  hellhounds  hellhounds  hellhounds 
+	if isIsolated:
+		soulsGathered -= 2
+	soulsGathered = clamp(soulsGathered, 0, 100)
+	var souls = player.souls + soulsGathered
+	if playerId == Data.id:
+		Signals.emitSoulsFromCollectionPosition.emit(sectio.get_global_transform_with_canvas().origin, soulsGathered)
+
+
+func gatherSoulsForSectio(sectioName : String, playerId : int, soulSummary : Dictionary) -> Dictionary:
+	var player = Data.players[playerId]
+	var sectio = Decks.sectioNodes[sectioName]
+	var isIsolated = sectio.isolated()
+	var soulsGathered = sectio.souls
+	# check for hellhounds in sectio as well!! hellhounds  hellhounds  hellhounds  hellhounds  hellhounds  hellhounds 
+	if isIsolated:
+		soulsGathered -= 2
+	soulsGathered = clamp(soulsGathered, 0, 100)
+	var souls = player.souls + soulsGathered
+	Signals.changeSouls.emit(playerId, souls)
+	soulSummary[player.playerId]["hell"][sectioName] = {"isolated" : isIsolated, "souls": soulsGathered,  "enemyInSectio": false}
 	return soulSummary
 
 
@@ -132,21 +168,6 @@ func getArcanaCardsForTheWiseMen(playerId : int) -> void:
 		var cardName : String = Decks.getRandomCard("arcana")
 		for peer in Connection.peers:
 			RpcCalls.addArcanaCard.rpc_id(peer, playerId, cardName)
-
-
-func gatherSoulsForSectio(sectioName : String, playerId : int, soulSummary : Dictionary) -> Dictionary:
-	var player = Data.players[playerId]
-	var sectio = Decks.sectioNodes[sectioName]
-	var isIsolated = sectio.isolated()
-	var soulsGathered = sectio.souls
-	# check for hellhounds in sectio as well!! hellhounds  hellhounds  hellhounds  hellhounds  hellhounds  hellhounds 
-	if isIsolated:
-		soulsGathered -= 2
-	soulsGathered = clamp(soulsGathered, 0, 100)
-	var souls = player.souls + soulsGathered
-	Signals.changeSouls.emit(playerId, souls)
-	soulSummary[player.playerId]["hell"][sectioName] = {"isolated" : isIsolated, "souls": soulsGathered,  "enemyInSectio": false}
-	return soulSummary
 
 
 func payUnits(playerId : int, soulSummary : Dictionary) -> Dictionary:
