@@ -102,3 +102,11 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 text = "9"
+
+[node name="DeactivateColorRect" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+color = Color(0.211765, 0.211765, 0.211765, 0.65098)
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

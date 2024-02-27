@@ -372,6 +372,7 @@ tooltip_text = "Legions can be spawned inside Sectios that are owned by your Tri
 text = "Recruit Legions for 3 Souls each"
 
 [node name="BuyArcanaCardHBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 tooltip_text = "Buy Arcana Card for 5 Souls"
 
@@ -411,6 +412,7 @@ centered = false
 
 [node name="AvailableLieutenantsCheckButton" type="CheckButton" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/ShowLieutenantsHBoxContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 alignment = 1
 
@@ -429,10 +431,9 @@ stretch_mode = 0
 
 [node name="EndPhaseButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/EndPhaseMarginContainer"]
 unique_name_in_owner = true
-visible = false
 material = SubResource("ShaderMaterial_yfeb6")
 layout_mode = 2
-text = "End Summoning Phase"
+text = "End Phase"
 metadata/_edit_use_anchors_ = true
 
 [node name="FrameMarginContainer" parent="MarginContainer" instance=ExtResource("8_m0ixw")]
@@ -443,6 +444,5 @@ layout_mode = 2
 [connection signal="gui_input" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/BuyArcanaCardHBoxContainer" to="." method="_on_buy_arcana_card_h_box_container_gui_input"]
 [connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/BuyArcanaCardHBoxContainer/BuyArcanaCardButton" to="." method="_on_buy_arcana_card_button_pressed"]
 [connection signal="gui_input" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/ShowLieutenantsHBoxContainer" to="." method="_on_show_lieutenants_h_box_container_gui_input"]
-[connection signal="toggled" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/ShowLieutenantsHBoxContainer/AvailableLieutenantsCheckButton" to="." method="_on_available_lieutenants_check_button_toggled"]
 [connection signal="gui_input" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/EndPhaseMarginContainer" to="." method="_on_end_phase_margin_container_gui_input"]
 [connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/EndPhaseMarginContainer/EndPhaseButton" to="." method="_on_end_phase_button_pressed"]

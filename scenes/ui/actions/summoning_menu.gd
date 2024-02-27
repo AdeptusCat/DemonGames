@@ -1,6 +1,9 @@
 extends Control
 
 
+var recruitLegionsButtonActivated : bool = true
+
+
 func _ready():
 	Signals.disableActionMenuButtons.connect(_on_disableActionButtons)
 	Signals.toggleRecruitLegionsButton.connect(_on_toggleRecruitLegionsButton)
@@ -24,10 +27,8 @@ func _on_disableActionButtons():
 
 func _on_toggleRecruitLegionsButton(boolean : bool):
 	%RecruitLegionsButton.disabled != boolean
-
-
-func _on_available_lieutenants_check_button_toggled(toggled_on):
-	Signals.toggleAvailableLieutenants.emit(toggled_on)
+	recruitLegionsButtonActivated = boolean
+	print("recruiting ", recruitLegionsButtonActivated)
 
 
 func _on_toggleBuyArcanaCardButton(boolean : bool):
@@ -90,9 +91,11 @@ func _on_end_phase_button_pressed():
 
 
 func _on_recruit_legions_h_box_container_gui_input(event):
-	if Input.is_action_just_pressed("click"):
-		Signals.tutorialRead.emit()
-		Signals.recruitLegions.emit()
+	if recruitLegionsButtonActivated:
+		if Input.is_action_just_pressed("click"):
+			print("recruti clo11")
+			Signals.tutorialRead.emit()
+			Signals.recruitLegions.emit()
 
 
 func _on_buy_arcana_card_h_box_container_gui_input(event):
@@ -103,7 +106,6 @@ func _on_buy_arcana_card_h_box_container_gui_input(event):
 
 
 func _on_show_lieutenants_h_box_container_gui_input(event):
-	return
 	if Input.is_action_just_pressed("click"):
 		Signals.toggleAvailableLieutenants.emit(true)
 

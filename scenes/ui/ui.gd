@@ -48,7 +48,6 @@ func _ready():
 	Signals.pickLegions.connect(pickLegions)
 	Signals.toogleSummoningMenu.connect(_on_toogleSummoningMenu)
 	Signals.toogleBuyLieutenant.connect(toogleBuyLieutenant)
-	Signals.spinLieutenantBox.connect(_on_spinLieutenantBox)
 	Signals.toggleDiscardArcanaCardControl.connect(_on_toggleDiscardArcanaCardControl)
 	Signals.hidePickArcanaCardContainer.connect(_on_hidePickArcanaCardContainer)
 	Signals.fleeDialog.connect(_on_fleeDialog)
@@ -59,7 +58,6 @@ func _ready():
 	Signals.toogleWaitForPlayer.connect(toogleWaitForPlayer)
 	Signals.addArcanaCardToUi.connect(addArcanaCard)
 	Signals.updateRankTrack.connect(_on_updateRankTrack)
-	Signals.addLieutenantToAvailableLieutenantsBox.connect(addLieutenantToAvailableLieutenantsBox)
 	Signals.fillPickArcanaCardsContainer.connect(fillPickArcanaCardsContainer)
 	Signals.removeDemon.connect(removeDemon)
 	Signals.changePlayerName.connect(changePlayerName)
@@ -67,14 +65,12 @@ func _ready():
 	Signals.showArcanaCardsContainer.connect(_on_showArcanaCardsContainer)
 	Signals.hideArcanaCardsContainer.connect(_on_hideArcanaCardsContainer)
 	Signals.showRankTrackMarginContainer.connect(_on_showRankTrackMarginContainer)
-	Signals.showChosenLieutenantFromAvailableLieutenantsBox.connect(showChosenLieutenantFromAvailableLieutenantsBox)
 
 	Signals.updateTurnTrack.connect(_on_updateTurnTrack)
 	
 	Signals.tutorial.connect(_on_tutorial)
 	Signals.tutorialRead.connect(_on_tutorialRead)
 	
-	Signals.removeLieutenantFromAvailableLieutenantsBox.connect(_on_removeLieutenantFromAvailableLieutenantsBox)
 	
 	Server.playerLeft.connect(_on_playerLeft)
 	
@@ -82,6 +78,7 @@ func _ready():
 	
 	Signals.playerDoneWithPhase.connect(_on_playerDoneWithPhase)
 	Signals.toggleAvailableLieutenants.connect(_on_toggleAvailableLieutenants)
+	Signals.showChosenLieutenantFromAvailableLieutenantsBox.connect(_on_showChosenLieutenantFromAvailableLieutenantsBox)
 	
 	currentDemonRoot = %CurrentDemonTopTree.create_item()
 	%CurrentDemonTopTree.set_column_title(0, "")
@@ -227,9 +224,7 @@ func _on_playerLeft(playerId : int):
 		add_child(scene)
 
 
-func _on_removeLieutenantFromAvailableLieutenantsBox(lieutenantName : String):
-	Decks.availableLieutenants.erase(lieutenantName)
-	removeLieutenantFromAvailableLieutenantsBox(lieutenantName)
+
 
 
 func _on_tutorial(topic, text : String):
@@ -556,94 +551,11 @@ func pickUnitToMove(sectio):
 
 func toogleBuyLieutenant(boolean : bool):
 	if boolean:
-		%AvailableLieutenantsMarginContainer.show()
+		%AvailableLieutenantsMenu.show()
 		Signals.toggleAvailableLieutenantsCheckButtonPressed.emit(true)
 	else:
-		%AvailableLieutenantsMarginContainer.hide()
+		%AvailableLieutenantsMenu.hide()
 		Signals.toggleAvailableLieutenantsCheckButtonPressed.emit(false)
-
-
-func addLieutenantToAvailableLieutenantsBox(lieutenantName):
-	var lieutenant = Decks.lieutenantsReference[lieutenantName]
-	var lieutenantMarginContainerScene = load("res://scenes/ui/lieutenant_margin_container.tscn")
-	var lieutenantMarginContainer = lieutenantMarginContainerScene.instantiate()
-	lieutenantMarginContainer.populate(lieutenantName, lieutenant.texture, str(lieutenant["combat bonus"]), str(lieutenant.capacity))
-	%AvailableLieutenantsHBoxContainer.add_child(lieutenantMarginContainer)
-
-var startTime = Time.get_ticks_msec()
-var lieutenantMarginContainers : Array = []
-var activeLieutenantMarginContainer
-var intervalDefault : float = 0.1
-var interval : float = intervalDefault
-var startSpin : bool = false
-var spinCounter : int = 0
-var goalLieutenantMarginContainer
-
-
-func _on_spinLieutenantBox(lieutenantPicked : String):
-	lieutenantMarginContainers = %AvailableLieutenantsHBoxContainer.get_children()
-	for lieutenantMarginContainer in lieutenantMarginContainers:
-		if lieutenantMarginContainer.lieutenantName == lieutenantPicked:
-			goalLieutenantMarginContainer = lieutenantMarginContainer
-	startArrowSpin()
-
-func startArrowSpin():
-	toogleBuyLieutenant(true)
-	startSpin = true
-	startTime = Time.get_ticks_msec()
-	spinCounter = 0
-	interval = intervalDefault
-
-func stopSpin():
-	startSpin = false
-	await get_tree().create_timer(1.0).timeout
-	Signals.spinLieutenantBoxStopped.emit()
-	toogleBuyLieutenant(false)
-	
-
-func _process(elta):
-	if startSpin:
-		if activeLieutenantMarginContainer == null:
-			activeLieutenantMarginContainer = lieutenantMarginContainers.pop_front()
-			activeLieutenantMarginContainer.toggleTriumphirateIcon(true, Data.id)
-			spinCounter += 1
-		else:
-			if Time.get_ticks_msec() > startTime + interval:
-				if spinCounter > 10 and activeLieutenantMarginContainer == goalLieutenantMarginContainer:
-					stopSpin()
-				else:
-					startTime = Time.get_ticks_msec()
-					activeLieutenantMarginContainer.toggleTriumphirateIcon(false, Data.id)
-					lieutenantMarginContainers.append(activeLieutenantMarginContainer)
-					if lieutenantMarginContainers.size() == 0:
-						stopSpin()
-					else:
-						activeLieutenantMarginContainer = null
-						interval += pow(interval, 1.01)
-			# if it takes too long, skip
-			if Time.get_ticks_msec() > startTime + 5000:
-					if activeLieutenantMarginContainer:
-						activeLieutenantMarginContainer.toggleTriumphirateIcon(false, Data.id)
-					goalLieutenantMarginContainer.toggleTriumphirateIcon(true, Data.id)
-					stopSpin()
-
-
-func showChosenLieutenantFromAvailableLieutenantsBox(lieutenantName):
-	var marginContainer
-	for child in %AvailableLieutenantsHBoxContainer.get_children():
-		var unitName = child.getLieutenantName()
-		if unitName == lieutenantName:
-			child.highlight()
-			marginContainer = child
-			%AvailableLieutenantsHBoxContainer.remove_child(child)
-	add_child(marginContainer)
-
-
-func removeLieutenantFromAvailableLieutenantsBox(lieutenantName : String):
-	for child in %AvailableLieutenantsHBoxContainer.get_children():
-		var unitName = child.getLieutenantName()
-		if unitName == lieutenantName:
-			child.queue_free()
 
 
 func addArcanaCard(id, cardName):
@@ -755,12 +667,10 @@ func _on_toogleSummoningMenu(boolean : bool):
 
 
 func _on_showArcanaCardsContainer():
-	print("show arcana")
 	%ArcanaCardsMarginContainer.show()
 
 
 func _on_hideArcanaCardsContainer():
-	print("hide arcana")
 	%ArcanaCardsMarginContainer.hide()
 
 
@@ -774,9 +684,13 @@ func _on_updateTurnTrack(turn : int):
 
 func _on_toggleAvailableLieutenants(toggled_on):
 	if toggled_on:
-		%AvailableLieutenantsMarginContainer.show()
+		%AvailableLieutenantsMenu.canPlayerAffordLieutenants()
+		%AvailableLieutenantsMenu.show()
 		Signals.toggleAvailableLieutenantsCheckButtonPressed.emit(true)
 	else:
-		%AvailableLieutenantsMarginContainer.hide()
+		%AvailableLieutenantsMenu.hide()
 		Signals.toggleAvailableLieutenantsCheckButtonPressed.emit(false)
 
+
+func _on_showChosenLieutenantFromAvailableLieutenantsBox(marginContainer : MarginContainer):
+	add_child(marginContainer)

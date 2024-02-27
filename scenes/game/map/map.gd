@@ -1112,7 +1112,6 @@ func placeUnit(sectio, playerId : int = Data.id, unitType : Data.UnitType = Data
 						continue
 					spawnUnit.rpc_id(peer, sectio.sectioName, nr, playerId, Data.UnitType.Lieutenant, lieutenantNameToSpawn)
 					updateTroopInSectio.rpc_id(peer, sectio.sectioName, sectio.troops)
-			
 			Data.players[Data.id].canAffordRecruitLieutenants()
 			RpcCalls.recruitedLieutenant.rpc_id(Connection.host)
 	
@@ -1148,7 +1147,7 @@ func spawnUnit(sectioName : String, nr : int, triumphirate : int, unitType : Dat
 			unitScene.combatBonus = lieutenantRef["combat bonus"]
 			unitScene.capacity = lieutenantRef["capacity"]
 			unitScene.lieutenantTextureDir = lieutenantRef["texture"]
-			Signals.removeLieutenantFromAvailableLieutenantsBox.emit(unitName)
+			Signals.removeChosenLieutenantFromMouse.emit(unitName)
 	
 	unitScene.name = str(nr)
 	unitScene.triumphirate = triumphirate

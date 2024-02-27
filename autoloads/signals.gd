@@ -22,7 +22,9 @@ signal startGame
 signal connected
 
 # UI
-signal showChosenLieutenantFromAvailableLieutenantsBox(lieutenantName : String)
+signal showChosenLieutenantFromAvailableLieutenantsBox(marginContainer : MarginContainer)
+signal removeChosenLieutenantFromAvailableLieutenantsBox(lieutenantName : String)
+signal removeChosenLieutenantFromMouse(lieutenantName : String)
 
 signal showStartScreen
 signal showArcanaCardsContainer
