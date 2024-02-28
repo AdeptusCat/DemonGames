@@ -51,15 +51,15 @@ func _ready():
 	#debug 
 	Server.playerjoinedRoom.connect(_on_playerjoinedRoom)
 	
-	#skipHell = true
-	#skipSouls = true
+	skipHell = true
+	skipSouls = true
 	#skipSummoning = true
 	#skipAction = true
 #	skipCombat = true
 #	skipPetitions = true
 #	skipEnd = true
 
-	#skipUnitPlacing = true
+	skipUnitPlacing = true
 	#debugTroops = true
 #	debugSouls = 100
 #	debugFavors = 1
@@ -403,7 +403,10 @@ func setupStartLegions():
 				aiPlaceStartLegion(playerId)
 		for peer in Connection.peers:
 			await map.unitPlacingDone
-		map.placeUnitsFromArray()
+		
+		for peers in Connection.peers:
+			RpcCalls.resetUnitsToPlace.rpc_id(peers)
+		Signals.placeUnitsFromArray.emit()
 
 
 func aiPlaceStartLegion(id : int) -> void:

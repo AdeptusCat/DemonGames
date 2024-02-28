@@ -5,6 +5,9 @@ func phase(phase : int, ui : UI):
 	if Tutorial.tutorial:
 		await tutorialSetup()
 	
+	for peers in Connection.peers:
+		RpcCalls.resetUnitsToPlace.rpc_id(peers)
+	
 	# sort players by souls
 	var playersSortedBySouls : Array = sortPlayersBySouls()
 	
@@ -76,17 +79,28 @@ func phase(phase : int, ui : UI):
 		if Tutorial.tutorial:
 			await tutorial2()
 		
-		await Signals.phaseDone
+		#await Signals.phaseDone
 		
 		if Tutorial.tutorial:
 			await tutorialEnd()
 		
+		#RpcCalls.hideArcanaCardsContainer.rpc_id(playerId)
+		#
+		#RpcCalls.phaseEnd.rpc_id(playerId, Data.phases.Summoning)
+		#for peer in Connection.peers:
+			#RpcCalls.toogleWaitForPlayer.rpc_id(peer, playerId, false)
+	
+	for peers in Connection.peers:
+		await Signals.phaseDone
+	
+	Signals.placeUnitsFromArray.emit()
+	
+	for playerId in Connection.peers:
 		RpcCalls.hideArcanaCardsContainer.rpc_id(playerId)
 		
 		RpcCalls.phaseEnd.rpc_id(playerId, Data.phases.Summoning)
 		for peer in Connection.peers:
 			RpcCalls.toogleWaitForPlayer.rpc_id(peer, playerId, false)
-
 
 func occupyTutorialSectios() -> void:
 	var sectio : Sectio = Decks.sectioNodes["Megalomaniacs"]

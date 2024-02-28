@@ -70,6 +70,9 @@ signal tutorial(topic, text : String)
 signal tutorialRead
 signal showSequenceOfPlayHelp
 
+# summoning 
+signal placeUnitsFromArray
+
 # actions
 signal disableActionMenuButtons
 signal toggleRecruitLegionsButton(boolean)

@@ -43,7 +43,7 @@ func _ready():
 	Signals.initMouseLights.connect(_on_initMouseLights)
 	Signals.spawnUnit.connect(_on_spawnUnit)
 	Signals.potatoPc.connect(_on_potatoPc)
-	
+	Signals.placeUnitsFromArray.connect(placeUnitsFromArray)
 	# Engine.is_editor_hint()
 	# only useful for tool scripts
 #	while not ResourceLoader.load_threaded_get_status(map_fx_path) == 3:
@@ -458,6 +458,8 @@ func sectiosClickable():
 
 func _on_summoningDone():
 	Signals.sectioClicked.emit(null)
+	if not Data.id == Connection.host:
+		sendUnitsToSpawnToHost.rpc_id(Connection.host, Data.unitsToSpawn, Data.sectiosToUpdate)
 
 
 func _unhandled_input(event):
@@ -1120,7 +1122,7 @@ func placeUnitsFromArray():
 					spawnUnit.rpc_id(peer, array[0], array[1], array[2], array[3])
 					updateTroopInSectio.rpc_id(peer, Data.sectiosToUpdate[i][0], Data.sectiosToUpdate[i][1])
 		i += 1
-
+	
 
 
 func placeUnit(sectio, playerId : int = Data.id, unitType : Data.UnitType = Data.UnitType.Legion, lieutenantNameToSpawn : String = ""):

@@ -6,6 +6,12 @@ const demonScene = preload("res://scenes/game/demon/demon.tscn")
 
 
 @rpc("any_peer", "call_local")
+func resetUnitsToPlace():
+	Data.unitsToSpawn.clear()
+	Data.sectiosToUpdate.clear()
+
+
+@rpc("any_peer", "call_local")
 func peerReady():
 	var playerId = multiplayer.get_remote_sender_id()
 	Connection.playerReady(playerId)
