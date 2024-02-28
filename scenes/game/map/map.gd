@@ -692,13 +692,15 @@ func reorderUnitsinSlots(sectio : Sectio):
 
 @rpc("any_peer", "call_local")
 func placeFirstLegion():
+	print("placing first legion ",Data.id , " ", Connection.host)
 	AudioSignals.playerTurn.emit()
 	Signals.help.emit(Data.HelpSubjects.PlaceFirstLegion)
 	for sectioName in Data.player.sectios:
 		Decks.sectioNodes[sectioName].changeClickable(true)
 	var sectio = await Signals.sectioClicked
 	placeUnit(sectio, Data.id, Data.UnitType.Legion)
-	print("w2 ",Connection.host)
+	if not Data.id == Connection.host:
+		sendUnitsToSpawnToHost.rpc_id(Connection.host, Data.unitsToSpawn, Data.sectiosToUpdate)
 	placingDone.rpc_id(Connection.host)
 	for sectioName in Data.player.sectios:
 		Decks.sectioNodes[sectioName].changeClickable(false)
@@ -1095,6 +1097,32 @@ func _on_spawnUnit(sectioName : String, playerId : int, unitType : Data.UnitType
 	placeUnit(sectio, playerId, unitType, unitName)
 
 
+@rpc("any_peer", "call_local")
+func sendUnitsToSpawnToHost(unitsToSpawn, sectiosToUpdate):
+	Data.unitsToSpawn = Data.unitsToSpawn + unitsToSpawn
+	Data.sectiosToUpdate = Data.sectiosToUpdate + sectiosToUpdate
+
+
+func placeUnitsFromArray():
+	var i : int = 0
+	for array : Array in Data.unitsToSpawn:
+		if array.size() > 4:
+			for peer in Connection.peers:
+				# dont sent it to the peer that has already spawned the unit for itself locally
+				if not peer == array[2]:
+					spawnUnit.rpc_id(peer, array[0], array[1], array[2], array[3], array[4])
+					updateTroopInSectio.rpc_id(peer, Data.sectiosToUpdate[i][0], Data.sectiosToUpdate[i][1])
+					RpcCalls.recruitedLieutenant.rpc_id(Connection.host)
+		else:
+			for peer in Connection.peers:
+				# dont sent it to the peer that has already spawned the unit for itself locally
+				if not peer == array[2]:
+					spawnUnit.rpc_id(peer, array[0], array[1], array[2], array[3])
+					updateTroopInSectio.rpc_id(peer, Data.sectiosToUpdate[i][0], Data.sectiosToUpdate[i][1])
+		i += 1
+
+
+
 func placeUnit(sectio, playerId : int = Data.id, unitType : Data.UnitType = Data.UnitType.Legion, lieutenantNameToSpawn : String = ""):
 	var player = Data.players[playerId]
 	if unitType == Data.UnitType.Lieutenant:
@@ -1105,15 +1133,17 @@ func placeUnit(sectio, playerId : int = Data.id, unitType : Data.UnitType = Data
 			spawnUnit(sectio.sectioName, nr, playerId, Data.UnitType.Lieutenant, lieutenantNameToSpawn)
 			updateTroopInSectio(sectio.sectioName, sectio.troops)
 			Signals.incomeChanged.emit(playerId)
-			for peer in Connection.peers:
-				if not peer == playerId:
-					# skip sending to host if its an AI player
-					if not Connection.peers.has(playerId) and peer == Connection.host:
-						continue
-					spawnUnit.rpc_id(peer, sectio.sectioName, nr, playerId, Data.UnitType.Lieutenant, lieutenantNameToSpawn)
-					updateTroopInSectio.rpc_id(peer, sectio.sectioName, sectio.troops)
+			Data.unitsToSpawn.append([sectio.sectioName, nr, playerId, Data.UnitType.Lieutenant, lieutenantNameToSpawn])
+			Data.sectiosToUpdate.append([sectio.sectioName, sectio.troops])
+			#for peer in Connection.peers:
+				#if not peer == playerId:
+					## skip sending to host if its an AI player
+					#if not Connection.peers.has(playerId) and peer == Connection.host:
+						#continue
+					#spawnUnit.rpc_id(peer, sectio.sectioName, nr, playerId, Data.UnitType.Lieutenant, lieutenantNameToSpawn)
+					#updateTroopInSectio.rpc_id(peer, sectio.sectioName, sectio.troops)
 			Data.players[Data.id].canAffordRecruitLieutenants()
-			RpcCalls.recruitedLieutenant.rpc_id(Connection.host)
+			#RpcCalls.recruitedLieutenant.rpc_id(Connection.host)
 	
 	if unitType == Data.UnitType.Legion:
 		var nr = randi()
@@ -1121,13 +1151,15 @@ func placeUnit(sectio, playerId : int = Data.id, unitType : Data.UnitType = Data
 		updateTroopInSectio(sectio.sectioName, sectio.troops)
 		print("troops in sectio ", sectio.sectioName, sectio.troops)
 		Signals.incomeChanged.emit(playerId)
-		for peer in Connection.peers:
-			if not peer == playerId:
-				# skip sending to host if its an AI player
-				if not Connection.peers.has(playerId) and peer == Connection.host:
-					continue
-				spawnUnit.rpc_id(peer, sectio.sectioName, nr, playerId, Data.UnitType.Legion)
-				updateTroopInSectio.rpc_id(peer, sectio.sectioName, sectio.troops)
+		Data.unitsToSpawn.append([sectio.sectioName, nr, playerId, Data.UnitType.Legion])
+		Data.sectiosToUpdate.append([sectio.sectioName, sectio.troops])
+		#for peer in Connection.peers:
+			#if not peer == playerId:
+				## skip sending to host if its an AI player
+				#if not Connection.peers.has(playerId) and peer == Connection.host:
+					#continue
+				#spawnUnit.rpc_id(peer, sectio.sectioName, nr, playerId, Data.UnitType.Legion)
+				#updateTroopInSectio.rpc_id(peer, sectio.sectioName, sectio.troops)
 	
 	sectio.reorderUnitsinSlots()
 

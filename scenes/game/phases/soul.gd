@@ -119,8 +119,8 @@ func gatherSoulsInHell(playerId : int, soulSummary : Dictionary) -> Dictionary:
 		else:
 			gatherSoulsForSectio(sectioName, playerId, soulSummary)
 			#gatherSoulsForSectio1(sectioName, playerId, soulSummary)
-			if sectioName == "The Wise Men":
-				getArcanaCardsForTheWiseMen(player.playerId)
+			#if sectioName == "The Wise Men":
+				#getArcanaCardsForTheWiseMen(player.playerId)
 	return soulSummary
 
 

@@ -66,7 +66,7 @@ func _ready():
 #	debugDisfavors = 1
 #
 #	Settings.tooltips = false
-	#Settings.skipScreens = true
+	Settings.skipScreens = true
 #	Settings.skipSoulsSummary = true
 #	Settings.skipWaitForPlayers = true
 #	Settings.skipPhaseReminder = true
@@ -398,9 +398,12 @@ func setupStartLegions():
 		playerIds.shuffle()
 		for playerId in playerIds:
 			if playerId > 0:
-				await playerPlaceStartLegion(playerId)
+				playerPlaceStartLegion(playerId)
 			else:
 				aiPlaceStartLegion(playerId)
+		for peer in Connection.peers:
+			await map.unitPlacingDone
+		map.placeUnitsFromArray()
 
 
 func aiPlaceStartLegion(id : int) -> void:
@@ -414,7 +417,7 @@ func playerPlaceStartLegion(playerId : int) -> void:
 		RpcCalls.toogleWaitForPlayer.rpc_id(peer, playerId, true)
 	for peer in Connection.peers:
 		ui.updateRankTrackCurrentPlayer.rpc_id(peer, playerId)
-	await map.unitPlacingDone
+	map.unitPlacingDone
 	for peer in Connection.peers:
 		RpcCalls.toogleWaitForPlayer.rpc_id(peer, playerId, false)
 

@@ -100,8 +100,8 @@ func _physics_process(delta: float) -> void:
 			arrived = true
 			arrivedAtDestination.emit()
 			global_position = destination
-			for peer in Connection.peers:
-				RpcCalls.stopFollowingUnit.rpc_id(peer, unitNr)
+			#for peer in Connection.peers:
+				#RpcCalls.stopFollowingUnit.rpc_id(peer, unitNr)
 
 
 func kill():
@@ -121,8 +121,8 @@ func set_destinations(newDestinations : Array):
 	destinations = newDestinations
 	destination = destinations.pop_front()
 	$NavigationAgent2D.set_target_position(destination)
-	for peer in Connection.peers:
-		RpcCalls.followUnit.rpc_id(peer, unitNr)
+	#for peer in Connection.peers:
+		#RpcCalls.followUnit.rpc_id(peer, unitNr)
 #func _integrate_forces(_state):
 #	if $NavigationAgent2D.is_target_reachable():
 #		var target = $NavigationAgent2D.get_next_path_position()
