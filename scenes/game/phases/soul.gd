@@ -102,8 +102,7 @@ func gatherSoulsOnEarth(demon : Demon, soulSummary : Dictionary) -> Dictionary:
 	#if player.playerId == Data.id:
 		#Signals.emitSoulsFromCollectionPosition.emit(sectioName, soulsGathered)
 	Signals.changeSouls.emit(player.playerId, souls)
-	#if player.playerId == Data.id:
-		#Signals.changeSoulsInUI.emit(souls)
+	#Signals.changeSoulsInUI.emit(player.playerId, souls)
 	soulSummary[player.playerId]["earth"][demon.demonName]["souls"] = soulsGathered
 	print(demon.demonName, " gathered ", soulsGathered, " Souls on Earth")
 	return soulSummary

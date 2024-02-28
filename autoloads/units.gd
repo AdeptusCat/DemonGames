@@ -22,7 +22,7 @@ func _on_recruit_legions():
 			Signals.placeLegion.emit(sectio, Data.id)
 			var souls = Data.players[sectio.player].souls - 3
 			Signals.changeSouls.emit(sectio.player, souls)
-			Signals.changeSoulsInUI.emit(souls)
+			Signals.changeSoulsInUI.emit(sectio.player, souls)
 			if not Data.player.hasEnoughSouls(3):
 				break
 			

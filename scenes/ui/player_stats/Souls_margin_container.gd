@@ -5,12 +5,12 @@ extends MarginContainer
 
 
 func _ready():
-	Signals.changeSoulsInUI.connect(_on_changeSoulsInUI)
+	Signals.changeSoulsInUiContainer.connect(_on_changeSoulsInUiContainer)
 	Signals.soulReachedPlayerStats.connect(_on_soulReachedPlayerStats)
 	Signals.soulLeftPlayerStats.connect(_on_soulLeftPlayerStats)
 
 
-func _on_changeSoulsInUI(souls : int):
+func _on_changeSoulsInUiContainer(playerId : int, souls : int):
 	%SoulsLabel.text = str(souls)
 
 

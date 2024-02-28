@@ -275,8 +275,9 @@ func setupSoulsFromSavegame():
 	for playerId in Data.players:
 		var player = Data.players[playerId]
 		Signals.changeSouls.emit(playerId, Save.savegame.players[playerId].souls)
-		if playerId == Data.id:
-			Signals.changeSoulsInUI.emit(Save.savegame.players[playerId].souls)
+		Signals.changeSoulsInUI.emit(playerId, Save.savegame.players[playerId].souls)
+		#if playerId == Data.id:
+			#Signals.changeSoulsInUI.emit(Save.savegame.players[playerId].souls)
 
 
 func setupSouls():
@@ -284,8 +285,9 @@ func setupSouls():
 		var player = Data.players[playerId]
 		var souls = player.souls + 10 + debugSouls
 		Signals.changeSouls.emit(playerId, souls)
-		if playerId == Data.id:
-			Signals.changeSoulsInUI.emit(souls)
+		Signals.changeSoulsInUI.emit(playerId, souls)
+		#if playerId == Data.id:
+			#Signals.changeSoulsInUI.emit(souls)
 
 
 func setupFavorsFromSavegame():

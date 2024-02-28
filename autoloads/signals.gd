@@ -202,7 +202,9 @@ signal nextDemon(demonRank)
 signal combatOver
 signal combatPhaseStarted
 
-signal changeSoulsInUI(souls : int)
+signal changeSoulsInUI(playerId : int, souls : int)
+signal changeSoulsInUiContainer(souls : int)
+
 signal changeSouls(playerId : int, souls : int)
 signal changeIncome(playerId : int, income : String)
 signal incomeChanged(playerId : int)
