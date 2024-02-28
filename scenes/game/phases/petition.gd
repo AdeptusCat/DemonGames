@@ -74,9 +74,15 @@ func phase(combatWinner : Dictionary, ui):
 func petitions(petitionSectiosByPlayerId : Dictionary, ui) -> void:
 	for playerId in petitionSectiosByPlayerId:
 		if not Connection.isAiPlayer(playerId):
-			await playerChoosePetitions(playerId, petitionSectiosByPlayerId, ui)
+			playerChoosePetitions(playerId, petitionSectiosByPlayerId, ui)
 		else:
 			aiPlayerChoosePetitions(playerId, petitionSectiosByPlayerId)
+	for playerId in petitionSectiosByPlayerId:
+		await Signals.petitionConfirmed
+	print("petitions to claim ",Data.sectiosToClaim)
+	for sectiosToClaim in Data.sectiosToClaim:
+		for peer in Connection.peers:
+			RpcCalls.occupySectio.rpc_id(peer, sectiosToClaim[0], sectiosToClaim[1])
 
 
 func winnersOccupySectios(combatWinner : Dictionary) -> void:
@@ -109,9 +115,7 @@ func playerChoosePetitions(playerId : int, petitionSectiosByTriumphirate : Dicti
 	for peer in Connection.peers:
 		ui.updateRankTrackCurrentPlayer.rpc_id(peer, playerId)
 	RpcCalls.petitionSectiosRequest.rpc_id(playerId, petitionSectiosByTriumphirate[playerId])
-	await Signals.petitionConfirmed
-	for sectio in Decks.sectioNodes.values():
-		sectio.changeClickable.rpc_id(playerId, false)
+	
 
 
 func tutorialEnd() -> void:

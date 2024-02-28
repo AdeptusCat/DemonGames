@@ -185,6 +185,8 @@ func _on_demonLabel_mouseExited():
 
 
 func _on_addLine(demonRank):
+	if not Data.demons.has(demonRank):
+		return
 	var demonName = Data.demons[demonRank].demonName
 	var status = ""
 	if Data.demons[demonRank].onEarth:

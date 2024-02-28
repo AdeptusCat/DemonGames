@@ -55,7 +55,7 @@ func _ready():
 	#skipSouls = true
 	#skipSummoning = true
 	#skipAction = true
-#	skipCombat = true
+	skipCombat = true
 #	skipPetitions = true
 #	skipEnd = true
 
@@ -66,7 +66,7 @@ func _ready():
 #	debugDisfavors = 1
 #
 #	Settings.tooltips = false
-	#Settings.skipScreens = true
+	Settings.skipScreens = false
 #	Settings.skipSoulsSummary = true
 #	Settings.skipWaitForPlayers = true
 #	Settings.skipPhaseReminder = true
@@ -151,6 +151,7 @@ func setup():
 		Data.chooseDemon = true
 		if not Tutorial.tutorial:
 			setupDemons()
+			print("confirm start demon")
 			await confirmStartDemon()
 		
 		if not Tutorial.tutorial:

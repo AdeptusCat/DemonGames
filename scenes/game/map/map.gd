@@ -769,8 +769,9 @@ func _on_march():
 			# move only as many troops as there are skulls on the demon
 			# if the sectiosMoved is 1, then it doesnt count the second move
 			if selectedUnit.sectiosMoved == 0:
-				Data.currentDemon.skullsUsed += 1
-				Signals.skullUsed.emit()
+				if is_instance_valid(Data.currentDemon):
+					Data.currentDemon.skullsUsed += 1
+					Signals.skullUsed.emit()
 			
 			selectedUnit.sectiosMoved += 1
 			

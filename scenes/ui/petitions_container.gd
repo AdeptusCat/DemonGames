@@ -28,6 +28,7 @@ func populate(sectioNames : Array):
 		entry.highlight(hasFavor)
 	if not hasFavor:
 		hide()
+		print("petitions no favor")
 		await get_tree().create_timer(0.3).timeout
 		RpcCalls.petitionsDone.rpc_id(Connection.host)
 		AudioSignals.playerTurnDone.emit()
@@ -39,8 +40,8 @@ func _on_reply(sectioName, boolean):
 		var favors = Data.player.favors - 1
 		Signals.changeFavors.emit(Data.id, favors)
 		Signals.changeFavorsInUI.emit(favors)
-		for peer in Connection.peers:
-			RpcCalls.occupySectio.rpc_id(peer, Data.id, sectioName)
+		Data.sectiosToClaim.append([Data.id, sectioName])
+		print("petitions to claim2 ",Data.sectiosToClaim)
 	$MarginContainer/VBoxContainer/VBoxContainer2/Label2.text = "You can occupy " + str(Data.player.favors - Data.player.disfavors) + " more Sectios"
 	entries.erase(sectioName)
 	var hasFavor = Data.player.hasFavor()
@@ -49,5 +50,16 @@ func _on_reply(sectioName, boolean):
 			entry.highlight(hasFavor)
 	if entries.size() <= 0 or not hasFavor:
 		hide()
+		if not Data.id == Connection.host:
+			sendSectiosToClaimToHost.rpc_id(Connection.host, Data.sectiosToClaim)
+			print("petitions to claim1 ",Data.sectiosToClaim)
 		RpcCalls.petitionsDone.rpc_id(Connection.host)
+		for sectio in Decks.sectioNodes.values():
+			sectio.changeClickable(false)
 		AudioSignals.playerTurnDone.emit()
+
+
+@rpc ("any_peer", "call_local")
+func sendSectiosToClaimToHost(sectiosToClaim):
+	print("petitions to claim0 ",sectiosToClaim)
+	Data.sectiosToClaim = Data.sectiosToClaim + sectiosToClaim

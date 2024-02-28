@@ -82,6 +82,7 @@ var phasesSize : int = phases.size()
 
 var unitsToSpawn = []
 var sectiosToUpdate = []
+var sectiosToClaim = []
 
 func _ready():
 	Signals.resetGame.connect(_on_resetGame)
