@@ -1388,6 +1388,7 @@ layout_mode = 2
 theme_override_constants/separation = 0
 
 [node name="PlayerStatsMarginContainer" type="MarginContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="ColorRect" type="ColorRect" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/PlayerStatsMarginContainer"]

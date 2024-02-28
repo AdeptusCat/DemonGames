@@ -112,20 +112,17 @@ animation = &"new_animation"
 autoplay = "new_animation"
 centered = false
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
-layout_mode = 2
-
-[node name="SoulsLabel" type="Label" parent="CenterContainer"]
+[node name="SoulsLabel" type="Label" parent="."]
 unique_name_in_owner = true
 layout_direction = 1
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_vertical = 1
 tooltip_text = "The amount of Souls you can spend."
 mouse_filter = 0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 20
 theme_override_font_sizes/font_size = 70
-text = "2"
+text = "1"
 label_settings = SubResource("LabelSettings_dwlrg")
 horizontal_alignment = 1
 vertical_alignment = 1
