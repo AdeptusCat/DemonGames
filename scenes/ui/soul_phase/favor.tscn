@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwkt8f2y7iers"]
+
+[ext_resource type="Script" path="res://scenes/ui/soul_phase/favor.gd" id="1_few7c"]
+[ext_resource type="Texture2D" uid="uid://dn8lbx47pk3wc" path="res://assets/favor/00482-928515031.png" id="2_tuj2i"]
+
+[node name="Favor" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_few7c")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_tuj2i")
+expand_mode = 1
+stretch_mode = 4

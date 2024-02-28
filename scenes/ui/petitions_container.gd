@@ -38,6 +38,7 @@ func _on_reply(sectioName, boolean):
 	if boolean:
 		var favors = Data.player.favors - 1
 		Signals.changeFavors.emit(Data.id, favors)
+		Signals.changeFavorsInUI.emit(favors)
 		for peer in Connection.peers:
 			RpcCalls.occupySectio.rpc_id(peer, Data.id, sectioName)
 	$MarginContainer/VBoxContainer/VBoxContainer2/Label2.text = "You can occupy " + str(Data.player.favors - Data.player.disfavors) + " more Sectios"

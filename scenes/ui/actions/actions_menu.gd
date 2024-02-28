@@ -262,6 +262,7 @@ func _recruitLieutenant():
 func _on_walk_the_earth_button_pressed():
 	var souls = Data.player.souls - currentDemonNode.hearts * 2
 	Signals.changeSouls.emit(Data.id, souls)
+	Signals.changeSoulsInUI.emit(souls)
 	walkTheEarth()
 	if Tutorial.currentTopic == Tutorial.Topic.WalkTheEarth:
 			Signals.tutorialRead.emit()

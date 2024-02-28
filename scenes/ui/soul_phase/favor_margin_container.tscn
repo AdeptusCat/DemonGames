@@ -1,0 +1,130 @@
+[gd_scene load_steps=25 format=3 uid="uid://hh5wndnhj36l"]
+
+[ext_resource type="Script" path="res://scenes/ui/player_stats/favor_margin_container.gd" id="1_j7vvq"]
+[ext_resource type="Texture2D" uid="uid://bnjuqj0b53pb5" path="res://assets/soul/00297-3811223522.png" id="2_nnmcs"]
+[ext_resource type="Texture2D" uid="uid://dn8lbx47pk3wc" path="res://assets/favor/00482-928515031.png" id="3_jr7k1"]
+[ext_resource type="Texture2D" uid="uid://csmcruf0kdhgp" path="res://assets/favor/00483-928515032.png" id="4_asp5f"]
+[ext_resource type="Texture2D" uid="uid://yre8wjvsyqup" path="res://assets/favor/00484-928515033.png" id="5_tc2o4"]
+[ext_resource type="Texture2D" uid="uid://d1cp1ojeyhcvn" path="res://assets/favor/00485-928515034.png" id="6_7gsrc"]
+[ext_resource type="Texture2D" uid="uid://dva6a85tft52f" path="res://assets/favor/00486-928515035.png" id="7_0dsd6"]
+[ext_resource type="Texture2D" uid="uid://rdtvhlc83dux" path="res://assets/favor/00487-928515036.png" id="8_mr2go"]
+[ext_resource type="Texture2D" uid="uid://bol54g0qhj15" path="res://assets/favor/00488-928515037.png" id="9_86jyi"]
+[ext_resource type="Texture2D" uid="uid://c832p117hfu2s" path="res://assets/favor/00489-928515038.png" id="10_oamio"]
+[ext_resource type="Texture2D" uid="uid://yrd6rf6fpgvb" path="res://assets/favor/00490-928515039.png" id="11_3c57f"]
+[ext_resource type="Texture2D" uid="uid://dgvan6vyyybqc" path="res://assets/favor/00491-928515040.png" id="12_ys2dg"]
+[ext_resource type="Texture2D" uid="uid://clajj030madic" path="res://assets/favor/00492-928515041.png" id="13_ttxr2"]
+[ext_resource type="Texture2D" uid="uid://jxxme77aonb" path="res://assets/favor/00493-928515042.png" id="14_glmtt"]
+[ext_resource type="Texture2D" uid="uid://b5srs5vcv6ksr" path="res://assets/favor/00494-928515043.png" id="15_kr33m"]
+[ext_resource type="Texture2D" uid="uid://dvmuy8cwmi68o" path="res://assets/favor/00495-928515044.png" id="16_xfjpb"]
+[ext_resource type="Texture2D" uid="uid://dy4gcme1pjb3d" path="res://assets/favor/00496-928515045.png" id="17_ui2l8"]
+[ext_resource type="Texture2D" uid="uid://ba3rwatu8gn1" path="res://assets/favor/00497-928515046.png" id="18_kut5j"]
+[ext_resource type="Texture2D" uid="uid://cyqxqr6mmphdn" path="res://assets/favor/00498-928515047.png" id="19_rxdsp"]
+[ext_resource type="Texture2D" uid="uid://bv2u5wh3i0ja0" path="res://assets/favor/00499-928515048.png" id="20_ix20j"]
+[ext_resource type="Texture2D" uid="uid://c6uibf0gd6ct5" path="res://assets/favor/00500-928515049.png" id="21_i3v8q"]
+[ext_resource type="Texture2D" uid="uid://dquhkgpe8g0ms" path="res://assets/favor/00501-928515050.png" id="22_ig5hf"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v52qh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_jr7k1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_asp5f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_tc2o4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_7gsrc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_0dsd6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_mr2go")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_86jyi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_oamio")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_3c57f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_ys2dg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_ttxr2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_glmtt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_kr33m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_xfjpb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_ui2l8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_kut5j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_rxdsp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_ix20j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_i3v8q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_ig5hf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="LabelSettings" id="LabelSettings_t5drw"]
+font_size = 70
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+
+[node name="FavorMarginContainer" type="MarginContainer"]
+script = ExtResource("1_j7vvq")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = ExtResource("2_nnmcs")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TextureRect"]
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_v52qh")
+autoplay = "default"
+centered = false
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 2
+
+[node name="FavorLabel" type="Label" parent="CenterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+tooltip_text = "The amount of Favors you can spend."
+mouse_filter = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 70
+text = "2"
+label_settings = SubResource("LabelSettings_t5drw")
+horizontal_alignment = 1
+vertical_alignment = 1

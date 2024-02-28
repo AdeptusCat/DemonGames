@@ -143,4 +143,5 @@ func _on_gui_input(event):
 			Signals.toggleAvailableLieutenants.emit(false)
 			var souls = Data.player.souls - cost
 			Signals.changeSouls.emit(Data.id, souls)
+			Signals.changeSoulsInUI.emit(souls)
 			Signals.recruitLieutenant.emit(lieutenantName)

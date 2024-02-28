@@ -1,0 +1,131 @@
+[gd_scene load_steps=24 format=3 uid="uid://bg15mv5forlhw"]
+
+[ext_resource type="Script" path="res://scenes/ui/player_stats/Souls_margin_container.gd" id="1_nl1vf"]
+[ext_resource type="Texture2D" uid="uid://bnjuqj0b53pb5" path="res://assets/soul/00297-3811223522.png" id="2_afqvi"]
+[ext_resource type="Texture2D" uid="uid://bdgs6gtspyq1c" path="res://assets/soul/00298-3811223523.png" id="3_rf6al"]
+[ext_resource type="Texture2D" uid="uid://csll8dwtk5bia" path="res://assets/soul/00299-3811223524.png" id="4_j4wik"]
+[ext_resource type="Texture2D" uid="uid://cyq2swsy2crr7" path="res://assets/soul/00300-3811223525.png" id="5_uore6"]
+[ext_resource type="Texture2D" uid="uid://n4vhma0sqq2v" path="res://assets/soul/00301-3811223526.png" id="6_gwh11"]
+[ext_resource type="Texture2D" uid="uid://bgbcn7gkrx5vt" path="res://assets/soul/00302-3811223527.png" id="7_paf7h"]
+[ext_resource type="Texture2D" uid="uid://dmifr2ui0it1n" path="res://assets/soul/00303-3811223528.png" id="8_540sx"]
+[ext_resource type="Texture2D" uid="uid://dmi8ughgl11wf" path="res://assets/soul/00304-3811223529.png" id="9_eywmm"]
+[ext_resource type="Texture2D" uid="uid://h0u6ji28i7em" path="res://assets/soul/00305-3811223530.png" id="10_i8lhm"]
+[ext_resource type="Texture2D" uid="uid://dbuhvjhelghj8" path="res://assets/soul/00306-3811223531.png" id="11_txn2w"]
+[ext_resource type="Texture2D" uid="uid://emg2is2l1ju3" path="res://assets/soul/00307-3811223532.png" id="12_tpbkb"]
+[ext_resource type="Texture2D" uid="uid://b5vwckw2je4u4" path="res://assets/soul/00308-3811223533.png" id="13_ldjrl"]
+[ext_resource type="Texture2D" uid="uid://chf8vf6xvcxtj" path="res://assets/soul/00309-3811223534.png" id="14_2v6yj"]
+[ext_resource type="Texture2D" uid="uid://dw8ucg7050mpf" path="res://assets/soul/00310-3811223535.png" id="15_btqvo"]
+[ext_resource type="Texture2D" uid="uid://5icw5tn7blfm" path="res://assets/soul/00311-3811223536.png" id="16_7cbrq"]
+[ext_resource type="Texture2D" uid="uid://dlfkmkvwdq8dd" path="res://assets/soul/00312-3811223537.png" id="17_ggm0v"]
+[ext_resource type="Texture2D" uid="uid://b5i2y5ikkk3dh" path="res://assets/soul/00313-3811223538.png" id="18_6ty68"]
+[ext_resource type="Texture2D" uid="uid://bmfksou7a0q67" path="res://assets/soul/00314-3811223539.png" id="19_ad41u"]
+[ext_resource type="Texture2D" uid="uid://b5yogoqke3bhs" path="res://assets/soul/00315-3811223540.png" id="20_yntuk"]
+[ext_resource type="Texture2D" uid="uid://bxklb0wv7fg6w" path="res://assets/soul/00316-3811223541.png" id="21_g3pfl"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_irbuw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_afqvi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rf6al")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_j4wik")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_uore6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_gwh11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_paf7h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_540sx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_eywmm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_i8lhm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_txn2w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_tpbkb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_ldjrl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_2v6yj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_btqvo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_7cbrq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_ggm0v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_6ty68")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_ad41u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_yntuk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_g3pfl")
+}],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="LabelSettings" id="LabelSettings_dwlrg"]
+font_size = 70
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+
+[node name="SoulsMarginContainer" type="MarginContainer"]
+script = ExtResource("1_nl1vf")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = ExtResource("2_afqvi")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TextureRect"]
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_irbuw")
+animation = &"new_animation"
+autoplay = "new_animation"
+centered = false
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 2
+
+[node name="SoulsLabel" type="Label" parent="CenterContainer"]
+unique_name_in_owner = true
+layout_direction = 1
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "The amount of Souls you can spend."
+mouse_filter = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_font_sizes/font_size = 70
+text = "2"
+label_settings = SubResource("LabelSettings_dwlrg")
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -39,6 +39,9 @@ var rankTrack: Array:
 
 
 func _ready():
+	Signals.emitSoulsFromCollectionPosition.connect(_on_emitSoulsFromCollectionPosition)
+	Signals.emitSoulsFromTreasury.connect(_on_emitSoulsFromTreasury)
+	Signals.emitFavorsFromCollectionPosition.connect(_on_emitFavorsFromCollectionPosition)
 	Signals.showSectioPreview.connect(showSectioPreview)
 	Signals.hideSectioPreview.connect(hideSectioPreview)
 	Signals.showFleeControl.connect(showFleeControl)
@@ -98,6 +101,38 @@ func _ready():
 #	tw1.set_ease(Tween.EASE_IN)
 #	tw1.tween_property(%WaitForPlayerControl, "modulate", Color(1,1,1,0), 2.0)#.set_delay(0.5)
 #	tw1.tween_callback(turn)
+
+
+func _on_emitSoulsFromTreasury(position : Vector2, soulsGathered : int):
+	for soul in soulsGathered:
+		var label = load("res://scenes/ui/soul_phase/soul.tscn").instantiate()
+		label.targetPosition = position
+		label.position = %SoulsMarginContainer.global_position
+		add_child(label)
+		label.pay()
+		await get_tree().create_timer(0.3).timeout
+
+
+func _on_emitSoulsFromCollectionPosition(position : Vector2, soulsGathered : int):
+	for soul in soulsGathered:
+		var label = load("res://scenes/ui/soul_phase/soul.tscn").instantiate()
+		label.position = position
+		label.targetPosition = %SoulsMarginContainer.global_position
+		add_child(label)
+		label.collect()
+		await get_tree().create_timer(0.3).timeout
+
+
+func _on_emitFavorsFromCollectionPosition(position : Vector2, favorsGathered : int):
+	for favor in favorsGathered:
+		var label = load("res://scenes/ui/soul_phase/favor.tscn").instantiate()
+		label.position = position
+		label.targetPosition = %FavorMarginContainer.global_position
+		add_child(label)
+		label.collect()
+		await get_tree().create_timer(0.3).timeout
+
+
 
 func highlightCurrentPlayer(player : Player = null):
 	Signals.showRankTrackMarginContainer.emit()
@@ -402,7 +437,7 @@ func nextDemon(nextDemon : int):
 	currentPlayerLabel.text = str(demonNode.stats.player)
 	print("action for demon")
 	var actionMenuScene = actionMenu.instantiate()
-	add_child(actionMenuScene)
+	%SideMenuVBoxContainer.add_child(actionMenuScene)
 	actionMenuScene.currentDemonRank = demonNode.stats.rank
 	Data.currentDemon = demonNode
 	print(demonNode.stats.rank)
@@ -660,7 +695,7 @@ func _on_toogleSummoningMenu(boolean : bool):
 	if boolean:
 		if not is_instance_valid(summoningMenuScene):
 			summoningMenuScene = summoningMenu.instantiate()
-			add_child(summoningMenuScene)
+			%SideMenuVBoxContainer.add_child(summoningMenuScene)
 	else:
 		if is_instance_valid(summoningMenuScene):
 			summoningMenuScene.queue_free()

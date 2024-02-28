@@ -15,6 +15,7 @@ func _on_buyArcanaCard():
 	if Data.player.hasEnoughSouls(5):
 		var souls = Data.players[Data.id].souls - 5
 		Signals.changeSouls.emit(Data.id, souls)
+		Signals.changeSoulsInUI.emit(souls)
 		RpcCalls.requestArcanaCardsToPick.rpc_id(Connection.host)
 
 

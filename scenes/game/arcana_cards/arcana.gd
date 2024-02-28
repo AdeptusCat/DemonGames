@@ -98,6 +98,8 @@ func loadStats(_cardName):
 func _on_minor_spell_button_pressed():
 	var souls = Data.players[player].souls - cost
 	Signals.changeSouls.emit(player, souls)
+	if Data.players[player].playerId == Data.id:
+		Signals.changeSoulsInUI.emit(souls)
 	Data.returnArcanaCard.rpc_id(Connection.host, cardName, player)
 	Decks.addCard(cardName, "arcana")
 	Data.players[player].arcanaCards.erase(cardName)

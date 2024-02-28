@@ -148,6 +148,7 @@ func highlightAffordableLieutenantCards(player : Player):
 
 func tutorialSetup():
 	Signals.changeSouls.emit(Data.id, 42)
+	Signals.changeSoulsInUI.emit(42)
 	occupyTutorialSectios()
 	Signals.tutorial.emit(Tutorial.Topic.Phase, "This is the Summoning Phase. \nHere you will be able to recruit Units like Legions and Lieutenants or buy Arcana Cards.")
 	await Signals.tutorialRead

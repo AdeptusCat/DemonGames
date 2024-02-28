@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://d00aywoo0y4ld"]
+[gd_scene load_steps=49 format=3 uid="uid://d00aywoo0y4ld"]
 
 [ext_resource type="Script" path="res://scenes/ui/ui.gd" id="1_o55j0"]
 [ext_resource type="Texture2D" uid="uid://cdii7y50q1lno" path="res://assets/icons/pentagram_white.png" id="2_3ml1l"]
@@ -43,6 +43,8 @@
 [ext_resource type="Script" path="res://scenes/ui/phases_container.gd" id="35_vehc2"]
 [ext_resource type="Theme" uid="uid://cgwxqm3rkumgq" path="res://assets/themes/test.tres" id="36_x2jp8"]
 [ext_resource type="Script" path="res://scenes/ui/CombatOverviewMarginContainer.gd" id="37_2s8h0"]
+[ext_resource type="PackedScene" uid="uid://bg15mv5forlhw" path="res://scenes/ui/soul_phase/souls_margin_container.tscn" id="43_wxdjf"]
+[ext_resource type="PackedScene" uid="uid://hh5wndnhj36l" path="res://scenes/ui/soul_phase/favor_margin_container.tscn" id="44_3nb2s"]
 [ext_resource type="PackedScene" uid="uid://dphwtkh030vsb" path="res://scenes/ui/combat_entry.tscn" id="44_xx0bh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2yxpw"]
@@ -1371,20 +1373,63 @@ hide_root = true
 scroll_horizontal_enabled = false
 scroll_vertical_enabled = false
 
-[node name="PlayerStatsMarginContainer" type="MarginContainer" parent="Control"]
+[node name="SideMenuMarginContainer" type="MarginContainer" parent="Control"]
+unique_name_in_owner = true
 layout_mode = 1
-offset_right = 20.0
-offset_bottom = 20.0
+offset_right = 148.0
+offset_bottom = 280.0
 
-[node name="ColorRect" type="ColorRect" parent="Control/PlayerStatsMarginContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/SideMenuMarginContainer"]
+layout_mode = 2
+
+[node name="SideMenuVBoxContainer" type="VBoxContainer" parent="Control/SideMenuMarginContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PlayerStatsMarginContainer" type="MarginContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/PlayerStatsMarginContainer"]
 layout_mode = 2
 color = Color(0.34902, 0.34902, 0.34902, 1)
 
-[node name="PlayersTree" parent="Control/PlayerStatsMarginContainer" instance=ExtResource("6_2gjeq")]
+[node name="PlayersTree" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/PlayerStatsMarginContainer" instance=ExtResource("6_2gjeq")]
 unique_name_in_owner = true
 layout_mode = 2
 scroll_horizontal_enabled = false
 scroll_vertical_enabled = false
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="ColorRect" type="ColorRect" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PlayerStatsVBoxContainer" type="VBoxContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="SoulsMarginContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer/MarginContainer/PlayerStatsVBoxContainer" instance=ExtResource("43_wxdjf")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="FavorMarginContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer/MarginContainer/PlayerStatsVBoxContainer" instance=ExtResource("44_3nb2s")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer/MarginContainer/PlayerStatsVBoxContainer"]
+layout_mode = 2
 
 [node name="CombatOverviewMarginContainer" type="MarginContainer" parent="Control"]
 visible = false
@@ -1464,6 +1509,6 @@ text = "Hide Combat Overview"
 [connection signal="pressed" from="Control/GoalMarginContainer/MarginContainer/MarginContainer/VBoxContainer/Button" to="Control/GoalMarginContainer" method="_on_button_pressed"]
 [connection signal="pressed" from="Control/GoalMarginContainer/MarginContainer/MarginContainer/VBoxContainer/Button2" to="Control/GoalMarginContainer" method="_on_button_2_pressed"]
 [connection signal="item_selected" from="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer/CurrentDemonTopTree" to="Control/RankTrackMarginContainer/RankTrack" method="_on_current_demon_tree_item_selected"]
-[connection signal="mouse_entered" from="Control/PlayerStatsMarginContainer/PlayersTree" to="Control/PlayerStatsMarginContainer/PlayersTree" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="Control/PlayerStatsMarginContainer/PlayersTree" to="Control/PlayerStatsMarginContainer/PlayersTree" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/PlayerStatsMarginContainer/PlayersTree" to="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/PlayerStatsMarginContainer/PlayersTree" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/PlayerStatsMarginContainer/PlayersTree" to="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/PlayerStatsMarginContainer/PlayersTree" method="_on_mouse_exited"]
 [connection signal="pressed" from="Control/CombatOverviewMarginContainer/MarginContainer/VBoxContainer/HideButton" to="Control/CombatOverviewMarginContainer" method="_on_button_pressed"]

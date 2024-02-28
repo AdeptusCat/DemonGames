@@ -28,7 +28,6 @@ func _on_disableActionButtons():
 func _on_toggleRecruitLegionsButton(boolean : bool):
 	%RecruitLegionsButton.disabled != boolean
 	recruitLegionsButtonActivated = boolean
-	print("recruiting ", recruitLegionsButtonActivated)
 
 
 func _on_toggleBuyArcanaCardButton(boolean : bool):
@@ -107,6 +106,7 @@ func _on_buy_arcana_card_h_box_container_gui_input(event):
 
 func _on_show_lieutenants_h_box_container_gui_input(event):
 	if Input.is_action_just_pressed("click"):
+		Signals.sectioClicked.emit(null)
 		Signals.toggleAvailableLieutenants.emit(true)
 
 
