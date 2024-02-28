@@ -282,9 +282,9 @@ func sendSoulSummary(soulSummary : Dictionary):
 			if Tutorial.tutorial:
 				Signals.tutorial.emit(Tutorial.Topic.Soul, "'" + demon.demonName + "' is one of your Demons on Earth and gathers Souls and a Favor each Turn. \nThe amount of Souls gathered depends on the amount of Hearts of the Demon.")
 				await Signals.tutorialRead
-			Signals.emitSoulsFromCollectionPosition.emit(demon.get_global_transform_with_canvas().origin, souls)
+			Signals.emitSoulsFromCollectionPosition.emit(demon.soulsGatherControl.get_global_transform_with_canvas().origin, souls)
 			await get_tree().create_timer(0.1).timeout
-			Signals.emitFavorsFromCollectionPosition.emit(demon.get_global_transform_with_canvas().origin, favors)
+			Signals.emitFavorsFromCollectionPosition.emit(demon.favorsGatherControl.get_global_transform_with_canvas().origin, favors)
 			timeToWaitForSoulsToFly += 0.3 * souls
 		await get_tree().create_timer(timeToWaitForSoulsToFly + 0.5).timeout
 		
@@ -312,11 +312,12 @@ func sendSoulSummary(soulSummary : Dictionary):
 			await Signals.tutorialRead
 		
 		Signals.emitSoulsFromCollectionPosition.emit(sectio.get_global_transform_with_canvas().origin, souls)
+		await get_tree().create_timer(0.1).timeout
 		#sectio.showSoulsGathered(souls)
 		#await Signals.animationDone
 	
 	Signals.resetCamera.emit()
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(1.5).timeout
 	
 	for unitName in soulSummary[Data.id]["payment"]:
 		var souls = soulSummary[Data.id]["payment"][unitName]["paid"]

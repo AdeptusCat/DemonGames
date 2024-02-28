@@ -111,7 +111,6 @@ func _on_emitSoulsFromTreasury(position : Vector2, soulsGathered : int):
 		add_child(label)
 		label.pay()
 		await get_tree().create_timer(0.3).timeout
-	Signals.changeSoulsInUI.emit()
 
 
 func _on_emitSoulsFromCollectionPosition(position : Vector2, soulsGathered : int):

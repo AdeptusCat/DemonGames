@@ -320,10 +320,12 @@ alignment = 1
 [node name="SoulsGatherControl" type="Control" parent="GatherHBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 4
 
 [node name="FavorsGatherControl" type="Control" parent="GatherHBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 4
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false

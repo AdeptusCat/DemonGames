@@ -11,6 +11,9 @@ signal demonClicked(node)
 @export var undefinedTexture : Texture
 @export var soulsGatherScene : PackedScene
 
+@onready var soulsGatherControl = %SoulsGatherControl
+@onready var favorsGatherControl = %FavorsGatherControl
+
 
 var demonName : String = "":
 	set(_name):
