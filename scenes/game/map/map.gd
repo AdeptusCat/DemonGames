@@ -30,7 +30,6 @@ func _ready():
 	Signals.sectiosClickable.connect(sectiosClickable)
 	Signals.sectiosUnclickable.connect(sectiosUnclickable)
 	Signals.demonActionDone.connect(_on_demonActionDone)
-	Signals.sectioClicked.connect(_on_sectioClicked)
 	Signals.neighbours.connect(on_neighbours)
 	Signals.changeSectioBackground.connect(_on_changeSectioBackground)
 	Signals.march.connect(_on_march)
@@ -860,17 +859,6 @@ func _on_march():
 	else:
 		Signals.demonDone.emit(null)
 	Signals.hideArrows.emit()
-
-
-func _on_sectioClicked(sectio):
-	return
-#	var selectedUnit = _selectedUnit
-	match Data.phase:
-		# place one legion at start of match
-		null:
-			placeUnit(sectio, Data.id, Data.UnitType.Legion)
-			placingDone.rpc_id(Connection.host)
-
 
 
 func neightboursClickable(boolean):

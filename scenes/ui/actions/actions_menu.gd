@@ -28,6 +28,8 @@ var currentDemonRank: int:
 			toggleActionMenu(true)
 		addSkullsToMenu()
 		addHeartsToMenu()
+		%WalkTheEarthCostLabel.text = str(currentDemonNode.hearts * 2)
+
 
 func _ready():
 	Signals.disableActionMenuButtons.connect(_on_disableActionButtons)
@@ -118,10 +120,14 @@ func activateActionButtons():
 	%UseMagicButton.disabled = true
 	
 	if currentDemonNode.onEarth:
+		%WalkTheEarthHBoxContainer.hide()
+		%DoEvilDeedsHBoxContainer.show()
 		%DoEvilDeedsButton.disabled = false
 #			%ConspireButton.disabled = false
 		%WalkTheEarthButton.disabled = true
 	else:
+		%WalkTheEarthHBoxContainer.show()
+		%DoEvilDeedsHBoxContainer.hide()
 		%DoEvilDeedsButton.disabled = true
 #			%ConspireButton.disabled = true
 
@@ -260,22 +266,15 @@ func _recruitLieutenant():
 
 
 func _on_walk_the_earth_button_pressed():
-	var souls = Data.player.souls - currentDemonNode.hearts * 2
+	var cost : int = currentDemonNode.hearts * 2
+	var souls : int = Data.player.souls - cost
 	Signals.changeSouls.emit(Data.id, souls)
-	Signals.changeSoulsInUI.emit(Data.id, souls)
+	Signals.emitSoulsFromTreasury.emit(%WalkTheEarthHBoxContainer.get_global_transform_with_canvas().origin, cost) 
 	walkTheEarth()
 	if Tutorial.currentTopic == Tutorial.Topic.WalkTheEarth:
 			Signals.tutorialRead.emit()
 	for peer in Connection.peers:
 		RpcCalls.demonStatusChange.rpc_id(peer, currentDemonRank, "earth")
-	#deactivateArcanaCards()
-	#for cardName in player.arcanaCards:
-		#var arcanaCard = Data.arcanaCardNodes[cardName]
-		#if not player.hasEnoughSouls(arcanaCard.cost):
-			#continue
-		#if spellObject.objects.has(arcanaCard.minorSpell):
-			#spellObject.objects[arcanaCard.minorSpell].highlightWalkTheEarthCard(arcanaCard)
-	#Signals.tutorialRead.emit()
 
 
 func _on_do_evil_deeds_button_pressed():
@@ -311,6 +310,7 @@ func _on_doEvilDeedsResult(playerId : int, demonName : String, favorsGathered : 
 
 @rpc("any_peer", "call_local")
 func doEvilDeedsResult(player_id : int, demonName : String, favors : int):
+	Signals.emitFavorsFromCollectionPosition.emit(%DoEvilDeedsHBoxContainer.get_global_transform_with_canvas().origin, favors)
 	if Settings.skipWaitForPlayers:
 		return
 	#if favors == 0:

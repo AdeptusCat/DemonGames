@@ -27,6 +27,7 @@ signal emitSoulsFromTreasury(position : Vector2, soulsGathered : int)
 signal soulReachedPlayerStats
 signal soulLeftPlayerStats
 signal emitFavorsFromCollectionPosition(position : Vector2, favorsGathered : int)
+signal emitFavorsFromTreasury(position : Vector2, favorsGathered : int)
 signal favorReachedPlayerStats
 signal favorLeftPlayerStats
 
@@ -209,7 +210,7 @@ signal changeSoulsInUiContainer(souls : int)
 signal changeSouls(playerId : int, souls : int)
 signal changeIncome(playerId : int, income : String)
 signal incomeChanged(playerId : int)
-signal changeFavorsInUI(favors : int)
+signal changeFavorsInUI(playerId : int, favors : int)
 signal changeFavorsInUiContainer(favors : int)
 signal changeFavors(playerId : int, favors : int)
 signal changeDisfavors(playerId : int, disfavors : int)

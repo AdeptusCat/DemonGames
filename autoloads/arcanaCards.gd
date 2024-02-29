@@ -56,20 +56,6 @@ func _on_MinorSpell(arcanaCard : ArcanaCard):
 		for peer in Connection.peers:
 			RpcCalls.demonStatusChange.rpc_id(peer, Data.currentDemon.rank, "earth")
 		Signals.actionThroughArcana.emit(arcanaCard.minorSpell)
-	if arcanaCard.minorSpell == MinorSpell.RecruitLieutenants:
-		if Tutorial.tutorial:
-			Signals.tutorialRead.emit()
-#		actionsNode._recruitLieutenant()
-		var lieutenantName : String = Decks.availableLieutenants.pop_back()
-		
-		print("recruit lieutenant")
-		Signals.spinLieutenantBox.emit(lieutenantName)
-		await Signals.spinLieutenantBoxStopped
-		
-		Signals.showChosenLieutenantFromAvailableLieutenantsBox.emit(lieutenantName)
-		
-		Signals.recruitLieutenant.emit(lieutenantName)
-
 	for peer in Connection.peers:
 		RpcCalls.discardArcanaCard.rpc_id(peer, arcanaCardName, Data.id)
 	AudioSignals.castArcana.emit()

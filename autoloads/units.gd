@@ -15,14 +15,15 @@ func _on_recruit_legions():
 	Sectios.sectiosWithoutEnemiesClickable()
 	
 	while true:
-		var sectio = await Signals.sectioClicked
+		var sectio : Sectio = await Signals.sectioClicked
 		if sectio == null:
 			break
 		if Data.player.hasEnoughSouls(3):
 			Signals.placeLegion.emit(sectio, Data.id)
 			var souls = Data.players[sectio.player].souls - 3
 			Signals.changeSouls.emit(sectio.player, souls)
-			Signals.changeSoulsInUI.emit(sectio.player, souls)
+			#Signals.changeSoulsInUI.emit(sectio.player, souls)
+			Signals.emitSoulsFromTreasury.emit(sectio.get_global_transform_with_canvas().origin, 3)
 			if not Data.player.hasEnoughSouls(3):
 				break
 			

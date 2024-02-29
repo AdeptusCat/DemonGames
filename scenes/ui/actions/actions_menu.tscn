@@ -1,4 +1,4 @@
-[gd_scene load_steps=160 format=3 uid="uid://c43nav0wkynac"]
+[gd_scene load_steps=162 format=3 uid="uid://c43nav0wkynac"]
 
 [ext_resource type="Script" path="res://scenes/ui/actions/actions_menu.gd" id="1_i65gp"]
 [ext_resource type="Texture2D" uid="uid://25er4ht16vnw" path="res://assets/00698-3170758600-drawing of a skull, digital art, game asset.png" id="2_kjl8k"]
@@ -85,6 +85,7 @@
 [ext_resource type="Texture2D" uid="uid://bhq8jhim10st8" path="res://assets/ui/action_menu/walk_the_earth/00052-3385372353.png" id="83_q4wab"]
 [ext_resource type="Texture2D" uid="uid://d2sq33ovoyhr3" path="res://assets/ui/action_menu/walk_the_earth/00053-3385372354.png" id="84_4oef1"]
 [ext_resource type="Texture2D" uid="uid://cfsu0bcnrn6c2" path="res://assets/ui/action_menu/walk_the_earth/00054-3385372355.png" id="85_073eo"]
+[ext_resource type="Texture2D" uid="uid://bnjuqj0b53pb5" path="res://assets/soul/00297-3811223522.png" id="85_s0iqs"]
 [ext_resource type="Texture2D" uid="uid://cntyg3w0u2dax" path="res://assets/ui/action_menu/do_evil_deeds/00086-3381223334.png" id="86_g1gdf"]
 [ext_resource type="Texture2D" uid="uid://c1xfjdn4lypsf" path="res://assets/ui/action_menu/do_evil_deeds/00087-3381223335.png" id="87_mmolt"]
 [ext_resource type="Texture2D" uid="uid://cp3gujg18kmik" path="res://assets/ui/action_menu/do_evil_deeds/00088-3381223336.png" id="88_h5tpu"]
@@ -416,6 +417,11 @@ shader_parameter/shine_speed = 5.0
 shader_parameter/shine_size = 0.01
 shader_parameter/active = false
 
+[sub_resource type="LabelSettings" id="LabelSettings_s38t4"]
+font_size = 30
+outline_size = 15
+outline_color = Color(0, 0, 0, 1)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_j1ssp"]
 animations = [{
 "frames": [{
@@ -737,11 +743,15 @@ size_flags_horizontal = 3
 tooltip_text = "Move one Unit per Skull. A Legion may move two Sectios and a Lieutenant three Sectios."
 text = "March"
 
-[node name="SkullsHBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/MarchHBoxContainer"]
+[node name="SkullsHBoxContainer" type="GridContainer" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/MarchHBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 3
 
 [node name="WalkTheEarthHBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Control" type="Control" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/WalkTheEarthHBoxContainer"]
@@ -766,19 +776,45 @@ size_flags_horizontal = 3
 tooltip_text = "Use a 'Walk the Earth' Arcana Card to send the Demon to Earth to collect Souls and earn Favors. "
 text = "WalkTheEarth"
 
-[node name="HeartsHBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/WalkTheEarthHBoxContainer"]
+[node name="HeartsHBoxContainer" type="GridContainer" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/WalkTheEarthHBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 3
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/WalkTheEarthHBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("85_s0iqs")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="WalkTheEarthCostLabel" type="Label" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/WalkTheEarthHBoxContainer/TextureRect"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1"
+label_settings = SubResource("LabelSettings_s38t4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DoEvilDeedsHBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Control" type="Control" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Control" type="Control" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/DoEvilDeedsHBoxContainer"]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer/Control"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/DoEvilDeedsHBoxContainer/Control"]
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_j1ssp")
 animation = &"new_animation"
@@ -786,7 +822,7 @@ autoplay = "new_animation"
 speed_scale = 2.0
 centered = false
 
-[node name="DoEvilDeedsButton" type="Button" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer"]
+[node name="DoEvilDeedsButton" type="Button" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/DoEvilDeedsHBoxContainer"]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_m67av")
 layout_mode = 2
@@ -882,7 +918,7 @@ text = "UseMagic"
 [connection signal="confirmed" from="MarginContainer/MarginContainer/ActionsMarginContainer/BackToHellConfirmationDialog" to="." method="_on_back_to_hell_confirmation_dialog_confirmed"]
 [connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/MarchHBoxContainer/MarchButton" to="." method="_on_march_button_pressed"]
 [connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/WalkTheEarthHBoxContainer/WalkTheEarthButton" to="." method="_on_walk_the_earth_button_pressed"]
-[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer/DoEvilDeedsButton" to="." method="_on_do_evil_deeds_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/DoEvilDeedsHBoxContainer/DoEvilDeedsButton" to="." method="_on_do_evil_deeds_button_pressed"]
 [connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer3/PassButton" to="." method="_on_pass_button_pressed"]
 [connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer4/PassForGoodButton" to="." method="_on_pass_for_good_button_pressed"]
 [connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer2/ConspireButton" to="." method="_on_conspire_button_pressed"]

@@ -54,20 +54,10 @@ func canMove():
 		return true
 
 
-
-
 func showSoulsPaid(souls : int):
 	var soulsGatherNode = soulsGatherScene.instantiate()
 	soulsGatherNode.souls = 0 - souls
 	add_child(soulsGatherNode)
-
-
-
-#func _input(event):
-#	if Input.is_action_pressed("space"):
-#		if tw3:
-#			tw3.kill()
-#			hideSoulsPaid()
 
 
 func _process(delta):
@@ -100,8 +90,6 @@ func _physics_process(delta: float) -> void:
 			arrived = true
 			arrivedAtDestination.emit()
 			global_position = destination
-			#for peer in Connection.peers:
-				#RpcCalls.stopFollowingUnit.rpc_id(peer, unitNr)
 
 
 func kill():
@@ -121,21 +109,10 @@ func set_destinations(newDestinations : Array):
 	destinations = newDestinations
 	destination = destinations.pop_front()
 	$NavigationAgent2D.set_target_position(destination)
-	#for peer in Connection.peers:
-		#RpcCalls.followUnit.rpc_id(peer, unitNr)
-#func _integrate_forces(_state):
-#	if $NavigationAgent2D.is_target_reachable():
-#		var target = $NavigationAgent2D.get_next_path_position()
-#		var velocity = global_transform.origin.direction_to(target).normalized() * speed
-#		print(target)
-#		$NavigationAgent2D.set_velocity(velocity)
-#	else:
-#		$NavigationAgent2D.set_linear_velocity(Vector2.ZERO)
 
 
 func changeClickable(boolean):
 	clickable = boolean
-	#$Area2D.input_pickable = boolean
 
 
 func _on_navigation_agend_2d_velocity_computed(safe_velocity):
@@ -149,12 +126,10 @@ func on_velocity_computed(safe_velocity: Vector2) -> void:
 
 func _on_navigation_agend_2d_target_reached():
 	pass
-#	print("reached goal")
 
 
 func _on_navigation_agend_2d_path_changed():
 	pass
-#	print("aaaaa",$NavigationAgent2D.get_nav_path())
 
 
 func _on_area_2d_input_event(viewport, event, shape_idx):
