@@ -10,7 +10,7 @@ func _ready():
 	Signals.soulLeftPlayerStats.connect(_on_soulLeftPlayerStats)
 
 
-func _on_changeSoulsInUiContainer(playerId : int, souls : int):
+func _on_changeSoulsInUiContainer(souls : int):
 	%SoulsLabel.text = str(souls)
 
 

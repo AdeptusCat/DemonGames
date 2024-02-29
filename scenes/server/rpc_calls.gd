@@ -432,8 +432,7 @@ func confirmPetition(boolean):
 		var playerId = multiplayer.get_remote_sender_id()
 		var favors = Data.players[playerId].favors - 1
 		Signals.changeFavors.emit(playerId, favors)
-		if playerId == Data.id:
-			Signals.changeFavorsInUI.emit(favors)
+		Signals.changeFavorsInUI.emit(playerId, favors)
 
 
 @rpc("any_peer", "call_local")

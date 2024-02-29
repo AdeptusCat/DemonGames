@@ -420,8 +420,7 @@ func doEvilDeeds(demon : Demon) -> void:
 			favorsGathered += 1
 			var favors = Data.players[demon.player].favors + 1
 			Signals.changeFavors.emit(demon.player, favors)
-			if demon.player == Data.id:
-				Signals.changeFavorsInUI.emit(favors)
+			Signals.changeFavorsInUI.emit(demon.player, favors)
 			print(demon, " evil deeds earned a favor on earth")
 		else:
 			print(demon, " evil deeds didnt earn a favor on earth")

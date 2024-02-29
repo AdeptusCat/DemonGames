@@ -39,7 +39,7 @@ func _on_reply(sectioName, boolean):
 	if boolean:
 		var favors = Data.player.favors - 1
 		Signals.changeFavors.emit(Data.id, favors)
-		Signals.changeFavorsInUI.emit(favors)
+		Signals.changeFavorsInUI.emit(Data.id, favors)
 		Data.sectiosToClaim.append([Data.id, sectioName])
 		print("petitions to claim2 ",Data.sectiosToClaim)
 	$MarginContainer/VBoxContainer/VBoxContainer2/Label2.text = "You can occupy " + str(Data.player.favors - Data.player.disfavors) + " more Sectios"

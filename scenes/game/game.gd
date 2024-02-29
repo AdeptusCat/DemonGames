@@ -294,8 +294,7 @@ func setupFavorsFromSavegame():
 	for playerId in Data.players:
 		var player = Data.players[playerId]
 		Signals.changeFavors.emit(playerId, Save.savegame.players[playerId].favors)
-		if playerId == Data.id:
-			Signals.changeFavorsInUI.emit(Save.savegame.players[playerId].favors)
+		Signals.changeFavorsInUI.emit(playerId, Save.savegame.players[playerId].favors)
 		Signals.changeDisfavors.emit(playerId, Save.savegame.players[playerId].disfavors)
 
 
@@ -304,8 +303,7 @@ func setupFavors():
 		var player = Data.players[playerId]
 		var favors = player.favors + 1
 		Signals.changeFavors.emit(playerId, favors)
-		if playerId == Data.id:
-			Signals.changeFavorsInUI.emit(favors)
+		Signals.changeFavorsInUI.emit(playerId, favors)
 
 
 func setupDemons():
