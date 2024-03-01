@@ -77,7 +77,11 @@ func petitions(petitionSectiosByPlayerId : Dictionary, ui) -> void:
 			playerChoosePetitions(playerId, petitionSectiosByPlayerId, ui)
 		else:
 			aiPlayerChoosePetitions(playerId, petitionSectiosByPlayerId)
+	var petitionSectiosByHumanPlayerId : Dictionary = {}
 	for playerId in petitionSectiosByPlayerId:
+		if playerId > 0:
+			petitionSectiosByHumanPlayerId[playerId] = petitionSectiosByPlayerId[playerId]
+	for playerId in petitionSectiosByHumanPlayerId:
 		await Signals.petitionConfirmed
 	print("petitions to claim ",Data.sectiosToClaim)
 	for sectiosToClaim in Data.sectiosToClaim:
