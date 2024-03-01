@@ -457,8 +457,7 @@ func sectiosClickable():
 
 func _on_summoningDone():
 	Signals.sectioClicked.emit(null)
-	if not Data.id == Connection.host:
-		sendUnitsToSpawnToHost.rpc_id(Connection.host, Data.unitsToSpawn, Data.sectiosToUpdate)
+	sendUnitsToSpawnToHost.rpc_id(Connection.host, Data.unitsToSpawn, Data.sectiosToUpdate)
 
 
 func _unhandled_input(event):
@@ -1097,8 +1096,11 @@ func sendUnitsToSpawnToHost(unitsToSpawn, sectiosToUpdate):
 func placeUnitsFromArray():
 	var i : int = 0
 	for array : Array in Data.unitsToSpawn:
+		
 		if array.size() > 4:
 			for peer in Connection.peers:
+				#if peer == Connection.host and array[2] < 0:
+					#continue
 				# dont sent it to the peer that has already spawned the unit for itself locally
 				if not peer == array[2]:
 					spawnUnit.rpc_id(peer, array[0], array[1], array[2], array[3], array[4])
@@ -1106,12 +1108,13 @@ func placeUnitsFromArray():
 					RpcCalls.recruitedLieutenant.rpc_id(Connection.host)
 		else:
 			for peer in Connection.peers:
+				#if peer == Connection.host and array[2] < 0:
+					#continue
 				# dont sent it to the peer that has already spawned the unit for itself locally
 				if not peer == array[2]:
 					spawnUnit.rpc_id(peer, array[0], array[1], array[2], array[3])
 					updateTroopInSectio.rpc_id(peer, Data.sectiosToUpdate[i][0], Data.sectiosToUpdate[i][1])
 		i += 1
-	
 
 
 func placeUnit(sectio, playerId : int = Data.id, unitType : Data.UnitType = Data.UnitType.Legion, lieutenantNameToSpawn : String = ""):
@@ -1119,40 +1122,38 @@ func placeUnit(sectio, playerId : int = Data.id, unitType : Data.UnitType = Data
 	if unitType == Data.UnitType.Lieutenant:
 		if Decks.availableLieutenants.size() > 0:
 			var nr = randi()
-			# call it for the recruiting player first
-			# otherwise the sectio isnt updated yet
-			spawnUnit(sectio.sectioName, nr, playerId, Data.UnitType.Lieutenant, lieutenantNameToSpawn)
-			updateTroopInSectio(sectio.sectioName, sectio.troops)
+			if playerId > 0:
+				spawnUnit(sectio.sectioName, nr, playerId, Data.UnitType.Lieutenant, lieutenantNameToSpawn)
+				updateTroopInSectio(sectio.sectioName, sectio.troops)
+			else:
+				sectio.troops = sectio.troops + [nr]
 			Signals.incomeChanged.emit(playerId)
-			Data.unitsToSpawn.append([sectio.sectioName, nr, playerId, Data.UnitType.Lieutenant, lieutenantNameToSpawn])
-			Data.sectiosToUpdate.append([sectio.sectioName, sectio.troops])
-			#for peer in Connection.peers:
-				#if not peer == playerId:
-					## skip sending to host if its an AI player
-					#if not Connection.peers.has(playerId) and peer == Connection.host:
-						#continue
-					#spawnUnit.rpc_id(peer, sectio.sectioName, nr, playerId, Data.UnitType.Lieutenant, lieutenantNameToSpawn)
-					#updateTroopInSectio.rpc_id(peer, sectio.sectioName, sectio.troops)
+			if not playerId == Connection.host:
+				Data.unitsToSpawn.append([sectio.sectioName, nr, playerId, Data.UnitType.Lieutenant, lieutenantNameToSpawn])
+				Data.sectiosToUpdate.append([sectio.sectioName, sectio.troops])
 			Data.players[Data.id].canAffordRecruitLieutenants()
-			#RpcCalls.recruitedLieutenant.rpc_id(Connection.host)
 	
 	if unitType == Data.UnitType.Legion:
 		var nr = randi()
-		spawnUnit(sectio.sectioName, nr, playerId, Data.UnitType.Legion)
-		updateTroopInSectio(sectio.sectioName, sectio.troops)
+		if playerId > 0:
+			spawnUnit(sectio.sectioName, nr, playerId, Data.UnitType.Legion)
+			updateTroopInSectio(sectio.sectioName, sectio.troops)
+		# cant do this because of setter in sectio
+		# unit doesnt exist but nr get added to array which triggers the sectio.troops setter
+		#else:
+			#sectio.troops = sectio.troops + [nr]
 		print("troops in sectio ", sectio.sectioName, sectio.troops)
 		Signals.incomeChanged.emit(playerId)
-		Data.unitsToSpawn.append([sectio.sectioName, nr, playerId, Data.UnitType.Legion])
-		Data.sectiosToUpdate.append([sectio.sectioName, sectio.troops])
-		#for peer in Connection.peers:
-			#if not peer == playerId:
-				## skip sending to host if its an AI player
-				#if not Connection.peers.has(playerId) and peer == Connection.host:
-					#continue
-				#spawnUnit.rpc_id(peer, sectio.sectioName, nr, playerId, Data.UnitType.Legion)
-				#updateTroopInSectio.rpc_id(peer, sectio.sectioName, sectio.troops)
+		if not playerId == Connection.host:
+			Data.unitsToSpawn.append([sectio.sectioName, nr, playerId, Data.UnitType.Legion])
+			if playerId > 0:
+				Data.sectiosToUpdate.append([sectio.sectioName, sectio.troops])
+			else:
+				var sectioTroops : Array = sectio.troops.duplicate() + [nr]
+				Data.sectiosToUpdate.append([sectio.sectioName, sectioTroops])
 	
 	sectio.reorderUnitsinSlots()
+
 
 @rpc("any_peer", "call_local")
 func spawnUnit(sectioName : String, nr : int, triumphirate : int, unitType : Data.UnitType, unitName : String = ""):
@@ -1178,7 +1179,6 @@ func spawnUnit(sectioName : String, nr : int, triumphirate : int, unitType : Dat
 	unitScene.changeSectio(sectio.sectioName, sectio.circle, sectio.quarter)
 	unitScene.position = sectio.position
 	unitScene.unitClicked.connect(_on_unitClicked)
-#	unitScene.unitMovedMax.connect(_on_unitMovedMax)
 	
 	get_node(str(triumphirate)).add_child(unitScene)
 	sectio.troops = sectio.troops + [nr]
@@ -1196,7 +1196,6 @@ func spawnUnit(sectioName : String, nr : int, triumphirate : int, unitType : Dat
 		destination = stackedPosition(destination, value)
 		unitScene.set_destination(destination)
 		
-			
 	if triumphirate == Data.id:
 		unitScene.set_process(true)
 		var i = sectio.slots.find(triumphirate)
@@ -1204,8 +1203,6 @@ func spawnUnit(sectioName : String, nr : int, triumphirate : int, unitType : Dat
 		var destination = sectio.slotPositions[i]
 		destination = stackedPosition(destination, value)
 		unitScene.set_destination(destination)
-	
-	
 
 
 func stackedPosition(destination : Vector2, stack : int):
@@ -1230,28 +1227,6 @@ func friendlyUnitsInSectio(sectio, triumphirate : int):
 			value += 1
 	return value
 
-
-#func spawnUnit(unitType, sectio, playerId):
-#	var player = Data.players[playerId]
-#	match unitType:
-#		"legion":
-#			var legion = legionScene.instantiate()
-#			legion.name = str(randi())
-#
-#			print(Data.id, " current legios in sectio ", sectio.sectioName, " ",sectio.troops)
-#			sectio.troops.append(legion.unitNr)
-#			print(Data.id, " after   legios in sectio ", sectio.sectioName, " ",sectio.troops)
-#			for peer in Connection.peers:
-#				updateTroopInSectio.rpc_id(peer, sectio.sectioName, sectio.troops)
-#
-#			for peer in Connection.peers:
-#				legion.changeSectio.rpc_id(peer, sectio.sectioName, sectio.circle, sectio.quarter)
-#			legion.global_position = sectio.global_position
-#			legion.unitClicked.connect(_on_unitClicked)
-#			legion.unitMovedMax.connect(_on_unitMovedMax)
-#			get_node(str(Data.id)).add_child(legion)
-#			player.troops[legion.unitNr] = legion
-	
 
 # still needed???
 #func _on_confirmation_dialog_confirmed():
