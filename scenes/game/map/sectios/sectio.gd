@@ -24,7 +24,15 @@ enum Circles {Treachery, Fraud, TheViolent, Heretics, TheWrathful, TheGreedy, Th
 @export var circle : Circles = Circles.Treachery
 var circleNames : Dictionary = {Circles.Treachery : "Treachery", Circles.Fraud : "Fraud", Circles.TheViolent  : "The Violent", Circles.Heretics : "Heretics", Circles.TheWrathful : "The Wrathful", Circles.TheGreedy : "The Greedy", Circles.TheGluttonous : "The Gluttonous", Circles.TheLustful : "The Lustful", Circles.Limbo : "Limbo", Circles.Antehell : "Antehell"}
 @export_enum("One", "Two", "Three", "Four", "Five") var quarter: int
-@export var souls : int = 2
+@export var souls : int = 2:
+	set(_souls):
+		souls = _souls
+		if isIsolated:
+			%SoulsLabel.text = str(souls - 2)
+			%SoulsRingLabel.text = str(souls - 2)
+		else:
+			%SoulsRingLabel.text = str(souls)
+			%SoulsLabel.text = str(souls)
 @export var player : int = 0:
 	set(playerNr):
 		player = playerNr
@@ -46,7 +54,15 @@ var slotPositions = []
 var id : int = 0
 
 
-var isIsolated = true
+var isIsolated : bool = true:
+	set(_isIsolated):
+		isIsolated = _isIsolated
+		if isIsolated:
+			%SoulsLabel.text = str(souls - 2)
+			%SoulsRingLabel.text = str(souls - 2)
+		else:
+			%SoulsRingLabel.text = str(souls)
+			%SoulsLabel.text = str(souls)
 var clickable = false
 var originalColor
 var tw1
@@ -78,7 +94,6 @@ func _ready():
 	Signals.showArrows.connect(_on_showArrows)
 	Signals.hideArrows.connect(_on_hideArrows)
 	%SoulsRing.self_modulate = colors[circle]
-	%SoulsRingLabel.text = str(souls)
 	remove_child(sectioPolygon)
 #	playerPolygon.modulate.a = 0.0
 	%NameLabel.text = sectioName
