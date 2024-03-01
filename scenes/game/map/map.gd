@@ -1117,7 +1117,8 @@ func placeUnitsFromArray():
 		i += 1
 
 
-func placeUnit(sectio, playerId : int = Data.id, unitType : Data.UnitType = Data.UnitType.Legion, lieutenantNameToSpawn : String = ""):
+func placeUnit(sectio : Sectio, playerId : int = Data.id, unitType : Data.UnitType = Data.UnitType.Legion, lieutenantNameToSpawn : String = ""):
+	print("spawn unit ", playerId)
 	var player = Data.players[playerId]
 	if unitType == Data.UnitType.Lieutenant:
 		if Decks.availableLieutenants.size() > 0:
@@ -1127,7 +1128,8 @@ func placeUnit(sectio, playerId : int = Data.id, unitType : Data.UnitType = Data
 				updateTroopInSectio(sectio.sectioName, sectio.troops)
 			else:
 				sectio.troops = sectio.troops + [nr]
-			Signals.incomeChanged.emit(playerId)
+			
+			#Signals.incomeChanged.emit(playerId)
 			if not playerId == Connection.host:
 				Data.unitsToSpawn.append([sectio.sectioName, nr, playerId, Data.UnitType.Lieutenant, lieutenantNameToSpawn])
 				Data.sectiosToUpdate.append([sectio.sectioName, sectio.troops])
@@ -1140,26 +1142,27 @@ func placeUnit(sectio, playerId : int = Data.id, unitType : Data.UnitType = Data
 			updateTroopInSectio(sectio.sectioName, sectio.troops)
 		# cant do this because of setter in sectio
 		# unit doesnt exist but nr get added to array which triggers the sectio.troops setter
-		#else:
-			#sectio.troops = sectio.troops + [nr]
+		else:
+			sectio.troops = sectio.troops + [nr]
 		print("troops in sectio ", sectio.sectioName, sectio.troops)
-		Signals.incomeChanged.emit(playerId)
+		#Signals.incomeChanged.emit(playerId)
 		if not playerId == Connection.host:
 			Data.unitsToSpawn.append([sectio.sectioName, nr, playerId, Data.UnitType.Legion])
-			if playerId > 0:
-				Data.sectiosToUpdate.append([sectio.sectioName, sectio.troops])
-			else:
-				var sectioTroops : Array = sectio.troops.duplicate() + [nr]
-				Data.sectiosToUpdate.append([sectio.sectioName, sectioTroops])
-	
+			#if playerId > 0:
+			Data.sectiosToUpdate.append([sectio.sectioName, sectio.troops])
+			#else:
+				#var sectioTroops : Array = sectio.troops.duplicate() + [nr]
+				#Data.sectiosToUpdate.append([sectio.sectioName, sectioTroops])
+				#print("troops in sectio1 ", sectio.sectioName, sectioTroops)
+	print("spawn unit ", playerId, Data.unitsToSpawn)
 	sectio.reorderUnitsinSlots()
 
 
 @rpc("any_peer", "call_local")
 func spawnUnit(sectioName : String, nr : int, triumphirate : int, unitType : Data.UnitType, unitName : String = ""):
-	var sectio = Decks.sectioNodes[sectioName]
+	var sectio : Sectio = Decks.sectioNodes[sectioName]
 	
-	var unitScene
+	var unitScene : Unit
 	match unitType:
 		Data.UnitType.Legion:
 			unitScene = legionScene.instantiate()
@@ -1183,6 +1186,7 @@ func spawnUnit(sectioName : String, nr : int, triumphirate : int, unitType : Dat
 	get_node(str(triumphirate)).add_child(unitScene)
 	sectio.troops = sectio.troops + [nr]
 	
+	Signals.incomeChanged.emit(triumphirate)
 	if unitType == Data.UnitType.Legion:
 		%SpawnLegionAudio.play()
 	elif unitType == Data.UnitType.Lieutenant:
@@ -1203,7 +1207,7 @@ func spawnUnit(sectioName : String, nr : int, triumphirate : int, unitType : Dat
 		var destination = sectio.slotPositions[i]
 		destination = stackedPosition(destination, value)
 		unitScene.set_destination(destination)
-
+	sectio.reorderUnitsinSlots()
 
 func stackedPosition(destination : Vector2, stack : int):
 	destination = destination - Vector2(0, 30 * stack)
@@ -1213,9 +1217,11 @@ func stackedPosition(destination : Vector2, stack : int):
 func friendlyUnitsOfTheSameTypeInSectio(sectio, triumphirate : int, unitType):
 	var value : int = 0
 	for unitNr in sectio.troops:
-		var unit = Data.troops[unitNr]
-		if unit.triumphirate == triumphirate and unit.unitType == unitType:
-			value += 1
+		if sectio.troops.has(unitNr):
+			if Data.troops.has(unitNr):
+				var unit = Data.troops[unitNr]
+				if unit.triumphirate == triumphirate and unit.unitType == unitType:
+					value += 1
 	return value
 
 

@@ -37,10 +37,11 @@ var slotPositions = []
 		slots = []
 		var playerId = null
 		for unitName in troops:
-			var unit = Data.troops[unitName]
-			playerId = unit.triumphirate
-			if not slots.has(playerId):
-				slots.append(playerId)
+			if Data.troops.has(unitName):
+				var unit = Data.troops[unitName]
+				playerId = unit.triumphirate
+				if not slots.has(playerId):
+					slots.append(playerId)
 @export var sectioTexture : Texture
 var id : int = 0
 
@@ -234,6 +235,7 @@ func _ready():
 	#startArrowSpin()
 	Signals.spinFleeArrows.connect(_on_spinFleeArrows)
 	Signals.hideFleeArrow.connect(_on_hideFleeArrow)
+
 
 
 func _on_showArrows(sectio : Sectio, possibleNeighboursDownUpCwCcw : Array):
@@ -492,13 +494,14 @@ func reorderUnitsinSlots():
 		
 		var units : Array = []
 		for unitNr : int in troops:
-			var unit : Unit = Data.troops[unitNr]
-			if unit.triumphirate == slot:
-				# if Lieutenant, put on the bottom of the stack
-				if unit.unitType == Data.UnitType.Lieutenant:
-					units.insert(0, unit)
-				else:
-					units.append(unit)
+			if Data.troops.has(unitNr):
+				var unit : Unit = Data.troops[unitNr]
+				if unit.triumphirate == slot:
+					# if Lieutenant, put on the bottom of the stack
+					if unit.unitType == Data.UnitType.Lieutenant:
+						units.insert(0, unit)
+					else:
+						units.append(unit)
 		
 		var zIndex : int = 1
 		for unit : Unit in units:

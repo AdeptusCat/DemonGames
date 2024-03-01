@@ -116,9 +116,10 @@ func changeIncome():
 	
 	for sectioName in sectios:
 		for unitName in Decks.sectioNodes[sectioName].troops:
-			if not Data.troops[unitName].triumphirate == playerId:
-				enemyInSectio = true
-				break
+			if Data.troops.has(unitName):
+				if not Data.troops[unitName].triumphirate == playerId:
+					enemyInSectio = true
+					break
 		if not enemyInSectio:
 			var sectio = Decks.sectioNodes[sectioName]
 			var isIsolated = sectio.isolated()

@@ -22,7 +22,7 @@ func _on_buyArcanaCard():
 
 
 func _on_incomeChanged(playerId : int):
-	var player = Data.players[playerId]
+	var player : Player = Data.players[playerId]
 	player.changeIncome()
 
 
