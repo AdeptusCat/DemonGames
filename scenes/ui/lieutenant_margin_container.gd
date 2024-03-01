@@ -1,20 +1,5 @@
 extends MarginContainer
 
-#@onready var textureRect = $VBoxContainer/MarginContainer/TextureRect
-#@onready var prefixLabel = $VBoxContainer/MarginContainer2/HBoxContainer/HBoxContainer/PrefixLabel
-#@onready var bonusLabel = $VBoxContainer/MarginContainer2/HBoxContainer/HBoxContainer/CombatBonusLabel
-#@onready var nameLabel = $VBoxContainer/MarginContainer2/HBoxContainer/HBoxContainer/CombatBonusLabel
-#@onready var capacityLabel = $VBoxContainer/MarginContainer2/HBoxContainer/CapactiyLabel
-
-
-#@onready var textureRect = %TextureRect
-#@onready var colorRect = %ColorRect
-#@onready var lieutenantTextureRect = %LieutenantTextureRect
-
-#@onready var textureRectMaterial = textureRect.get_material()
-#@onready var colorRectMaterial = colorRect.get_material()
-#@onready var lieutenantTextureRectMaterial = lieutenantTextureRect.get_material()
-
 
 var followMouse : bool = false
 var lieutenantName : String = ""
@@ -29,7 +14,6 @@ func _ready():
 
 
 func _on_removeChosenLieutenantFromMouse(_lieutenantName):
-	print("remove leiteuentn ", _lieutenantName, " ", lieutenantName )
 	if _lieutenantName == lieutenantName:
 		queue_free()
 
@@ -46,7 +30,6 @@ func deactivate():
 
 func _input(event):
 	if event is InputEventMouseMotion:
-		#print(event.global_position)
 		var x = remap(event.global_position.x, 0, DisplayServer.window_get_size().x, 0, 1920)
 		var y = remap(event.global_position.y, 0, DisplayServer.window_get_size().y, 0, 1080)
 		if followMouse:
@@ -79,7 +62,7 @@ func populate(unitName, lieutenantTextureDir, combatBonus, capacity, triumphirat
 	if triumphirate:
 		var texture = Data.icons[Data.players[triumphirate].colorName]
 		%TextureRect.texture = texture
-	cost = combatBonus.to_int() + capacity.to_int()
+	cost = (combatBonus.to_int() + capacity.to_int())*2
 	lieutenantName = unitName
 
 
@@ -119,12 +102,10 @@ func hit():
 
 
 func kill():
-	print("lieut gets killed")
 	var tw1 = create_tween()
 	tw1.set_trans(Tween.TRANS_QUAD)
 	tw1.set_ease(Tween.EASE_IN)
 	tw1.parallel().tween_property(%TextureRect.get_material(), "shader_parameter/dissolveState", 1.0, 2.0)
-#	tw1.parallel().tween_property(%LieutenantTextureRect, "shader_parameter/dissolveState", 1.0, 2.0)
 	tw1.parallel().tween_property(%ColorRect.get_material(), "shader_parameter/dissolveState", 1.0, 2.0)
 	tw1.tween_callback(queue_free)
 
@@ -143,5 +124,5 @@ func _on_gui_input(event):
 			Signals.toggleAvailableLieutenants.emit(false)
 			var souls = Data.player.souls - cost
 			Signals.changeSouls.emit(Data.id, souls)
-			Signals.changeSoulsInUI.emit(souls)
+			Signals.emitSoulsFromTreasury.emit(event.global_position, cost) 
 			Signals.recruitLieutenant.emit(lieutenantName)

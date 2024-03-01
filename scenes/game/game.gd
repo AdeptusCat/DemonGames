@@ -55,7 +55,7 @@ func _ready():
 	#skipSouls = true
 	#skipSummoning = true
 	#skipAction = true
-#	skipCombat = true
+	skipCombat = true
 #	skipPetitions = true
 #	skipEnd = true
 
@@ -66,7 +66,7 @@ func _ready():
 #	debugDisfavors = 1
 #
 #	Settings.tooltips = false
-	#Settings.skipScreens = true
+	Settings.skipScreens = false
 #	Settings.skipSoulsSummary = true
 #	Settings.skipWaitForPlayers = true
 #	Settings.skipPhaseReminder = true
@@ -151,6 +151,7 @@ func setup():
 		Data.chooseDemon = true
 		if not Tutorial.tutorial:
 			setupDemons()
+			print("confirm start demon")
 			await confirmStartDemon()
 		
 		if not Tutorial.tutorial:
@@ -274,8 +275,9 @@ func setupSoulsFromSavegame():
 	for playerId in Data.players:
 		var player = Data.players[playerId]
 		Signals.changeSouls.emit(playerId, Save.savegame.players[playerId].souls)
-		if playerId == Data.id:
-			Signals.changeSoulsInUI.emit(Save.savegame.players[playerId].souls)
+		Signals.changeSoulsInUI.emit(playerId, Save.savegame.players[playerId].souls)
+		#if playerId == Data.id:
+			#Signals.changeSoulsInUI.emit(Save.savegame.players[playerId].souls)
 
 
 func setupSouls():
@@ -283,16 +285,16 @@ func setupSouls():
 		var player = Data.players[playerId]
 		var souls = player.souls + 10 + debugSouls
 		Signals.changeSouls.emit(playerId, souls)
-		if playerId == Data.id:
-			Signals.changeSoulsInUI.emit(souls)
+		Signals.changeSoulsInUI.emit(playerId, souls)
+		#if playerId == Data.id:
+			#Signals.changeSoulsInUI.emit(souls)
 
 
 func setupFavorsFromSavegame():
 	for playerId in Data.players:
 		var player = Data.players[playerId]
 		Signals.changeFavors.emit(playerId, Save.savegame.players[playerId].favors)
-		if playerId == Data.id:
-			Signals.changeFavorsInUI.emit(Save.savegame.players[playerId].favors)
+		Signals.changeFavorsInUI.emit(playerId, Save.savegame.players[playerId].favors)
 		Signals.changeDisfavors.emit(playerId, Save.savegame.players[playerId].disfavors)
 
 
@@ -301,8 +303,7 @@ func setupFavors():
 		var player = Data.players[playerId]
 		var favors = player.favors + 1
 		Signals.changeFavors.emit(playerId, favors)
-		if playerId == Data.id:
-			Signals.changeFavorsInUI.emit(favors)
+		Signals.changeFavorsInUI.emit(playerId, favors)
 
 
 func setupDemons():
@@ -398,9 +399,15 @@ func setupStartLegions():
 		playerIds.shuffle()
 		for playerId in playerIds:
 			if playerId > 0:
-				await playerPlaceStartLegion(playerId)
+				playerPlaceStartLegion(playerId)
 			else:
 				aiPlaceStartLegion(playerId)
+		for peer in Connection.peers:
+			await map.unitPlacingDone
+		Signals.placeUnitsFromArray.emit()
+		for peers in Connection.peers:
+			RpcCalls.resetUnitsToPlace.rpc_id(peers)
+		
 
 
 func aiPlaceStartLegion(id : int) -> void:
@@ -414,7 +421,7 @@ func playerPlaceStartLegion(playerId : int) -> void:
 		RpcCalls.toogleWaitForPlayer.rpc_id(peer, playerId, true)
 	for peer in Connection.peers:
 		ui.updateRankTrackCurrentPlayer.rpc_id(peer, playerId)
-	await map.unitPlacingDone
+	map.unitPlacingDone
 	for peer in Connection.peers:
 		RpcCalls.toogleWaitForPlayer.rpc_id(peer, playerId, false)
 

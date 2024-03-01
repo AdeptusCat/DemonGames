@@ -42,6 +42,7 @@ func _ready():
 	Signals.emitSoulsFromCollectionPosition.connect(_on_emitSoulsFromCollectionPosition)
 	Signals.emitSoulsFromTreasury.connect(_on_emitSoulsFromTreasury)
 	Signals.emitFavorsFromCollectionPosition.connect(_on_emitFavorsFromCollectionPosition)
+	Signals.emitFavorsFromTreasury.connect(_on_emitFavorsFromTreasury)
 	Signals.showSectioPreview.connect(showSectioPreview)
 	Signals.hideSectioPreview.connect(hideSectioPreview)
 	Signals.showFleeControl.connect(showFleeControl)
@@ -106,8 +107,8 @@ func _ready():
 func _on_emitSoulsFromTreasury(position : Vector2, soulsGathered : int):
 	for soul in soulsGathered:
 		var label = load("res://scenes/ui/soul_phase/soul.tscn").instantiate()
-		label.targetPosition = position
 		label.position = %SoulsMarginContainer.global_position
+		label.targetPosition = position
 		add_child(label)
 		label.pay()
 		await get_tree().create_timer(0.3).timeout
@@ -132,6 +133,15 @@ func _on_emitFavorsFromCollectionPosition(position : Vector2, favorsGathered : i
 		label.collect()
 		await get_tree().create_timer(0.3).timeout
 
+
+func _on_emitFavorsFromTreasury(position : Vector2, favorsGathered : int):
+	for favor in favorsGathered:
+		var label = load("res://scenes/ui/soul_phase/favor.tscn").instantiate()
+		label.position = %FavorMarginContainer.global_position
+		label.targetPosition = position
+		add_child(label)
+		label.pay()
+		await get_tree().create_timer(0.3).timeout
 
 
 func highlightCurrentPlayer(player : Player = null):

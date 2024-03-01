@@ -63,5 +63,5 @@ func showMovesLeft(boolean : bool, value : int = 0):
 			add_child(movesLeftContainer)
 			movesLeftContainer.position.x += marginContainer.size.x
 	else:
-		if movesLeftContainer:
+		if is_instance_valid(movesLeftContainer):
 			movesLeftContainer.queue_free()

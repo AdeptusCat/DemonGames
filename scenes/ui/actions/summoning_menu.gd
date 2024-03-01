@@ -87,12 +87,23 @@ func _on_end_phase_button_pressed():
 	Signals.summoningDone.emit()
 	Signals.playerDoneWithPhase.emit()
 	AudioSignals.playerTurnDone.emit()
+	
+	Signals.toogleSummoningMenu.emit(false)
+	Signals.toogleTameHellhoundContainer.emit(false)
+	Signals.toogleBuyLieutenant.emit(false)
+	for cardName in Data.player.arcanaCards:
+		var arcanaCard = Data.arcanaCards[cardName]
+		var MinorSpell = Decks.MinorSpell
+		if arcanaCard.minorSpell == MinorSpell.RecruitLieutenants:
+			RpcCalls.disableArcanaCard(cardName)
+	for sectio in Data.player.sectios:
+		sectio = sectio as String
+		Decks.sectioNodes[sectio].changeClickable(false)
 
 
 func _on_recruit_legions_h_box_container_gui_input(event):
 	if recruitLegionsButtonActivated:
 		if Input.is_action_just_pressed("click"):
-			print("recruti clo11")
 			Signals.tutorialRead.emit()
 			Signals.recruitLegions.emit()
 
@@ -115,3 +126,15 @@ func _on_end_phase_margin_container_gui_input(event):
 		Signals.summoningDone.emit()
 		Signals.playerDoneWithPhase.emit()
 		AudioSignals.playerTurnDone.emit()
+		
+		Signals.toogleSummoningMenu.emit(false)
+		Signals.toogleTameHellhoundContainer.emit(false)
+		Signals.toogleBuyLieutenant.emit(false)
+		for cardName in Data.player.arcanaCards:
+			var arcanaCard = Data.arcanaCards[cardName]
+			var MinorSpell = Decks.MinorSpell
+			if arcanaCard.minorSpell == MinorSpell.RecruitLieutenants:
+				RpcCalls.disableArcanaCard(cardName)
+		for sectio in Data.player.sectios:
+			sectio = sectio as String
+			Decks.sectioNodes[sectio].changeClickable(false)

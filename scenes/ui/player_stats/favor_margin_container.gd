@@ -3,14 +3,13 @@ extends MarginContainer
 
 @onready var default_font_size : int = %FavorLabel.label_settings.font_size
 
-
 func _ready():
-	Signals.changeFavorsInUI.connect(_on_changeFavorsInUI)
+	Signals.changeFavorsInUiContainer.connect(_on_changeFavorsInUiContainer)
 	Signals.favorReachedPlayerStats.connect(_on_favorReachedPlayerStats)
 	Signals.favorLeftPlayerStats.connect(_on_favorLeftPlayerStats)
 
 
-func _on_changeFavorsInUI(favors : int):
+func _on_changeFavorsInUiContainer(favors : int):
 	%FavorLabel.text = str(favors)
 
 

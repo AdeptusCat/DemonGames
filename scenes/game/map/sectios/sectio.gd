@@ -24,7 +24,15 @@ enum Circles {Treachery, Fraud, TheViolent, Heretics, TheWrathful, TheGreedy, Th
 @export var circle : Circles = Circles.Treachery
 var circleNames : Dictionary = {Circles.Treachery : "Treachery", Circles.Fraud : "Fraud", Circles.TheViolent  : "The Violent", Circles.Heretics : "Heretics", Circles.TheWrathful : "The Wrathful", Circles.TheGreedy : "The Greedy", Circles.TheGluttonous : "The Gluttonous", Circles.TheLustful : "The Lustful", Circles.Limbo : "Limbo", Circles.Antehell : "Antehell"}
 @export_enum("One", "Two", "Three", "Four", "Five") var quarter: int
-@export var souls : int = 2
+@export var souls : int = 2:
+	set(_souls):
+		souls = _souls
+		if isIsolated:
+			%SoulsLabel.text = str(souls - 2)
+			%SoulsRingLabel.text = str(souls - 2)
+		else:
+			%SoulsRingLabel.text = str(souls)
+			%SoulsLabel.text = str(souls)
 @export var player : int = 0:
 	set(playerNr):
 		player = playerNr
@@ -37,15 +45,24 @@ var slotPositions = []
 		slots = []
 		var playerId = null
 		for unitName in troops:
-			var unit = Data.troops[unitName]
-			playerId = unit.triumphirate
-			if not slots.has(playerId):
-				slots.append(playerId)
+			if Data.troops.has(unitName):
+				var unit = Data.troops[unitName]
+				playerId = unit.triumphirate
+				if not slots.has(playerId):
+					slots.append(playerId)
 @export var sectioTexture : Texture
 var id : int = 0
 
 
-var isIsolated = true
+var isIsolated : bool = true:
+	set(_isIsolated):
+		isIsolated = _isIsolated
+		if isIsolated:
+			%SoulsLabel.text = str(souls - 2)
+			%SoulsRingLabel.text = str(souls - 2)
+		else:
+			%SoulsRingLabel.text = str(souls)
+			%SoulsLabel.text = str(souls)
 var clickable = false
 var originalColor
 var tw1
@@ -77,7 +94,6 @@ func _ready():
 	Signals.showArrows.connect(_on_showArrows)
 	Signals.hideArrows.connect(_on_hideArrows)
 	%SoulsRing.self_modulate = colors[circle]
-	%SoulsRingLabel.text = str(souls)
 	remove_child(sectioPolygon)
 #	playerPolygon.modulate.a = 0.0
 	%NameLabel.text = sectioName
@@ -234,6 +250,7 @@ func _ready():
 	#startArrowSpin()
 	Signals.spinFleeArrows.connect(_on_spinFleeArrows)
 	Signals.hideFleeArrow.connect(_on_hideFleeArrow)
+
 
 
 func _on_showArrows(sectio : Sectio, possibleNeighboursDownUpCwCcw : Array):
@@ -492,13 +509,14 @@ func reorderUnitsinSlots():
 		
 		var units : Array = []
 		for unitNr : int in troops:
-			var unit : Unit = Data.troops[unitNr]
-			if unit.triumphirate == slot:
-				# if Lieutenant, put on the bottom of the stack
-				if unit.unitType == Data.UnitType.Lieutenant:
-					units.insert(0, unit)
-				else:
-					units.append(unit)
+			if Data.troops.has(unitNr):
+				var unit : Unit = Data.troops[unitNr]
+				if unit.triumphirate == slot:
+					# if Lieutenant, put on the bottom of the stack
+					if unit.unitType == Data.UnitType.Lieutenant:
+						units.insert(0, unit)
+					else:
+						units.append(unit)
 		
 		var zIndex : int = 1
 		for unit : Unit in units:

@@ -6,6 +6,12 @@ const demonScene = preload("res://scenes/game/demon/demon.tscn")
 
 
 @rpc("any_peer", "call_local")
+func resetUnitsToPlace():
+	Data.unitsToSpawn.clear()
+	Data.sectiosToUpdate.clear()
+
+
+@rpc("any_peer", "call_local")
 func peerReady():
 	var playerId = multiplayer.get_remote_sender_id()
 	Connection.playerReady(playerId)
@@ -426,8 +432,7 @@ func confirmPetition(boolean):
 		var playerId = multiplayer.get_remote_sender_id()
 		var favors = Data.players[playerId].favors - 1
 		Signals.changeFavors.emit(playerId, favors)
-		if playerId == Data.id:
-			Signals.changeFavorsInUI.emit(favors)
+		Signals.changeFavorsInUI.emit(playerId, favors)
 
 
 @rpc("any_peer", "call_local")
