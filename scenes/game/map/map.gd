@@ -1091,9 +1091,13 @@ func _on_spawnUnit(sectioName : String, playerId : int, unitType : Data.UnitType
 func sendUnitsToSpawnToHost(unitsToSpawn, sectiosToUpdate):
 	Data.unitsToSpawn = Data.unitsToSpawn + unitsToSpawn
 	Data.sectiosToUpdate = Data.sectiosToUpdate + sectiosToUpdate
+	print("units to spawn ", Data.unitsToSpawn)
 
 
 func placeUnitsFromArray():
+	print("spawn from array ",Data.unitsToSpawn)
+	print("spawn from array and update sectios ",Data.sectiosToUpdate)
+	
 	var i : int = 0
 	for array : Array in Data.unitsToSpawn:
 		
@@ -1127,7 +1131,10 @@ func placeUnit(sectio : Sectio, playerId : int = Data.id, unitType : Data.UnitTy
 				spawnUnit(sectio.sectioName, nr, playerId, Data.UnitType.Lieutenant, lieutenantNameToSpawn)
 				updateTroopInSectio(sectio.sectioName, sectio.troops)
 			else:
-				sectio.troops = sectio.troops + [nr]
+				#sectio.troops = sectio.troops + [nr]
+				sectio.aiRecruits = sectio.troops + sectio.aiRecruits + [nr]
+				#Data.unitsToSpawn.append([sectio.sectioName, nr, playerId, Data.UnitType.Lieutenant, lieutenantNameToSpawn])
+				#Data.sectiosToUpdate.append([sectio.sectioName, sectio.troops])
 			
 			#Signals.incomeChanged.emit(playerId)
 			if not playerId == Connection.host:
@@ -1143,17 +1150,20 @@ func placeUnit(sectio : Sectio, playerId : int = Data.id, unitType : Data.UnitTy
 		# cant do this because of setter in sectio
 		# unit doesnt exist but nr get added to array which triggers the sectio.troops setter
 		else:
-			sectio.troops = sectio.troops + [nr]
+			#sectio.troops = sectio.troops + [nr]
+			#Data.unitsToSpawn.append([sectio.sectioName, nr, playerId, Data.UnitType.Legion])
+			#Data.sectiosToUpdate.append([sectio.sectioName, sectio.troops])
+			sectio.aiRecruits = sectio.troops + sectio.aiRecruits + [nr]
+			
 		print("troops in sectio ", sectio.sectioName, sectio.troops)
 		#Signals.incomeChanged.emit(playerId)
 		if not playerId == Connection.host:
-			Data.unitsToSpawn.append([sectio.sectioName, nr, playerId, Data.UnitType.Legion])
-			#if playerId > 0:
-			Data.sectiosToUpdate.append([sectio.sectioName, sectio.troops])
-			#else:
-				#var sectioTroops : Array = sectio.troops.duplicate() + [nr]
-				#Data.sectiosToUpdate.append([sectio.sectioName, sectioTroops])
-				#print("troops in sectio1 ", sectio.sectioName, sectioTroops)
+			if playerId > 0:
+				Data.unitsToSpawn.append([sectio.sectioName, nr, playerId, Data.UnitType.Legion])
+				Data.sectiosToUpdate.append([sectio.sectioName, sectio.troops])
+			else:
+				Data.unitsToSpawn.append([sectio.sectioName, nr, playerId, Data.UnitType.Legion])
+				Data.sectiosToUpdate.append([sectio.sectioName, sectio.aiRecruits])
 	print("spawn unit ", playerId, Data.unitsToSpawn)
 	sectio.reorderUnitsinSlots()
 

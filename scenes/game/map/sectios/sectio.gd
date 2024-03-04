@@ -53,6 +53,9 @@ var slotPositions = []
 @export var sectioTexture : Texture
 var id : int = 0
 
+# hold ai units to spawn separate from actual units in sectio
+var aiRecruits : Array = []
+
 
 var isIsolated : bool = true:
 	set(_isIsolated):

@@ -81,6 +81,9 @@ func _ready():
 		RpcCalls.peerReady.rpc_id(Connection.host)
 	
 	Signals.potatoPc.emit(Settings.potatoPc)
+	
+	for peers in Connection.peers:
+		RpcCalls.resetUnitsToPlace.rpc_id(peers)
 
 func saveGame():
 	var save_dict = {"game" : {
