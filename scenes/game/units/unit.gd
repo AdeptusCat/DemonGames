@@ -50,6 +50,7 @@ func setup():
 	triumphirate = str(get_parent().name).to_int()
 	Data.troops[unitNr] = self
 	Data.players[triumphirate].troops[unitNr] = self
+	print("spawn unit ", unitNr)
 	set_process(false)
 
 

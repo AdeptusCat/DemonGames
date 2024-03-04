@@ -84,7 +84,6 @@ func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 					var sectiosNextToFriendlySectioInSameCircle : Array = [] 
 					var sectiosNextToFriendlySectioInSameCircleWithoutFriendlies : Array = [] 
 					var unitsWithoutPlan : Dictionary = Data.players[playerId].troops.duplicate()
-					
 					unitsWithoutPlan = removeUnitsThatCannotMove(unitsWithoutPlan, playerId)
 					
 					for sectioName in Decks.sectioNodes:

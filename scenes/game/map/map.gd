@@ -629,7 +629,6 @@ func moveUnits(troopsToMove, oldSectio : Sectio, sectio : Sectio):
 	for peer in Connection.peers:
 		updateTroopInSectio.rpc_id(peer, sectio.sectioName, sectio.troops)
 	
-	
 	var i = sectio.slots.find(playerId)
 	var destination : Vector2 = sectio.slotPositions[i]
 	
@@ -1087,7 +1086,7 @@ func _on_spawnUnit(sectioName : String, playerId : int, unitType : Data.UnitType
 	placeUnit(sectio, playerId, unitType, unitName)
 
 
-@rpc("any_peer", "call_local")
+@rpc("any_peer")
 func sendUnitsToSpawnToHost(unitsToSpawn, sectiosToUpdate):
 	Data.unitsToSpawn = Data.unitsToSpawn + unitsToSpawn
 	Data.sectiosToUpdate = Data.sectiosToUpdate + sectiosToUpdate
@@ -1096,11 +1095,8 @@ func sendUnitsToSpawnToHost(unitsToSpawn, sectiosToUpdate):
 func placeUnitsFromArray():
 	var i : int = 0
 	for array : Array in Data.unitsToSpawn:
-		
 		if array.size() > 4:
 			for peer in Connection.peers:
-				#if peer == Connection.host and array[2] < 0:
-					#continue
 				# dont sent it to the peer that has already spawned the unit for itself locally
 				if not peer == array[2]:
 					spawnUnit.rpc_id(peer, array[0], array[1], array[2], array[3], array[4])
@@ -1108,8 +1104,6 @@ func placeUnitsFromArray():
 					RpcCalls.recruitedLieutenant.rpc_id(Connection.host)
 		else:
 			for peer in Connection.peers:
-				#if peer == Connection.host and array[2] < 0:
-					#continue
 				# dont sent it to the peer that has already spawned the unit for itself locally
 				if not peer == array[2]:
 					spawnUnit.rpc_id(peer, array[0], array[1], array[2], array[3])
@@ -1118,7 +1112,6 @@ func placeUnitsFromArray():
 
 
 func placeUnit(sectio : Sectio, playerId : int = Data.id, unitType : Data.UnitType = Data.UnitType.Legion, lieutenantNameToSpawn : String = ""):
-	print("spawn unit ", playerId)
 	var player = Data.players[playerId]
 	if unitType == Data.UnitType.Lieutenant:
 		if Decks.availableLieutenants.size() > 0:
@@ -1127,12 +1120,13 @@ func placeUnit(sectio : Sectio, playerId : int = Data.id, unitType : Data.UnitTy
 				spawnUnit(sectio.sectioName, nr, playerId, Data.UnitType.Lieutenant, lieutenantNameToSpawn)
 				updateTroopInSectio(sectio.sectioName, sectio.troops)
 			else:
-				sectio.troops = sectio.troops + [nr]
-			
-			#Signals.incomeChanged.emit(playerId)
+				sectio.AiUnitsToSpawn = sectio.AiUnitsToSpawn + [nr]
 			if not playerId == Connection.host:
 				Data.unitsToSpawn.append([sectio.sectioName, nr, playerId, Data.UnitType.Lieutenant, lieutenantNameToSpawn])
 				Data.sectiosToUpdate.append([sectio.sectioName, sectio.troops])
+			if playerId < 0:
+				Data.unitsToSpawn.append([sectio.sectioName, nr, playerId, Data.UnitType.Legion])
+				Data.sectiosToUpdate.append([sectio.sectioName, sectio.AiUnitsToSpawn + sectio.troops])
 			Data.players[Data.id].canAffordRecruitLieutenants()
 	
 	if unitType == Data.UnitType.Legion:
@@ -1140,21 +1134,15 @@ func placeUnit(sectio : Sectio, playerId : int = Data.id, unitType : Data.UnitTy
 		if playerId > 0:
 			spawnUnit(sectio.sectioName, nr, playerId, Data.UnitType.Legion)
 			updateTroopInSectio(sectio.sectioName, sectio.troops)
-		# cant do this because of setter in sectio
-		# unit doesnt exist but nr get added to array which triggers the sectio.troops setter
 		else:
-			sectio.troops = sectio.troops + [nr]
-		print("troops in sectio ", sectio.sectioName, sectio.troops)
-		#Signals.incomeChanged.emit(playerId)
-		if not playerId == Connection.host:
+			sectio.AiUnitsToSpawn = sectio.AiUnitsToSpawn + [nr]
+		if not playerId == Connection.host and playerId > 0:
 			Data.unitsToSpawn.append([sectio.sectioName, nr, playerId, Data.UnitType.Legion])
-			#if playerId > 0:
 			Data.sectiosToUpdate.append([sectio.sectioName, sectio.troops])
-			#else:
-				#var sectioTroops : Array = sectio.troops.duplicate() + [nr]
-				#Data.sectiosToUpdate.append([sectio.sectioName, sectioTroops])
-				#print("troops in sectio1 ", sectio.sectioName, sectioTroops)
-	print("spawn unit ", playerId, Data.unitsToSpawn)
+		if playerId < 0:
+			Data.unitsToSpawn.append([sectio.sectioName, nr, playerId, Data.UnitType.Legion])
+			Data.sectiosToUpdate.append([sectio.sectioName, sectio.AiUnitsToSpawn + sectio.troops])
+	
 	sectio.reorderUnitsinSlots()
 
 
@@ -1177,6 +1165,7 @@ func spawnUnit(sectioName : String, nr : int, triumphirate : int, unitType : Dat
 			Signals.removeChosenLieutenantFromMouse.emit(unitName)
 	
 	unitScene.name = str(nr)
+	
 	unitScene.triumphirate = triumphirate
 	
 	unitScene.changeSectio(sectio.sectioName, sectio.circle, sectio.quarter)

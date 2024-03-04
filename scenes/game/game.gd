@@ -55,7 +55,7 @@ func _ready():
 	#skipSouls = true
 	#skipSummoning = true
 	#skipAction = true
-	skipCombat = true
+	#skipCombat = true
 #	skipPetitions = true
 #	skipEnd = true
 

@@ -247,54 +247,7 @@ func _on_updateRooms(roomsDict : Dictionary, playersInGame : Array):
 			item.set_selectable(0, false)
 			item.deselect(0)
 	connectAudio()
-	
-	
-#	var roomsInLobby : Array = []
-#	var roomsToRemove : Array = []
-#	for index in %RoomsList.item_count:
-#		var roomName = %RoomsList.get_item_text(index)
-#		if not roomsDict.values().has(roomName):
-#			roomsToRemove.append(index)
-#		else:
-#			roomsInLobby.append(roomName)
-#		%RoomsList.set_item_disabled(index, playersInGame.has(roomName))
-#	for index in roomsToRemove:
-#		%RoomsList.remove_item(index)
-#	for roomId in roomsDict:
-#		if roomsInLobby.has(roomsDict[roomId].name):
-#			if roomId == Data.id:
-#				%HostButton.disabled = true
-#				%JoinButton.disabled = true
-#				%RoomContainer.show()
-#				%MovePlayerContainer.hide()
-#				%SavegamePlayersContainer.hide()
-#		else:
-#			%RoomsList.add_item(roomsDict[roomId].name)
-	
-	
-#	leaveRoomButton.disabled = true
-#	rooms = roomsDict
-#	room_id_array = []
-#	player_in_room = []
-#	for item in roomList.get_item_count():
-#		roomList.remove_item(0)
-#	for room in rooms:
-#		room_id_array.append(room)
-#		roomList.add_item(str(rooms[room]["name"]))
-#		if playersInGame.has(room):
-#			roomList.set_item_disabled(roomList.get_item_count() - 1, true)
-#		else:
-#			roomList.set_item_disabled(roomList.get_item_count() - 1, false)
-#	for item in playerInRoomList.get_item_count():
-#		playerInRoomList.remove_item(0)
-#	if rooms.has(room_id):
-#		leaveRoomButton.disabled = false
-#		for player in rooms[room_id]["players"]:
-#			player_in_room.append(player)
-#			playerInRoomList.add_item(str(rooms[room_id]["players"][player]))
-#			if player == room_id or player == get_tree().get_network_unique_id():
-#				continue
-#			rpc_id(player, "update_addon", firecardsCheckBox.pressed, quickCheckBox.pressed, extremeCheckBox.pressed, faceToFaceCheckBox.pressed, difficultyCheckBox.pressed)
+
 
 func _on_roomCreated(playerId : int, roomName : String):
 	

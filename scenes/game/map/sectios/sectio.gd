@@ -53,7 +53,7 @@ var slotPositions = []
 @export var sectioTexture : Texture
 var id : int = 0
 
-
+var AiUnitsToSpawn : Array = []
 var isIsolated : bool = true:
 	set(_isIsolated):
 		isIsolated = _isIsolated
