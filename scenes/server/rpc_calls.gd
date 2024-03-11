@@ -173,6 +173,45 @@ func occupySectio(id : int, sectio):
 
 
 @rpc("any_peer", "call_local")
+func occupySectios(sectiosToClaim : Array):
+	var ids : Array
+	var sectios : Array
+	for sectioToClaim : Array in sectiosToClaim:
+		ids.append(sectioToClaim[0])
+		sectios.append(sectioToClaim[1])
+	
+	Signals.resetCamera.emit()
+	await get_tree().create_timer(1.0).timeout
+	var i = 0
+	for sectio : String in sectios:
+		print("petition for ", sectio)
+		Signals.moveCamera.emit(Decks.sectioNodes[sectio].global_position)
+		await Signals.doneMoving
+		
+		var formerPlayerId = Decks.sectioNodes[sectio].player
+		if not formerPlayerId == 0:
+			Data.players[formerPlayerId].sectios.erase(sectio)
+		
+		Decks.sectioNodes[sectio].player = ids[i]
+		Data.players[ids[i]].addSectio(sectio)
+		
+		if Data.id == Connection.host:
+			Signals.incomeChanged.emit(ids[i])
+		
+		if not Connection.dedicatedServer:
+			Decks.sectioNodes[sectio].changeColor(ids[i])
+		
+		if not Data.id == ids[i] and not Connection.dedicatedServer:
+			Data.player.sectios.erase(sectio)
+			
+		await get_tree().create_timer(0.1).timeout
+		
+		i += 1
+	
+	RpcCalls.petitionsDone.rpc_id(Connection.host)
+
+
+@rpc("any_peer", "call_local")
 func addArcanaCard(id, cardName):
 	var player : Player = Data.players[id]
 	player.addArcanaCard(cardName)

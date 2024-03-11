@@ -83,11 +83,13 @@ func petitions(petitionSectiosByPlayerId : Dictionary, ui) -> void:
 			petitionSectiosByHumanPlayerId[playerId] = petitionSectiosByPlayerId[playerId]
 	for playerId in petitionSectiosByHumanPlayerId:
 		await Signals.petitionConfirmed
-	print("petitions to claim ",Data.sectiosToClaim)
-	for sectiosToClaim in Data.sectiosToClaim:
-		for peer in Connection.peers:
-			RpcCalls.occupySectio.rpc_id(peer, sectiosToClaim[0], sectiosToClaim[1])
-
+	#for sectiosToClaim in Data.sectiosToClaim:
+	for peer in Connection.peers:
+		#RpcCalls.occupySectio.rpc_id(peer, sectiosToClaim[0], sectiosToClaim[1])
+		RpcCalls.occupySectios.rpc_id(peer, Data.sectiosToClaim)
+	
+	for playerId in petitionSectiosByHumanPlayerId:
+		await Signals.petitionConfirmed
 
 func winnersOccupySectios(combatWinner : Dictionary) -> void:
 	for winner in combatWinner:
@@ -109,8 +111,9 @@ func aiPlayerChoosePetitions(playerId : int,  petitionSectiosByTriumphirate):
 		if not sectioNameToOccupy == "":
 			var favors = player.favors - 1
 			Signals.changeFavors.emit(playerId, favors)
-			for peer in Connection.peers:
-				RpcCalls.occupySectio.rpc_id(peer, playerId, sectioNameToOccupy)
+			Data.sectiosToClaim.append([playerId, sectioNameToOccupy])
+			#for peer in Connection.peers:
+				#RpcCalls.occupySectio.rpc_id(peer, playerId, sectioNameToOccupy)
 		else:
 			break
 
