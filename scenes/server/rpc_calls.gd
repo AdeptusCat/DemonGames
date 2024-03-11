@@ -184,9 +184,9 @@ func occupySectios(sectiosToClaim : Array):
 	await get_tree().create_timer(1.0).timeout
 	var i = 0
 	for sectio : String in sectios:
-		print("petition for ", sectio)
 		Signals.moveCamera.emit(Decks.sectioNodes[sectio].global_position)
 		await Signals.doneMoving
+		await get_tree().create_timer(0.5).timeout
 		
 		var formerPlayerId = Decks.sectioNodes[sectio].player
 		if not formerPlayerId == 0:
@@ -204,7 +204,7 @@ func occupySectios(sectiosToClaim : Array):
 		if not Data.id == ids[i] and not Connection.dedicatedServer:
 			Data.player.sectios.erase(sectio)
 			
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(0.5).timeout
 		
 		i += 1
 	
