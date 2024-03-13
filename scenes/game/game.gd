@@ -151,7 +151,6 @@ func setup():
 		Data.chooseDemon = true
 		if not Tutorial.tutorial:
 			setupDemons()
-			print("confirm start demon")
 			await confirmStartDemon()
 		
 		if not Tutorial.tutorial:
@@ -412,7 +411,7 @@ func setupStartLegions():
 
 func aiPlaceStartLegion(id : int) -> void:
 	var bestSectio : Sectio = Ai.getBestStartSectio(id)
-	map.placeUnit(bestSectio, id, Data.UnitType.Legion)
+	Signals.placeLegion.emit(bestSectio, id)
 
 
 func playerPlaceStartLegion(playerId : int) -> void:
