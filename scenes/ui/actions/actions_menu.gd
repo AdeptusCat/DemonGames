@@ -41,6 +41,10 @@ func _ready():
 	Signals.cancelMarch.connect(_on_cancelMarch)
 	Signals.doEvilDeedsResult.connect(_on_doEvilDeedsResult)
 	Signals.actionThroughArcana.connect(_on_actionThroughArcana)
+	%WalkTheEarthHBoxContainer.show()
+	%DoEvilDeedsHBoxContainer.show()
+	%PassForGoodHBoxContainer.show()
+	Signals.changedActionState.connect(_on_changedActionState)
 	
 	
 
@@ -71,6 +75,11 @@ func _on_disableActionButtons():
 	
 	%UseMagicButton.disabled = true
 	%UseMagicButton.get_material().set_shader_parameter("active", false)
+
+
+func _on_changedActionState(newState : int):
+	if newState == Data.States.MARCHING:
+		%MarchButton.text = "End March"
 
 
 func _on_actionThroughArcana(minorSpell : Decks.MinorSpell):
@@ -118,6 +127,7 @@ func activateActionButtons():
 #		%AtonementAndSuplicationButton.disabled = true
 	%InfluenceUnitsButton.disabled = true
 	%UseMagicButton.disabled = true
+	%PassForGoodHBoxContainer.show()
 	
 	if currentDemonNode.onEarth:
 		%WalkTheEarthHBoxContainer.hide()
@@ -196,7 +206,7 @@ func _on_march_button_pressed():
 	if not Data.state == Data.States.MARCHING:
 		for peer in Connection.peers:
 			RpcCalls.demonAction.rpc_id(peer, currentDemonRank, "Marching")
-		if %MarchButton.text == "End March":
+		if %MarchButton.text == "Cancel March" or %MarchButton.text == "End March":
 			%MarchButton.text = "March"
 			Signals.sectiosUnclickable.emit()
 			Signals.sectioClicked.emit(null)
@@ -209,8 +219,11 @@ func _on_march_button_pressed():
 		Signals.demonStatusChange.emit(currentDemonNode.rank, "hell")
 		disableActions()
 		Signals.march.emit()
-		%MarchButton.text = "End March"
+		%MarchButton.text = "Cancel March"
 		%MarchButton.disabled = false
+		%WalkTheEarthHBoxContainer.hide()
+		%DoEvilDeedsHBoxContainer.hide()
+		%PassForGoodHBoxContainer.hide()
 		if Tutorial.tutorial:
 			if Tutorial.currentTopic == Tutorial.Topic.MarchAction:
 				Signals.tutorialRead.emit()
@@ -432,7 +445,6 @@ func _on_end_button_pressed():
 
 func disableActions():
 	%MarchButton.disabled = true
-	print("march disabled1")
 	%WalkTheEarthButton.disabled = true
 	%PassButton.disabled = true
 	%PassForGoodButton.disabled = true
