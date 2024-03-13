@@ -117,24 +117,7 @@ func gatherSoulsInHell(playerId : int, soulSummary : Dictionary) -> Dictionary:
 			soulSummary[player.playerId]["hell"][sectioName] = {"isolated" : false, "souls": 0, "enemyInSectio": true}
 		else:
 			gatherSoulsForSectio(sectioName, playerId, soulSummary)
-			#gatherSoulsForSectio1(sectioName, playerId, soulSummary)
-			#if sectioName == "The Wise Men":
-				#getArcanaCardsForTheWiseMen(player.playerId)
 	return soulSummary
-
-
-func gatherSoulsForSectio1(sectioName : String, playerId : int, soulSummary : Dictionary):
-	var player = Data.players[playerId]
-	var sectio = Decks.sectioNodes[sectioName]
-	var isIsolated = sectio.isolated()
-	var soulsGathered = sectio.souls
-	# check for hellhounds in sectio as well!! hellhounds  hellhounds  hellhounds  hellhounds  hellhounds  hellhounds 
-	if isIsolated:
-		soulsGathered -= 2
-	soulsGathered = clamp(soulsGathered, 0, 100)
-	var souls = player.souls + soulsGathered
-	if playerId == Data.id:
-		Signals.emitSoulsFromCollectionPosition.emit(sectio.get_global_transform_with_canvas().origin, soulsGathered)
 
 
 func gatherSoulsForSectio(sectioName : String, playerId : int, soulSummary : Dictionary) -> Dictionary:
