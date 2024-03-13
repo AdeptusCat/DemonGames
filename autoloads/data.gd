@@ -109,6 +109,7 @@ func startPhase():
 
 func changeState(newState):
 	state = newState
+	Signals.changedActionState.emit(newState)
 
 
 func nextPhase():

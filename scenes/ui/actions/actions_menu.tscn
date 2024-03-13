@@ -855,15 +855,16 @@ size_flags_horizontal = 3
 tooltip_text = "Use a Pass Arcana Card to delay the Demon's turn. Sometimes its good to know what your enemy does before its your turn."
 text = "Pass"
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer"]
+[node name="PassForGoodHBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Control" type="Control" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer4"]
+[node name="Control" type="Control" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/PassForGoodHBoxContainer"]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer4/Control"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/PassForGoodHBoxContainer/Control"]
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_ds78a")
 animation = &"new_animation"
@@ -871,7 +872,7 @@ autoplay = "new_animation"
 speed_scale = 2.0
 centered = false
 
-[node name="PassForGoodButton" type="Button" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer4"]
+[node name="PassForGoodButton" type="Button" parent="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/PassForGoodHBoxContainer"]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_vrvro")
 layout_mode = 2
@@ -920,7 +921,7 @@ text = "UseMagic"
 [connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/WalkTheEarthHBoxContainer/WalkTheEarthButton" to="." method="_on_walk_the_earth_button_pressed"]
 [connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/DoEvilDeedsHBoxContainer/DoEvilDeedsButton" to="." method="_on_do_evil_deeds_button_pressed"]
 [connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer3/PassButton" to="." method="_on_pass_button_pressed"]
-[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer4/PassForGoodButton" to="." method="_on_pass_for_good_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/PassForGoodHBoxContainer/PassForGoodButton" to="." method="_on_pass_for_good_button_pressed"]
 [connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/HBoxContainer2/ConspireButton" to="." method="_on_conspire_button_pressed"]
 [connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/InfluenceUnitsButton" to="." method="_on_influence_units_button_pressed"]
 [connection signal="pressed" from="MarginContainer/MarginContainer/ActionsMarginContainer/VBoxContainer/AtonementAndSuplicationButton" to="." method="_on_atonement_and_suplication_button_pressed"]

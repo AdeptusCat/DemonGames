@@ -81,6 +81,7 @@ signal toggleAvailableLieutenants(boolean : bool)
 signal toggleBuyArcanaCardButton(boolean : bool)
 signal toggleEndPhaseButton(boolean)
 signal toggleAvailableLieutenantsCheckButtonPressed(boolean)
+signal changedActionState(newState : int)
 
 signal playerDoneWithPhase
 
