@@ -8,7 +8,9 @@ const demonScene = preload("res://scenes/game/demon/demon.tscn")
 @rpc("any_peer", "call_local")
 func resetUnitsToPlace():
 	Data.unitsToSpawn.clear()
+	Data.unitsToSpawnHost.clear()
 	Data.sectiosToUpdate.clear()
+	Data.sectiosToUpdateHost.clear()
 	for sectio : Sectio in Decks.sectioNodes.values():
 		sectio.AiUnitsToSpawn.clear()
 

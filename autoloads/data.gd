@@ -81,7 +81,9 @@ var phase = null
 var phasesSize : int = phases.size()
 
 var unitsToSpawn = []
+var unitsToSpawnHost = []
 var sectiosToUpdate = []
+var sectiosToUpdateHost = []
 var sectiosToClaim = []
 
 func _ready():
@@ -100,6 +102,9 @@ func _on_resetGame():
 	currentAiPlayer = null
 	aiPlayers = 0
 	pickDemon = false
+	
+	unitsToSpawn.clear()
+	sectiosToUpdate.clear()
 
 
 func startPhase():
