@@ -1,18 +1,43 @@
-[gd_scene load_steps=3 format=3 uid="uid://bg28sygbl80vx"]
+[gd_scene load_steps=4 format=3 uid="uid://bg28sygbl80vx"]
 
 [ext_resource type="Script" path="res://scenes/ui/soul_phase/soul.gd" id="1_ctkru"]
 [ext_resource type="Texture2D" uid="uid://bnjuqj0b53pb5" path="res://assets/soul/00297-3811223522.png" id="2_swdj8"]
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_k623e"]
+lifetime_randomness = 0.48
+particle_flag_disable_z = true
+direction = Vector3(1, 1, 1)
+spread = 180.0
+initial_velocity_min = 50.0
+initial_velocity_max = 150.0
+gravity = Vector3(0, 0, 0)
+scale_min = 5.0
+scale_max = 10.0
+
 [node name="Soul" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+pivot_offset = Vector2(32, 29)
+size_flags_horizontal = 4
+size_flags_vertical = 4
 script = ExtResource("1_ctkru")
 
 [node name="TextureRect" type="TextureRect" parent="."]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 64.0
+offset_bottom = 64.0
+pivot_offset = Vector2(32, 29)
 texture = ExtResource("2_swdj8")
 expand_mode = 1
 stretch_mode = 4
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(32, 29)
+emitting = false
+amount = 30
+process_material = SubResource("ParticleProcessMaterial_k623e")
+one_shot = true
+explosiveness = 1.0

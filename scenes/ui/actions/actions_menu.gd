@@ -326,6 +326,7 @@ func doEvilDeedsResult(player_id : int, demonName : String, favors : int):
 	Signals.emitFavorsFromCollectionPosition.emit(%DoEvilDeedsHBoxContainer.get_global_transform_with_canvas().origin, favors)
 	if Settings.skipWaitForPlayers:
 		return
+		
 	#if favors == 0:
 		#%DoEvilDeedsLabel.text = demonName + " gatherd no Favors on Earth."
 	#elif favors == 1:

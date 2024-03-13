@@ -8,7 +8,7 @@ func _ready():
 
 
 func _on_showEvilDeedsControl(player_id : int):
-	return
+	#return
 	playerId = player_id
 	if playerId == Data.id or playerId < 0:
 		%DoEvilDeedsControlButton.disabled = false
