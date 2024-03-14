@@ -316,7 +316,7 @@ unique_name_in_owner = true
 layout_mode = 2
 offset_left = -1662.0
 offset_top = -2077.0
-offset_right = -1191.0
+offset_right = -1542.0
 offset_bottom = -1957.0
 script = ExtResource("27_q5h8k")
 

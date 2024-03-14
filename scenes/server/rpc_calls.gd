@@ -138,6 +138,7 @@ func win(playerId):
 
 @rpc ("any_peer", "call_local")
 func petitionSectiosRequest(sectioNames : Array):
+	Data.sectiosToClaim.clear()
 	Signals.populatePetitionsContainer.emit(sectioNames)
 	AudioSignals.playerTurn.emit()
 

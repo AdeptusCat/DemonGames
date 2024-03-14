@@ -432,8 +432,8 @@ func done():
 
 @rpc("any_peer", "call_local")
 func confirmStartDemon():
-	if not Settings.debug:
-		%GoalMarginContainer.show()
+	#if not Settings.debug:
+		#%GoalMarginContainer.show()
 	%DemonCardsMarginContainer.expandDemonCards(false)
 	Signals.help.emit(Data.HelpSubjects.SwapDemonOnStart)
 

@@ -150,10 +150,10 @@ func setup():
 	setupMouseLights()
 	
 	if Save.savegame.size() == 0:
-		Data.chooseDemon = true
 		if not Tutorial.tutorial:
 			setupDemons()
-			await confirmStartDemon()
+			#Data.chooseDemon = true
+			#await confirmStartDemon()
 		
 		if not Tutorial.tutorial:
 			setupSectios()
@@ -264,13 +264,15 @@ func setupPlayers(playerIds : Array) -> void:
 func setupMouseLights():
 	for peer in Connection.peers:
 		RpcCalls.initMouseLights.rpc_id(peer)
-	
-	
+
+
 func fillAvailableLieutenantsBox():
-	for i in range(3):
-		var lieutenantName : String = Decks.getRandomCard("lieutenant")
-		for peer in Connection.peers:
-			RpcCalls.fillAvailableLieutenantsBox.rpc_id(peer, lieutenantName)
+	for peer in Connection.peers:
+		for i in range(3):
+			var lieutenantName : String = Decks.getRandomCard("lieutenant")
+			if not lieutenantName == "":
+				RpcCalls.fillAvailableLieutenantsBox.rpc_id(peer, lieutenantName)
+
 
 func setupSoulsFromSavegame():
 	for playerId in Data.players:

@@ -203,5 +203,8 @@ func getRandomCard(deckName : String):
 		"demon" : 
 			return demonCards.pop_back()
 		"lieutenant" :
-			return lieutenants.pop_back()
+			if not lieutenants.is_empty():
+				return lieutenants.pop_back()
+			else:
+				return ""
 

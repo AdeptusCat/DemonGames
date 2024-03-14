@@ -47,6 +47,7 @@ func collapse():
 	tw1.set_trans(Tween.TRANS_QUAD)
 	tw1.set_ease(Tween.EASE_IN_OUT)
 	tw1.parallel().tween_property(self, "position", startPosition - Vector2(0, 550), 0.2)
+	reset_size()
 
 
 func removeDemon(rank : int):
@@ -131,6 +132,7 @@ func _on_mouse_exited():
 		tw1.set_trans(Tween.TRANS_QUAD)
 		tw1.set_ease(Tween.EASE_IN_OUT)
 		tw1.parallel().tween_property(self, "position", startPosition - Vector2(0, 550), 0.2)
+	reset_size()
 
 
 func _on_collapse_button_pressed():
