@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://dv4h8w62ygoeo"]
+[gd_scene load_steps=72 format=3 uid="uid://dv4h8w62ygoeo"]
 
 [ext_resource type="Script" path="res://scenes/ui/actions/summoning_menu.gd" id="1_pvfms"]
 [ext_resource type="Texture2D" uid="uid://biql8mxh5w1bm" path="res://assets/ui/summoning_menu/recruit_lieutenant/00830-1562418942.png" id="3_8iavs"]
@@ -62,6 +62,7 @@
 [ext_resource type="Texture2D" uid="uid://cl471tsa62pvq" path="res://assets/ui/summoning_menu/recruit_lieutenant/00858-1562418970.png" id="31_i4txn"]
 [ext_resource type="Texture2D" uid="uid://06q8f5on7p30" path="res://assets/ui/summoning_menu/recruit_legions/00252-2731579400.png" id="32_2yydb"]
 [ext_resource type="Texture2D" uid="uid://cetqxqvw0j7mi" path="res://assets/ui/summoning_menu/recruit_lieutenant/00859-1562418971.png" id="32_t2gm8"]
+[ext_resource type="Texture2D" uid="uid://bnjuqj0b53pb5" path="res://assets/soul/00297-3811223522.png" id="33_fgf52"]
 [ext_resource type="Texture2D" uid="uid://c7e5jnnj3mbmj" path="res://assets/ui/summoning_menu/buy_arcana_card/00473-1220702329.png" id="34_4axof"]
 [ext_resource type="Texture2D" uid="uid://duotlx1h0n7ke" path="res://assets/ui/summoning_menu/end_phase/00536-601245618.png" id="35_bo2le"]
 
@@ -169,6 +170,11 @@ shader_parameter/shine_color = Color(1, 1, 1, 1)
 shader_parameter/shine_speed = 5.0
 shader_parameter/shine_size = 0.01
 shader_parameter/active = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_2bper"]
+font_size = 30
+outline_size = 15
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q7xpk"]
 shader = ExtResource("3_iuxt5")
@@ -343,11 +349,33 @@ centered = false
 
 [node name="RecruitLegionsButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/RecruitLegionsHBoxContainer"]
 unique_name_in_owner = true
-visible = false
 material = SubResource("ShaderMaterial_5u6ho")
 layout_mode = 2
+size_flags_horizontal = 3
 tooltip_text = "Legions can be spawned inside Sectios that are owned by your Triumphirate and not occupied by enemy units."
-text = "Recruit Legions for 3 Souls each"
+text = "Recruit Legions"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/RecruitLegionsHBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("33_fgf52")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="LegionCostLabel" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/RecruitLegionsHBoxContainer/TextureRect"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "3"
+label_settings = SubResource("LabelSettings_2bper")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="BuyArcanaCardHBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer"]
 visible = false
@@ -394,6 +422,33 @@ visible = false
 layout_mode = 2
 alignment = 1
 
+[node name="RecruitLieutenantsButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/ShowLieutenantsHBoxContainer"]
+material = SubResource("ShaderMaterial_5u6ho")
+layout_mode = 2
+tooltip_text = "Legions can be spawned inside Sectios that are owned by your Triumphirate and not occupied by enemy units."
+text = "Recruit Lieutenants"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/ShowLieutenantsHBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("33_fgf52")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="LieutenantCostLabel" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/ShowLieutenantsHBoxContainer/TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "?"
+label_settings = SubResource("LabelSettings_2bper")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="EndPhaseMarginContainer" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
 tooltip_text = "End Phase"
@@ -419,5 +474,6 @@ metadata/_edit_use_anchors_ = true
 [connection signal="gui_input" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/BuyArcanaCardHBoxContainer" to="." method="_on_buy_arcana_card_h_box_container_gui_input"]
 [connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/BuyArcanaCardHBoxContainer/BuyArcanaCardButton" to="." method="_on_buy_arcana_card_button_pressed"]
 [connection signal="gui_input" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/ShowLieutenantsHBoxContainer" to="." method="_on_show_lieutenants_h_box_container_gui_input"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/ShowLieutenantsHBoxContainer/RecruitLieutenantsButton" to="." method="_on_recruit_lieutenants_button_pressed"]
 [connection signal="gui_input" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/EndPhaseMarginContainer" to="." method="_on_end_phase_margin_container_gui_input"]
 [connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/EndPhaseMarginContainer/EndPhaseButton" to="." method="_on_end_phase_button_pressed"]

@@ -964,6 +964,7 @@ layout_mode = 1
 
 [node name="QuickHelpControl" type="MarginContainer" parent="Control"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 0
 offset_left = 1859.0
 offset_top = 200.0
@@ -1297,7 +1298,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/TopBannerMarginContainer/MarginContainer"]
 layout_mode = 2
-alignment = 2
+alignment = 1
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -1358,6 +1359,7 @@ layout_mode = 2
 
 [node name="CurrentDemonTopTree" type="Tree" parent="Control/TopBannerMarginContainer/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(450, 75)
 layout_mode = 2
 mouse_filter = 1
@@ -1388,6 +1390,7 @@ layout_mode = 2
 theme_override_constants/separation = 0
 
 [node name="PlayerStatsMarginContainer" type="MarginContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="ColorRect" type="ColorRect" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/PlayerStatsMarginContainer"]

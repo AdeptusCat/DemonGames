@@ -138,3 +138,8 @@ func _on_end_phase_margin_container_gui_input(event):
 		for sectio in Data.player.sectios:
 			sectio = sectio as String
 			Decks.sectioNodes[sectio].changeClickable(false)
+
+
+func _on_recruit_lieutenants_button_pressed():
+	Signals.sectioClicked.emit(null)
+	Signals.toggleAvailableLieutenants.emit(true)

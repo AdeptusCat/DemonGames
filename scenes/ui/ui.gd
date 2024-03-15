@@ -155,7 +155,7 @@ func highlightCurrentPlayer(player : Player = null):
 		%CurrentDemonTopTree.hide()
 		%CurrentActionLabel.hide()
 		return
-	%CurrentDemonTopTree.show()
+	#%CurrentDemonTopTree.show()
 	%CurrentActionLabel.show()
 	%CurrentDemonTopTree.set_column_title(0, "")
 	%CurrentDemonTopTree.set_column_title(1, "Player")
@@ -187,7 +187,7 @@ func highlightCurrentPlayer(player : Player = null):
 
 func highlightCurrentDemon(rank):
 	Signals.showRankTrackMarginContainer.emit()
-	%CurrentDemonTopTree.show()
+	#%CurrentDemonTopTree.show()
 	%CurrentActionLabel.show()
 	%CurrentDemonTopTree.set_column_title(0, "")
 	%CurrentDemonTopTree.set_column_title(1, "Demon")
