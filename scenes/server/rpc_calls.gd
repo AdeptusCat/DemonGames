@@ -186,12 +186,14 @@ func occupySectios(sectiosToClaim : Array):
 		sectios.append(sectioToClaim[1])
 	
 	Signals.resetCamera.emit()
-	await get_tree().create_timer(1.0).timeout
+	await Signals.cameraResetted
+	await get_tree().create_timer(0.5).timeout
+	
 	var i = 0
 	for sectio : String in sectios:
-		Signals.moveCamera.emit(Decks.sectioNodes[sectio].global_position)
-		await Signals.doneMoving
-		await get_tree().create_timer(0.5).timeout
+		#Signals.moveCamera.emit(Decks.sectioNodes[sectio].global_position)
+		#await Signals.doneMoving
+		#await get_tree().create_timer(0.5).timeout
 		
 		var formerPlayerId = Decks.sectioNodes[sectio].player
 		if not formerPlayerId == 0:
@@ -209,7 +211,7 @@ func occupySectios(sectiosToClaim : Array):
 		if not Data.id == ids[i] and not Connection.dedicatedServer:
 			Data.player.sectios.erase(sectio)
 			
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(1.0).timeout
 		
 		i += 1
 	

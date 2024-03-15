@@ -332,7 +332,7 @@ alignment = 1
 
 [node name="RecruitLegionsHBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
-tooltip_text = "Recruite Legions for 3 Souls each"
+tooltip_text = "Recruite Legions"
 
 [node name="Control" type="Control" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/RecruitLegionsHBoxContainer"]
 custom_minimum_size = Vector2(128, 128)
@@ -360,6 +360,7 @@ custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+tooltip_text = "Legions cost 3 Souls each"
 texture = ExtResource("33_fgf52")
 expand_mode = 1
 stretch_mode = 4
@@ -425,7 +426,7 @@ alignment = 1
 [node name="RecruitLieutenantsButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/ShowLieutenantsHBoxContainer"]
 material = SubResource("ShaderMaterial_5u6ho")
 layout_mode = 2
-tooltip_text = "Legions can be spawned inside Sectios that are owned by your Triumphirate and not occupied by enemy units."
+tooltip_text = "Lieutenants can be spawned inside Sectios that are owned by your Triumphirate and not occupied by enemy units."
 text = "Recruit Lieutenants"
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/MarginContainer/VBoxContainer/SummoningMenu/MarginContainer/VBoxContainer/ShowLieutenantsHBoxContainer"]
@@ -433,6 +434,7 @@ custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+tooltip_text = "The Cost of Lieutenants can vary"
 texture = ExtResource("33_fgf52")
 expand_mode = 1
 stretch_mode = 4

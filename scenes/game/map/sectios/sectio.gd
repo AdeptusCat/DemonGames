@@ -400,6 +400,8 @@ func changeColor(id : int):
 	sectioPolygon.texture_offset = position# - get_parent().get_parent().get_parent().position
 	sectioPolygon.position = position
 	Signals.changeSectioBackground.emit(id, sectioPolygon)
+	%GPUParticles2D.modulate = Data.players[id].color
+	%GPUParticles2D.emitting = true
 #	get_parent().get_parent().get_parent().changePolygon(id, sectioPolygon)
 #	print("modulate", playerPolygon.modulate.a)
 

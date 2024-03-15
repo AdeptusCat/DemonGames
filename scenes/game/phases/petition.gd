@@ -91,6 +91,7 @@ func petitions(petitionSectiosByPlayerId : Dictionary, ui) -> void:
 	for playerId in petitionSectiosByHumanPlayerId:
 		await Signals.petitionConfirmed
 
+
 func winnersOccupySectios(combatWinner : Dictionary) -> void:
 	for winner in combatWinner:
 		for sectioName in combatWinner[winner]:

@@ -154,11 +154,15 @@ func reset():
 	tw2.set_ease(Tween.EASE_IN)
 	tw2.parallel().tween_property(self, "position", START_POSITION, 1.0)
 	tw2.parallel().tween_property(self, "_target_zoom", 0.2, 1.0)
+	tw2.connect("finished", on_reset_finished)
 	tw2.play()
 	_target_position = START_POSITION
 	arrived = false
 	_target_zoom = 0.2
 	set_physics_process(true)
 
+
+func on_reset_finished():
+	Signals.cameraResetted.emit()
 
 

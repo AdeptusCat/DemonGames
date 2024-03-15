@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://0jxmw3vgonen"]
+[gd_scene load_steps=16 format=3 uid="uid://0jxmw3vgonen"]
 
 [ext_resource type="Script" path="res://scenes/game/map/sectios/sectio.gd" id="1_0w1n6"]
 [ext_resource type="PackedScene" uid="uid://16ug6shh8tk7" path="res://scenes/ui/pick_move_unit_v_box_container.tscn" id="2_lmecm"]
@@ -72,6 +72,17 @@ shader_parameter/on = true
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cec82"]
 load_path = "res://.godot/imported/line_dashed.png-17e21fa0a62bea531e4150bcc726298c.ctex"
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nkmp2"]
+lifetime_randomness = 0.76
+particle_flag_disable_z = true
+spread = 180.0
+flatness = 0.8
+initial_velocity_min = 100.0
+initial_velocity_max = 300.0
+gravity = Vector3(0, 0, 0)
+scale_min = 15.0
+scale_max = 20.0
 
 [node name="Sectio" type="Node2D"]
 position = Vector2(1039, 654)
@@ -268,6 +279,17 @@ visible = false
 rotation = 1.5708
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("8_67oed")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(0.662745, 0, 0.0705882, 1)
+scale = Vector2(3, 3)
+emitting = false
+amount = 30
+process_material = SubResource("ParticleProcessMaterial_nkmp2")
+one_shot = true
+explosiveness = 1.0
+trail_lifetime = 0.2
 
 [connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]

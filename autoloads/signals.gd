@@ -138,6 +138,7 @@ signal changeSectioBackground(id, sectioPolygon)
 # Camera
 signal doneMoving
 signal resetCamera
+signal cameraResetted
 signal followUnit(unit)
 signal stopFollowingUnit(unit)
 

@@ -110,6 +110,8 @@ vertical_alignment = 1
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
+tooltip_text = "The amount of Souls you can spend.
+"
 texture = ExtResource("2_afqvi")
 expand_mode = 1
 stretch_mode = 4
@@ -137,7 +139,8 @@ offset_bottom = 48.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 1
-tooltip_text = "The amount of Souls you can spend."
+tooltip_text = "The amount of Souls you can spend.
+"
 mouse_filter = 0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 20
