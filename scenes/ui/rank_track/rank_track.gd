@@ -15,6 +15,8 @@ var rankTrack : Array = []
 func _ready():
 	Signals.updateRankTrack.connect(_on_updateRankTrack)
 	Signals.currentDemon.connect(_on_currentDemon)
+	Signals.actionsDone.connect(_on_actionsDone)
+	Signals.action.connect(_on_action)
 	
 	#await get_tree().create_timer(0.1).timeout
 	#_on_updateRankTrack([1,2,3])
@@ -62,25 +64,39 @@ func moveIn():
 
 
 func _on_updateRankTrack(_rankTrack : Array):
-	if _rankTrack == rankTrack:
-		return
+	#if not entries.is_empty():
+		#return
 	rankTrack = _rankTrack
-	var i : int = 0
-	for rank in rankTrack:
-		var entry : RankTrackEntry = entryScene.instantiate()
-		add_child(entry)
-		entry.global_position = %MarginContainer.global_position + Vector2(2000, 0) + Vector2(entry.size.x * i, 0)
-		entries.append(entry)
-		entriesRank.append(rank)
-		i += 1
-	moveIn()
+	
 
 
 func _on_currentDemon(currentDemonRank : int):
 	for rank in entriesRank.duplicate():
-		print(rank)
 		if rank == currentDemonRank:
 			break
 		else:
 			moveOut()
-		
+
+
+func _on_action(_rank : int, action : String):
+	if action == "Reset":
+		show()
+		var i : int = 0
+		for rank in rankTrack:
+			var entry : RankTrackEntry = entryScene.instantiate()
+			add_child(entry)
+			entry.rank = rank
+			entry.colorRect.color = Data.players[Data.demons[rank].player].color
+			entry.textureRect.texture = Data.demons[rank].image
+			entry.global_position = %MarginContainer.global_position + Vector2(2000, 0) + Vector2(entry.size.x * i, 0)
+			entries.append(entry)
+			entriesRank.append(rank)
+			i += 1
+		moveIn()
+
+
+func _on_actionsDone():
+	moveOut()
+	entries.clear()
+	entriesRank.clear()
+	hide()

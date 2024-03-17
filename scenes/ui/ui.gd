@@ -79,6 +79,8 @@ func _ready():
 	Server.playerLeft.connect(_on_playerLeft)
 	
 	Signals.action.connect(_on_action)
+	Signals.rankTrackEntryMouseEntered.connect(_on_rankTrackEntryMouseEntered)
+	Signals.rankTrackEntryMouseExited.connect(_on_rankTrackEntryMouseExited)
 	
 	Signals.playerDoneWithPhase.connect(_on_playerDoneWithPhase)
 	Signals.toggleAvailableLieutenants.connect(_on_toggleAvailableLieutenants)
@@ -741,3 +743,15 @@ func _on_toggleAvailableLieutenants(toggled_on):
 
 func _on_showChosenLieutenantFromAvailableLieutenantsBox(marginContainer : MarginContainer):
 	add_child(marginContainer)
+
+
+func _on_rankTrackEntryMouseEntered(rank : int):
+	var demonNode : Demon = Data.demons[rank].duplicate()
+	%DemonDetailsMarginContainer.add_child(demonNode)
+	%DemonDetailsControl.show()
+
+
+func _on_rankTrackEntryMouseExited():
+	%DemonDetailsControl.hide()
+	for node in %DemonDetailsMarginContainer.get_children():
+		node.queue_free()

@@ -75,6 +75,9 @@ signal showSequenceOfPlayHelp
 signal placeUnitsFromArray
 
 # actions
+signal rankTrackEntryMouseEntered(rank : int)
+signal rankTrackEntryMouseExited
+signal actionsDone
 signal disableActionMenuButtons
 signal toggleRecruitLegionsButton(boolean)
 signal toggleAvailableLieutenants(boolean : bool)

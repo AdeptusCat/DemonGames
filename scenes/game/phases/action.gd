@@ -124,7 +124,7 @@ func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 		
 		for peer in Connection.peers:
 			RpcCalls.toogleWaitForPlayer.rpc_id(peer, Data.demons[nextDemonRank].player, false)
-
+		
 		if result:
 			if result == 0:
 				pass # pass for good
@@ -133,12 +133,21 @@ func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 				
 				newRankTrack.erase(nextDemonRank)
 				rankTrack = sortRankTrack(result, rankTrack, nextDemonRank)
+	
 	rankTrackNode.updateRankTrack(newRankTrack)
+	
+	for peer in Connection.peers:
+		actionsDone.rpc_id(peer)
 	
 	if Tutorial.tutorial:
 		await get_tree().create_timer(0.1).timeout
 		Signals.returnToMainMenu.emit()
 		await Signals.tutorialRead
+
+
+@rpc("any_peer", "call_local")
+func actionsDone():
+	Signals.actionsDone.emit()
 
 
 func tutorialStart(rankTrack, rankTrackNode) -> Array:
