@@ -12,7 +12,7 @@ func showSoulsPaid(souls : int):
 	%SoulsGatherLabel.text = str(souls)
 	prevPosition = %MarginContainer.position
 	%MarginContainer.show()
-	tw3 = get_tree().create_tween()
+	tw3 = create_tween()
 	tw3.set_trans(Tween.TRANS_QUAD)
 	tw3.set_ease(Tween.EASE_IN)
 	tw3.parallel().tween_property(%MarginContainer, "position", %MarginContainer.position + Vector2(0, -150), time)

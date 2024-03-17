@@ -70,14 +70,14 @@ func _on_changeValue(playerId, column, value):
 
 func _on_mouse_entered():
 	var y : int = entries.size() * entrySize + titleSize
-	var tw1 = get_tree().create_tween()
+	var tw1 = create_tween()
 	tw1.set_trans(Tween.TRANS_QUAD)
 	tw1.set_ease(Tween.EASE_IN)
 	tw1.tween_property(self, "custom_minimum_size", Vector2(370, y), 0.3)
 
 
 func _on_mouse_exited():
-	var tw1 = get_tree().create_tween()
+	var tw1 = create_tween()
 	tw1.set_trans(Tween.TRANS_QUAD)
 	tw1.set_ease(Tween.EASE_IN)
 	tw1.tween_property(self, "custom_minimum_size", Vector2(370,  entrySize + titleSize), 0.3)

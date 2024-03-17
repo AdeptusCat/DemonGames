@@ -167,6 +167,7 @@ signal pickedDemonInGame(demonRank : int)
 signal pickedDemon(demonRank : int)
 signal pickedDemonForCombat
 signal updateRankTrack(arr : Array)
+signal currentDemon(rank : int)
 signal doneGatheringSouls
 signal proceedSignal
 signal placeLieutenant(sectio, playerId, lieutenantName)

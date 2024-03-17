@@ -92,10 +92,10 @@ func setupLightning():
 	%LightningPointLight2D.position = pos
 	%LightningPointLight2D.height = randi_range(50,150)
 	%LightningPointLight2D.scale.x = randf_range(2, 6)
-	var tw1 : Tween = get_tree().create_tween()
+	var tw1 : Tween = create_tween()
 	tw1.set_trans(Tween.TRANS_QUAD)
 	tw1.set_ease(Tween.EASE_IN)
-	var tw2 : Tween = get_tree().create_tween()
+	var tw2 : Tween = create_tween()
 	tw2.set_trans(Tween.TRANS_QUAD)
 	tw2.set_ease(Tween.EASE_IN)
 	var count : int = randi_range(2, 5)
@@ -113,7 +113,7 @@ func setupLightning():
 
 func call1():
 #	tw1.stop()
-	var tw1 = get_tree().create_tween()
+	var tw1 = create_tween()
 	tw1.set_parallel(true)
 	
 	var i = randf_range(1.0, 1.5)
@@ -133,7 +133,7 @@ func call2():
 #	print("2")
 #	tw1.stop()
 	
-	var tw1 = get_tree().create_tween()
+	var tw1 = create_tween()
 	tw1.set_parallel(true)
 	
 	var i = randf_range(0.5, 1.0)

@@ -53,9 +53,9 @@ func _ready():
 	
 	
 	
-	#skipHell = true
-	#skipSouls = true
-	#skipSummoning = true
+	skipHell = true
+	skipSouls = true
+	skipSummoning = true
 	#skipAction = true
 	#skipCombat = true
 #	skipPetitions = true

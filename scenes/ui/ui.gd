@@ -97,7 +97,7 @@ func _ready():
 #	%WaitForPlayerControl.show()
 ##			await get_tree().create_timer(10.0).timeout
 ##			%WaitForPlayerControl.hide()
-#	var tw1 = get_tree().create_tween()
+#	var tw1 = create_tween()
 #	tw1.set_trans(Tween.TRANS_QUAD)
 #	tw1.set_ease(Tween.EASE_IN)
 #	tw1.tween_property(%WaitForPlayerControl, "modulate", Color(1,1,1,0), 2.0)#.set_delay(0.5)
@@ -468,6 +468,7 @@ func nextDemon(nextDemon : int):
 func updateRankTrackCurrentDemon(nextDemon : int):
 	%RankTrack.highlightCurrentDemon(nextDemon)
 	highlightCurrentDemon(nextDemon)
+	Signals.currentDemon.emit(nextDemon)
 
 
 @rpc("any_peer", "call_local")
@@ -683,7 +684,7 @@ func toogleWaitForPlayer(playerId, boolean : bool, phase = null):
 				%WaitForPlayerLabel.text = "Waiting for player " + str(Data.players[playerId].playerName) + " to use its demon."
 			%WaitForPlayerControl.modulate.a = 1.0
 			%WaitForPlayerControl.show()
-			var tw1 = get_tree().create_tween()
+			var tw1 = create_tween()
 			tw1.set_trans(Tween.TRANS_QUAD)
 			tw1.set_ease(Tween.EASE_IN)
 			tw1.tween_property(%WaitForPlayerControl, "modulate", Color(1,1,1,0), 3.0)#.set_delay(0.5)

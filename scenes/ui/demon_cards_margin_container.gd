@@ -36,14 +36,14 @@ func _process(delta):
 			#return
 #			position -= Vector2(0, 650)
 			hovering = false
-			tw1 = get_tree().create_tween()
+			tw1 = create_tween()
 			tw1.set_trans(Tween.TRANS_QUAD)
 			tw1.set_ease(Tween.EASE_IN_OUT)
 			tw1.parallel().tween_property(self, "position", startPosition - Vector2(0, 550), 0.2)
 
 
 func collapse():
-	tw1 = get_tree().create_tween()
+	tw1 = create_tween()
 	tw1.set_trans(Tween.TRANS_QUAD)
 	tw1.set_ease(Tween.EASE_IN_OUT)
 	tw1.parallel().tween_property(self, "position", startPosition - Vector2(0, 550), 0.2)
@@ -61,7 +61,7 @@ func _on_mouse_entered():
 	mouseEnteredPositiony = get_global_mouse_position().y
 	hovering = true
 #	position = startPosition
-	tw1 = get_tree().create_tween()
+	tw1 = create_tween()
 	tw1.set_trans(Tween.TRANS_QUAD)
 	tw1.set_ease(Tween.EASE_IN_OUT)
 	tw1.parallel().tween_property(self, "position", startPosition, 0.2)
@@ -128,7 +128,7 @@ func _on_mouse_exited():
 	#return
 	if hovering and not expand:
 		hovering = false
-		tw1 = get_tree().create_tween()
+		tw1 = create_tween()
 		tw1.set_trans(Tween.TRANS_QUAD)
 		tw1.set_ease(Tween.EASE_IN_OUT)
 		tw1.parallel().tween_property(self, "position", startPosition - Vector2(0, 550), 0.2)

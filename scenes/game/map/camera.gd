@@ -123,7 +123,7 @@ func zoom_out():
 
 func moveTo(_position):
 	unitToFollow = null
-	tw1 = get_tree().create_tween()
+	tw1 = create_tween()
 	tw1.set_trans(Tween.TRANS_CUBIC)
 	tw1.set_ease(Tween.EASE_IN)
 	tw1.parallel().tween_property(self, "position", _position, camera_moving_speed)
@@ -149,7 +149,7 @@ func _on_stopFollowingUnit(unit):
 
 
 func reset():
-	var tw2 = get_tree().create_tween()
+	var tw2 = create_tween()
 	tw2.set_trans(Tween.TRANS_CUBIC)
 	tw2.set_ease(Tween.EASE_IN)
 	tw2.parallel().tween_property(self, "position", START_POSITION, 1.0)
