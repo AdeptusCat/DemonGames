@@ -21,5 +21,6 @@ func get_effects() -> Dictionary:
 
 
 func perform(actor, delta) -> bool:
+	#var playerId : int = WorldState.get_state("active_player")
 	Signals.phaseDone.emit()
 	return true

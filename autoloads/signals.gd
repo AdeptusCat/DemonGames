@@ -22,6 +22,7 @@ signal startGame
 signal connected
 
 # UI
+signal updatePlayerStatusDone(playerId : int)
 signal emitSoulsFromCollectionPosition(position : Vector2, soulsGathered : int)
 signal emitSoulsFromTreasury(position : Vector2, soulsGathered : int)
 signal soulReachedPlayerStats
@@ -102,6 +103,9 @@ signal recruiting
 signal recruitingDone
 signal demonDone(passAction)
 signal demonDoneWithPhase(passAction)
+signal playerDone(playerId : int)
+signal changePlayerStatus
+signal addPlayerStatus(playerId : int)
 signal phaseDone
 signal phaseReminderDone
 signal triumphiratWantsToFlee(triumphirat)

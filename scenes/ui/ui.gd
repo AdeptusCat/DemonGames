@@ -39,6 +39,9 @@ var rankTrack: Array:
 
 
 func _ready():
+	Signals.updatePlayerStatusDone.connect(_on_updatePlayerStatusDone)
+	
+	
 	Signals.emitSoulsFromCollectionPosition.connect(_on_emitSoulsFromCollectionPosition)
 	Signals.emitSoulsFromTreasury.connect(_on_emitSoulsFromTreasury)
 	Signals.emitFavorsFromCollectionPosition.connect(_on_emitFavorsFromCollectionPosition)
@@ -146,7 +149,50 @@ func _on_emitFavorsFromTreasury(position : Vector2, favorsGathered : int):
 		await get_tree().create_timer(0.3).timeout
 
 
+func showPlayerStatus():
+	for entryD in currentDemonEntries:
+		if currentDemonEntries.has(entryD):
+			if is_instance_valid(currentDemonEntries[entryD]):
+				currentDemonEntries[entryD].free()
+				currentDemonEntries.erase(entryD)
+	
+	%CurrentDemonTopTree.set_column_title(0, "")
+	%CurrentDemonTopTree.set_column_title(1, "Player")
+	%CurrentDemonTopTree.set_column_title(2, "Phase")
+	%CurrentDemonTopTree.set_column_title(3, "")
+	
+	for peer in Connection.peers:
+		var player : Player = Data.players[peer]
+		var line = %CurrentDemonTopTree.create_item(currentDemonRoot)
+		line.set_icon(0, playerIcon)
+		line.set_icon_modulate(0, iconColorVisible)
+		line.set_text_alignment(0, HORIZONTAL_ALIGNMENT_CENTER)
+		line.set_selectable(0, false)
+		line.set_text(1, player.playerName)
+		line.set_metadata(1, 0)
+		line.set_custom_color(1, player.color)
+		line.set_text_alignment(1, HORIZONTAL_ALIGNMENT_CENTER)
+		line.set_selectable(1, true)
+		var phaseName : String
+		if Data.phases.values().has(Data.phase):
+			phaseName = Data.phases.keys()[Data.phase]
+		else:
+			phaseName = "Place Legion"
+		line.set_text(2, phaseName)
+		line.set_text_alignment(2, HORIZONTAL_ALIGNMENT_CENTER)
+		line.set_selectable(2, false)
+		line.set_selectable(3, false)
+		line.set_text_alignment(3, HORIZONTAL_ALIGNMENT_CENTER)
+		currentDemonEntries[peer] = line
+
+
+func _on_updatePlayerStatusDone(playerId : int):
+	currentDemonEntries[playerId].set_text(2, "done")
+
+
 func highlightCurrentPlayer(player : Player = null):
+	showPlayerStatus()
+	return
 	Signals.showRankTrackMarginContainer.emit()
 	for entryD in currentDemonEntries:
 		if currentDemonEntries.has(entryD):
@@ -428,8 +474,14 @@ func _on_playerDoneWithPhase():
 
 @rpc("any_peer", "call_local")
 func done():
+	var peer_id : int = multiplayer.get_remote_sender_id()
 	Signals.tutorialRead.emit()
 	Signals.phaseDone.emit()
+	Signals.playerDone.emit(peer_id)
+	if peer_id == 0:
+		peer_id = Data.id
+	for peer in Connection.peers:
+		RpcCalls.changePlayerStatus.rpc_id(peer, peer_id, "Done")
 
 
 @rpc("any_peer", "call_local")
@@ -724,6 +776,7 @@ func _on_hideArcanaCardsContainer():
 
 
 func _on_showRankTrackMarginContainer():
+	return
 	%RankTrackMarginContainer.show()
 
 

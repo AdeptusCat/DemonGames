@@ -497,6 +497,11 @@ func enoughSkullsToMoveAgain():
 @rpc("any_peer", "call_local")
 func placingDone():
 	unitPlacingDone.emit()
+	var peer_id = multiplayer.get_remote_sender_id()
+	if peer_id == 0:
+		peer_id = Data.id
+	for peer in Connection.peers:
+		RpcCalls.changePlayerStatus.rpc_id(peer, peer_id, "Done")
 
 
 @rpc("any_peer", "call_local")

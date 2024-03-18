@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://xsddd41k8p1r"]
+
+[ext_resource type="Script" path="res://scenes/ui/player_status/player_status.gd" id="1_ccoax"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gms4l"]
+bg_color = Color(0.372549, 0.372549, 0.372549, 1)
+
+[node name="PlayerStatus" type="Tree"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(450, 75)
+offset_right = 458.0
+offset_bottom = 119.0
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 20
+theme_override_styles/panel = SubResource("StyleBoxFlat_gms4l")
+columns = 2
+column_titles_visible = true
+allow_reselect = true
+hide_folding = true
+hide_root = true
+scroll_horizontal_enabled = false
+scroll_vertical_enabled = false
+script = ExtResource("1_ccoax")

@@ -39,7 +39,7 @@ func _process(delta):
 			tw1 = create_tween()
 			tw1.set_trans(Tween.TRANS_QUAD)
 			tw1.set_ease(Tween.EASE_IN_OUT)
-			tw1.parallel().tween_property(self, "position", startPosition - Vector2(0, 550), 0.2)
+			tw1.parallel().tween_property(self, "position", startPosition - Vector2(0, 770), 0.2)
 
 
 func collapse():
