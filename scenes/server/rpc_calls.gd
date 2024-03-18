@@ -578,7 +578,7 @@ func demonStatusChange(demonRank, statusName):
 			Data.demons[demonRank].incapacitated = true
 		"recovered":
 			Data.demons[demonRank].incapacitated = false
-	Signals.updateRankTrack.emit([])
+	#Signals.updateRankTrack.emit([])
 
 
 @rpc("any_peer", "call_local")

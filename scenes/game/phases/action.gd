@@ -15,6 +15,7 @@ func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 		var nextDemonRank = rankTrack.pop_front()
 		newRankTrack.append(nextDemonRank)
 		
+		print("new ranktrack 1",rankTrackNode.rankTrack)
 		for peer in Connection.peers:
 			RpcCalls.updateRankTrack.rpc_id(peer, newRankTrack + rankTrack)
 		for peer in Connection.peers:
@@ -134,6 +135,7 @@ func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 				newRankTrack.erase(nextDemonRank)
 				rankTrack = sortRankTrack(result, rankTrack, nextDemonRank)
 	
+	print("new ranktrack2 ",newRankTrack)
 	rankTrackNode.updateRankTrack(newRankTrack)
 	
 	for peer in Connection.peers:

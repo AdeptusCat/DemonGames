@@ -2,7 +2,7 @@ extends Camera2D
 
 
 
-var START_POSITION : Vector2 = Vector2(1050, 0)
+var START_POSITION : Vector2 = Vector2(1050, 800)
 var _target_zoom : float = 0.2
 const MIN_ZOOM : float = 0.2
 const MAX_ZOOM : float = 2.0

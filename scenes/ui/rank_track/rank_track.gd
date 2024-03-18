@@ -73,8 +73,9 @@ func tweenToPosition(entry : RankTrackEntry, position : Vector2):
 
 
 func _on_updateRankTrack(_rankTrack : Array):
+	print("updating ranktrack ",_rankTrack)
 	rankTrack = _rankTrack
-	Data.rankTrack = rankTrack
+	Data.rankTrack = rankTrack.duplicate()
 
 
 func _on_currentDemon(currentDemonRank : int):
@@ -93,6 +94,9 @@ func _on_currentDemon(currentDemonRank : int):
 func _on_action(_rank : int, action : String):
 	if action == "Reset":
 		show()
+		print("reset ranktrack ",rankTrack)
+		rankTrack = Data.rankTrack.duplicate()
+		print("reset ranktrack ",rankTrack)
 		var i : int = 0
 		for rank in rankTrack:
 			var entry : RankTrackEntry = entryScene.instantiate()
