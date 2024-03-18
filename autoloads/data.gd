@@ -24,6 +24,7 @@ var colors : Dictionary = {
 	"Grey": Color8(128,128,128),
 }
 var chooseDemon : bool = false
+var rankTrack : Array = []
 
 @onready var normalMaps = {
 	colorsNames[0] : preload("res://assets/triumphirates/00080-1662389051_n.png"),

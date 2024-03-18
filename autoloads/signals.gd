@@ -103,6 +103,7 @@ signal recruiting
 signal recruitingDone
 signal demonDone(passAction)
 signal demonDoneWithPhase(passAction)
+signal passOptionSelected(passInterval : int)
 signal playerDone(playerId : int)
 signal changePlayerStatus
 signal addPlayerStatus(playerId : int)

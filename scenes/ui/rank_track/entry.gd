@@ -18,3 +18,6 @@ func _on_mouse_exited():
 
 func flash():
 	%TextureRect.get_material().set_shader_parameter("active", true)
+
+func flashOff():
+	%TextureRect.get_material().set_shader_parameter("active", false)

@@ -35,7 +35,6 @@ var rankTrack: Array:
 	set(array):
 		rankTrack = array
 		%RankTrack.rankTrack = rankTrack
-		print(Data.id, " updating ranktrack")
 
 
 func _ready():
@@ -500,12 +499,11 @@ func nextDemon(nextDemon : int):
 	var demonNode = Data.demons[nextDemon]
 	demonNode.skullsUsed = 0
 	currentPlayerLabel.text = str(demonNode.stats.player)
-	print("action for demon")
 	var actionMenuScene = actionMenu.instantiate()
-	%SideMenuVBoxContainer.add_child(actionMenuScene)
 	actionMenuScene.currentDemonRank = demonNode.stats.rank
+	%SideMenuVBoxContainer.add_child(actionMenuScene)
+	actionMenuScene.init()
 	Data.currentDemon = demonNode
-	print(demonNode.stats.rank)
 	var action = await Signals.demonDone
 	
 	# do this or _on_march wont come out of the loop
