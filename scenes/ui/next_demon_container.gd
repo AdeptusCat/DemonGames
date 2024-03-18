@@ -9,6 +9,7 @@ func _ready():
 
 @rpc("any_peer", "call_local")
 func nextDemon(demonRank : int):
+	return
 	if demonNode:
 		demonNode.queue_free()
 	demonNode = Data.demons[demonRank].duplicate()

@@ -71,7 +71,8 @@ func phase(combatWinner : Dictionary, ui):
 	
 	for peer in Connection.peers:
 		for peer_id in petitionSectiosWithoutWinners.keys():
-			RpcCalls.changePlayerStatus.rpc_id(peer, peer_id, "Petitioning")
+			if peer_id > 0:
+				RpcCalls.changePlayerStatus.rpc_id(peer, peer_id, "Petitioning")
 	
 	await petitions(petitionSectiosWithoutWinners, ui)
 

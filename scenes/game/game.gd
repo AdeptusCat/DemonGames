@@ -144,9 +144,9 @@ func setup():
 		setupSoulsFromSavegame()
 		setupFavorsFromSavegame()
 	
-	for playerId in playerIds:
-		for id in playerIds:
-			RpcCalls.addPlayerStatus.rpc_id(playerId, id)
+	for peer in Connection.peers:
+		for id in Connection.peers:
+			RpcCalls.addPlayerStatus.rpc_id(peer, id)
 	
 	debug.debugFavors()
 	debug.debugDisfavors()
@@ -405,10 +405,10 @@ func setupStartLegions():
 		playerIds.append_array(Ai.playerIds.duplicate())
 		playerIds.shuffle()
 		for playerId in playerIds:
-			for peer in playerIds:
-				RpcCalls.changePlayerStatus.rpc_id(peer, playerId, "Placing First Legion")
 			if playerId > 0:
 				playerPlaceStartLegion(playerId)
+				for peer in Connection.peers:
+					RpcCalls.changePlayerStatus.rpc_id(peer, playerId, "Placing First Legion")
 			else:
 				aiPlaceStartLegion(playerId)
 		for peer in Connection.peers:

@@ -460,6 +460,7 @@ func pickLegions(possibleLegionsToMoveWithLieutenant, unitsAlreadyMovingWithLieu
 
 
 func showMessage(message : String):
+	return
 	%WaitForPlayerLabel.text = message
 	%WaitForPlayerControl.show()
 
@@ -719,6 +720,7 @@ func changePlayerName(playerName):
 
 
 func toogleWaitForPlayer(playerId, boolean : bool, phase = null):
+	return
 	if Settings.skipWaitForPlayers:
 		return
 	if boolean:

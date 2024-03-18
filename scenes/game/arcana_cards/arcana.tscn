@@ -1,18 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bupmbau5r1ld6"]
+[gd_scene load_steps=4 format=3 uid="uid://bupmbau5r1ld6"]
 
 [ext_resource type="Script" path="res://scenes/game/arcana_cards/arcana.gd" id="1_i8p1k"]
-[ext_resource type="Shader" path="res://assets/materials_shaders/shine_highlight.gdshader" id="2_rwusq"]
+[ext_resource type="Material" uid="uid://cj8y7d3nbsrbq" path="res://assets/materials_shaders/shine_highlight.tres" id="2_iteq3"]
 [ext_resource type="Texture2D" uid="uid://digftfaphe850" path="res://assets/tiles/00000.png" id="3_ext33"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yi8ln"]
-resource_local_to_scene = true
-shader = ExtResource("2_rwusq")
-shader_parameter/shine_color = Color(1, 1, 1, 1)
-shader_parameter/shine_color_default = Color(1, 1, 1, 1)
-shader_parameter/shine_color_for_deletion = Color(1, 0, 0, 1)
-shader_parameter/shine_speed = 5.0
-shader_parameter/shine_size = 0.01
-shader_parameter/active = false
 
 [node name="Arcana" type="MarginContainer"]
 custom_minimum_size = Vector2(150, 200)
@@ -24,7 +14,7 @@ color = Color(0.211765, 0.211765, 0.211765, 1)
 
 [node name="TextureRect" type="TextureRect" parent="."]
 unique_name_in_owner = true
-material = SubResource("ShaderMaterial_yi8ln")
+material = ExtResource("2_iteq3")
 layout_mode = 2
 texture = ExtResource("3_ext33")
 expand_mode = 1

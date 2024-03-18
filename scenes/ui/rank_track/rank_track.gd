@@ -60,6 +60,11 @@ func moveIn():
 		tween.set_trans(Tween.TRANS_SINE)
 		tween.tween_property(entry, "global_position", %MarginContainer.global_position + Vector2((entry.size.x + marginBetweenEntries) * i, 0) , moveTime)
 		tween.play()
+		
+		if i == 0:
+			if entry.playerId == Data.id:
+				entry.flash()
+		
 		i += 1
 
 
@@ -67,7 +72,6 @@ func _on_updateRankTrack(_rankTrack : Array):
 	#if not entries.is_empty():
 		#return
 	rankTrack = _rankTrack
-	
 
 
 func _on_currentDemon(currentDemonRank : int):
@@ -86,6 +90,7 @@ func _on_action(_rank : int, action : String):
 			var entry : RankTrackEntry = entryScene.instantiate()
 			add_child(entry)
 			entry.rank = rank
+			entry.playerId = Data.players[Data.demons[rank].player].playerId
 			entry.colorRect.color = Data.players[Data.demons[rank].player].color
 			entry.textureRect.texture = Data.demons[rank].image
 			entry.global_position = %MarginContainer.global_position + Vector2(2000, 0) + Vector2(entry.size.x * i, 0)
