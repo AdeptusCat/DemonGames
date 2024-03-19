@@ -459,7 +459,6 @@ func pickLegions(possibleLegionsToMoveWithLieutenant, unitsAlreadyMovingWithLieu
 
 
 func showMessage(message : String):
-	return
 	%WaitForPlayerLabel.text = message
 	%WaitForPlayerControl.show()
 

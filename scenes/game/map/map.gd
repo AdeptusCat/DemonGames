@@ -1018,6 +1018,7 @@ func fleeingLieutenant(sectioToFleeFrom, fleeingTroops, lieutenant, sectioAttack
 		Signals.moveCamera.emit(sectioToFleeFrom.global_position)
 		var sectiosToFleeTo = []
 		var neighbour1 = getFleeDirection(sectioToFleeFrom, sectioAttackedFrom)
+		
 		if not neighbour1[0] == 666:
 			print("fleeoption 1")
 			sectiosToFleeTo.append(Decks.sectios[neighbour1[0]][neighbour1[1]])
