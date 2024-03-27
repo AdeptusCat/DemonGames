@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://d00aywoo0y4ld"]
+[gd_scene load_steps=52 format=3 uid="uid://d00aywoo0y4ld"]
 
 [ext_resource type="Script" path="res://scenes/ui/ui.gd" id="1_o55j0"]
 [ext_resource type="Texture2D" uid="uid://cdii7y50q1lno" path="res://assets/icons/pentagram_white.png" id="2_3ml1l"]
@@ -46,6 +46,7 @@
 [ext_resource type="PackedScene" uid="uid://bg15mv5forlhw" path="res://scenes/ui/soul_phase/souls_margin_container.tscn" id="43_wxdjf"]
 [ext_resource type="PackedScene" uid="uid://hh5wndnhj36l" path="res://scenes/ui/soul_phase/favor_margin_container.tscn" id="44_3nb2s"]
 [ext_resource type="PackedScene" uid="uid://dphwtkh030vsb" path="res://scenes/ui/combat_entry.tscn" id="44_xx0bh"]
+[ext_resource type="PackedScene" uid="uid://cmomnc6jcy36a" path="res://scenes/ui/show_demons_margin_container.tscn" id="45_mhgq8"]
 [ext_resource type="PackedScene" uid="uid://dsvdpwbo68k25" path="res://scenes/ui/rank_track/rank_track.tscn" id="47_8xx4m"]
 [ext_resource type="PackedScene" uid="uid://xsddd41k8p1r" path="res://scenes/ui/player_status/player_status.tscn" id="48_w4ulu"]
 
@@ -301,26 +302,29 @@ size_flags_vertical = 3
 alignment = 1
 
 [node name="CardsControl" type="Control" parent="Control"]
-layout_mode = 2
-anchors_preset = 0
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 970.0
-offset_top = 1040.0
-offset_right = 970.0
-offset_bottom = 1040.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="DemonCardsMarginContainer" type="MarginContainer" parent="Control/CardsControl"]
 unique_name_in_owner = true
-layout_mode = 2
-offset_left = -1698.0
-offset_top = -2297.0
-offset_right = -1578.0
-offset_bottom = -2177.0
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -73.5
+offset_top = -70.0
+offset_right = 73.5
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("27_q5h8k")
 
 [node name="FrameBackgroundMarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer" instance=ExtResource("25_jfpsm")]
@@ -335,18 +339,25 @@ theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 50
 
-[node name="DemonVBoxContainer" type="VBoxContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer"]
-unique_name_in_owner = true
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer"]
 layout_mode = 2
-alignment = 1
 
-[node name="DemonHBoxContainer" type="HBoxContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer"]
+[node name="DemonHBoxContainer" type="HBoxContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer"]
+[node name="Button" type="Button" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/VBoxContainer/DemonHBoxContainer"]
+layout_mode = 2
+text = "close"
+
+[node name="DemonVBoxContainer" type="VBoxContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/VBoxContainer/DemonVBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 4
@@ -355,31 +366,31 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="ColorRect" type="ColorRect" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/MarginContainer"]
+[node name="ColorRect" type="ColorRect" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/VBoxContainer/DemonVBoxContainer/MarginContainer"]
 layout_mode = 2
 color = Color(0, 0, 0, 0.501961)
 
-[node name="MarginContainer" type="MarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/MarginContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/VBoxContainer/DemonVBoxContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="DemonHeaderLabel" type="Label" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/MarginContainer/MarginContainer"]
+[node name="DemonHeaderLabel" type="Label" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/VBoxContainer/DemonVBoxContainer/MarginContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 15
 text = "Demons of your Triumphirat"
 horizontal_alignment = 1
 
-[node name="CollapseButton" type="Button" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer"]
+[node name="CollapseButton" type="Button" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/VBoxContainer/DemonVBoxContainer"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 mouse_filter = 1
 
-[node name="Button" type="Button" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer"]
+[node name="Button" type="Button" parent="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/VBoxContainer/DemonVBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 1
@@ -1378,11 +1389,53 @@ hide_root = true
 scroll_horizontal_enabled = false
 scroll_vertical_enabled = false
 
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -148.0
+offset_bottom = 484.0
+grow_horizontal = 0
+size_flags_horizontal = 0
+
+[node name="ColorRect" type="ColorRect" parent="Control/MarginContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PlayerStatsVBoxContainer" type="VBoxContainer" parent="Control/MarginContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="SoulsMarginContainer" parent="Control/MarginContainer/MarginContainer/PlayerStatsVBoxContainer" instance=ExtResource("43_wxdjf")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="FavorMarginContainer" parent="Control/MarginContainer/MarginContainer/PlayerStatsVBoxContainer" instance=ExtResource("44_3nb2s")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ShowDemonsMarginContainer" parent="Control/MarginContainer/MarginContainer/PlayerStatsVBoxContainer" instance=ExtResource("45_mhgq8")]
+layout_mode = 2
+
 [node name="SideMenuMarginContainer" type="MarginContainer" parent="Control"]
 unique_name_in_owner = true
 layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -140.0
 offset_right = 148.0
-offset_bottom = 280.0
+offset_bottom = 140.0
+grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Control/SideMenuMarginContainer"]
 layout_mode = 2
@@ -1405,37 +1458,6 @@ unique_name_in_owner = true
 layout_mode = 2
 scroll_horizontal_enabled = false
 scroll_vertical_enabled = false
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-
-[node name="ColorRect" type="ColorRect" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer"]
-layout_mode = 2
-color = Color(0, 0, 0, 1)
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="PlayerStatsVBoxContainer" type="VBoxContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer/MarginContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 0
-
-[node name="SoulsMarginContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer/MarginContainer/PlayerStatsVBoxContainer" instance=ExtResource("43_wxdjf")]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="FavorMarginContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer/MarginContainer/PlayerStatsVBoxContainer" instance=ExtResource("44_3nb2s")]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="Control/SideMenuMarginContainer/MarginContainer/SideMenuVBoxContainer/MarginContainer/MarginContainer/PlayerStatsVBoxContainer"]
-layout_mode = 2
 
 [node name="CombatOverviewMarginContainer" type="MarginContainer" parent="Control"]
 visible = false
@@ -1515,7 +1537,8 @@ grow_vertical = 0
 [connection signal="item_selected" from="Control/RankTrackMarginContainer/RankTrack/MarginContainer/VBoxContainer/DemonTree" to="Control/RankTrackMarginContainer/RankTrack" method="_on_demon_tree_item_selected"]
 [connection signal="mouse_entered" from="Control/CardsControl/DemonCardsMarginContainer" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="Control/CardsControl/DemonCardsMarginContainer" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_mouse_exited"]
-[connection signal="pressed" from="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/DemonVBoxContainer/CollapseButton" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_collapse_button_pressed"]
+[connection signal="pressed" from="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/VBoxContainer/DemonHBoxContainer/Button" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_button_pressed"]
+[connection signal="pressed" from="Control/CardsControl/DemonCardsMarginContainer/MarginContainer/VBoxContainer/DemonVBoxContainer/CollapseButton" to="Control/CardsControl/DemonCardsMarginContainer" method="_on_collapse_button_pressed"]
 [connection signal="pressed" from="Control/DoEvilDeedsControl/MarginContainer/VBoxContainer/DoEvilDeedsControlButton" to="Control/DoEvilDeedsControl" method="_on_do_evil_deeds_control_button_pressed"]
 [connection signal="pressed" from="Control/FleeControl/MarginContainer/VBoxContainer/HBoxContainer/ConfirmFleeButton" to="Control/FleeControl" method="_on_confirm_flee_button_pressed"]
 [connection signal="pressed" from="Control/FleeControl/MarginContainer/VBoxContainer/HBoxContainer/CancelFleeButton" to="Control/FleeControl" method="_on_cancel_flee_button_pressed"]

@@ -480,10 +480,10 @@ func discardArcanaCard(arcanaCardName, playerId):
 
 @rpc("any_peer", "call_local")
 func recruitedLieutenant():
+	var peer_id : int = multiplayer.get_remote_sender_id()
 	var lieutenantName = Decks.getRandomCard("lieutenant")
 	if lieutenantName:
-		for peer in Connection.peers:
-			fillAvailableLieutenantsBox.rpc_id(peer, lieutenantName)
+		fillAvailableLieutenantsBox.rpc_id(peer_id, lieutenantName)
 
 
 @rpc("any_peer", "call_local")

@@ -43,6 +43,7 @@ func _process(delta):
 
 
 func collapse():
+	return
 	tw1 = create_tween()
 	tw1.set_trans(Tween.TRANS_QUAD)
 	tw1.set_ease(Tween.EASE_IN_OUT)
@@ -57,7 +58,9 @@ func removeDemon(rank : int):
 				child.queue_free()
 	reset_size()
 
+
 func _on_mouse_entered():
+	return
 	mouseEnteredPositiony = get_global_mouse_position().y
 	hovering = true
 #	position = startPosition
@@ -69,6 +72,7 @@ func _on_mouse_entered():
 
 func expandDemonCards(battle : bool = true):
 	#button = Button.new()
+	show()
 	if battle:
 		expand = true
 		_on_mouse_entered()
@@ -96,6 +100,7 @@ func expandDemonCards(battle : bool = true):
 
 
 func collapseDemonCards():
+	hide()
 	%DemonHeaderLabel.text = buttonTextNormal
 	expand = false
 	collapse()
@@ -126,6 +131,7 @@ func _on_noDemonClicked():
 
 func _on_mouse_exited():
 	#return
+	return
 	if hovering and not expand:
 		hovering = false
 		tw1 = create_tween()
@@ -143,3 +149,7 @@ func _on_collapse_button_pressed():
 	else:
 		expand = true
 		button_collapse.text = "Collapse"
+
+
+func _on_button_pressed():
+	Signals.collapseDemonCards.emit()

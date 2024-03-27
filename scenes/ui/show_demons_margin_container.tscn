@@ -1,0 +1,128 @@
+[gd_scene load_steps=24 format=3 uid="uid://cmomnc6jcy36a"]
+
+[ext_resource type="Script" path="res://scenes/ui/show_demons_margin_container.gd" id="1_c3c83"]
+[ext_resource type="Texture2D" uid="uid://bnjuqj0b53pb5" path="res://assets/soul/00297-3811223522.png" id="1_rlysd"]
+[ext_resource type="Texture2D" uid="uid://dn8lbx47pk3wc" path="res://assets/favor/00482-928515031.png" id="2_gesms"]
+[ext_resource type="Texture2D" uid="uid://csmcruf0kdhgp" path="res://assets/favor/00483-928515032.png" id="3_3xtmo"]
+[ext_resource type="Texture2D" uid="uid://yre8wjvsyqup" path="res://assets/favor/00484-928515033.png" id="4_loovp"]
+[ext_resource type="Texture2D" uid="uid://d1cp1ojeyhcvn" path="res://assets/favor/00485-928515034.png" id="5_s5g4t"]
+[ext_resource type="Texture2D" uid="uid://dva6a85tft52f" path="res://assets/favor/00486-928515035.png" id="6_5qrge"]
+[ext_resource type="Texture2D" uid="uid://rdtvhlc83dux" path="res://assets/favor/00487-928515036.png" id="7_k1meg"]
+[ext_resource type="Texture2D" uid="uid://bol54g0qhj15" path="res://assets/favor/00488-928515037.png" id="8_cciv1"]
+[ext_resource type="Texture2D" uid="uid://c832p117hfu2s" path="res://assets/favor/00489-928515038.png" id="9_qv1cj"]
+[ext_resource type="Texture2D" uid="uid://yrd6rf6fpgvb" path="res://assets/favor/00490-928515039.png" id="10_qf8lb"]
+[ext_resource type="Texture2D" uid="uid://dgvan6vyyybqc" path="res://assets/favor/00491-928515040.png" id="11_cra7f"]
+[ext_resource type="Texture2D" uid="uid://clajj030madic" path="res://assets/favor/00492-928515041.png" id="12_v2xnl"]
+[ext_resource type="Texture2D" uid="uid://jxxme77aonb" path="res://assets/favor/00493-928515042.png" id="13_4wrjx"]
+[ext_resource type="Texture2D" uid="uid://b5srs5vcv6ksr" path="res://assets/favor/00494-928515043.png" id="14_4g4av"]
+[ext_resource type="Texture2D" uid="uid://dvmuy8cwmi68o" path="res://assets/favor/00495-928515044.png" id="15_xm1lv"]
+[ext_resource type="Texture2D" uid="uid://dy4gcme1pjb3d" path="res://assets/favor/00496-928515045.png" id="16_ivswq"]
+[ext_resource type="Texture2D" uid="uid://ba3rwatu8gn1" path="res://assets/favor/00497-928515046.png" id="17_y5dvk"]
+[ext_resource type="Texture2D" uid="uid://cyqxqr6mmphdn" path="res://assets/favor/00498-928515047.png" id="18_tirkt"]
+[ext_resource type="Texture2D" uid="uid://bv2u5wh3i0ja0" path="res://assets/favor/00499-928515048.png" id="19_a8fto"]
+[ext_resource type="Texture2D" uid="uid://c6uibf0gd6ct5" path="res://assets/favor/00500-928515049.png" id="20_kn6li"]
+[ext_resource type="Texture2D" uid="uid://dquhkgpe8g0ms" path="res://assets/favor/00501-928515050.png" id="21_n54hc"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2bhxb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_gesms")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_3xtmo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_loovp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_s5g4t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_5qrge")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_k1meg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_cciv1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_qv1cj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_qf8lb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_cra7f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_v2xnl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_4wrjx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_4g4av")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_xm1lv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_ivswq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_y5dvk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_tirkt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_a8fto")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_kn6li")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_n54hc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="ShowDemonsMarginContainer" type="MarginContainer"]
+script = ExtResource("1_c3c83")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Demons"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+tooltip_text = "The amount of Favors you can spend."
+texture = ExtResource("1_rlysd")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VBoxContainer/TextureRect"]
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_2bhxb")
+autoplay = "default"
+centered = false
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture_normal = ExtResource("2_gesms")
+ignore_texture_size = true
+stretch_mode = 5
+
+[connection signal="pressed" from="VBoxContainer/TextureButton" to="." method="_on_texture_button_pressed"]
