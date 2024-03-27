@@ -26,6 +26,7 @@ func _on_disableActionButtons():
 
 
 func _on_toggleRecruitLegionsButton(boolean : bool):
+	print("recruiting _on_toggleRecruitLegionsButton ", boolean)
 	%RecruitLegionsButton.disabled != boolean
 	recruitLegionsButtonActivated = boolean
 
@@ -73,8 +74,9 @@ func _on_tutorialRead():
 
 
 func _on_recruit_legions_button_pressed():
-	Signals.tutorialRead.emit()
-	Signals.recruitLegions.emit()
+	if recruitLegionsButtonActivated:
+		Signals.tutorialRead.emit()
+		Signals.recruitLegions.emit()
 
 
 func _on_buy_arcana_card_button_pressed():

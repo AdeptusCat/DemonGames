@@ -490,7 +490,7 @@ func _on_back_to_hell_confirmation_dialog_confirmed():
 
 func _on_pass_button_item_selected(index):
 	Signals.passOptionSelected.emit(index + 1)
-	%PassCostLabel.text = str((index + 1) * 2)
+	%PassCostLabel.text = str((index + 1) * Costs.passAction)
 	%PassConfirmCancelHBoxContainer.show()
 	%MarchHBoxContainer.hide()
 	%WalkTheEarthHBoxContainer.hide()
