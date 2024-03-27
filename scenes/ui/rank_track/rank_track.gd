@@ -45,6 +45,20 @@ func _ready():
 	#moveOut()
 
 
+func moveToStart():
+	var i : int = 0
+	for entry in entries:
+		var tween : Tween = create_tween()
+		tween.set_ease(Tween.EASE_OUT)
+		tween.set_trans(Tween.TRANS_SINE)
+		tween.tween_property(entry, "global_position", %MarginContainer.global_position + Vector2(2000, 0) + Vector2(entry.size.x * i, 0), moveTime)
+		
+		tween.play()
+		i += 1
+		if entries.size() == i:
+			tween.tween_callback(hideRankTrack)
+
+
 func moveOut():
 	entriesRank.pop_front()
 	var entry = entries.pop_front()
@@ -93,10 +107,10 @@ func _on_currentDemon(currentDemonRank : int):
 
 func _on_action(_rank : int, action : String):
 	if action == "Reset":
-		show()
-		print("reset ranktrack ",rankTrack)
+		if rankTrackPopulated():
+			toggleRankTrack(true)
+			return
 		rankTrack = Data.rankTrack.duplicate()
-		print("reset ranktrack ",rankTrack)
 		var i : int = 0
 		for rank in rankTrack:
 			var entry : RankTrackEntry = entryScene.instantiate()
@@ -110,16 +124,21 @@ func _on_action(_rank : int, action : String):
 			entriesRank.append(rank)
 			i += 1
 		moveIn()
+		
 	if action == "Pass":
 		entries = _entries.duplicate()
 		entriesRank = _entriesRank.duplicate()
+
+
+func rankTrackPopulated():
+	return not entries.size() == 0
 
 
 func _on_actionsDone():
 	moveOut()
 	entries.clear()
 	entriesRank.clear()
-	hide()
+	%RankTrackContainer.hide()
 
 
 @rpc("any_peer", "call_local")
@@ -164,3 +183,38 @@ func _on_label_mouse_exited():
 func _on_label_gui_input(event):
 	if Input.is_action_just_pressed("click"):
 		pass
+
+
+func _on_toggle_rank_track_button_pressed():
+	toggleRankTrack(!%RankTrackContainer.visible)
+
+
+func toggleRankTrack(show : bool):
+	if show:
+		showTrankTrack()
+		moveIn()
+		
+	else:
+		moveToStart()
+
+
+func showTrankTrack():
+	%RankTrackContainer.show()
+	for entry in entries:
+		entry.show()
+	%ToggleRankTrackButton.text = "Hide Rank Track"
+
+
+func hideRankTrack():
+	%RankTrackContainer.hide()
+	for entry in entries:
+		entry.hide()
+	%ToggleRankTrackButton.text = "Show Rank Track"
+
+
+func _on_toggle_rank_track_button_mouse_entered():
+	return
+
+
+func _on_toggle_rank_track_button_mouse_exited():
+	return

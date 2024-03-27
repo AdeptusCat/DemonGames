@@ -141,6 +141,9 @@ func phase(phase, rankTrack : Array, ui, map, rankTrackNode):
 	for peer in Connection.peers:
 		actionsDone.rpc_id(peer)
 	
+	for peer in Connection.peers:
+		RpcCalls.demonAction.rpc_id(peer, 0, "Reset")
+	
 	if Tutorial.tutorial:
 		await get_tree().create_timer(0.1).timeout
 		Signals.returnToMainMenu.emit()

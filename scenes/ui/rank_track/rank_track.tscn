@@ -5,40 +5,14 @@
 
 [node name="RankTrack" type="Control"]
 layout_mode = 3
-anchors_preset = 12
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_ahxnf")
 entryScene = ExtResource("2_ccvgu")
-
-[node name="RankTrack" type="MarginContainer" parent="."]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -20.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="ColorRect" type="ColorRect" parent="RankTrack"]
-layout_mode = 2
-color = Color(0, 0, 0, 1)
-
-[node name="MarginContainer" type="MarginContainer" parent="RankTrack"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="MarginContainer" type="MarginContainer" parent="RankTrack/MarginContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 148)
-layout_mode = 2
 
 [node name="Label" type="Label" parent="."]
 visible = false
@@ -70,6 +44,47 @@ offset_bottom = -351.0
 mouse_filter = 1
 text = "33333"
 
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -203.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 2
+
+[node name="RankTrackContainer" type="MarginContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/RankTrackContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/RankTrackContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/RankTrackContainer/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 148)
+layout_mode = 2
+
+[node name="ToggleRankTrackButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Show Rank Track"
+
 [connection signal="gui_input" from="Label" to="." method="_on_label_gui_input"]
 [connection signal="mouse_entered" from="Label" to="." method="_on_label_mouse_entered"]
 [connection signal="mouse_exited" from="Label" to="." method="_on_label_mouse_exited"]
+[connection signal="mouse_entered" from="VBoxContainer/ToggleRankTrackButton" to="." method="_on_toggle_rank_track_button_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/ToggleRankTrackButton" to="." method="_on_toggle_rank_track_button_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/ToggleRankTrackButton" to="." method="_on_toggle_rank_track_button_pressed"]

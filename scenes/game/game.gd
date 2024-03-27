@@ -177,6 +177,9 @@ func setup():
 		if Tutorial.tutorial:
 			phase = Tutorial.chapter
 		
+		for peer in Connection.peers:
+			RpcCalls.demonAction.rpc_id(peer, 0, "Reset")
+		
 		sequenceOfPlay(phase)
 	else:
 		Data.chooseDemon = false

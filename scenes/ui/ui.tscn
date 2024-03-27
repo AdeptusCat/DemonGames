@@ -1512,7 +1512,6 @@ layout_mode = 2
 text = "Hide Combat Overview"
 
 [node name="RankTrack" parent="Control" instance=ExtResource("47_8xx4m")]
-visible = false
 layout_mode = 1
 
 [node name="PlayerStatus" parent="Control" instance=ExtResource("48_w4ulu")]
