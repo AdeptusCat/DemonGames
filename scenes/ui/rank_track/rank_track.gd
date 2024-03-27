@@ -123,7 +123,8 @@ func _on_action(_rank : int, action : String):
 			entries.append(entry)
 			entriesRank.append(rank)
 			i += 1
-		moveIn()
+		#toggleRankTrack(true)
+		#moveIn()
 		
 	if action == "Pass":
 		entries = _entries.duplicate()

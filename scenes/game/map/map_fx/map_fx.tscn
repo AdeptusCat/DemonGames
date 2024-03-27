@@ -44,6 +44,7 @@ offset_left = -6928.0
 offset_top = -4923.0
 offset_right = 7068.0
 offset_bottom = 4866.0
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="CircleFog" parent="." instance=ExtResource("3_gddj2")]

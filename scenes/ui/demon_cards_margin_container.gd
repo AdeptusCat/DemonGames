@@ -139,6 +139,7 @@ func _on_mouse_exited():
 		tw1.set_ease(Tween.EASE_IN_OUT)
 		tw1.parallel().tween_property(self, "position", startPosition - Vector2(0, 550), 0.2)
 	reset_size()
+	set_anchors_preset(PRESET_CENTER)
 
 
 func _on_collapse_button_pressed():
