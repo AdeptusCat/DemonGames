@@ -863,6 +863,11 @@ func _on_march():
 	Signals.hideArrows.emit()
 
 
+func hideEventDialog():
+	await get_tree().create_timer(2).timeout
+	%EventDialog.hide()
+
+
 func neightboursClickable(boolean):
 	for neighbour in possibleNeighbours:
 		if not neighbour == null:
