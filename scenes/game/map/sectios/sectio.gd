@@ -423,7 +423,7 @@ func highlight(boolean):
 		if tw1:
 			tw1.kill()
 #			tw2.kill()
-		tw1 = get_tree().create_tween()
+		tw1 = create_tween()
 		tw1.set_loops()
 		tw1.set_trans(Tween.TRANS_CUBIC)
 		tw1.set_ease(Tween.EASE_IN)
@@ -433,7 +433,7 @@ func highlight(boolean):
 		tw1.set_ease(Tween.EASE_OUT)
 		tw1.tween_property(playerPolygon, "modulate:a", 0.6, 0.5)
 		
-#		tw2 = get_tree().create_tween()
+#		tw2 = create_tween()
 #		tw2.set_loops()
 #		tw2.set_trans(Tween.TRANS_CUBIC)
 #		tw2.set_ease(Tween.EASE_IN)
@@ -448,7 +448,7 @@ func highlight(boolean):
 		if tw1:
 			tw1.kill()
 #			tw2.kill()
-		var tween1 = get_tree().create_tween()
+		var tween1 = create_tween()
 		tween1.set_trans(Tween.TRANS_CUBIC)
 		tween1.set_ease(Tween.EASE_IN)
 #		if player == 0:

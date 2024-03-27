@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cj8y7d3nbsrbq"]
+
+[ext_resource type="Shader" path="res://assets/materials_shaders/shine_highlight.gdshader" id="1_w0ypj"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_w0ypj")
+shader_parameter/shine_color = Color(1, 1, 1, 1)
+shader_parameter/shine_color_default = Color(1, 1, 1, 1)
+shader_parameter/shine_color_for_deletion = Color(1, 0, 0, 1)
+shader_parameter/shine_speed = 5.0
+shader_parameter/shine_size = 0.01
+shader_parameter/active = false

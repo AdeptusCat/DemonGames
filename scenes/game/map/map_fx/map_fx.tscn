@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://bgijk4prumaxr" path="res://assets/circle.png" id="4_watc5"]
 [ext_resource type="Texture2D" uid="uid://b4awi58rg5qaf" path="res://assets/light/radial.png" id="5_jgvy2"]
 
-
 [sub_resource type="CanvasTexture" id="CanvasTexture_7x8xr"]
 diffuse_texture = ExtResource("1_4r176")
 normal_texture = ExtResource("2_ukx4g")
@@ -38,6 +37,14 @@ offset_left = -7002.0
 offset_top = -5081.0
 offset_right = -3502.0
 offset_bottom = -2581.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(100, 100)
+offset_left = -6928.0
+offset_top = -4923.0
+offset_right = 7068.0
+offset_bottom = 4866.0
+color = Color(0, 0, 0, 1)
 
 [node name="CircleFog" parent="." instance=ExtResource("3_gddj2")]
 

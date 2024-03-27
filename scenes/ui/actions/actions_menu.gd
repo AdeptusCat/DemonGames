@@ -9,31 +9,43 @@ signal backToHell(boolean)
 var spellObject : Spells = Spells.new()
 var player : Player
 var currentDemonNode : Demon
-var currentDemonRank: int:
-	set(demonRank):
-		currentDemonRank = demonRank
-		currentDemonNode = Data.demons[currentDemonRank]
-		player = Data.players[currentDemonNode.player]
-		var demonName : String = currentDemonNode.demonName
-		%CurrentDemonLabel.text = "Demon " + demonName
-		if currentDemonNode.incapacitated:
-			var result = Dice.roll(1)
-			if result[0] >= 5:
-				Signals.demonStatusChange.emit(currentDemonNode.rank, "recovered")
-				toggleActionMenu(true)
-			else:
-				await get_tree().create_timer(0.1).timeout
-				Signals.demonDone.emit(null)
-		else:
+var currentDemonRank : int
+
+
+func init():
+	currentDemonNode = Data.demons[currentDemonRank]
+	player = Data.players[currentDemonNode.player]
+	var demonName : String = currentDemonNode.demonName
+	%CurrentDemonLabel.text = "Demon " + demonName
+	if currentDemonNode.incapacitated:
+		var result = Dice.roll(1)
+		if result[0] >= 5:
+			Signals.demonStatusChange.emit(currentDemonNode.rank, "recovered")
 			toggleActionMenu(true)
-		addSkullsToMenu()
-		addHeartsToMenu()
-		%WalkTheEarthCostLabel.text = str(currentDemonNode.hearts * 2)
+		else:
+			await get_tree().create_timer(0.1).timeout
+			Signals.demonDone.emit(null)
+	else:
+		toggleActionMenu(true)
+	addSkullsToMenu()
+	addHeartsToMenu()
+	%WalkTheEarthCostLabel.text = str(currentDemonNode.hearts * 2)
 
 
 func _ready():
+	%PassButton.clear()
+	var boolean : bool = false
+	var i : int = 1
+	for rank in Data.rankTrack:
+		if boolean:
+			%PassButton.add_item(str(i) + " Pass")
+			i += 1
+		if rank == currentDemonRank:
+			boolean = true
+	%PassButton.selected = -1
+	
 	Signals.disableActionMenuButtons.connect(_on_disableActionButtons)
-	%PassButton.disabled = true
+	#%PassButton.disabled = true
 	%WalkTheEarthButton.disabled = true
 	%DoEvilDeedsButton.disabled = true
 	%ConspireButton.disabled = true
@@ -42,7 +54,7 @@ func _ready():
 	Signals.doEvilDeedsResult.connect(_on_doEvilDeedsResult)
 	Signals.actionThroughArcana.connect(_on_actionThroughArcana)
 	%WalkTheEarthHBoxContainer.show()
-	%DoEvilDeedsHBoxContainer.show()
+	#%DoEvilDeedsHBoxContainer.show()
 	%PassForGoodHBoxContainer.show()
 	Signals.changedActionState.connect(_on_changedActionState)
 	
@@ -55,8 +67,8 @@ func _on_disableActionButtons():
 	%WalkTheEarthButton.disabled = true
 	%WalkTheEarthButton.get_material().set_shader_parameter("active", false)
 	
-	%PassButton.disabled = true
-	%PassButton.get_material().set_shader_parameter("active", false)
+	#%PassButton.disabled = true
+	#%PassButton.get_material().set_shader_parameter("active", false)
 	
 	%PassForGoodButton.disabled = true
 	%PassForGoodButton.get_material().set_shader_parameter("active", false)
@@ -120,9 +132,10 @@ func activateActionButtons():
 	
 	%MarchButton.text = "March"
 	%MarchButton.disabled = false
-	
+	%MarchButton.show()
+	%MarchHBoxContainer.show()
 	%PassForGoodButton.disabled = false
-		
+	%PassHBoxContainer.show()
 	# not implemented yet
 #		%AtonementAndSuplicationButton.disabled = true
 	%InfluenceUnitsButton.disabled = true
@@ -143,7 +156,7 @@ func activateActionButtons():
 
 
 func deactivateActionButtons():
-	%PassButton.disabled = true
+	#%PassButton.disabled = true
 	%WalkTheEarthButton.disabled = true
 
 
@@ -224,6 +237,7 @@ func _on_march_button_pressed():
 		%WalkTheEarthHBoxContainer.hide()
 		%DoEvilDeedsHBoxContainer.hide()
 		%PassForGoodHBoxContainer.hide()
+		%PassHBoxContainer.hide()
 		if Tutorial.tutorial:
 			if Tutorial.currentTopic == Tutorial.Topic.MarchAction:
 				Signals.tutorialRead.emit()
@@ -240,14 +254,15 @@ func _on_march_button_pressed():
 
 
 func _on_pass_button_pressed():
-	deactivateArcanaCards()
-	for cardName in player.arcanaCards:
-		var arcanaCard : ArcanaCard = Data.arcanaCardNodes[cardName]
-		if not player.hasEnoughSouls(arcanaCard.cost):
-			continue
-		if spellObject.objects.has(arcanaCard.minorSpell):
-			spellObject.objects[arcanaCard.minorSpell].highlightPassCard(arcanaCard)
-	Signals.tutorialRead.emit()
+	return
+	#deactivateArcanaCards()
+	#for cardName in player.arcanaCards:
+		#var arcanaCard : ArcanaCard = Data.arcanaCardNodes[cardName]
+		#if not player.hasEnoughSouls(arcanaCard.cost):
+			#continue
+		#if spellObject.objects.has(arcanaCard.minorSpell):
+			#spellObject.objects[arcanaCard.minorSpell].highlightPassCard(arcanaCard)
+	#Signals.tutorialRead.emit()
 
 
 func _on_pass_for_good_button_pressed():
@@ -439,7 +454,6 @@ func backToHellCheck():
 
 func _on_end_button_pressed():
 	Signals.sectiosUnclickable.emit()
-#	Signals.demonDone.emit(null)
 	Signals.sectioClicked.emit(null)
 	Signals.sectioClicked.emit(null)
 
@@ -447,7 +461,7 @@ func _on_end_button_pressed():
 func disableActions():
 	%MarchButton.disabled = true
 	%WalkTheEarthButton.disabled = true
-	%PassButton.disabled = true
+	#%PassButton.disabled = true
 	%PassForGoodButton.disabled = true
 	%DoEvilDeedsButton.disabled = true
 	%ConspireButton.disabled = true
@@ -464,3 +478,31 @@ func _on_back_to_hell_confirmation_dialog_confirmed():
 	backToHell.emit(true)
 
 
+func _on_pass_button_item_selected(index):
+	Signals.passOptionSelected.emit(index + 1)
+	%PassCostLabel.text = str((index + 1) * 2)
+	%PassConfirmCancelHBoxContainer.show()
+	%MarchHBoxContainer.hide()
+	%WalkTheEarthHBoxContainer.hide()
+	%DoEvilDeedsHBoxContainer.hide()
+	%PassForGoodHBoxContainer.hide()
+
+func _on_confirm_pass_button_pressed():
+	var cost : int = int(%PassCostLabel.text)
+	var souls : int = Data.player.souls - cost
+	Signals.changeSouls.emit(Data.id, souls)
+	Signals.emitSoulsFromTreasury.emit(%PassHBoxContainer.get_global_transform_with_canvas().origin, cost) 
+	for peer in Connection.peers:
+		RpcCalls.demonAction.rpc_id(peer, currentDemonRank, "Pass")
+	Signals.demonDone.emit(%PassButton.selected + 1)
+	AudioSignals.passAction.emit()
+
+
+func _on_cancel_pass_button_pressed():
+	Signals.passOptionSelected.emit(0)
+	%PassButton.selected = -1
+	%PassConfirmCancelHBoxContainer.hide()
+	activateActionButtons()
+	
+	
+	

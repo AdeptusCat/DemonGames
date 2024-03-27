@@ -75,7 +75,7 @@ func disable():
 		tw1.kill()
 	if tw2:
 		tw2.kill()
-		var tween1 = get_tree().create_tween()
+		var tween1 = create_tween()
 		tween1.set_trans(Tween.TRANS_CUBIC)
 		tween1.set_ease(Tween.EASE_IN)
 #			tween1.tween_property(playerPolygon, "scale", Vector2(1.0, 1.0), 1.0)

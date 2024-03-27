@@ -5,8 +5,10 @@ func phase(phase : int, ui : UI):
 	if Tutorial.tutorial:
 		await tutorialSetup()
 	
-	for peers in Connection.peers:
-		RpcCalls.resetUnitsToPlace.rpc_id(peers)
+	for peer in Connection.peers:
+		RpcCalls.resetUnitsToPlace.rpc_id(peer)
+		for peer_id in Connection.peers:
+			RpcCalls.changePlayerStatus.rpc_id(peer, peer_id, "Summoning")
 	
 	# sort players by souls
 	var playersSortedBySouls : Array = sortPlayersBySouls()

@@ -13,7 +13,7 @@ func start(text : String):
 	pivot_offset = size / 2
 	show()
 	await get_tree().create_timer(0.5).timeout
-	var tw1 = get_tree().create_tween()
+	var tw1 = create_tween()
 	tw1.set_trans(Tween.TRANS_QUINT)
 	tw1.set_ease(Tween.EASE_IN)
 	tw1.tween_property(self, "scale", Vector2.ZERO, 1)

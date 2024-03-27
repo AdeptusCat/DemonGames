@@ -57,6 +57,8 @@ func getPetitionSectios() -> Dictionary:
 
 
 func phase(combatWinner : Dictionary, ui):
+	
+	
 	await tutorialStart()
 	
 	winnersOccupySectios(combatWinner)
@@ -65,6 +67,12 @@ func phase(combatWinner : Dictionary, ui):
 	
 	var petitionSectiosWithWinners : Dictionary = getPetitionSectios()
 	var petitionSectiosWithoutWinners : Dictionary = removeWinnersFromPetitionSectios(petitionSectiosWithWinners, combatWinner)
+	
+	
+	for peer in Connection.peers:
+		for peer_id in petitionSectiosWithoutWinners.keys():
+			if peer_id > 0:
+				RpcCalls.changePlayerStatus.rpc_id(peer, peer_id, "Petitioning")
 	
 	await petitions(petitionSectiosWithoutWinners, ui)
 

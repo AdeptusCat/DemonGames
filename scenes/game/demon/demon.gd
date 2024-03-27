@@ -14,6 +14,9 @@ signal demonClicked(node)
 @onready var soulsGatherControl = %SoulsGatherControl
 @onready var favorsGatherControl = %FavorsGatherControl
 
+@onready var demonTextureRect = %DemonTextureRect
+@export var texture : Texture
+
 
 var demonName : String = "":
 	set(_name):
@@ -94,6 +97,7 @@ var onEarth : bool = false:
 				%StatusLabel.text = "In Hell"
 var image : Texture:
 	set(_image):
+		image = _image
 		%DemonTextureRect.texture = _image
 
 var description : String:
@@ -168,7 +172,6 @@ func loadStats():
 	image_texture.set_image(image1)
 	
 	image = image_texture
-	
 	description = stats.description
 
 

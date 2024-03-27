@@ -35,10 +35,12 @@ var rankTrack: Array:
 	set(array):
 		rankTrack = array
 		%RankTrack.rankTrack = rankTrack
-		print(Data.id, " updating ranktrack")
 
 
 func _ready():
+	Signals.updatePlayerStatusDone.connect(_on_updatePlayerStatusDone)
+	
+	
 	Signals.emitSoulsFromCollectionPosition.connect(_on_emitSoulsFromCollectionPosition)
 	Signals.emitSoulsFromTreasury.connect(_on_emitSoulsFromTreasury)
 	Signals.emitFavorsFromCollectionPosition.connect(_on_emitFavorsFromCollectionPosition)
@@ -79,6 +81,8 @@ func _ready():
 	Server.playerLeft.connect(_on_playerLeft)
 	
 	Signals.action.connect(_on_action)
+	Signals.rankTrackEntryMouseEntered.connect(_on_rankTrackEntryMouseEntered)
+	Signals.rankTrackEntryMouseExited.connect(_on_rankTrackEntryMouseExited)
 	
 	Signals.playerDoneWithPhase.connect(_on_playerDoneWithPhase)
 	Signals.toggleAvailableLieutenants.connect(_on_toggleAvailableLieutenants)
@@ -97,7 +101,7 @@ func _ready():
 #	%WaitForPlayerControl.show()
 ##			await get_tree().create_timer(10.0).timeout
 ##			%WaitForPlayerControl.hide()
-#	var tw1 = get_tree().create_tween()
+#	var tw1 = create_tween()
 #	tw1.set_trans(Tween.TRANS_QUAD)
 #	tw1.set_ease(Tween.EASE_IN)
 #	tw1.tween_property(%WaitForPlayerControl, "modulate", Color(1,1,1,0), 2.0)#.set_delay(0.5)
@@ -144,7 +148,50 @@ func _on_emitFavorsFromTreasury(position : Vector2, favorsGathered : int):
 		await get_tree().create_timer(0.3).timeout
 
 
+func showPlayerStatus():
+	for entryD in currentDemonEntries:
+		if currentDemonEntries.has(entryD):
+			if is_instance_valid(currentDemonEntries[entryD]):
+				currentDemonEntries[entryD].free()
+				currentDemonEntries.erase(entryD)
+	
+	%CurrentDemonTopTree.set_column_title(0, "")
+	%CurrentDemonTopTree.set_column_title(1, "Player")
+	%CurrentDemonTopTree.set_column_title(2, "Phase")
+	%CurrentDemonTopTree.set_column_title(3, "")
+	
+	for peer in Connection.peers:
+		var player : Player = Data.players[peer]
+		var line = %CurrentDemonTopTree.create_item(currentDemonRoot)
+		line.set_icon(0, playerIcon)
+		line.set_icon_modulate(0, iconColorVisible)
+		line.set_text_alignment(0, HORIZONTAL_ALIGNMENT_CENTER)
+		line.set_selectable(0, false)
+		line.set_text(1, player.playerName)
+		line.set_metadata(1, 0)
+		line.set_custom_color(1, player.color)
+		line.set_text_alignment(1, HORIZONTAL_ALIGNMENT_CENTER)
+		line.set_selectable(1, true)
+		var phaseName : String
+		if Data.phases.values().has(Data.phase):
+			phaseName = Data.phases.keys()[Data.phase]
+		else:
+			phaseName = "Place Legion"
+		line.set_text(2, phaseName)
+		line.set_text_alignment(2, HORIZONTAL_ALIGNMENT_CENTER)
+		line.set_selectable(2, false)
+		line.set_selectable(3, false)
+		line.set_text_alignment(3, HORIZONTAL_ALIGNMENT_CENTER)
+		currentDemonEntries[peer] = line
+
+
+func _on_updatePlayerStatusDone(playerId : int):
+	currentDemonEntries[playerId].set_text(2, "done")
+
+
 func highlightCurrentPlayer(player : Player = null):
+	showPlayerStatus()
+	return
 	Signals.showRankTrackMarginContainer.emit()
 	for entryD in currentDemonEntries:
 		if currentDemonEntries.has(entryD):
@@ -426,8 +473,14 @@ func _on_playerDoneWithPhase():
 
 @rpc("any_peer", "call_local")
 func done():
+	var peer_id : int = multiplayer.get_remote_sender_id()
 	Signals.tutorialRead.emit()
 	Signals.phaseDone.emit()
+	Signals.playerDone.emit(peer_id)
+	if peer_id == 0:
+		peer_id = Data.id
+	for peer in Connection.peers:
+		RpcCalls.changePlayerStatus.rpc_id(peer, peer_id, "Done")
 
 
 @rpc("any_peer", "call_local")
@@ -445,12 +498,11 @@ func nextDemon(nextDemon : int):
 	var demonNode = Data.demons[nextDemon]
 	demonNode.skullsUsed = 0
 	currentPlayerLabel.text = str(demonNode.stats.player)
-	print("action for demon")
 	var actionMenuScene = actionMenu.instantiate()
-	%SideMenuVBoxContainer.add_child(actionMenuScene)
 	actionMenuScene.currentDemonRank = demonNode.stats.rank
+	%SideMenuVBoxContainer.add_child(actionMenuScene)
+	actionMenuScene.init()
 	Data.currentDemon = demonNode
-	print(demonNode.stats.rank)
 	var action = await Signals.demonDone
 	
 	# do this or _on_march wont come out of the loop
@@ -468,6 +520,7 @@ func nextDemon(nextDemon : int):
 func updateRankTrackCurrentDemon(nextDemon : int):
 	%RankTrack.highlightCurrentDemon(nextDemon)
 	highlightCurrentDemon(nextDemon)
+	Signals.currentDemon.emit(nextDemon)
 
 
 @rpc("any_peer", "call_local")
@@ -664,6 +717,7 @@ func changePlayerName(playerName):
 
 
 func toogleWaitForPlayer(playerId, boolean : bool, phase = null):
+	return
 	if Settings.skipWaitForPlayers:
 		return
 	if boolean:
@@ -683,7 +737,7 @@ func toogleWaitForPlayer(playerId, boolean : bool, phase = null):
 				%WaitForPlayerLabel.text = "Waiting for player " + str(Data.players[playerId].playerName) + " to use its demon."
 			%WaitForPlayerControl.modulate.a = 1.0
 			%WaitForPlayerControl.show()
-			var tw1 = get_tree().create_tween()
+			var tw1 = create_tween()
 			tw1.set_trans(Tween.TRANS_QUAD)
 			tw1.set_ease(Tween.EASE_IN)
 			tw1.tween_property(%WaitForPlayerControl, "modulate", Color(1,1,1,0), 3.0)#.set_delay(0.5)
@@ -721,6 +775,7 @@ func _on_hideArcanaCardsContainer():
 
 
 func _on_showRankTrackMarginContainer():
+	return
 	%RankTrackMarginContainer.show()
 
 
@@ -740,3 +795,15 @@ func _on_toggleAvailableLieutenants(toggled_on):
 
 func _on_showChosenLieutenantFromAvailableLieutenantsBox(marginContainer : MarginContainer):
 	add_child(marginContainer)
+
+
+func _on_rankTrackEntryMouseEntered(rank : int):
+	var demonNode : Demon = Data.demons[rank].duplicate()
+	%DemonDetailsMarginContainer.add_child(demonNode)
+	%DemonDetailsControl.show()
+
+
+func _on_rankTrackEntryMouseExited():
+	%DemonDetailsControl.hide()
+	for node in %DemonDetailsMarginContainer.get_children():
+		node.queue_free()

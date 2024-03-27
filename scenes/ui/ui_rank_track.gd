@@ -256,7 +256,7 @@ func _on_demonClicked(demon : Demon):
 
 func expand():
 	var y : int = clamp(rankTrack.size() * 48 + 48, 0, 12 * 48 + 48)
-	var tw1 = get_tree().create_tween()
+	var tw1 = create_tween()
 	tw1.set_trans(Tween.TRANS_QUAD)
 	tw1.set_ease(Tween.EASE_IN)
 	tw1.tween_property(%DemonTree, "custom_minimum_size", Vector2(350, y), 0.3)
@@ -267,7 +267,7 @@ func _on_mouse_entered():
 	expand()
 
 func collapse():
-	var tw1 = get_tree().create_tween()
+	var tw1 = create_tween()
 	tw1.set_trans(Tween.TRANS_QUAD)
 	tw1.set_ease(Tween.EASE_IN)
 	tw1.tween_property(%DemonTree, "custom_minimum_size", Vector2(350, 0), 0.3)
@@ -282,7 +282,7 @@ func _process(delta):
 		##return
 ##			position -= Vector2(0, 650)
 		#hovering = false
-		#tw1 = get_tree().create_tween()
+		#tw1 = create_tween()
 		#tw1.set_trans(Tween.TRANS_QUAD)
 		#tw1.set_ease(Tween.EASE_IN_OUT)
 		#tw1.parallel().tween_property(self, "position", startPosition - Vector2(0, 550), 0.2)

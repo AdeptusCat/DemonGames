@@ -9,6 +9,7 @@ func _ready():
 
 @rpc("any_peer", "call_local")
 func nextDemon(demonRank : int):
+	return
 	if demonNode:
 		demonNode.queue_free()
 	demonNode = Data.demons[demonRank].duplicate()
@@ -21,7 +22,7 @@ func nextDemon(demonRank : int):
 	show()
 	if tw1:
 		tw1.kill()
-	tw1 = get_tree().create_tween()
+	tw1 = create_tween()
 	tw1.set_trans(Tween.TRANS_QUAD)
 	tw1.set_ease(Tween.EASE_IN)
 	tw1.tween_property(self, "modulate", Color(1,1,1,0), 3.0).set_delay(0.2)

@@ -22,6 +22,7 @@ signal startGame
 signal connected
 
 # UI
+signal updatePlayerStatusDone(playerId : int)
 signal emitSoulsFromCollectionPosition(position : Vector2, soulsGathered : int)
 signal emitSoulsFromTreasury(position : Vector2, soulsGathered : int)
 signal soulReachedPlayerStats
@@ -75,6 +76,9 @@ signal showSequenceOfPlayHelp
 signal placeUnitsFromArray
 
 # actions
+signal rankTrackEntryMouseEntered(rank : int)
+signal rankTrackEntryMouseExited
+signal actionsDone
 signal disableActionMenuButtons
 signal toggleRecruitLegionsButton(boolean)
 signal toggleAvailableLieutenants(boolean : bool)
@@ -99,6 +103,10 @@ signal recruiting
 signal recruitingDone
 signal demonDone(passAction)
 signal demonDoneWithPhase(passAction)
+signal passOptionSelected(passInterval : int)
+signal playerDone(playerId : int)
+signal changePlayerStatus
+signal addPlayerStatus(playerId : int)
 signal phaseDone
 signal phaseReminderDone
 signal triumphiratWantsToFlee(triumphirat)
@@ -167,6 +175,7 @@ signal pickedDemonInGame(demonRank : int)
 signal pickedDemon(demonRank : int)
 signal pickedDemonForCombat
 signal updateRankTrack(arr : Array)
+signal currentDemon(rank : int)
 signal doneGatheringSouls
 signal proceedSignal
 signal placeLieutenant(sectio, playerId, lieutenantName)

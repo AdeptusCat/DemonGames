@@ -1,0 +1,75 @@
+[gd_scene load_steps=3 format=3 uid="uid://dsvdpwbo68k25"]
+
+[ext_resource type="Script" path="res://scenes/ui/rank_track/rank_track.gd" id="1_ahxnf"]
+[ext_resource type="PackedScene" uid="uid://b73im5u6j3cn4" path="res://scenes/ui/rank_track/entry.tscn" id="2_ccvgu"]
+
+[node name="RankTrack" type="Control"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_ahxnf")
+entryScene = ExtResource("2_ccvgu")
+
+[node name="RankTrack" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ColorRect" type="ColorRect" parent="RankTrack"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="RankTrack"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="MarginContainer" type="MarginContainer" parent="RankTrack/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 148)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 123.0
+offset_top = -388.0
+offset_right = 169.0
+offset_bottom = -365.0
+mouse_filter = 1
+text = "11111"
+
+[node name="Label2" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 255.0
+offset_top = -381.0
+offset_right = 301.0
+offset_bottom = -358.0
+mouse_filter = 1
+text = "22222"
+
+[node name="Label3" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 401.0
+offset_top = -374.0
+offset_right = 447.0
+offset_bottom = -351.0
+mouse_filter = 1
+text = "33333"
+
+[connection signal="gui_input" from="Label" to="." method="_on_label_gui_input"]
+[connection signal="mouse_entered" from="Label" to="." method="_on_label_mouse_entered"]
+[connection signal="mouse_exited" from="Label" to="." method="_on_label_mouse_exited"]
