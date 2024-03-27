@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://blpdq04upl3pu"]
+
+[ext_resource type="PackedScene" uid="uid://6o6b6xlm1u6g" path="res://scenes/ui/combat/player_color.tscn" id="1_41244"]
+[ext_resource type="Script" path="res://scenes/ui/combat/combat_entry.gd" id="1_mfxsi"]
+
+[node name="CombatEntry" type="MarginContainer"]
+offset_right = 1.0
+offset_bottom = 23.0
+script = ExtResource("1_mfxsi")
+playerColorScene = ExtResource("1_41244")
+
+[node name="ColorsHBoxContainer" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="SectioLabel" type="Label" parent="MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+text = "Sectio"
+horizontal_alignment = 1
+vertical_alignment = 1

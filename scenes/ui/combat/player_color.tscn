@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://6o6b6xlm1u6g"]
+
+[node name="PlayerColor" type="ColorRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
