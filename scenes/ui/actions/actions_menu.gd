@@ -30,20 +30,10 @@ func init():
 	addSkullsToMenu()
 	addHeartsToMenu()
 	%WalkTheEarthCostLabel.text = str(currentDemonNode.hearts * 2)
+	addPassActions(player, currentDemonRank)
 
 
 func _ready():
-	%PassButton.clear()
-	var boolean : bool = false
-	var i : int = 1
-	for rank in Data.rankTrack:
-		if boolean:
-			%PassButton.add_item(str(i) + " Pass")
-			i += 1
-		if rank == currentDemonRank:
-			boolean = true
-	%PassButton.selected = -1
-	
 	Signals.disableActionMenuButtons.connect(_on_disableActionButtons)
 	#%PassButton.disabled = true
 	%WalkTheEarthButton.disabled = true
@@ -57,8 +47,28 @@ func _ready():
 	#%DoEvilDeedsHBoxContainer.show()
 	%PassForGoodHBoxContainer.show()
 	Signals.changedActionState.connect(_on_changedActionState)
-	
-	
+
+
+func addPassActions(_player : Player, _currentDemonRank : int):
+	%PassButton.disabled = false
+	%PassButton.clear()
+	var boolean : bool = false
+	var i : int = 0
+	var passCost : int = 0
+	for rank in Data.rankTrack:
+		if boolean:
+			passCost = Costs.passAction * (i + 1)
+			if _player.hasEnoughSouls(passCost):
+				%PassButton.add_item(str(i + 1) + " Pass")
+				i += 1
+			else:
+				if i == 0:
+					%PassButton.disabled = true
+				break
+		if rank == currentDemonRank:
+			boolean = true
+	%PassButton.selected = -1
+
 
 func _on_disableActionButtons():
 	%MarchButton.disabled = true
