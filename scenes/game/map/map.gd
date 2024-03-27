@@ -819,6 +819,7 @@ func _on_march():
 					if Connection.peers.has(unit.triumphirate):
 						fleeingConfirmed = await fleeConfirmation
 					%EventDialog.dialog_hide_on_ok = true
+					hideEventDialog()
 					if fleeingConfirmed:
 						enemiesFled += 1
 		#						%EventDialog.dialog_text = "The Enemy fled."
@@ -852,7 +853,7 @@ func _on_march():
 
 			if not troopsRemaining:
 				%EventDialog.dialog_text = "The Enemy fled."
-				
+			hideEventDialog()
 #		Signals.unitDeselected.emit()
 		selectedUnit.showMovesLeft(false)
 	Data.changeState(Data.States.IDLE)

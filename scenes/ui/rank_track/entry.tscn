@@ -1,6 +1,5 @@
-[gd_scene load_steps=4 format=3 uid="uid://b73im5u6j3cn4"]
+[gd_scene load_steps=3 format=3 uid="uid://b73im5u6j3cn4"]
 
-[ext_resource type="Texture2D" uid="uid://dipscqw2ol756" path="res://assets/demons/textures/andras/00354-3473751642.png" id="1_lriwg"]
 [ext_resource type="Script" path="res://scenes/ui/rank_track/entry.gd" id="1_ohdhf"]
 [ext_resource type="Material" uid="uid://cj8y7d3nbsrbq" path="res://assets/materials_shaders/shine_highlight.tres" id="2_chovh"]
 
@@ -27,7 +26,6 @@ custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
-texture = ExtResource("1_lriwg")
 expand_mode = 1
 stretch_mode = 4
 

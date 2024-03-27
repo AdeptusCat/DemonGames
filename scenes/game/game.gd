@@ -319,9 +319,9 @@ func setupFavors():
 func setupDemons():
 	for playerId in Data.players:
 		for i in range(3):
-			var nr : String = Decks.getRandomCard("demon")
+			var resourceFileName : String = Decks.getRandomCard("demon")
 			for peer in Connection.peers:
-				RpcCalls.addDemon.rpc_id(peer, playerId, nr)
+				RpcCalls.addDemon.rpc_id(peer, playerId, resourceFileName)
 
 
 func setupDemonsFromSavegame():
